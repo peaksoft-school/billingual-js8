@@ -1,8 +1,8 @@
 import React from 'react'
-import UserHeader from './Header'
+import Header from '../../components/header/Header'
 
 const UserLayout = () => {
-   return <UserHeader />
+   return <Header title="MY" />
 }
 
 export default UserLayout

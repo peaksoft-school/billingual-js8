@@ -2,22 +2,22 @@ import React from 'react'
 import { Button, styled } from '@mui/material'
 import { ReactComponent as Logo } from '../../assets/icons/Logo.svg'
 
-const UserHeader = () => {
+const Header = ({ title }) => {
    return (
-      <Header>
+      <StyledHeader>
          <Logo />
          <Container>
             <TestBtn>TESTS</TestBtn>
-            <ResultBtn>MY RESULTS</ResultBtn>
-            <OutButton>LOG OUT</OutButton>
+            <SubmitBtn>{title} RESULTS</SubmitBtn>
+            <LogOut>LOG OUT</LogOut>
          </Container>
-      </Header>
+      </StyledHeader>
    )
 }
 
-export default UserHeader
+export default Header
 
-const Header = styled('header')(() => ({
+const StyledHeader = styled('header')(() => ({
    display: 'flex',
    justifyContent: 'space-between',
    padding: '26px 120px',
@@ -25,7 +25,7 @@ const Header = styled('header')(() => ({
    background: '#ffffff',
 }))
 
-const OutButton = styled(Button)(() => ({
+const LogOut = styled(Button)(() => ({
    border: '2px solid #4C4859',
    boxShadow:
       '0px 1px 2px rgba(76, 72, 89, 0.2), 0px 1px 2px rgba(76, 72, 89, 0.2)',
@@ -60,7 +60,7 @@ const TestBtn = styled(Button)(() => ({
    textDecoration: 'none',
 }))
 
-const ResultBtn = styled(Button)(() => ({
+const SubmitBtn = styled(Button)(() => ({
    fontSize: '15px',
    fontWeight: 700,
    lineHeight: '18px',

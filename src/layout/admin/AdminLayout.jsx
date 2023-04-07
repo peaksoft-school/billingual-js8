@@ -1,8 +1,7 @@
-import React from 'react'
-import AdminHeader from './Header'
+import Header from '../../components/header/Header'
 
 const AdminLayout = () => {
-   return <AdminHeader />
+   return <Header title="SUBMITTED" />
 }
 
 export default AdminLayout
