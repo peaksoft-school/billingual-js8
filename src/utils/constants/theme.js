@@ -24,4 +24,7 @@ export const theme = createTheme({
          linearBlue: 'linear-gradient(270deg, #3A10E5 0%, #6746EF 75.83%)',
       },
    },
+   typography: {
+      fontFamily: 'Poppins, Gilroy',
+   },
 })
