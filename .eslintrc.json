@@ -13,9 +13,21 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "react-hooks"],
+  "plugins": [
+    "react",
+    "react-hooks"
+  ],
   "rules": {
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/prop-type": "off",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
     "react/jsx-props-no-spreading": "off",
     "react/react-in-jsx-scope": "off",
     "import/prefer-default-export": "off",
@@ -32,12 +44,23 @@
         "ignoreRegExpLiterals": true
       }
     ],
-    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "no-console": [
+      "warn",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
     "jsx-a11y/label-has-associated-control": [
       "error",
       {
         "required": {
-          "some": ["nesting", "id"]
+          "some": [
+            "nesting",
+            "id"
+          ]
         }
       }
     ]
