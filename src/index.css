@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap');
 body {
    margin: 0;
+   font-family: 'Poppins', 'Gilroy';
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
 }
