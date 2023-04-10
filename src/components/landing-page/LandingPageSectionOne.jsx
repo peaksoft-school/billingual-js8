@@ -1,9 +1,11 @@
-import { Button, styled } from '@mui/material'
+import { styled } from '@mui/material'
 import logo from '../../assets/logo/Layer 1.png'
 import imageBubble from '../../assets/images/Group.png'
 import cap from '../../assets/images/Group 4264.png'
 import imageBook from '../../assets/images/Group 4265.png'
 import InfoSection from './InfoSection'
+import LandingButton from '../UI/buttons/LandingButtton'
+import Button from '../UI/buttons/Buttons'
 
 const LandingPage = styled('div')(() => ({
    height: '778px',
@@ -29,12 +31,41 @@ const LogoAndButtonDiv = styled('div')(() => ({
 const ButtonDiv = styled('div')(() => ({
    position: 'absolute',
    width: '16.1875rem',
+   display: 'flex',
    height: '42px',
    right: '80px',
    top: '27px',
 }))
 const ButtonToComeIn = {
+   width: '122px',
+   height: '42',
    marginRight: '24px',
+   fontSize: '14px',
+   background: '#3A10E5',
+   fontFamily: 'DINNextRoundedLTPro-Bold',
+   lineHeight: '16px',
+   alignItems: 'center',
+   textAlign: 'center',
+   letterSpacing: ' 0.02em',
+}
+const ButtonSx = {
+   width: '113px',
+   height: '42',
+   fontSize: '14px',
+   background: '#ffffff',
+   color: '#4C4C4C',
+   fontFamily: 'DINNextRoundedLTPro-Bold',
+   lineHeight: '16px',
+   alignItems: 'center',
+   textAlign: 'center',
+   letterSpacing: ' 0.02em',
+   boxShadow:
+      '0px 1px 2px rgba(76, 72, 89, 0.2), 0px 1px 2px rgba(76, 72, 89, 0.2)',
+   borderRadius: '8px',
+   ':hover': {
+      background: '#3A10E5',
+      color: '#fff',
+   },
 }
 const ImgBubble = styled('img')(() => ({
    height: '659.9998779296875px',
@@ -107,17 +138,13 @@ const ImageBooks = styled('img')(() => ({
    zIndex: 10,
 }))
 
-const ButtonToBegin = styled('button')(() => ({
+const ButtonToBegin = styled('div')(() => ({
    height: '59.99999237060547px',
    width: ' 200px',
    marginleft: '80px',
    top: '530px',
-   borderRadius: '0px',
    position: 'absolute',
    bottom: ' 92.65%',
-   background:
-      'linear-gradient(186.36deg, #CB4080 5.01%, #C93D7D 29.76%, #BD3172 55.4%, #AD1E60 94.99%)',
-   boxShadow: 'inset 4px -5px 0px rgba(255, 204, 191, 0.68)',
 }))
 
 const LandingPageSectionOne = () => {
@@ -130,7 +157,9 @@ const LandingPageSectionOne = () => {
                <Button sx={ButtonToComeIn} variant="contained">
                   To come in
                </Button>
-               <Button variant="contained">Register</Button>
+               <Button sx={ButtonSx} variant="contained">
+                  Register
+               </Button>
             </ButtonDiv>
          </LogoAndButtonDiv>
          <ImgBubble src={imageBubble} />
@@ -141,13 +170,14 @@ const LandingPageSectionOne = () => {
                </EnglishProficiency>
                <Bilingual>BILINGUAL</Bilingual>
             </div>
-
             <TextDivInfo>
                For nearly 30 years, learners have turned to Rosetta Stone to
                build the fluency and confidence they need to speak new
                languages.
             </TextDivInfo>
-            <ButtonToBegin>Register</ButtonToBegin>
+            <ButtonToBegin>
+               <LandingButton textButton="toBeggin" />
+            </ButtonToBegin>
          </DivInfo>
          <AcademicCap src={cap} />
          <ImageBooks src={imageBook} />
