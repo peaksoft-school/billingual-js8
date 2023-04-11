@@ -27,12 +27,7 @@ const ContainerStyle = styled(Grid)(({ background, prop }) => ({
    display: 'flex',
    marginLeft: prop ? '10px' : '50px',
    marginTop: prop ? '0px' : '20px',
-   //   alignSelf: "center",
    gap: '42px',
-
-   '& .image': {
-      //   marginTop: '10px',
-   },
 }))
 
 const InfoStyle = styled(Grid)(() => ({
