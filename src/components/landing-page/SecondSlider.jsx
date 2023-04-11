@@ -2,15 +2,15 @@ import { Grid, Rating, Typography, styled } from '@mui/material'
 import React, { useState } from 'react'
 
 import Slider from 'react-slick'
-import Avatar1 from '../../assets/images/Avatar1.jpg'
-import Avatar2 from '../../assets/images/Avatar2.jpg'
-import Avatar3 from '../../assets/images/Avatar3.jpg'
-import Avatar4 from '../../assets/images/Avatar4.jpg'
-import Avatar5 from '../../assets/images/Avatar5.jpg'
-import { ReactComponent as NextIcon } from '../../assets/icons/NextIcon.svg'
-import { ReactComponent as PrevIcon } from '../../assets/icons/PrevIcon.svg'
-import { ReactComponent as Pagination } from '../../assets/icons/Pagination.svg'
-import { ReactComponent as ActivePagination } from '../../assets/icons/ActivePagination.svg'
+import avatar1 from '../../assets/images/avatar1.jpg'
+import avatar2 from '../../assets/images/avatar2.jpg'
+import avatar3 from '../../assets/images/avatar3.jpg'
+import avatar4 from '../../assets/images/avatar4.jpg'
+import avatar5 from '../../assets/images/avatar5.jpg'
+import { ReactComponent as NextIcon } from '../../assets/icons/nextIcon.svg'
+import { ReactComponent as PrevIcon } from '../../assets/icons/prevIcon.svg'
+import { ReactComponent as Pagination } from '../../assets/icons/pagination.svg'
+import { ReactComponent as ActivePagination } from '../../assets/icons/activePagination.svg'
 
 const humans = [
    {
@@ -19,7 +19,7 @@ const humans = [
          'Great way to learn a language. Fun, interactive, and engaging. I am enjoying the course immensely and would recommend it to anyone who wishes to learn a second language.',
       name: 'Aibek Atabekov',
       rating: 5,
-      avatar: Avatar1,
+      avatar: avatar1,
    },
    {
       id: 2,
@@ -27,7 +27,7 @@ const humans = [
          'Bilingual has helped me to get a good grasp of the language in a fun and challenging way. I enjoy the dialogues and scenarios, which include helpful phrases that can be used in various situations.',
       name: 'Alina Begishova',
       rating: 5,
-      avatar: Avatar2,
+      avatar: avatar2,
    },
    {
       id: 3,
@@ -35,7 +35,7 @@ const humans = [
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
       name: 'Minura Telegenova',
       rating: 5,
-      avatar: Avatar3,
+      avatar: avatar3,
    },
    {
       id: 4,
@@ -43,7 +43,7 @@ const humans = [
          'Great way to learn a language. Fun, interactive, and engaging. I am enjoying the course immensely and would recommend it to anyone who wishes to learn a second language.',
       name: 'Aibek Atabekov',
       rating: 5,
-      avatar: Avatar4,
+      avatar: avatar4,
    },
    {
       id: 5,
@@ -51,7 +51,7 @@ const humans = [
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
       name: 'Alina Begishova',
       rating: 5,
-      avatar: Avatar5,
+      avatar: avatar5,
    },
 ]
 
@@ -80,10 +80,9 @@ const SecondSlider = () => {
 
    const settings = {
       focusOnSelect: true,
-      autoplay: true,
       className: 'center',
       centerMode: true,
-      centerPadding: '0',
+      centerPadding: 0,
       infinite: true,
       slidesToShow: 3,
       speed: 1500,
@@ -194,7 +193,7 @@ const StyledSlider = styled(Slider)({
    justifyItems: 'center',
 
    '& .slick-slide': {
-      //   width: '700px',
+      // width: '700px',
       background: '#e5e5e5',
       borderRadius: '40px',
    },
@@ -209,8 +208,9 @@ const StyledSlider = styled(Slider)({
 
    '& .slick-list': {
       width: '1000px',
-      height: '740px',
+      height: '760px',
       overflow: 'hidden',
+      padding: '50px',
    },
 
    '& .slick-arrow': {
