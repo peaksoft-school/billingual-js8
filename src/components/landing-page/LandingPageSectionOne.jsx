@@ -1,11 +1,11 @@
 import { styled } from '@mui/material'
-import logo from '../../assets/logo/Layer 1.png'
-import imageBubble from '../../assets/images/Group.png'
-import cap from '../../assets/images/Group 4264.png'
-import imageBook from '../../assets/images/Group 4265.png'
-import InfoSection from './InfoSection'
+import logo from '../../assets/logo/layer1.png'
+import imageBubble from '../../assets/images/bubble.png'
+import cap from '../../assets/images/cap.png'
+import imageBook from '../../assets/images/books.png'
 import LandingButton from '../UI/buttons/LandingButtton'
 import Button from '../UI/buttons/Buttons'
+import InfoSection from './InfoSection'
 
 const LandingPage = styled('div')(() => ({
    height: '778px',
@@ -18,7 +18,7 @@ const LandingPage = styled('div')(() => ({
 const Logo = styled('img')(() => ({
    position: 'absolute',
    height: '48px',
-   left: '90px',
+   left: '80px',
    right: '78.13%',
    top: '24px',
    bottom: '99.1%',
@@ -42,7 +42,7 @@ const ButtonToComeIn = {
    marginRight: '24px',
    fontSize: '14px',
    background: '#3A10E5',
-   fontFamily: 'DINNextRoundedLTPro-Bold',
+   fontFamily: 'Poppins',
    lineHeight: '16px',
    alignItems: 'center',
    textAlign: 'center',
@@ -54,7 +54,7 @@ const ButtonSx = {
    fontSize: '14px',
    background: '#ffffff',
    color: '#4C4C4C',
-   fontFamily: 'DINNextRoundedLTPro-Bold',
+   fontFamily: 'Poppins',
    lineHeight: '16px',
    alignItems: 'center',
    textAlign: 'center',
@@ -76,35 +76,40 @@ const ImgBubble = styled('img')(() => ({
    mixBlendMode: 'overlay',
    marginTop: '107px',
 }))
-const EnglishProficiency = styled('h3')(() => ({
+const EnglishProficiency = styled('div')(() => ({
    position: 'absolute',
-   width: '635px',
+   width: '680px',
    height: '219px',
-   top: '120px',
+   marginTop: '192px',
+}))
+const ProveYourEnglish = styled('h1')(() => ({
    fontFamily: 'Gilroy',
+   marginTop: '0px',
+   marginBottom: '0px',
+   width: '680px',
+   height: '141px',
    fontStyle: 'normal',
-   fontWeight: '700',
+   fontWeight: 700,
    fontSize: '60px',
    lineHeight: '73px',
    color: ' #43404E',
 }))
-
 const DivInfo = styled('div')(() => ({
-   marginLeft: '90px',
+   marginLeft: '80px',
    lineHeight: '73px',
 }))
-const Bilingual = styled('div')(() => ({
-   position: 'absolute',
-   width: '295px',
-   height: '75px',
+const Bilingual = styled('h1')(() => ({
+   width: '320px',
+   height: '85px',
    marginleft: '80px',
-   top: '339px',
    fontFamily: 'Gilroy',
    fontStyle: 'normal',
-   fontWeight: ' 900',
+   fontWeight: 900,
    fontSize: '60px',
-   lineHeight: '75px',
+   lineHeight: '74.88px',
    color: '#C93D7D',
+   marginTop: '5px',
+   textTransform: 'uppercase',
 }))
 
 const TextDivInfo = styled('div')(() => ({
@@ -115,7 +120,7 @@ const TextDivInfo = styled('div')(() => ({
    top: '440px',
    fontFamily: 'Poppins',
    fontStyle: 'normal',
-   fontWeight: '400',
+   fontWeight: 400,
    fontSize: '20px',
    lineHeight: '30px',
    color: '#23212A',
@@ -152,7 +157,6 @@ const LandingPageSectionOne = () => {
       <LandingPage>
          <LogoAndButtonDiv>
             <Logo src={logo} />
-
             <ButtonDiv>
                <Button sx={ButtonToComeIn} variant="contained">
                   To come in
@@ -164,12 +168,12 @@ const LandingPageSectionOne = () => {
          </LogoAndButtonDiv>
          <ImgBubble src={imageBubble} />
          <DivInfo>
-            <div>
-               <EnglishProficiency>
+            <EnglishProficiency>
+               <ProveYourEnglish>
                   Prove your English proficiency today with
-               </EnglishProficiency>
-               <Bilingual>BILINGUAL</Bilingual>
-            </div>
+               </ProveYourEnglish>
+               <Bilingual>bilingual</Bilingual>
+            </EnglishProficiency>
             <TextDivInfo>
                For nearly 30 years, learners have turned to Rosetta Stone to
                build the fluency and confidence they need to speak new

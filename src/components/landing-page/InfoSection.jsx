@@ -1,18 +1,36 @@
 import { styled } from '@mui/material'
-import img1 from '../../assets/images/c1f1f2ed1497825e71058d467b8ec831 1.png'
-import img2 from '../../assets/images/4be617c3542970e193ff464c3292e0a5 1.png'
-import img3 from '../../assets/images/3f5986b9c2254548566619450f4f6064 1.png'
+import paperAirline from '../../assets/images/paperAirline.png'
+import globus from '../../assets/images/globus.png'
+import piggyBank from '../../assets/images/piggyBank.png'
 import accessible from '../../assets/images/accessible.png'
 import speech from '../../assets/images/speech.png'
 import extensive from '../../assets/images/extensive.png'
 import tutoring from '../../assets/images/tutoring.png'
-import booksImage from '../../assets/images/image.png'
-import OurTeamImg1 from '../../assets/images/1.jpg'
-import OurTeamImg2 from '../../assets/images/2.jpg'
-import OurTeamImg3 from '../../assets/images/3.jpg'
-import OurTeamImg4 from '../../assets/images/4.jpg'
-import OurTeamImg5 from '../../assets/images/5.jpg'
-import OurTeamImg6 from '../../assets/images/6.jpg'
+import booksImage from '../../assets/images/imgBookEnglish.png'
+import OurTeamImg1 from '../../assets/images/person1.png'
+import OurTeamImg2 from '../../assets/images/person2.png'
+import OurTeamImg3 from '../../assets/images/person3.png'
+import OurTeamImg4 from '../../assets/images/person4.png'
+import OurTeamImg5 from '../../assets/images/person5.png'
+import OurTeamImg6 from '../../assets/images/person6.png'
+
+const infoCardArray = [
+   {
+      img: paperAirline,
+      text: 'Over 10,000 fee waivers for the Bilingual English Test areoffered annually.',
+      id: 1,
+   },
+   {
+      img: globus,
+      text: 'Students from over 200 countries and territories have benefitted.',
+      id: 2,
+   },
+   {
+      img: piggyBank,
+      text: 'Eligible students can take the test with absolutely zero cost to them.',
+      id: 3,
+   },
+]
 
 const ourTeamArray = [
    {
@@ -53,24 +71,6 @@ const ourTeamArray = [
    },
 ]
 
-const infoCardArray = [
-   {
-      img: img1,
-      text: 'Over 10,000 fee waivers for the Bilingual English Test areoffered annually.',
-      id: 1,
-   },
-   {
-      img: img2,
-      text: 'Students from over 200 countries and territories have benefitted.',
-      id: 2,
-   },
-   {
-      img: img3,
-      text: 'Eligible students can take the test with absolutely zero cost to them.',
-      id: 3,
-   },
-]
-
 const Card = styled('div')(() => ({
    position: 'absolute',
    width: '100%',
@@ -87,26 +87,14 @@ const InfoCard = styled('div')(() => ({
    borderRadius: '0px',
    display: 'flex',
    padding: '0px',
+   gap: '120px',
 }))
 
-const Img1 = styled('img')(() => ({
+const Img = styled('img')(() => ({
    width: '300.96px',
    height: '176px',
    top: '898px',
 }))
-
-const Img2 = styled('img')(() => ({
-   width: ' 300.96px',
-   height: '176px',
-   top: '898px',
-}))
-
-const Img3 = styled('img')(() => ({
-   width: ' 300.96px',
-   height: '176px',
-   top: '898px',
-}))
-
 const Img1DivOne = styled('div')(() => ({
    width: '335px',
    height: '248px',
@@ -114,62 +102,18 @@ const Img1DivOne = styled('div')(() => ({
    flexDirection: 'column',
    alignItems: 'center',
 }))
-const Img1DivSecond = styled('div')(() => ({
-   width: '326px',
-   height: '248px',
-   marginLeft: '120px',
-   display: 'flex',
-   flexDirection: 'column',
-   alignItems: 'center',
-}))
-const Img1DivThird = styled('div')(() => ({
-   width: '302px',
-   height: '248px',
-   marginLeft: '120px',
-   display: 'flex',
-   flexDirection: 'column',
-   alignItems: 'center',
-}))
-
-const Over = styled('div')(() => ({
+const Over = styled('p')(() => ({
    width: '335px',
    height: '48px',
    marginTop: '23px',
    fontFamily: 'Poppins',
    fontStyle: 'normal',
-   fontWeight: '400',
+   fontWeight: 400,
    fontSize: '16px',
    lineHeight: '24px',
    textAlign: 'center',
    color: '#23212A',
 }))
-
-const StudentsOver = styled('div')(() => ({
-   width: '326px',
-   height: '48px',
-   marginTop: '23px',
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: '400',
-   fontSize: '16px',
-   lineHeight: '24px',
-   textAlign: 'center',
-   color: '#23212A',
-}))
-
-const Eligble = styled('div')(() => ({
-   width: '302px',
-   height: '48px',
-   marginTop: '23px',
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: '400',
-   fontSize: '16px',
-   lineHeight: '24px',
-   textAlign: 'center',
-   color: '#23212A',
-}))
-
 const Description = styled('div')(() => ({
    width: '1205.81px',
    height: ' 437px',
@@ -183,12 +127,12 @@ const Description = styled('div')(() => ({
 const UserExpiriance = styled('div')(() => ({
    fontFamily: 'Gilroy',
    fontSize: '40px',
-   fontWeight: '700',
+   fontWeight: 700,
    lineHeight: '48px',
    letterSpacing: '0em',
    textAlign: 'left',
    height: '96px',
-   width: '328px',
+   width: '338px',
    color: '#3752B4',
 }))
 
@@ -329,37 +273,6 @@ const TextOurTeam = styled('div')(() => ({
 const OurTeamImage = styled('img')(() => ({
    width: '180px',
    height: '180px',
-   borderRadius: '0px 0px 0px 40px',
-}))
-const OurTeamImage2 = styled('img')(() => ({
-   width: '180px',
-   height: '180px',
-   borderRadius: '40px 0px',
-   marginRight: '30px',
-}))
-const OurTeamImage3 = styled('img')(() => ({
-   width: '180px',
-   height: '180px',
-   borderRadius: ' 0px 0px 40px 0px',
-   marginRight: '32px',
-}))
-const OurTeamImage4 = styled('img')(() => ({
-   width: '180px',
-   height: '180px',
-   borderRadius: '40px 0px 0px 0px',
-   marginRight: '30px',
-}))
-const OurTeamImage5 = styled('img')(() => ({
-   width: '180px',
-   height: '180px',
-   borderRadius: '40px 0px',
-   marginRight: '30px',
-}))
-const OurTeamImage6 = styled('img')(() => ({
-   width: '180px',
-   height: '180px',
-   borderRadius: '0px 40px 0px 0px',
-   marginRight: '30px',
 }))
 const DivImage = styled('div')(() => ({
    display: 'flex',
@@ -384,7 +297,7 @@ const DivEmployeeNamePerson = styled('div')(() => ({
    marginTop: '14px',
 }))
 const NamePersonEmployee = styled('div')(() => ({
-   width: '110px',
+   width: '115px',
    height: '21px',
    fontFamily: 'Poppins',
    fontStyle: 'normal',
@@ -411,26 +324,10 @@ const InfoSection = () => {
       <Card>
          <InfoCard>
             {infoCardArray.map((elem) => (
-               <div>
-                  {elem.id === 1 && (
-                     <Img1DivOne>
-                        <Img1 src={elem.img} />
-                        <Over>{elem.text}</Over>
-                     </Img1DivOne>
-                  )}
-                  {elem.id === 2 && (
-                     <Img1DivSecond>
-                        <Img2 src={elem.img} />
-                        <StudentsOver>{elem.text}</StudentsOver>
-                     </Img1DivSecond>
-                  )}
-                  {elem.id === 3 && (
-                     <Img1DivThird>
-                        <Img3 src={elem.img} />
-                        <Eligble>{elem.text}</Eligble>
-                     </Img1DivThird>
-                  )}
-               </div>
+               <Img1DivOne>
+                  <Img src={elem.img} />
+                  <Over>{elem.text}</Over>
+               </Img1DivOne>
             ))}
          </InfoCard>
          <Description>
@@ -465,7 +362,7 @@ const InfoSection = () => {
                   </DivSpeech>
                   <DivTutoring>
                      <ImgTutoring src={tutoring} />
-                     <TutoringText>Extensive business content</TutoringText>
+                     <TutoringText>Unlimited live tutoring</TutoringText>
                   </DivTutoring>
                </DivSeparation>
             </div>
@@ -476,12 +373,7 @@ const InfoSection = () => {
             <DivImage>
                {ourTeamArray.map((elem) => (
                   <DivImageEmployeeName>
-                     {elem.id === 1 && <OurTeamImage src={elem.img} />}
-                     {elem.id === 2 && <OurTeamImage2 src={elem.img} />}
-                     {elem.id === 3 && <OurTeamImage3 src={elem.img} />}
-                     {elem.id === 4 && <OurTeamImage4 src={elem.img} />}
-                     {elem.id === 5 && <OurTeamImage5 src={elem.img} />}
-                     {elem.id === 6 && <OurTeamImage6 src={elem.img} />}
+                     <OurTeamImage src={elem.img} />
                      <DivEmployeeNamePerson>
                         <NamePersonEmployee>{elem.name}</NamePersonEmployee>
                         <Employee>{elem.employee}</Employee>
