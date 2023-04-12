@@ -1,21 +1,21 @@
 import { styled } from '@mui/material'
 import React from 'react'
 
-const MyForm = ({ children, onSubmit, ...rest }) => {
+const FormContainer = ({ children }) => {
    return (
-      <Form onSubmit={onSubmit} {...rest}>
-         <Container>{children}</Container>
-      </Form>
+      <MainContainer>
+         <InsideContainer>{children}</InsideContainer>
+      </MainContainer>
    )
 }
 
-export default MyForm
+export default FormContainer
 
-const Form = styled('form')(() => ({
+const MainContainer = styled('div')(() => ({
    padding: '70px 190px',
 }))
 
-const Container = styled('div')(() => ({
+const InsideContainer = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
    backgroundColor: '#fff',
