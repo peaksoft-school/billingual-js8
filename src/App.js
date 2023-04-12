@@ -1,11 +1,5 @@
-import LandingSlider from './components/landingSlider/Slider'
-
 function App() {
-   return (
-      <div>
-         <LandingSlider />
-      </div>
-   )
+   return <div>Bilingual </div>
 }
 
 export default App
