@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Slider from 'react-slick'
 import { Grid, Typography, styled } from '@mui/material'
-import { ReactComponent as Globus } from '../../assets/icons/globus.svg'
-import { ReactComponent as NextIcon } from '../../assets/icons/nextIcon.svg'
-import { ReactComponent as PrevIcon } from '../../assets/icons/prevIcon.svg'
-import { ReactComponent as Pagination } from '../../assets/icons/pagination.svg'
-import { ReactComponent as ActivePagination } from '../../assets/icons/activePagination.svg'
+import { ReactComponent as Globus } from '../../../assets/icons/globus.svg'
+import { ReactComponent as NextIcon } from '../../../assets/icons/nextIcon.svg'
+import { ReactComponent as PrevIcon } from '../../../assets/icons/prevIcon.svg'
+import { ReactComponent as Pagination } from '../../../assets/icons/pagination.svg'
+import { ReactComponent as ActivePagination } from '../../../assets/icons/activePagination.svg'
 import SlideItem from './SliderItem'
 
 const info = [
