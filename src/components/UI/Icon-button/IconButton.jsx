@@ -1,8 +1,8 @@
 import React from 'react'
 import { IconButton } from '@mui/material'
 
-const MyIconButton = ({ icon, ...rest }) => {
-   return <IconButton {...rest}>{icon}</IconButton>
+const MyIconButton = ({ children, ...rest }) => {
+   return <IconButton {...rest}>{children}</IconButton>
 }
 
 export default MyIconButton

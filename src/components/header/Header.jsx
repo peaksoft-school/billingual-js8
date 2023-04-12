@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, styled } from '@mui/material'
-import { ReactComponent as Logo } from '../../assets/icons/Logo.svg'
+import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
 
 const Header = ({ title }) => {
    return (
