@@ -1,5 +1,5 @@
-import React from 'react'
-import { Button, styled } from '@mui/material'
+import React, { useEffect } from 'react'
+import { styled } from '@mui/material'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -20,12 +20,12 @@ const Snackbar = ({ type, title, message }) => {
             theme: 'colored',
          }
       )
-   return (
-      <div>
-         <Toastify />
-         <Button onClick={notify}>Success!</Button>
-      </div>
-   )
+
+   useEffect(() => {
+      notify()
+   }, [])
+
+   return <Toastify />
 }
 export default Snackbar
 const Toastify = styled(ToastContainer)(() => ({
