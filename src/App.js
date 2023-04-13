@@ -1,5 +1,5 @@
 function App() {
-   return <div> </div>
+   return <div>Bilingual</div>
 }
 
 export default App
