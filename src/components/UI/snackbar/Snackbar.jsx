@@ -4,23 +4,24 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const Snackbar = ({ type, title, message }) => {
-   const notify = () =>
-      toast[type](
-         <>
-            <Title>{title}</Title>
-            <Message>{message}</Message>
-         </>,
-         {
-            position: 'top-right',
-            autoClose: true,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            theme: 'colored',
-         }
-      )
    useEffect(() => {
+      const notify = () =>
+         toast[type](
+            <>
+               <Title>{title}</Title>
+               <Message>{message}</Message>
+            </>,
+            {
+               position: 'top-right',
+               autoClose: true,
+               hideProgressBar: true,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               theme: 'colored',
+            }
+         )
+
       notify()
    }, [])
 
