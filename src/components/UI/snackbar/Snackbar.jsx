@@ -1,14 +1,14 @@
-import { Button, styled } from '@mui/material'
 import React from 'react'
+import { Button, styled } from '@mui/material'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const Snackbar = () => {
+const Snackbar = ({ type, title, message }) => {
    const notify = () =>
-      toast.success(
+      toast[type](
          <>
-            <PrimaryTitle>File saved</PrimaryTitle>
-            <SecondaryTitle>Successfully saved</SecondaryTitle>
+            <Title>{title}</Title>
+            <Message>{message}</Message>
          </>,
          {
             position: 'top-right',
@@ -17,7 +17,6 @@ const Snackbar = () => {
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
-            progress: undefined,
             theme: 'colored',
          }
       )
@@ -29,7 +28,6 @@ const Snackbar = () => {
    )
 }
 export default Snackbar
-
 const Toastify = styled(ToastContainer)(() => ({
    textAlign: 'start',
    '& .Toastify__toast--success': {
@@ -40,14 +38,17 @@ const Toastify = styled(ToastContainer)(() => ({
       background: '#fff1f0',
       border: '1px solid #fb9998',
       padding: '8px 16px',
-      // borderLeft: '5px solid red',
-      // BorderHeight: '10px',
+
+      '& .Toastify__close-button': {
+         path: {
+            fill: '#828282',
+         },
+      },
 
       '& .Toastify__toast-icon': {
          marginTop: '10px',
-         height: '18vh',
-         borderLeft: '2px solid red',
-         alighItems: 'flex-start',
+         height: '10vh',
+         borderLeft: '3px solid #F61414',
          svg: {
             display: 'none',
          },
@@ -80,7 +81,7 @@ const Toastify = styled(ToastContainer)(() => ({
    },
 }))
 
-const PrimaryTitle = styled('h4')(() => ({
+const Title = styled('h4')(() => ({
    fontFamily: 'DINNextRoundedLTPro-Bold',
    margin: '10px 0 0 0',
    fontSize: '16px',
@@ -88,7 +89,7 @@ const PrimaryTitle = styled('h4')(() => ({
    color: '#4C4859',
 }))
 
-const SecondaryTitle = styled('p')(() => ({
+const Message = styled('p')(() => ({
    margin: '8px 0 10px 0',
    fontFamily: 'DINNextRoundedLTW01-Regular',
    fontStyle: 'normal',
