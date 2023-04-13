@@ -20,7 +20,6 @@ const Snackbar = ({ type, title, message }) => {
             theme: 'colored',
          }
       )
-
    useEffect(() => {
       notify()
    }, [])
