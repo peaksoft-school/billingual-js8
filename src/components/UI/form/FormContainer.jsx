@@ -18,9 +18,9 @@ const MainContainer = styled('div')(() => ({
 const InsideContainer = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
+   gap: '15px',
    backgroundColor: '#fff',
    padding: '50px 80px',
    borderRadius: '20px',
-   alignItems: 'flex-end',
    boxShadow: '0px 4px 39px rgba(196, 196, 196, 0.6)',
 }))
