@@ -1,13 +1,7 @@
 import { styled, TextField } from '@mui/material'
 import React from 'react'
 
-const TextArea = ({
-   handleChange,
-   value,
-   placeholder,
-   rows,
-   ...props
-}) => {
+const TextArea = ({ handleChange, value, placeholder, rows, ...props }) => {
    return (
       <TextAreaStyle
          {...props}
