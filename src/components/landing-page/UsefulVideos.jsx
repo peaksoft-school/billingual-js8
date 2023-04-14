@@ -25,27 +25,32 @@ const videos = [
 
 const UsefulVideos = ({ onClick }) => {
    return (
-      <Contain>
-         <TitleContainer>
-            <Title> Useful videos </Title>
-         </TitleContainer>
-         <Container>
-            {videos.map((item) => (
-               <VideoContainer key={item.id}>
-                  <Image src={item.video} alt="video" />
-                  <StartIcon onClick={onClick} />
-                  <VideoTitle>{item.title}</VideoTitle>
-                  <VideoDuration>{item.duration}</VideoDuration>
-               </VideoContainer>
-            ))}
-         </Container>
-      </Contain>
+      <Container>
+         <FirstSection>
+            <TitleContainer>
+               <Title> Useful videos </Title>
+            </TitleContainer>
+            <SecondSection>
+               {videos.map((item) => (
+                  <VideoContainer key={item.id}>
+                     <Image src={item.video} alt="video" />
+                     <StartIcon onClick={onClick} />
+                     <VideoTitle>{item.title}</VideoTitle>
+                     <VideoDuration>{item.duration}</VideoDuration>
+                  </VideoContainer>
+               ))}
+            </SecondSection>
+         </FirstSection>
+      </Container>
    )
 }
 
 export default UsefulVideos
+const Container = styled(Grid)(() => ({
+   background: '#F0F0DC',
+}))
 
-const Contain = styled(Grid)(() => ({
+const FirstSection = styled(Grid)(() => ({
    display: 'flex',
    width: '1250px',
    margin: '0 auto',
@@ -65,7 +70,7 @@ const Title = styled(Typography)(() => ({
    color: '#3752B4',
    marginTop: '138px',
 }))
-const Container = styled(Grid)(() => ({
+const SecondSection = styled(Grid)(() => ({
    display: 'flex',
    justifyContent: 'center',
    gap: '70px',

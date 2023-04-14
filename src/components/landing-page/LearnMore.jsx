@@ -1,92 +1,104 @@
 import { Grid, Typography, styled } from '@mui/material'
-import { ReactComponent as Icon } from '../../assets/icons/Vector 2.svg'
-import { ReactComponent as Icon1 } from '../../assets/icons/globe 1.svg'
-import { ReactComponent as Icon2 } from '../../assets/icons/research 1.svg'
-import { ReactComponent as Icon3 } from '../../assets/icons/Group 4376.svg'
-import { ReactComponent as Icon4 } from '../../assets/icons/dashboard 1.svg'
-import { ReactComponent as Icon5 } from '../../assets/icons/img-secure-design 1.svg'
+import { ReactComponent as Icon } from '../../assets/icons/roadmap.svg'
+import { ReactComponent as Icon1 } from '../../assets/icons/globe.svg'
+import { ReactComponent as Icon2 } from '../../assets/icons/research.svg'
+import { ReactComponent as Icon3 } from '../../assets/icons/thirdicon.svg'
+import { ReactComponent as Icon4 } from '../../assets/icons/dashboard.svg'
+import { ReactComponent as Icon5 } from '../../assets/icons/img-secure-design.svg'
 import LandingButton from '../UI/buttons/LandingButtton'
 
 const LearnMore = () => {
    return (
-      <Contain>
-         <TitleContainer>
-            <Title>Learn more</Title>
-         </TitleContainer>
-         <StyledIcon />
-         <Container>
-            <Grid>
-               <Title1>Expand your applicant pool</Title1>
-               <Text1>
-                  Tap into a diverse pool of candidates from 210+ countries and
-                  <br />
-                  territories of origin, who have taken the Bilingual English
-                  Test <br /> because of its radical accessibility.
-               </Text1>
-            </Grid>
+      <Background>
+         <Contain>
+            <TitleContainer>
+               <Title>Learn more</Title>
+            </TitleContainer>
+            <StyledIcon />
+            <Container>
+               <Grid>
+                  <Title1>Expand your applicant pool</Title1>
+                  <Text1>
+                     Tap into a diverse pool of candidates from 210+ countries
+                     and
+                     <br />
+                     territories of origin, who have taken the Bilingual English
+                     Test <br /> because of its radical accessibility.
+                  </Text1>
+               </Grid>
 
-            <Icon1 />
-         </Container>
-         <Container1>
-            <Icon2 />
-            <Grid>
-               <Title2>Built on the latest assessment sciencee</Title2>
-               <Text2>
-                  The Duolingo English Test is a computer adaptive test backed
-                  <br />
-                  by rigorous research, with results that are highly correlated
-                  <br />
-                  with other major assessments such as the TOEFL and the
-                  <br /> IELTS.
-               </Text2>
-            </Grid>
-         </Container1>
-         <Container2>
-            <Grid>
-               <Title1>Innovative test security</Title1>
-               <Text1>
-                  Industry-leading security protocols, individual test
-                  proctoring,
-                  <br />
-                  and computer adaptive technology help prevent fraud and <br />
-                  cheating and ensure results you can trust.
-               </Text1>
-            </Grid>
-            <Icon3 />
-         </Container2>
-         <Container3>
-            <Icon4 />
-            <Grid>
-               <Title2>Convenient results dashboard</Title2>
-               <Text2>
-                  Access candidates’ certificates, video interviews, and writing
-                  <br />
-                  samples through a free and secure dashboard. Quickly and
-                  <br /> easily view applicant data with filtering tools.
-               </Text2>
-            </Grid>
-         </Container3>
-         <Container4>
-            <Grid>
-               <Title1>Secure Design</Title1>
-               <Text1>
-                  Adaptive test engine dynamically administers test questions
-                  <br /> from a database of hundreds of thousands of items.
-                  <br /> Someone would have to take the test more than 1,000
-                  times
-                  <br /> to see a question repeated.
-               </Text1>
-            </Grid>
-            <Icon5 />
-         </Container4>
-         <StyledButton>
-            <LandingButton />
-         </StyledButton>
-      </Contain>
+               <Icon1 />
+            </Container>
+            <Container1>
+               <Icon2 />
+               <Grid>
+                  <Title2>Built on the latest assessment sciencee</Title2>
+                  <Text2>
+                     The Duolingo English Test is a computer adaptive test
+                     backed
+                     <br />
+                     by rigorous research, with results that are highly
+                     correlated
+                     <br />
+                     with other major assessments such as the TOEFL and the
+                     <br /> IELTS.
+                  </Text2>
+               </Grid>
+            </Container1>
+            <Container2>
+               <Grid>
+                  <Title1>Innovative test security</Title1>
+                  <Text1>
+                     Industry-leading security protocols, individual test
+                     proctoring,
+                     <br />
+                     and computer adaptive technology help prevent fraud and{' '}
+                     <br />
+                     cheating and ensure results you can trust.
+                  </Text1>
+               </Grid>
+               <Icon3 />
+            </Container2>
+            <Container3>
+               <Icon4 />
+               <Grid>
+                  <Title2>Convenient results dashboard</Title2>
+                  <Text2>
+                     Access candidates’ certificates, video interviews, and
+                     writing
+                     <br />
+                     samples through a free and secure dashboard. Quickly and
+                     <br /> easily view applicant data with filtering tools.
+                  </Text2>
+               </Grid>
+            </Container3>
+            <Container4>
+               <Grid>
+                  <Title1>Secure Design</Title1>
+                  <Text1>
+                     Adaptive test engine dynamically administers test questions
+                     <br /> from a database of hundreds of thousands of items.
+                     <br /> Someone would have to take the test more than 1,000
+                     times
+                     <br /> to see a question repeated.
+                  </Text1>
+               </Grid>
+               <Icon5 />
+            </Container4>
+            <StyledButton>
+               <LandingButton />
+            </StyledButton>
+         </Contain>
+      </Background>
    )
 }
 export default LearnMore
-
+const Background = styled(Grid)(() => ({
+   background: '#F0F0DC',
+   position: 'absolute',
+   width: '100%',
+   zIndex: '-2',
+}))
 const Contain = styled(Grid)(() => ({
    display: 'flex',
    width: '1229px',
