@@ -1,18 +1,21 @@
 import { styled, TextField } from '@mui/material'
-import React from 'react'
+import React, { forwardRef } from 'react'
 
-const TextArea = ({ handleChange, value, placeholder, rows, ...props }) => {
-   return (
-      <TextAreaStyle
-         {...props}
-         multiline
-         minRows={rows}
-         placeholder={placeholder}
-         value={value}
-         onChange={handleChange}
-      />
-   )
-}
+const TextArea = forwardRef(
+   ({ handleChange, value, placeholder, rows, ...props }, ref) => {
+      return (
+         <TextAreaStyle
+            {...props}
+            multiline
+            minRows={rows}
+            placeholder={placeholder}
+            value={value}
+            onChange={handleChange}
+            ref={ref}
+         />
+      )
+   }
+)
 
 export default TextArea
 
@@ -27,7 +30,7 @@ const TextAreaStyle = styled(TextField)(({ theme }) => ({
 
    ' & .MuiInputBase-root': {
       borderRadius: '8px',
-      padding: '14px 16px 40px 16px',
+      padding: '14px 16px ',
       border: '1.53px solid #D5D0D0',
    },
    ' & .MuiInputBase-input': {
