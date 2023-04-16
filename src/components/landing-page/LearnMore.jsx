@@ -93,6 +93,7 @@ const LearnMore = () => {
    )
 }
 export default LearnMore
+
 const Background = styled(Grid)(() => ({
    background: '#F0F0DC',
    position: 'absolute',

@@ -1,29 +1,39 @@
 import { Grid, Typography, styled } from '@mui/material'
-import video from '../../assets/images/video.jpg'
-import { ReactComponent as Start } from '../../assets/icons/arrow (1).svg'
+import { DefaultPlayer as Video } from 'react-html5video'
+import 'react-html5video/dist/styles.css'
+import { createRef, useState } from 'react'
+import video1 from '../../assets/videos/video1.MP4'
+import video2 from '../../assets/videos/video2.MP4'
+import video3 from '../../assets/videos/video3.MP4'
+import poster from '../../assets/images/poster.jpg'
 
 const videos = [
    {
       id: 1,
-      video,
+      poster,
+      video: video1,
       title: 'Test Overview',
       duration: 'Duration 1:00',
    },
    {
       id: 2,
-      video,
+      poster,
+      video: video2,
       title: 'Test Walkthrough',
       duration: 'Duration 5:00',
    },
    {
       id: 3,
-      video,
+      poster,
+      video: video3,
       title: 'Integrated Subscores',
       duration: 'Duration 2:55',
    },
 ]
 
-const UsefulVideos = ({ onClick }) => {
+const UsefulVideos = () => {
+   const [model, setModel] = useState(false)
+
    return (
       <Container>
          <FirstSection>
@@ -31,14 +41,39 @@ const UsefulVideos = ({ onClick }) => {
                <Title> Useful videos </Title>
             </TitleContainer>
             <SecondSection>
-               {videos.map((item) => (
-                  <VideoContainer key={item.id}>
-                     <Image src={item.video} alt="video" />
-                     <StartIcon onClick={onClick} />
-                     <VideoTitle>{item.title}</VideoTitle>
-                     <VideoDuration>{item.duration}</VideoDuration>
-                  </VideoContainer>
-               ))}
+               {videos.map((item) => {
+                  const divRef = createRef(null)
+                  const openModel = () => {
+                     divRef.current.classList.remove('video')
+                     divRef.current.classList.add('model')
+                     setModel(true)
+                  }
+                  return (
+                     <VideoContainer ref={divRef} key={item.id}>
+                        <Grid
+                           style={{ borderRadius: '16px 16px 0px 0px' }}
+                           onClick={() => openModel()}
+                        >
+                           <StyledVideo
+                              autoPlay={model}
+                              controle={[
+                                 'PlayPause',
+                                 'Seek',
+                                 'Time',
+                                 'Volume',
+                                 'FullScreen',
+                              ]}
+                              poster={item.poster}
+                           >
+                              <source src={item.video} type="video/webm" />
+                           </StyledVideo>
+                        </Grid>
+
+                        <VideoTitle>{item.title}</VideoTitle>
+                        <VideoDuration>{item.duration}</VideoDuration>
+                     </VideoContainer>
+                  )
+               })}
             </SecondSection>
          </FirstSection>
       </Container>
@@ -46,6 +81,7 @@ const UsefulVideos = ({ onClick }) => {
 }
 
 export default UsefulVideos
+
 const Container = styled(Grid)(() => ({
    background: '#F0F0DC',
 }))
@@ -77,16 +113,13 @@ const SecondSection = styled(Grid)(() => ({
    marginBottom: '120px',
    marginTop: '48px',
 }))
-
-const Image = styled('img')(() => ({
+const StyledVideo = styled(Video)(() => ({
    borderRadius: '16px 16px 0px 0px',
    marginBottom: -7,
+   width: '370px',
+   height: '261px',
 }))
 
-const StartIcon = styled(Start)(() => ({
-   transform: 'matrix(1, 0, 0, 1, -224, 100)',
-   position: 'absolute',
-}))
 const VideoContainer = styled(Grid)(() => ({
    background: '#FFFFFF',
    border: '1px solid #DDDDDD',
