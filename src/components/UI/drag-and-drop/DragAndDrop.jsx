@@ -81,6 +81,7 @@ const DragAndDrop = () => {
    const [board, setBoard] = useState([])
 
    const dragStartHandler = (e, item) => {
+      e.preventDefault()
       console.log('start', item)
    }
 

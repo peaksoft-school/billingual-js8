@@ -40,7 +40,7 @@ const LogOut = styled(Button)(() => ({
    marginLeft: '60px',
    ':hover': {
       background: '#3A10E5',
-      color: '#fff',
+      color: '#2c2c2c',
       border: '2px solid #3A10E5',
    },
 }))

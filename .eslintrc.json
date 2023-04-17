@@ -23,6 +23,7 @@
     "no-shadow": "off",
     "react-hooks/exhaustive-deps": "off",
     "react-hooks/rules-of-hooks": "error",
+    "react/button-has-type": "off",
     "react/function-component-definition": "off",
     "max-len": [
       "error",
