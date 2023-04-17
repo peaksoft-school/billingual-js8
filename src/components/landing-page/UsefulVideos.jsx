@@ -1,7 +1,6 @@
 import { Grid, Typography, styled } from '@mui/material'
 import { DefaultPlayer as Video } from 'react-html5video'
 import 'react-html5video/dist/styles.css'
-import { createRef, useState } from 'react'
 import video1 from '../../assets/videos/video1.MP4'
 import video2 from '../../assets/videos/video2.MP4'
 import video3 from '../../assets/videos/video3.MP4'
@@ -32,8 +31,6 @@ const videos = [
 ]
 
 const UsefulVideos = () => {
-   const [model, setModel] = useState(false)
-
    return (
       <Container>
          <FirstSection>
@@ -42,32 +39,20 @@ const UsefulVideos = () => {
             </TitleContainer>
             <SecondSection>
                {videos.map((item) => {
-                  const divRef = createRef(null)
-                  const openModel = () => {
-                     divRef.current.classList.remove('video')
-                     divRef.current.classList.add('model')
-                     setModel(true)
-                  }
                   return (
-                     <VideoContainer ref={divRef} key={item.id}>
-                        <Grid
-                           style={{ borderRadius: '16px 16px 0px 0px' }}
-                           onClick={() => openModel()}
+                     <VideoContainer key={item.id}>
+                        <StyledVideo
+                           controle={[
+                              'PlayPause',
+                              'Seek',
+                              'Time',
+                              'Volume',
+                              'FullScreen',
+                           ]}
+                           poster={item.poster}
                         >
-                           <StyledVideo
-                              autoPlay={model}
-                              controle={[
-                                 'PlayPause',
-                                 'Seek',
-                                 'Time',
-                                 'Volume',
-                                 'FullScreen',
-                              ]}
-                              poster={item.poster}
-                           >
-                              <source src={item.video} type="video/webm" />
-                           </StyledVideo>
-                        </Grid>
+                           <source src={item.video} type="video/webm" />
+                        </StyledVideo>
 
                         <VideoTitle>{item.title}</VideoTitle>
                         <VideoDuration>{item.duration}</VideoDuration>

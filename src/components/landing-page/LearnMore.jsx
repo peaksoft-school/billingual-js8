@@ -1,5 +1,5 @@
 import { Grid, Typography, styled } from '@mui/material'
-import { ReactComponent as Icon } from '../../assets/icons/roadmap.svg'
+import { ReactComponent as Roadmap } from '../../assets/icons/roadmap.svg'
 import { ReactComponent as Icon1 } from '../../assets/icons/globe.svg'
 import { ReactComponent as Icon2 } from '../../assets/icons/research.svg'
 import { ReactComponent as Icon3 } from '../../assets/icons/thirdicon.svg'
@@ -120,7 +120,7 @@ const Title = styled(Typography)(() => ({
    color: '#3752B4',
 }))
 
-const StyledIcon = styled(Icon)(() => ({
+const StyledIcon = styled(Roadmap)(() => ({
    position: 'absolute',
    zIndex: '-1',
    left: '0',
