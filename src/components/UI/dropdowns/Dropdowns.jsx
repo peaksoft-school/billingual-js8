@@ -1,0 +1,58 @@
+import { MenuItem, Select, styled } from '@mui/material'
+import React from 'react'
+
+const ITEM_HEIGHT = 60
+const ITEM_PADDING_TOP = 0
+const MenuProps = {
+   PaperProps: {
+      style: {
+         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+         width: 360,
+         marginLeft: -16,
+      },
+   },
+}
+
+const Dropdowns = ({ arraySelect, title, value, changeSelect }) => {
+   const handleChange = (event) => {
+      const {
+         target: { value },
+      } = event
+      changeSelect(typeof value === 'string' ? value.split(',') : value)
+   }
+   return (
+      <StyledList
+         displayEmpty
+         value={value}
+         onChange={handleChange}
+         input={<StyledListItem />}
+         MenuProps={MenuProps}
+      >
+         <MenuItem disabled value="">
+            <em>{title}</em>
+         </MenuItem>
+         {arraySelect.map((item) => {
+            return (
+               <MenuItem key={item.name} value={item.name}>
+                  {item.name}
+               </MenuItem>
+            )
+         })}
+      </StyledList>
+   )
+}
+
+export default Dropdowns
+const StyledListItem = styled(Select)(() => ({
+   '&:hover': {
+      Bordercolor: '#1A237E',
+   },
+}))
+const StyledList = styled(Select)(() => ({
+   width: '100%',
+   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontStyle: 'normal',
+   fontWeight: '400',
+   fontSize: '16px',
+   lineHeight: '18px',
+}))
