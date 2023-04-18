@@ -13,27 +13,18 @@ const MenuProps = {
    },
 }
 
-const Dropdowns = ({ arraySelect, title, value, changeSelect }) => {
-   const handleChange = (event) => {
-      const {
-         target: { value },
-      } = event
-      changeSelect(typeof value === 'string' ? value.split(',') : value)
-   }
+const Dropdowns = ({ arraySelect, value, onChange }) => {
    return (
       <StyledList
          displayEmpty
          value={value}
-         onChange={handleChange}
+         onChange={onChange}
          input={<StyledListItem />}
          MenuProps={MenuProps}
       >
-         <MenuItem disabled value="">
-            <em>{title}</em>
-         </MenuItem>
          {arraySelect.map((item) => {
             return (
-               <MenuItem key={item.name} value={item.name}>
+               <MenuItem key={item.id} value={item.name}>
                   {item.name}
                </MenuItem>
             )
@@ -49,6 +40,7 @@ const StyledListItem = styled(Select)(() => ({
    },
 }))
 const StyledList = styled(Select)(() => ({
+   borderRadius: '10px 10px 0 0',
    width: '100%',
    fontFamily: 'DINNextRoundedLTW01-Regular',
    fontStyle: 'normal',
