@@ -80,9 +80,8 @@ const data = [
 const DragAndDrop = () => {
    const [board, setBoard] = useState([])
 
-   const dragStartHandler = (e, item) => {
+   const dragStartHandler = (e) => {
       e.preventDefault()
-      console.log('start', item)
    }
 
    const dragEndHandler = (e, word) => {
