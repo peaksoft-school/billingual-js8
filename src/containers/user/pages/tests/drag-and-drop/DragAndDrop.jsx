@@ -79,27 +79,31 @@ const data = [
 
 const DragAndDrop = () => {
    const [board, setBoard] = useState([])
-
-   const dragStartHandler = (e) => {
-      e.preventDefault()
-   }
+   const [isDropped, setIsDropped] = useState(false)
+   const [isDragging, setIsDragging] = useState(false)
 
    const dragEndHandler = (e, word) => {
       e.preventDefault()
-      setBoard((prev) => {
-         if (prev.find((item) => item.id === word.id)) {
-            return prev
-         }
-         return [...prev, word]
-      })
+      if (isDropped) {
+         setBoard((prev) => {
+            if (prev.find((item) => item.id === word.id)) {
+               return prev
+            }
+            return [...prev, word]
+         })
+      }
+      setIsDropped(false)
+      setIsDragging(false)
    }
 
    const dragOverHandler = (e) => {
       e.preventDefault()
+      setIsDragging(true)
    }
 
    const dropHandler = (e) => {
       e.preventDefault()
+      setIsDropped(true)
    }
 
    const removeWordHandler = (id) => {
@@ -113,7 +117,6 @@ const DragAndDrop = () => {
                <WordsContainer
                   key={item.id}
                   draggable={!false}
-                  onDragStart={(e) => dragStartHandler(e, item)}
                   onDragEnd={(e) => dragEndHandler(e, item)}
                >
                   <Word>{item.title}</Word>
@@ -121,6 +124,7 @@ const DragAndDrop = () => {
             ))}
          </DragContainer>
          <DropBoard
+            isDragging={isDragging}
             onDragOver={(e) => dragOverHandler(e)}
             onDrop={(e) => dropHandler(e)}
          >
@@ -140,7 +144,6 @@ const DragAndDrop = () => {
       </Container>
    )
 }
-
 export default DragAndDrop
 
 const Container = styled('div')(() => ({
@@ -159,7 +162,7 @@ const DragContainer = styled('div')(() => ({
 const WordsContainer = styled('div')(() => ({
    border: '2px solid #D4D0D0',
    borderRadius: '8px',
-   padding: '10px 39px',
+   padding: '10px 29px',
    cursor: 'pointer',
 
    ':active': {
@@ -173,16 +176,14 @@ const WordsContainer = styled('div')(() => ({
 }))
 
 const Word = styled(Typography)(() => ({
-   fontFamily: 'DINNextRoundedLTW04-Medium',
+   fontFamily: 'Poppins, Gilroy',
    fontStyle: 'normal',
    fontWeight: 500,
    fontSize: '18px',
    lineHeight: '21px',
 }))
 
-const DropBoard = styled('div')(() => ({
-   border: `1px dashed  `,
-
+const DropBoard = styled('div')(({ isDragging }) => ({
    borderRadius: '5px',
    display: 'flex',
    gap: '10px',
@@ -193,8 +194,6 @@ const DropBoard = styled('div')(() => ({
    justifyContent: 'center',
    alignItems: 'center',
    minHeight: '100px',
-   ':hover': {
-      border: `1px dashed  #3A10E5`,
-      background: 'rgba(58, 16, 229, 0.1)',
-   },
+   border: isDragging ? `1px dashed  #3A10E5` : '1px dashed',
+   background: isDragging ? 'rgba(58, 16, 229, 0.1)' : '',
 }))
