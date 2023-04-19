@@ -42,7 +42,6 @@ const StyledListItem = styled(Select)(() => ({
 const StyledList = styled(Select)(() => ({
    borderRadius: '10px 10px 0 0',
    width: '100%',
-   fontFamily: 'DINNextRoundedLTW01-Regular',
    fontStyle: 'normal',
    fontWeight: '400',
    fontSize: '16px',
