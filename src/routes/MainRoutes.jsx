@@ -2,30 +2,30 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 import AdminLayout from './admin/AdminLayout'
+import LandingPage from '../components/landing-page/LandingPage'
+import AdminTest from '../containers/admin/pages/AdminTest'
 
 const MainRoutes = () => {
    const roles = {
-      admin: 'Admin',
       user: 'User',
+      admin: 'Admin',
    }
 
    return (
       <div>
          <Routes>
             {/* Guest */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<LandingPage />} />
 
             {/* User */}
             <Route element={<ProtectedRoute isAllowed={[roles.user]} />}>
-               <Route path="/about" element={<About />} />
-               <Route path="/contact" element={<Contact />} />
+               {/* пока что пусто */}
             </Route>
 
             {/* Admin */}
             <Route element={<ProtectedRoute isAllowed={[roles.admin]} />}>
                <Route path="/admin/" element={<AdminLayout />}>
-                  <Route path="" />
+                  <Route path="test" element={<AdminTest />} />
                </Route>
             </Route>
          </Routes>

@@ -5,7 +5,6 @@ import cap from '../../assets/images/cap.png'
 import imageBook from '../../assets/images/books.png'
 import LandingButton from '../UI/buttons/LandingButtton'
 import Button from '../UI/buttons/Buttons'
-import InfoSection from './InfoSection'
 
 const LandingPage = styled('div')(() => ({
    height: '778px',
@@ -185,7 +184,6 @@ const LandingPageSectionOne = () => {
          </DivInfo>
          <AcademicCap src={cap} />
          <ImageBooks src={imageBook} />
-         <InfoSection />
       </LandingPage>
    )
 }

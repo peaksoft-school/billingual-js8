@@ -72,10 +72,8 @@ const ourTeamArray = [
 ]
 
 const Card = styled('div')(() => ({
-   position: 'absolute',
    width: '100%',
    paddingTop: '120px',
-   marginTop: '778px',
    paddingBottom: '120px',
    background: '#f0f0dc',
 }))

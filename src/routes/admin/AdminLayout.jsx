@@ -1,15 +1,20 @@
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
-import AdminRoute from "./AdminRoute";
+import React from 'react'
+import { styled } from '@mui/material'
+import { Outlet } from 'react-router-dom'
+import Header from '../../components/header/Header'
 
 const AdminLayout = () => {
-  return (
-    <div>
-      <Link to="test">test</Link>
-      <Link to="submit">submit</Link>
-      <Outlet />
-    </div>
-  );
-};
+   return (
+      <Admin>
+         <Header title="submitted results" />
+         <Outlet />
+      </Admin>
+   )
+}
 
-export default AdminLayout;
+export default AdminLayout
+
+const Admin = styled('div')(() => ({
+   background: '#D7E1F8',
+   height: '100vh',
+}))
