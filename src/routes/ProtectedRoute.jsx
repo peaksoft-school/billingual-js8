@@ -1,20 +1,7 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
 
-const useAuth = () => {
-   const user = { loggedIn: true }
-   const roles = [
-      {
-         name: 'Admin',
-         role: 'Admin',
-      },
-      {
-         name: 'User',
-         role: 'User',
-      },
-   ]
-   return { user, roles }
-}
 const ProtectedRoute = ({ isAllowed }) => {
    const isAuth = useAuth()
 
