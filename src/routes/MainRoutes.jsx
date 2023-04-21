@@ -1,9 +1,9 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
-import AdminLayout from './admin/AdminLayout'
 import LandingPage from '../components/landing-page/LandingPage'
 import AdminTest from '../containers/admin/pages/AdminTest'
+import AdminRoute from './admin/AdminRoute'
 
 const MainRoutes = () => {
    const roles = {
@@ -24,7 +24,7 @@ const MainRoutes = () => {
 
             {/* Admin */}
             <Route element={<ProtectedRoute isAllowed={[roles.admin]} />}>
-               <Route path="/admin/" element={<AdminLayout />}>
+               <Route path="/admin/" element={<AdminRoute />}>
                   <Route path="test" element={<AdminTest />} />
                </Route>
             </Route>
