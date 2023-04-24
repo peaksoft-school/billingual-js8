@@ -5,10 +5,9 @@ import { ReactComponent as Check } from '../../../assets/icons/check (1).svg'
 
 const MultiplySelect = ({ id, onClick }) => {
    const [color, setColor] = useState(false)
-   const colorChangeHAndler = () => {
+   const colorChangeHandler = () => {
       setColor((prev) => !prev)
    }
-   console.log(color)
    return (
       <Main color={color} key={id}>
          <Content>
@@ -16,7 +15,7 @@ const MultiplySelect = ({ id, onClick }) => {
             <Word>WORD {id}</Word>
          </Content>
          <Actions>
-            <Check onClick={colorChangeHAndler} />
+            <Check onClick={colorChangeHandler} />
          </Actions>
       </Main>
    )

@@ -1,5 +1,5 @@
-function App() {
-   return <div> Bilingual</div>
+const App = () => {
+   return <div> </div>
 }
 
 export default App
