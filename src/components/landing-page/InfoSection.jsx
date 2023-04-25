@@ -322,7 +322,7 @@ const InfoSection = () => {
       <Card>
          <InfoCard>
             {infoCardArray.map((elem) => (
-               <Img1DivOne>
+               <Img1DivOne key={elem.id}>
                   <Img src={elem.img} />
                   <Over>{elem.text}</Over>
                </Img1DivOne>
@@ -370,7 +370,7 @@ const InfoSection = () => {
             <TextOurTeam>Our Team</TextOurTeam>
             <DivImage>
                {ourTeamArray.map((elem) => (
-                  <DivImageEmployeeName>
+                  <DivImageEmployeeName key={elem.id}>
                      <OurTeamImage src={elem.img} />
                      <DivEmployeeNamePerson>
                         <NamePersonEmployee>{elem.name}</NamePersonEmployee>

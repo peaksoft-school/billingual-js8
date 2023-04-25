@@ -7,11 +7,6 @@ import AdminRoute from './admin/AdminRoute'
 import UserRoute from './user/UserRoute'
 
 const MainRoutes = () => {
-   const roles = {
-      user: 'User',
-      admin: 'Admin',
-   }
-
    return (
       <div>
          <Routes>
@@ -19,12 +14,12 @@ const MainRoutes = () => {
             <Route path="/" element={<LandingPage />} />
 
             {/* User */}
-            <Route element={<ProtectedRoute isAllowed={[roles.user]} />}>
+            <Route element={<ProtectedRoute />}>
                <Route path="/user/" element={<UserRoute />} />
             </Route>
 
             {/* Admin */}
-            <Route element={<ProtectedRoute isAllowed={[roles.admin]} />}>
+            <Route element={<ProtectedRoute />}>
                <Route path="/admin/" element={<AdminRoute />}>
                   <Route path="test" element={<AdminTest />} />
                </Route>

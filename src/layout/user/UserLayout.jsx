@@ -6,7 +6,9 @@ const UserLayout = () => {
    return (
       <>
          <Header title="MY" />
-         <Outlet />
+         <main>
+            <Outlet />
+         </main>
       </>
    )
 }

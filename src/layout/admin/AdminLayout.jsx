@@ -5,7 +5,9 @@ const AdminLayout = () => {
    return (
       <>
          <Header title="SUBMITTED" />
-         <Outlet />
+         <main>
+            <Outlet />
+         </main>
       </>
    )
 }
