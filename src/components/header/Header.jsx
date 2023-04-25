@@ -1,13 +1,16 @@
 import React from 'react'
 import { Button, styled } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
 
 const Header = ({ title }) => {
+   const navigate = useNavigate()
+
    return (
       <StyledHeader>
          <Logo />
          <Container>
-            <TestBtn>TESTS</TestBtn>
+            <TestBtn onClick={() => navigate('/admin/test')}>TESTS</TestBtn>
             <SubmitBtn>{title} RESULTS</SubmitBtn>
             <LogOut>LOG OUT</LogOut>
          </Container>

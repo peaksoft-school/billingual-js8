@@ -27,10 +27,10 @@ const LearnMore = () => {
                   </Text1>
                </Grid>
 
-               <Icon1 />
+               <Icon1 style={{ position: 'relative', zIndex: 1 }} />
             </Container>
             <Container1>
-               <Icon2 />
+               <Icon2 style={{ position: 'relative', zIndex: 1 }} />
                <Grid>
                   <Title2>Built on the latest assessment sciencee</Title2>
                   <Text2>
@@ -57,10 +57,10 @@ const LearnMore = () => {
                      cheating and ensure results you can trust.
                   </Text1>
                </Grid>
-               <Icon3 />
+               <Icon3 style={{ position: 'relative', zIndex: 1 }} />
             </Container2>
             <Container3>
-               <Icon4 />
+               <Icon4 style={{ position: 'relative', zIndex: 1 }} />
                <Grid>
                   <Title2>Convenient results dashboard</Title2>
                   <Text2>
@@ -83,7 +83,7 @@ const LearnMore = () => {
                      <br /> to see a question repeated.
                   </Text1>
                </Grid>
-               <Icon5 />
+               <Icon5 style={{ position: 'relative', zIndex: 1 }} />
             </Container4>
             <StyledButton>
                <LandingButton />
@@ -95,8 +95,6 @@ const LearnMore = () => {
 export default LearnMore
 
 const Background = styled(Grid)(() => ({
-   background: '#F0F0DC',
-   position: 'absolute',
    width: '100%',
    zIndex: '-2',
 }))
@@ -122,7 +120,7 @@ const Title = styled(Typography)(() => ({
 
 const StyledIcon = styled(Roadmap)(() => ({
    position: 'absolute',
-   zIndex: '-1',
+   zIndex: '1',
    left: '0',
    right: '0',
    marginLeft: 'auto',
