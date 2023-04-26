@@ -43,7 +43,7 @@ const Footer = () => {
                <StyledTitle>FAQ:</StyledTitle>
             </div>
             {FAQ.map((item) => (
-               <MuiAccordion disableGutters>
+               <MuiAccordion disableGutters key={item.question}>
                   <MuiAccordionSummary
                      expandIcon={<PlusIcon sx={{ fontSize: '0.9rem' }} />}
                   >

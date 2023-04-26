@@ -124,6 +124,7 @@ const SecondSlider = () => {
 export default SecondSlider
 
 const TitleContainer = styled(Grid)(() => ({
+   marginTop: '7.5rem',
    display: 'flex',
    justifyContent: 'center',
 }))

@@ -1,5 +1,11 @@
+import MainRoutes from './routes/MainRoutes'
+
 const App = () => {
-   return <div>Bilingual</div>
+   return (
+      <div>
+         <MainRoutes />
+      </div>
+   )
 }
 
 export default App

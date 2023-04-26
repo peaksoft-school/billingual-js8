@@ -1,13 +1,16 @@
 import React from 'react'
 import { Button, styled } from '@mui/material'
-import { ReactComponent as Logo } from '../../assets/icons/Logo.svg'
+import { useNavigate } from 'react-router-dom'
+import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
 
 const Header = ({ title }) => {
+   const navigate = useNavigate()
+
    return (
       <StyledHeader>
          <Logo />
          <Container>
-            <TestBtn>TESTS</TestBtn>
+            <TestBtn onClick={() => navigate('/admin/test')}>TESTS</TestBtn>
             <SubmitBtn>{title} RESULTS</SubmitBtn>
             <LogOut>LOG OUT</LogOut>
          </Container>
@@ -40,7 +43,7 @@ const LogOut = styled(Button)(() => ({
    marginLeft: '60px',
    ':hover': {
       background: '#3A10E5',
-      color: '#fff',
+      color: '#2c2c2c',
       border: '2px solid #3A10E5',
    },
 }))
