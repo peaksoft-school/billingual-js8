@@ -8,3 +8,5 @@ export const authSlice = createSlice({
    reducers: {},
    extraReducers: {},
 })
+
+export const { actions, reducer } = authSlice

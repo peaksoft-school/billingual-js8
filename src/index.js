@@ -8,18 +8,18 @@ import { Provider } from 'react-redux'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { theme } from './utils/constants/theme'
-import { store } from './store'
+import { store } from './redux'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
    <React.StrictMode>
-      <ThemeProvider theme={theme}>
-         <BrowserRouter>
-            <Provider store={store}>
+      <Provider store={store}>
+         <ThemeProvider theme={theme}>
+            <BrowserRouter>
                <App />
-            </Provider>
-         </BrowserRouter>
-      </ThemeProvider>
+            </BrowserRouter>
+         </ThemeProvider>
+      </Provider>
    </React.StrictMode>
 )
 
