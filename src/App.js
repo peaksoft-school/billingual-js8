@@ -1,9 +1,9 @@
-import MainRoutes from './routes/MainRoutes'
+import SignupPage from './containers/public/SignupPage'
 
 const App = () => {
    return (
       <div>
-         <MainRoutes />
+         <SignupPage />
       </div>
    )
 }
