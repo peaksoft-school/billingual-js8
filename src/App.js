@@ -1,11 +1,5 @@
-import SignupPage from './containers/public/SignupPage'
-
 const App = () => {
-   return (
-      <div>
-         <SignupPage />
-      </div>
-   )
+   return <div />
 }
 
 export default App
