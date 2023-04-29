@@ -1,10 +1,10 @@
 import React from 'react'
 import { Grid, Typography, styled } from '@mui/material'
 import Marquee from 'react-fast-marquee'
-import Adama from '../../assets/icons/adama.svg'
-import Dekalb from '../../assets/icons/dekalb.svg'
-import Basf from '../../assets/icons/basf.svg'
-import Lidea from '../../assets/icons/lidea.svg'
+import Adama from '../../assets/icons/Adama.svg'
+import Dekalb from '../../assets/icons/Dekalb.svg'
+import Basf from '../../assets/icons/Basf.svg'
+import Lidea from '../../assets/icons/Lidea.svg'
 
 const partners = [
    { id: '1', icon: Lidea },
