@@ -59,6 +59,9 @@ const SignupPage = () => {
          label: 'Password',
       },
    ]
+   const CheckEmail = errors.email && touched.email ? 'Incorrect email !' : null
+   const CheckPassword =
+      errors.password && touched.password ? 'Incorrect  password!' : null
 
    return (
       <Background>
@@ -67,7 +70,6 @@ const SignupPage = () => {
             <Container>
                <Icon2 />
                <Title> Create an Account</Title>
-
                {inputArray.map((item) => {
                   return (
                      <StyledInput
@@ -80,12 +82,7 @@ const SignupPage = () => {
                      />
                   )
                })}
-               {
-                  (errors.email,
-                  errors.password && touched.email,
-                  touched.password ? 'Incorrect email and/or password' : null)
-               }
-
+               {CheckEmail} {CheckPassword}
                <StyledButton variant="contained" type="submit">
                   Sign up
                </StyledButton>
