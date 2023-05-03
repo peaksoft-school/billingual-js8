@@ -5,7 +5,7 @@ import useAuth from '../hooks/useAuth'
 const ProtectedRoute = () => {
    const { roles, user } = useAuth()
 
-   const isAllowed = ['awdwadwad']
+   const isAllowed = ['User']
 
    return user.loggedIn && roles?.find((r) => isAllowed?.includes(r.role)) ? (
       <Outlet />

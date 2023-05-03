@@ -5,6 +5,8 @@ import LandingPage from '../components/landing-page/LandingPage'
 import AdminTest from '../containers/admin/pages/AdminTest'
 import AdminRoute from './admin/AdminRoute'
 import UserRoute from './user/UserRoute'
+import GetAllTests from '../layout/user/GetAllTests'
+import CurrentTest from '../layout/user/CurrentTest'
 
 const MainRoutes = () => {
    return (
@@ -15,7 +17,13 @@ const MainRoutes = () => {
 
             {/* User */}
             <Route element={<ProtectedRoute />}>
-               <Route path="/user/" element={<UserRoute />} />
+               <Route path="/user/" element={<UserRoute />}>
+                  <Route path="all-tests" element={<GetAllTests />} />
+                  <Route
+                     path="all-tests/:current-tests"
+                     element={<CurrentTest />}
+                  />
+               </Route>
             </Route>
 
             {/* Admin */}
