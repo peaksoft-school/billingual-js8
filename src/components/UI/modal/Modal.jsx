@@ -1,13 +1,13 @@
 import React from 'react'
 import Box from '@mui/material/Box'
-import Modal from '@mui/material/Modal'
+import { Modal as MuiModal } from '@mui/material/Modal'
 import { styled } from '@mui/material'
 
 const Modal = ({ handleClose, isOpen, children }) => {
    return (
-      <Modal open={isOpen} onClose={handleClose}>
+      <MuiModal open={isOpen} onClose={handleClose}>
          <BoxStyle>{children}</BoxStyle>
-      </Modal>
+      </MuiModal>
    )
 }
 

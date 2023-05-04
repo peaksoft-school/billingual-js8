@@ -1,4 +1,5 @@
 import { styled } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import logo from '../../assets/logo/layer1.png'
 import imageBubble from '../../assets/images/bubble.png'
 import cap from '../../assets/images/cap.png'
@@ -152,15 +153,37 @@ const ButtonToBegin = styled('div')(() => ({
 }))
 
 const LandingPageSectionOne = () => {
+   const navigate = useNavigate()
+
+   const goToSignInPage = () => {
+      navigate('/sign-in')
+   }
+
+   const goToSignUpPage = () => {
+      navigate('/sign-up')
+   }
+
+   const goToTests = () => {
+      navigate('/user/')
+   }
+
    return (
       <LandingPage>
          <LogoAndButtonDiv>
             <Logo src={logo} />
             <ButtonDiv>
-               <Button sx={ButtonToComeIn} variant="contained">
+               <Button
+                  sx={ButtonToComeIn}
+                  variant="contained"
+                  onClick={goToSignInPage}
+               >
                   To come in
                </Button>
-               <Button sx={ButtonSx} variant="contained">
+               <Button
+                  sx={ButtonSx}
+                  variant="contained"
+                  onClick={goToSignUpPage}
+               >
                   Register
                </Button>
             </ButtonDiv>
@@ -179,7 +202,7 @@ const LandingPageSectionOne = () => {
                languages.
             </TextDivInfo>
             <ButtonToBegin>
-               <LandingButton textButton="toBeggin" />
+               <LandingButton textButton="toBeggin" onClick={goToTests} />
             </ButtonToBegin>
          </DivInfo>
          <AcademicCap src={cap} />

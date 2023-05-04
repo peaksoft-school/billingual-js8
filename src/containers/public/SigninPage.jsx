@@ -1,23 +1,34 @@
 import { Grid, Typography, styled } from '@mui/material'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { ReactComponent as System } from '../../assets/icons/system.svg'
 import { ReactComponent as Layer } from '../../assets/icons/layer 2.svg'
 import { ReactComponent as Defoult } from '../../assets/icons/defoult.svg'
 import Input from '../../components/UI/input/Input'
 import Checkboxes from '../../components/UI/checkbox/Checkbox'
 import Button from '../../components/UI/buttons/Buttons'
+import { signIn } from '../../redux/reducer/auth/auth.thunk'
 
 const SigninPage = () => {
-   // eslint-disable-next-line no-unused-vars
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+   const { role, error } = useSelector((state) => state.auth)
+
    const signInSchema = Yup.object().shape({
       email: Yup.string().email().required('Email is required'),
 
       password: Yup.string()
          .required('Password is required')
-         .min(6, 'Password is too short - should be 6 chars minimum'),
+         .min(8, 'Password is too short - should be 8 chars minimum'),
    })
+
+   const submitHandler = (values) => {
+      dispatch(signIn(values))
+         .unwrap()
+         .then(() => navigate(role === 'ADMIN' ? '/admin/test' : '/'))
+   }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
@@ -26,34 +37,44 @@ const SigninPage = () => {
       },
       validationSchema: signInSchema,
       onSubmit: (values) => {
-         console.log(values, 'VALUES')
+         submitHandler(values)
       },
    })
+
+   const gotToLandingPage = () => {
+      navigate('/')
+   }
+
    return (
       <Background>
          <Card onSubmit={handleSubmit}>
-            <Icon1 />
+            <Icon1 onClick={gotToLandingPage} />
             <Container>
                <Icon2 />
                <Title> Sign in</Title>
                <StyledInput
                   label="Email"
                   name="email"
-                  error={errors.email}
+                  error={!!errors.email}
                   value={values.email}
                   onChange={handleChange}
+                  type="email"
                />
                <StyledInput
                   label="Password"
                   name="password"
-                  error={errors.password}
+                  error={!!errors.password}
                   value={values.password}
                   onChange={handleChange}
+                  type="password"
                />
                <CheckboxContain>
                   <StyledCheckbox />
                   <Text>To remember me</Text>
                </CheckboxContain>
+               <Error>{errors.email}</Error>
+               <Error>{errors.password}</Error>
+               <Error>{error}</Error>
                <StyledButton variant="contained" type="submit">
                   Sign in
                </StyledButton>
@@ -68,6 +89,13 @@ const SigninPage = () => {
    )
 }
 export default SigninPage
+
+const Error = styled('p')(() => ({
+   margin: '0 0 10px 0',
+   color: '#f00',
+   textAlign: 'center',
+}))
+
 const Background = styled(Grid)(() => ({
    background: 'linear-gradient(90.76deg, #6B0FA9 0.74%, #520FB6 88.41%)',
    height: '100vh',
@@ -86,6 +114,7 @@ const Card = styled('form')(() => ({
 const Icon1 = styled(System)(() => ({
    marginLeft: '562px',
    marginTop: '20px',
+   cursor: 'pointer',
 }))
 const Container = styled(Grid)(() => ({
    display: 'flex',
