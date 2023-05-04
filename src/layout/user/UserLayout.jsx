@@ -6,7 +6,7 @@ import Header from '../../components/header/Header'
 const UserLayout = () => {
    return (
       <>
-         <Header title="MY" endpoint="/user/all-tests" />
+         <Header title="MY" endpoint="/user/tests" />
          <BackgroundContainer>
             <Outlet />
          </BackgroundContainer>
@@ -17,4 +17,5 @@ const UserLayout = () => {
 export default UserLayout
 const BackgroundContainer = styled('main')(() => ({
    backgroundColor: '#D7E1F8',
+   height: '100vh',
 }))

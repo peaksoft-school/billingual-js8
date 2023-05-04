@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react'
 import {
    styled,
    Grid,
@@ -7,18 +8,43 @@ import {
    Typography,
    CircularProgress,
 } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ReactComponent as CurrentImg } from '../../assets/icons/currentTest.svg'
 import { ReactComponent as Online } from '../../assets/icons/iconOnline.svg'
 import { ReactComponent as Photo } from '../../assets/icons/iconPhotoId.svg'
 import { ReactComponent as Time } from '../../assets/icons/iconTime.svg'
 import Button from '../../components/UI/buttons/Buttons'
 import FormContainer from '../../components/UI/form/FormContainer'
+import { getTestById } from '../../api/testService'
+import { useSnackbar } from '../../hooks/useSnackbar'
 
 const CurrentTest = () => {
    const navigate = useNavigate()
-   const { tests, isLoading } = useSelector((state) => state.tests)
+   const { notify } = useSnackbar()
+   const [test, setTest] = useState([])
+   const [isLoading, setIsLoading] = useState(true)
+
+   const { testId } = useParams()
+
+   const getOneTest = async () => {
+      try {
+         const { data } = await getTestById(testId)
+         notify(
+            'success',
+            'Current test',
+            'Сurrent test received successfully!'
+         )
+         setTest([data])
+         setIsLoading(false)
+      } catch (error) {
+         notify('error', 'Current test', `Failed to fetch test!`)
+         setIsLoading(true)
+      }
+   }
+
+   useEffect(() => {
+      getOneTest()
+   }, [])
 
    return (
       <FormContainer>
@@ -27,8 +53,8 @@ const CurrentTest = () => {
                <CircularProgress />
             </SpinnerContainer>
          )}
-         {tests ? (
-            tests.map((item) => {
+         {test && test.length > 0 ? (
+            test.map((item) => {
                return (
                   <StyledForm>
                      <TitleStyle>{item.title}</TitleStyle>
@@ -42,7 +68,7 @@ const CurrentTest = () => {
                            <ListItem>
                               <Time />
                               <span>
-                                 Practice takes just {item.duration / 60}{' '}
+                                 Practice takes just {item.duration / 60}
                                  minutes
                               </span>
                            </ListItem>
@@ -61,7 +87,7 @@ const CurrentTest = () => {
                      <ContainerBtn>
                         <CancelButton
                            variant="outlined"
-                           onClick={() => navigate('/user/all-tests')}
+                           onClick={() => navigate('/user/tests')}
                         >
                            Cancel
                         </CancelButton>
@@ -71,7 +97,9 @@ const CurrentTest = () => {
                )
             })
          ) : (
-            <Typography>no current test available</Typography>
+            <Typography>
+               Sorry, there are no tests available at the moment.
+            </Typography>
          )}
       </FormContainer>
    )

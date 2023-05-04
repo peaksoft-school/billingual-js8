@@ -22,11 +22,8 @@ const MainRoutes = () => {
             {/* User */}
             <Route element={<ProtectedRoute />}>
                <Route path="/user/" element={<UserRoute />}>
-                  <Route path="all-tests" element={<GetAllTests />} />
-                  <Route
-                     path="all-tests/:current-tests"
-                     element={<CurrentTest />}
-                  />
+                  <Route path="tests" element={<GetAllTests />} />
+                  <Route path="tests/:testId" element={<CurrentTest />} />
                </Route>
             </Route>
 

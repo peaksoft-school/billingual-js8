@@ -6,7 +6,7 @@ import { CircularProgress, Grid, styled, Typography } from '@mui/material'
 import FormContainer from '../../components/UI/form/FormContainer'
 import { ReactComponent as TestList } from '../../assets/icons/allTestList.svg'
 import Button from '../../components/UI/buttons/Buttons'
-import { getTests, getCurrentTest } from '../../redux/tests/test.thunk'
+import { getTests } from '../../redux/tests/test.thunk'
 import { useSnackbar } from '../../hooks/useSnackbar'
 
 const GetAllTests = () => {
@@ -24,22 +24,6 @@ const GetAllTests = () => {
 
    const navigate = useNavigate()
 
-   const toCurrentTest = (id, title) => {
-      dispatch(getCurrentTest(id))
-         .unwrap()
-         .then(() => navigate(`${id}current-tests`))
-         .then(() =>
-            notify(
-               'success',
-               'Current test',
-               'Сurrent test received successfully!'
-            )
-         )
-         .catch(() =>
-            notify('error', 'Current test', `Failed to fetch "${title}"!`)
-         )
-   }
-
    return (
       <StyledForm>
          {isLoading && (
@@ -47,7 +31,7 @@ const GetAllTests = () => {
                <CircularProgress />
             </SpinnerContainer>
          )}
-         {tests ? (
+         {tests && tests.length > 0 ? (
             tests.map((el) => {
                return (
                   <TestsContainer key={el.id}>
@@ -63,7 +47,7 @@ const GetAllTests = () => {
                      </InfoContainer>
 
                      <StyledButton
-                        onClick={() => toCurrentTest(el.id, el.title)}
+                        onClick={() => navigate(`${el.id}`)}
                         variant="outlined"
                      >
                         try test
@@ -72,7 +56,9 @@ const GetAllTests = () => {
                )
             })
          ) : (
-            <Typography>no tests available</Typography>
+            <Typography>
+               Sorry, there are no tests available at the moment.
+            </Typography>
          )}
       </StyledForm>
    )
