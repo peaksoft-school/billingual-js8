@@ -4,7 +4,7 @@ import Header from '../../components/header/Header'
 const AdminLayout = () => {
    return (
       <>
-         <Header title="SUBMITTED" />
+         <Header title="SUBMITTED" endpoint="/admin/test" />
          <main>
             <Outlet />
          </main>
