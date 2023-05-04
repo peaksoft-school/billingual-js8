@@ -21,7 +21,7 @@ export const testSlice = createSlice({
             state.isLoading = false
          })
          .addCase(getTests.rejected, (state, action) => {
-            state.error = action.payload.response?.data.message
+            state.error = action.payload
             state.isLoading = false
          })
    },

@@ -20,7 +20,9 @@ export const getCurrentTest = createAsyncThunk(
          const { data } = await getTestById(id)
          return data
       } catch (error) {
-         return rejectedWithValue(error)
+         const message =
+            error.response?.data?.message || 'Failed to fetch test.'
+         return rejectedWithValue(message)
       }
    }
 )

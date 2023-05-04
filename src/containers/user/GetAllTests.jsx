@@ -2,57 +2,90 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Grid, styled, Typography } from '@mui/material'
+import { CircularProgress, Grid, styled, Typography } from '@mui/material'
 import FormContainer from '../../components/UI/form/FormContainer'
 import { ReactComponent as TestList } from '../../assets/icons/allTestList.svg'
 import Button from '../../components/UI/buttons/Buttons'
 import { getTests, getCurrentTest } from '../../redux/tests/test.thunk'
+import { useSnackbar } from '../../hooks/useSnackbar'
 
 const GetAllTests = () => {
-   const allTest = useSelector((state) => state.tests.tests)
    const dispatch = useDispatch()
+   const { tests, isLoading } = useSelector((state) => state.tests)
+   const { notify } = useSnackbar()
    useEffect(() => {
       dispatch(getTests())
+         .unwrap()
+         .then(() =>
+            notify('success', 'All tests', 'Tests received successfully!')
+         )
+         .catch(() => notify('error', 'All tests', 'Failed to fetch test!'))
    }, [])
 
    const navigate = useNavigate()
 
-   const toCurrentTest = (id) => {
+   const toCurrentTest = (id, title) => {
       dispatch(getCurrentTest(id))
          .unwrap()
          .then(() => navigate(`${id}current-tests`))
+         .then(() =>
+            notify(
+               'success',
+               'Current test',
+               'Сurrent test received successfully!'
+            )
+         )
+         .catch(() =>
+            notify('error', 'Current test', `Failed to fetch "${title}"!`)
+         )
    }
 
    return (
       <StyledForm>
-         {allTest.map((el) => {
-            return (
-               <TestsContainer key={el.id}>
-                  <InfoContainer>
-                     <TestIconWrapper>
-                        <TestList />
-                     </TestIconWrapper>
-                     <span>{el.duration / 60} minutes</span>
-                     <StyledTitle>{el.title}</StyledTitle>
-                     <StyledDescription>
-                        {el.shortDescription}
-                     </StyledDescription>
-                  </InfoContainer>
+         {isLoading && (
+            <SpinnerContainer>
+               <CircularProgress />
+            </SpinnerContainer>
+         )}
+         {tests ? (
+            tests.map((el) => {
+               return (
+                  <TestsContainer key={el.id}>
+                     <InfoContainer>
+                        <TestIconWrapper>
+                           <TestList />
+                        </TestIconWrapper>
+                        <span>{el.duration / 60} minutes</span>
+                        <StyledTitle>{el.title}</StyledTitle>
+                        <StyledDescription>
+                           {el.shortDescription}
+                        </StyledDescription>
+                     </InfoContainer>
 
-                  <StyledButton
-                     onClick={() => toCurrentTest(el.id)}
-                     variant="outlined"
-                  >
-                     try test
-                  </StyledButton>
-               </TestsContainer>
-            )
-         })}
+                     <StyledButton
+                        onClick={() => toCurrentTest(el.id, el.title)}
+                        variant="outlined"
+                     >
+                        try test
+                     </StyledButton>
+                  </TestsContainer>
+               )
+            })
+         ) : (
+            <Typography>no tests available</Typography>
+         )}
       </StyledForm>
    )
 }
 
 export default GetAllTests
+
+const SpinnerContainer = styled('div')(() => ({
+   display: 'flex',
+   justifyContent: 'center',
+   alignItems: 'center',
+   height: '100%',
+}))
 
 const TestIconWrapper = styled('div')(() => ({
    position: 'absolute',
