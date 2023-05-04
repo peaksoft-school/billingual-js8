@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { store } from '../../redux'
 
-const BASE_URL = 'http://ec2-3-120-192-66.eu-central-1.compute.amazonaws.com'
+const BASE_URL = 'http://ec2-3-121-202-47.eu-central-1.compute.amazonaws.com'
 
 export const instanse = axios.create({
    baseURL: BASE_URL,
@@ -9,7 +10,7 @@ export const instanse = axios.create({
 instanse.interceptors.request.use(
    (config) => {
       const configUpdate = { ...config }
-      const token = store.getState().auth.token
+      const { token } = store.getState().auth
       if (token) {
          configUpdate.headers.Authorization = `Bearer ${token}`
       }

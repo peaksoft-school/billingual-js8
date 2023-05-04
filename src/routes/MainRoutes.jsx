@@ -5,8 +5,10 @@ import LandingPage from '../components/landing-page/LandingPage'
 import AdminTest from '../containers/admin/pages/AdminTest'
 import AdminRoute from './admin/AdminRoute'
 import UserRoute from './user/UserRoute'
-import GetAllTests from '../layout/user/GetAllTests'
-import CurrentTest from '../layout/user/CurrentTest'
+import GetAllTests from '../containers/user/GetAllTests'
+import CurrentTest from '../containers/user/CurrentTest'
+import SigninPage from '../containers/public/SigninPage'
+import SignupPage from '../containers/public/SignupPage'
 
 const MainRoutes = () => {
    return (
@@ -14,6 +16,8 @@ const MainRoutes = () => {
          <Routes>
             {/* Guest */}
             <Route path="/" element={<LandingPage />} />
+            <Route path="/sign-in" element={<SigninPage />} />
+            <Route path="/sign-up" element={<SignupPage />} />
 
             {/* User */}
             <Route element={<ProtectedRoute />}>

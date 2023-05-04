@@ -1,6 +1,7 @@
 import React from 'react'
 import { styled, Grid, List, ListItem, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { ReactComponent as CurrentImg } from '../../assets/icons/currentTest.svg'
 import { ReactComponent as Online } from '../../assets/icons/iconOnline.svg'
 import { ReactComponent as Photo } from '../../assets/icons/iconPhotoId.svg'
@@ -10,45 +11,51 @@ import FormContainer from '../../components/UI/form/FormContainer'
 
 const CurrentTest = () => {
    const navigate = useNavigate()
+   const { tests } = useSelector((state) => state.tests)
+
    return (
       <FormContainer>
-         <StyledForm>
-            <TitleStyle>
-               Take a free practice test and estimate your score
-            </TitleStyle>
-            <ContentContainer>
-               <CurrentImg />
-               <ListStyle>
-                  <ListItem>
-                     <Online />
-                     <span>See what the test is like *</span>
-                  </ListItem>
-                  <ListItem>
-                     <Time />
-                     <span>Practice takes just 15 minutes</span>
-                  </ListItem>
-                  <ListItem>
-                     <Photo />
-                     <span>Get an unofficial score estimate</span>
-                  </ListItem>
-               </ListStyle>
-            </ContentContainer>
+         {tests.map((item) => {
+            return (
+               <StyledForm>
+                  <TitleStyle>{item.title}</TitleStyle>
+                  <ContentContainer>
+                     <CurrentImg />
+                     <ListStyle>
+                        <ListItem>
+                           <Online />
+                           <span>See what the test is like *</span>
+                        </ListItem>
+                        <ListItem>
+                           <Time />
+                           <span>
+                              Practice takes just {item.duration / 60} minutes
+                           </span>
+                        </ListItem>
+                        <ListItem>
+                           <Photo />
+                           <span>Get an unofficial score estimate</span>
+                        </ListItem>
+                     </ListStyle>
+                  </ContentContainer>
 
-            <InfoStyle>
-               * The practice test may include question types that may not
-               appear on the certified test.
-            </InfoStyle>
+                  <InfoStyle>
+                     * The practice test may include question types that may not
+                     appear on the certified test.
+                  </InfoStyle>
 
-            <ContainerBtn>
-               <CancelButton
-                  variant="outlined"
-                  onClick={() => navigate('/user/all-tests')}
-               >
-                  Cancel
-               </CancelButton>
-               <Button variant="contained">Practice Test</Button>
-            </ContainerBtn>
-         </StyledForm>
+                  <ContainerBtn>
+                     <CancelButton
+                        variant="outlined"
+                        onClick={() => navigate('/user/all-tests')}
+                     >
+                        Cancel
+                     </CancelButton>
+                     <Button variant="contained">Practice Test</Button>
+                  </ContainerBtn>
+               </StyledForm>
+            )
+         })}
       </FormContainer>
    )
 }

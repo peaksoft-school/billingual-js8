@@ -1,27 +1,28 @@
-import React from 'react'
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { Grid, styled, Typography } from '@mui/material'
 import FormContainer from '../../components/UI/form/FormContainer'
 import { ReactComponent as TestList } from '../../assets/icons/allTestList.svg'
 import Button from '../../components/UI/buttons/Buttons'
-
-const allTest = [
-   {
-      title: 'English advanced test',
-      time: 15,
-      desciption: 'Train as much as you like.',
-      id: new Date().toISOString(),
-   },
-   {
-      title: 'something test',
-      time: 60,
-      desciption: 'Train as much as you like.',
-      id: new Date().toISOString(),
-   },
-]
+import { getTests, getCurrentTest } from '../../redux/tests/test.thunk'
 
 const GetAllTests = () => {
+   const allTest = useSelector((state) => state.tests.tests)
+   const dispatch = useDispatch()
+   useEffect(() => {
+      dispatch(getTests())
+   }, [])
+
    const navigate = useNavigate()
+
+   const toCurrentTest = (id) => {
+      dispatch(getCurrentTest(id))
+         .unwrap()
+         .then(() => navigate(`${id}current-tests`))
+   }
+
    return (
       <StyledForm>
          {allTest.map((el) => {
@@ -31,13 +32,15 @@ const GetAllTests = () => {
                      <TestIconWrapper>
                         <TestList />
                      </TestIconWrapper>
-                     <span>{el.time} minutes</span>
+                     <span>{el.duration / 60} minutes</span>
                      <StyledTitle>{el.title}</StyledTitle>
-                     <StyledDescription>{el.desciption}</StyledDescription>
+                     <StyledDescription>
+                        {el.shortDescription}
+                     </StyledDescription>
                   </InfoContainer>
 
                   <StyledButton
-                     onClick={() => navigate(`${el.title}current-tests`)}
+                     onClick={() => toCurrentTest(el.id)}
                      variant="outlined"
                   >
                      try test
