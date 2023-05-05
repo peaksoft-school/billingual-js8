@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { STORAGE_KEYS } from '../../../utils/constants/common'
-import authService from '../../../api/authService'
+import { STORAGE_KEYS } from '../../utils/constants/common'
+import authService from '../../api/authService'
 
 export const signUp = createAsyncThunk(
    'auth/signUp',

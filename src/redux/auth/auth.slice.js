@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { STORAGE_KEYS } from '../../../utils/constants/common'
 import { signIn, signUp } from './auth.thunk'
+import { STORAGE_KEYS } from '../../utils/constants/common'
 
 const getInitialState = () => {
    const json = localStorage.getItem(STORAGE_KEYS.AUTH)

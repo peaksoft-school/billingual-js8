@@ -8,7 +8,7 @@ import { ReactComponent as Layer } from '../../assets/icons/layer 2.svg'
 import { ReactComponent as Defoult } from '../../assets/icons/defoult.svg'
 import Input from '../../components/UI/input/Input'
 import Button from '../../components/UI/buttons/Buttons'
-import { signUp } from '../../redux/reducer/auth/auth.thunk'
+import { signUp } from '../../redux/auth/auth.thunk'
 
 const inputArray = [
    {

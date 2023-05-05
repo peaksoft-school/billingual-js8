@@ -9,7 +9,7 @@ import { ReactComponent as Defoult } from '../../assets/icons/defoult.svg'
 import Input from '../../components/UI/input/Input'
 import Checkboxes from '../../components/UI/checkbox/Checkbox'
 import Button from '../../components/UI/buttons/Buttons'
-import { signIn } from '../../redux/reducer/auth/auth.thunk'
+import { signIn } from '../../redux/auth/auth.thunk'
 
 const SigninPage = () => {
    const dispatch = useDispatch()
