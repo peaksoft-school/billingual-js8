@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, styled } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
+import { ReactComponent as Logo } from '../../assets/icons/Logo.svg'
 
 const Header = ({ title }) => {
    const navigate = useNavigate()

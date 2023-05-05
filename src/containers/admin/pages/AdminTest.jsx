@@ -4,8 +4,8 @@ import FormContainer from '../../../components/UI/form/FormContainer'
 import Button from '../../../components/UI/buttons/Buttons'
 import Switcher from '../../../components/UI/checkbox/Switcher'
 
-import { ReactComponent as EditIcon } from '../../../assets/icons/editicon.svg'
-import { ReactComponent as DeleteIcon } from '../../../assets/icons/deletedIcon.svg'
+import { ReactComponent as EditIcon } from '../../../assets/icons/Editicon.svg'
+import { ReactComponent as DeleteIcon } from '../../../assets/icons/DeletedIcon.svg'
 import MyIconButton from '../../../components/UI/Icon-button/IconButton'
 
 const data = [
