@@ -1,5 +1,4 @@
-import { Grid, Typography, styled } from '@mui/material'
-import * as Yup from 'yup'
+import { CircularProgress, Grid, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,56 +8,25 @@ import { ReactComponent as Defoult } from '../../assets/icons/defoult.svg'
 import Input from '../../components/UI/input/Input'
 import Button from '../../components/UI/buttons/Buttons'
 import { signUp } from '../../redux/auth/auth.thunk'
-
-const inputArray = [
-   {
-      name: 'firstName',
-      label: 'Frist name',
-      type: 'text',
-   },
-   {
-      name: 'lastName',
-      label: 'Last name',
-      type: 'text',
-   },
-   {
-      name: 'email',
-      label: 'email',
-      type: 'email',
-   },
-   {
-      name: 'password',
-      label: 'Password',
-      type: 'password',
-   },
-]
+import {
+   signUpInputArray,
+   signUpValidation,
+} from '../../utils/constants/general'
+import { useSnackbar } from '../../hooks/useSnackbar'
 
 const SignupPage = () => {
    const dispatch = useDispatch()
-   const { error } = useSelector((state) => state.auth)
+   const { error, isLoading } = useSelector((state) => state.auth)
 
    const navigate = useNavigate()
-
-   const signUpSchema = Yup.object().shape({
-      firstName: Yup.string()
-         .min(2, 'Too Short!')
-         .max(50, 'Too Long!')
-         .required('Firstname is required'),
-
-      lastName: Yup.string()
-         .min(2, 'Too Short!')
-         .max(50, 'Too Long!')
-         .required('Lastname is required'),
-
-      email: Yup.string().email().required('Email is required'),
-
-      password: Yup.string()
-         .required('Password is required')
-         .min(8, 'Password is too short - should be 8 chars minimum'),
-   })
+   const { notify } = useSnackbar()
 
    const submitHandler = (values) => {
       dispatch(signUp(values))
+         .unwrap()
+         .then(() => navigate('/'))
+         .then(() => notify('success', 'Authorization', 'Successfully sign up'))
+         .catch(() => notify('error', 'Authorization', 'Failed to sign up'))
    }
 
    const { values, handleChange, handleSubmit, errors, touched } = useFormik({
@@ -68,7 +36,7 @@ const SignupPage = () => {
          email: '',
          password: '',
       },
-      validationSchema: signUpSchema,
+      validationSchema: signUpValidation,
       onSubmit: (values) => {
          submitHandler(values)
       },
@@ -85,35 +53,45 @@ const SignupPage = () => {
    return (
       <Background>
          <Card onSubmit={handleSubmit}>
-            <Icon1 onClick={gotToLandingPage} />
+            <IconContainer>
+               <CloseModalIcon onClick={gotToLandingPage} />
+            </IconContainer>
             <Container>
-               <Icon2 />
-               <Title> Create an Account</Title>
-               {inputArray.map((item) => {
-                  return (
-                     <StyledInput
-                        error={!!errors[item.name]}
-                        key={item.name}
-                        label={item.label}
-                        name={item.name}
-                        value={values[item.name]}
-                        onChange={handleChange}
-                        type={item.type}
-                     />
-                  )
-               })}
+               {isLoading ? (
+                  <SpinnerContainer>
+                     <CircularProgress />
+                  </SpinnerContainer>
+               ) : (
+                  <>
+                     <Icon2 />
+                     <Title> Create an Account</Title>
+                     {signUpInputArray.map((item) => {
+                        return (
+                           <StyledInput
+                              error={!!errors[item.name]}
+                              key={item.name}
+                              label={item.label}
+                              name={item.name}
+                              value={values[item.name]}
+                              onChange={handleChange}
+                              type={item.type}
+                           />
+                        )
+                     })}
 
-               <Error>
-                  {CheckEmail} {CheckPassword} {error}
-               </Error>
-               <StyledButton variant="contained" type="submit">
-                  Sign up
-               </StyledButton>
-               <DefoultIcon />
-               <StyledText>
-                  ALREADY HAVE AN ACCOUNT?
-                  <NavLink to="/sign-in">LOG IN</NavLink>
-               </StyledText>
+                     <Error>{CheckEmail}</Error>
+                     <Error> {CheckPassword}</Error>
+                     <Error>{error}</Error>
+                     <StyledButton variant="contained" type="submit">
+                        Sign up
+                     </StyledButton>
+                     <DefoultIcon />
+                     <StyledText>
+                        ALREADY HAVE AN ACCOUNT?
+                        <NavLink to="/sign-in">LOG IN</NavLink>
+                     </StyledText>
+                  </>
+               )}
             </Container>
          </Card>
       </Background>
@@ -122,26 +100,37 @@ const SignupPage = () => {
 
 export default SignupPage
 
+const SpinnerContainer = styled('div')(() => ({
+   display: 'flex',
+   justifyContent: 'center',
+   alignItems: 'center',
+   height: '100%',
+}))
+
 const Error = styled('p')(() => ({
+   margin: '0 0 10px 0',
    color: '#f00',
+   textAlign: 'center',
 }))
 
 const Background = styled(Grid)(() => ({
    background: 'linear-gradient(90.76deg, #6B0FA9 0.74%, #520FB6 88.41%)',
-   width: '100%',
-   padding: '74px 0',
+   padding: '40px',
 }))
 
 const Card = styled('form')(() => ({
-   width: '616px',
-   height: '726px',
+   width: '38.5rem',
+   height: 'auto',
    background: '#FFFFFF',
    borderRadius: '10px',
    margin: '0 auto',
+   padding: '30px',
 }))
-const Icon1 = styled(System)(() => ({
-   marginLeft: '562px',
-   marginTop: '20px',
+const IconContainer = styled('div')(() => ({
+   textAlign: 'end',
+}))
+
+const CloseModalIcon = styled(System)(() => ({
    cursor: 'pointer',
 }))
 const Container = styled(Grid)(() => ({

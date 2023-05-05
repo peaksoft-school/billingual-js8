@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { store } from '../../redux'
-import { STORAGE_KEYS } from '../../utils/constants/common'
+import { signOut } from '../../redux/auth/auth.thunk'
 
-const BASE_URL = 'http://ec2-3-121-202-47.eu-central-1.compute.amazonaws.com'
+const BASE_URL = 'http://ec2-3-121-202-47.eu-central-1.compute.amazonaws.com/'
 
 export const instanse = axios.create({
    baseURL: BASE_URL,
@@ -29,7 +29,7 @@ instanse.interceptors.response.use(
    },
    (error) => {
       if (error.response?.status === 401) {
-         localStorage.removeItem(STORAGE_KEYS.AUTH)
+         store.dispatch(signOut())
          throw new Error('401 unauthotized')
       }
       return Promise.reject(error)

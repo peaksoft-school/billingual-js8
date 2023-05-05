@@ -1,3 +1,3 @@
 export const STORAGE_KEYS = {
-   AUTH: 'AUTH',
+   BILINGUAL_USER_KEY: 'BILINGUAL_USER_KEY',
 }

@@ -3,7 +3,7 @@ import { Button, styled } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
-import { signOut } from '../../redux/reducer/auth/auth.thunk'
+import { signOut } from '../../redux/auth/auth.thunk'
 
 const Header = ({ title, endpoint }) => {
    const navigate = useNavigate()

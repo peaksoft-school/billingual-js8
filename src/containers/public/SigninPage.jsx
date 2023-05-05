@@ -1,5 +1,4 @@
-import { Grid, Typography, styled } from '@mui/material'
-import * as Yup from 'yup'
+import { CircularProgress, Grid, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,24 +9,24 @@ import Input from '../../components/UI/input/Input'
 import Checkboxes from '../../components/UI/checkbox/Checkbox'
 import Button from '../../components/UI/buttons/Buttons'
 import { signIn } from '../../redux/auth/auth.thunk'
+import { useSnackbar } from '../../hooks/useSnackbar'
+import { signInValidation } from '../../utils/constants/general'
 
 const SigninPage = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { role, error } = useSelector((state) => state.auth)
+   const { error, isLoading } = useSelector((state) => state.auth)
 
-   const signInSchema = Yup.object().shape({
-      email: Yup.string().email().required('Email is required'),
-
-      password: Yup.string()
-         .required('Password is required')
-         .min(8, 'Password is too short - should be 8 chars minimum'),
-   })
+   const { notify } = useSnackbar()
 
    const submitHandler = (values) => {
       dispatch(signIn(values))
          .unwrap()
-         .then(() => navigate(role === 'ADMIN' ? '/admin/test' : '/'))
+         .then(() =>
+            notify('success', 'Authentication', 'Successfully sign in')
+         )
+         .then(() => navigate('/admin/test'))
+         .catch(() => notify('error', 'Authentication', 'Failed to sign in'))
    }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
@@ -35,7 +34,7 @@ const SigninPage = () => {
          email: '',
          password: '',
       },
-      validationSchema: signInSchema,
+      validationSchema: signInValidation,
       onSubmit: (values) => {
          submitHandler(values)
       },
@@ -48,47 +47,64 @@ const SigninPage = () => {
    return (
       <Background>
          <Card onSubmit={handleSubmit}>
-            <Icon1 onClick={gotToLandingPage} />
+            <IconContainer>
+               <CloseModalIcon onClick={gotToLandingPage} />
+            </IconContainer>
             <Container>
-               <Icon2 />
-               <Title> Sign in</Title>
-               <StyledInput
-                  label="Email"
-                  name="email"
-                  error={!!errors.email}
-                  value={values.email}
-                  onChange={handleChange}
-                  type="email"
-               />
-               <StyledInput
-                  label="Password"
-                  name="password"
-                  error={!!errors.password}
-                  value={values.password}
-                  onChange={handleChange}
-                  type="password"
-               />
-               <CheckboxContain>
-                  <StyledCheckbox />
-                  <Text>To remember me</Text>
-               </CheckboxContain>
-               <Error>{errors.email}</Error>
-               <Error>{errors.password}</Error>
-               <Error>{error}</Error>
-               <StyledButton variant="contained" type="submit">
-                  Sign in
-               </StyledButton>
-               <DefoultIcon />
-               <StyledText>
-                  DON`T HAVE AN ACCOUNT?
-                  <NavLink to="/sign-up">REGISTER</NavLink>
-               </StyledText>
+               {isLoading ? (
+                  <SpinnerContainer>
+                     <CircularProgress />
+                  </SpinnerContainer>
+               ) : (
+                  <>
+                     <Icon2 />
+                     <Title> Sign in</Title>
+                     <StyledInput
+                        label="Email"
+                        name="email"
+                        error={!!errors.email}
+                        value={values.email}
+                        onChange={handleChange}
+                        type="email"
+                     />
+                     <StyledInput
+                        label="Password"
+                        name="password"
+                        error={!!errors.password}
+                        value={values.password}
+                        onChange={handleChange}
+                        type="password"
+                     />
+                     <CheckboxContain>
+                        <StyledCheckbox />
+                        <Text>To remember me</Text>
+                     </CheckboxContain>
+                     <Error>{errors.email}</Error>
+                     <Error>{errors.password}</Error>
+                     <Error>{error}</Error>
+                     <StyledButton variant="contained" type="submit">
+                        Sign in
+                     </StyledButton>
+                     <DefoultIcon />
+                     <StyledText>
+                        DON`T HAVE AN ACCOUNT?
+                        <NavLink to="/sign-up">REGISTER</NavLink>
+                     </StyledText>
+                  </>
+               )}
             </Container>
          </Card>
       </Background>
    )
 }
 export default SigninPage
+
+const SpinnerContainer = styled('div')(() => ({
+   display: 'flex',
+   justifyContent: 'center',
+   alignItems: 'center',
+   height: '100%',
+}))
 
 const Error = styled('p')(() => ({
    margin: '0 0 10px 0',
@@ -98,22 +114,24 @@ const Error = styled('p')(() => ({
 
 const Background = styled(Grid)(() => ({
    background: 'linear-gradient(90.76deg, #6B0FA9 0.74%, #520FB6 88.41%)',
+   padding: '40px',
    height: '100vh',
-   position: 'absolute',
-   width: '100vw',
 }))
 
 const Card = styled('form')(() => ({
-   width: '616px',
-   height: '620px',
+   width: '38.5rem',
+   height: 'auto',
    background: '#FFFFFF',
    borderRadius: '10px',
    margin: '0 auto',
-   marginTop: '74px',
+   padding: '30px',
 }))
-const Icon1 = styled(System)(() => ({
-   marginLeft: '562px',
-   marginTop: '20px',
+
+const IconContainer = styled('div')(() => ({
+   textAlign: 'end',
+}))
+
+const CloseModalIcon = styled(System)(() => ({
    cursor: 'pointer',
 }))
 const Container = styled(Grid)(() => ({

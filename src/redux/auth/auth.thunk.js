@@ -7,7 +7,10 @@ export const signUp = createAsyncThunk(
    async (userData, { rejectWithValue }) => {
       try {
          const { data } = await authService.signUp(userData)
-         localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(data))
+         localStorage.setItem(
+            STORAGE_KEYS.BILINGUAL_USER_KEY,
+            JSON.stringify(data)
+         )
          return data
       } catch (error) {
          return rejectWithValue(error.response?.data.message)
@@ -20,7 +23,10 @@ export const signIn = createAsyncThunk(
    async (userData, { rejectWithValue }) => {
       try {
          const { data } = await authService.signIn(userData)
-         localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(data))
+         localStorage.setItem(
+            STORAGE_KEYS.BILINGUAL_USER_KEY,
+            JSON.stringify(data)
+         )
          return data
       } catch (error) {
          return rejectWithValue(error.response?.data.message)
@@ -29,5 +35,5 @@ export const signIn = createAsyncThunk(
 )
 
 export const signOut = createAsyncThunk('auth/signout', async () => {
-   return localStorage.removeItem(STORAGE_KEYS.AUTH)
+   return localStorage.removeItem(STORAGE_KEYS.BILINGUAL_USER_KEY)
 })

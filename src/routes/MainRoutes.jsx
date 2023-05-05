@@ -20,7 +20,11 @@ const MainRoutes = () => {
             <Route path="/sign-up" element={<SignupPage />} />
 
             {/* User */}
-            <Route element={<ProtectedRoute roles="USER" />}>
+            <Route
+               element={
+                  <ProtectedRoute roles="USER" fallbackPath="/admin/test" />
+               }
+            >
                <Route path="/user/" element={<UserRoute />}>
                   <Route path="tests" element={<GetAllTests />} />
                   <Route path="tests/:testId" element={<CurrentTest />} />
@@ -28,7 +32,7 @@ const MainRoutes = () => {
             </Route>
 
             {/* Admin */}
-            <Route element={<ProtectedRoute roles="ADMIN" />}>
+            <Route element={<ProtectedRoute roles="ADMIN" fallbackPath="/" />}>
                <Route path="/admin/" element={<AdminRoute />}>
                   <Route path="test" element={<AdminTest />} />
                </Route>

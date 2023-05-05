@@ -3,7 +3,7 @@ import { signIn, signUp } from './auth.thunk'
 import { STORAGE_KEYS } from '../../utils/constants/common'
 
 const getInitialState = () => {
-   const json = localStorage.getItem(STORAGE_KEYS.AUTH)
+   const json = localStorage.getItem(STORAGE_KEYS.BILINGUAL_USER_KEY)
    if (json) {
       const userData = JSON.parse(json)
       return {
@@ -20,6 +20,7 @@ const getInitialState = () => {
       email: '',
       role: 'GUEST',
       error: '',
+      isLoading: false,
    }
 }
 
@@ -33,18 +34,32 @@ export const authSlice = createSlice({
          state.token = payload.token
          state.email = payload.email
          state.role = payload.role
+         state.isLoading = false
+         state.error = ''
       })
       builder.addCase(signUp.fulfilled, (state, { payload }) => {
          state.isAuthorized = true
          state.token = payload.token
          state.email = payload.email
          state.role = payload.role
+         state.isLoading = false
+         state.error = ''
+      })
+      builder.addCase(signIn.pending, (state) => {
+         state.isLoading = true
+         state.error = ''
+      })
+      builder.addCase(signUp.pending, (state) => {
+         state.isLoading = true
+         state.error = ''
       })
       builder.addCase(signIn.rejected, (state, { payload }) => {
          state.error = payload
+         state.isLoading = false
       })
       builder.addCase(signUp.rejected, (state, { payload }) => {
          state.error = payload
+         state.isLoading = false
       })
    },
 })
