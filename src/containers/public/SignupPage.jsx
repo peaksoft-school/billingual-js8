@@ -52,7 +52,7 @@ const SignupPage = () => {
 
    return (
       <Background>
-         <Card onSubmit={handleSubmit}>
+         <SignUpForm onSubmit={handleSubmit}>
             <IconContainer>
                <CloseModalIcon onClick={gotToLandingPage} />
             </IconContainer>
@@ -93,7 +93,7 @@ const SignupPage = () => {
                   </>
                )}
             </Container>
-         </Card>
+         </SignUpForm>
       </Background>
    )
 }
@@ -118,7 +118,7 @@ const Background = styled(Grid)(() => ({
    padding: '40px',
 }))
 
-const Card = styled('form')(() => ({
+const SignUpForm = styled('form')(() => ({
    width: '38.5rem',
    height: 'auto',
    background: '#FFFFFF',
