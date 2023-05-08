@@ -2,13 +2,15 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 import LandingPage from '../components/landing-page/LandingPage'
-import AdminTest from '../containers/admin/pages/AdminTest'
+import AdminTest from '../containers/admin/pages/test/AdminTest'
 import AdminRoute from './admin/AdminRoute'
 import UserRoute from './user/UserRoute'
 import GetAllTests from '../containers/user/GetAllTests'
 import CurrentTest from '../containers/user/CurrentTest'
 import SigninPage from '../containers/public/SigninPage'
 import SignupPage from '../containers/public/SignupPage'
+import CreateTest from '../containers/admin/pages/test/CreateTest'
+import AddQuestions from '../containers/admin/pages/test/AddQuestions'
 
 const MainRoutes = () => {
    return (
@@ -35,6 +37,9 @@ const MainRoutes = () => {
             <Route element={<ProtectedRoute roles="ADMIN" fallbackPath="/" />}>
                <Route path="/admin/" element={<AdminRoute />}>
                   <Route path="test" element={<AdminTest />} />
+                  <Route path="test/add-new-test" element={<CreateTest />} />
+                  <Route path="test/update-test" element={<CreateTest />} />
+                  <Route path="test/:testId" element={<AddQuestions />} />
                </Route>
             </Route>
          </Routes>

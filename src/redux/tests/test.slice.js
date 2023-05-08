@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getTests } from './test.thunk'
 
 const initialState = {
    tests: [],
@@ -13,17 +12,31 @@ export const testSlice = createSlice({
    reducers: {},
    extraReducers: (builder) => {
       builder
-         .addCase(getTests.pending, (state) => {
-            state.isLoading = true
-         })
-         .addCase(getTests.fulfilled, (state, action) => {
-            state.tests = action.payload
-            state.isLoading = false
-         })
-         .addCase(getTests.rejected, (state, action) => {
-            state.error = action.payload
-            state.isLoading = false
-         })
+         .addMatcher(
+            (action) => action.type.endsWith('/pending'),
+            (state) => {
+               state.isLoading = true
+               state.error = ''
+            }
+         )
+         .addMatcher(
+            (action) => action.type.endsWith('/fulfilled'),
+            (state, action) => {
+               if (action.type.includes('/getTests/')) {
+                  state.tests = action.payload
+               } else if (action.type.includes('/postTest/')) {
+                  state.error = ''
+               }
+               state.isLoading = false
+            }
+         )
+         .addMatcher(
+            (action) => action.type.endsWith('/rejected'),
+            (state, action) => {
+               state.error = action.payload
+               state.isLoading = false
+            }
+         )
    },
 })
 
