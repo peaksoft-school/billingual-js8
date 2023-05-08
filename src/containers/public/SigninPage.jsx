@@ -1,4 +1,4 @@
-import { CircularProgress, Grid, Typography, styled } from '@mui/material'
+import { Grid, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,6 +11,7 @@ import Button from '../../components/UI/buttons/Buttons'
 import { signIn } from '../../redux/auth/auth.thunk'
 import { useSnackbar } from '../../hooks/useSnackbar'
 import { signInValidation } from '../../utils/constants/general'
+import Spinner from '../../components/UI/spinner/Spinner'
 
 const SigninPage = () => {
    const dispatch = useDispatch()
@@ -51,60 +52,49 @@ const SigninPage = () => {
                <CloseModalIcon onClick={gotToLandingPage} />
             </IconContainer>
             <Container>
+               <Icon2 />
+               <Title> Sign in</Title>
+               <StyledInput
+                  label="Email"
+                  name="email"
+                  error={!!errors.email}
+                  value={values.email}
+                  onChange={handleChange}
+                  type="email"
+               />
+               <StyledInput
+                  label="Password"
+                  name="password"
+                  error={!!errors.password}
+                  value={values.password}
+                  onChange={handleChange}
+                  type="password"
+               />
+               <CheckboxContain>
+                  <StyledCheckbox />
+                  <Text>To remember me</Text>
+               </CheckboxContain>
+               <Error>{errors.email}</Error>
+               <Error>{errors.password}</Error>
+               <Error>{error}</Error>
                {isLoading ? (
-                  <SpinnerContainer>
-                     <CircularProgress />
-                  </SpinnerContainer>
+                  <Spinner />
                ) : (
-                  <>
-                     <Icon2 />
-                     <Title> Sign in</Title>
-                     <StyledInput
-                        label="Email"
-                        name="email"
-                        error={!!errors.email}
-                        value={values.email}
-                        onChange={handleChange}
-                        type="email"
-                     />
-                     <StyledInput
-                        label="Password"
-                        name="password"
-                        error={!!errors.password}
-                        value={values.password}
-                        onChange={handleChange}
-                        type="password"
-                     />
-                     <CheckboxContain>
-                        <StyledCheckbox />
-                        <Text>To remember me</Text>
-                     </CheckboxContain>
-                     <Error>{errors.email}</Error>
-                     <Error>{errors.password}</Error>
-                     <Error>{error}</Error>
-                     <StyledButton variant="contained" type="submit">
-                        Sign in
-                     </StyledButton>
-                     <DefoultIcon />
-                     <StyledText>
-                        DON`T HAVE AN ACCOUNT?
-                        <NavLink to="/sign-up">REGISTER</NavLink>
-                     </StyledText>
-                  </>
+                  <StyledButton variant="contained" type="submit">
+                     sign in
+                  </StyledButton>
                )}
+               <DefoultIcon />
+               <StyledText>
+                  DON`T HAVE AN ACCOUNT?
+                  <NavLink to="/sign-up">REGISTER</NavLink>
+               </StyledText>
             </Container>
          </SignInForm>
       </Background>
    )
 }
 export default SigninPage
-
-const SpinnerContainer = styled('div')(() => ({
-   display: 'flex',
-   justifyContent: 'center',
-   alignItems: 'center',
-   height: '100%',
-}))
 
 const Error = styled('p')(() => ({
    margin: '0 0 10px 0',
