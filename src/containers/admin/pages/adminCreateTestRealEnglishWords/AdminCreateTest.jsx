@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { InputLabel, MenuItem, Select, styled } from '@mui/material'
-import Button from '../../../components/UI/buttons/Buttons'
-import Vector from '../../../assets/icons/Vector.png'
-import Checkboxes from '../../../components/UI/checkbox/Checkbox'
-import DeleteIcon from '../../../assets/icons/DeletedIcon.svg'
+import Button from '../../../../components/UI/buttons/Buttons'
+import Vector from '../../../../assets/icons/Vector.png'
+import TypeTest from './TypeTest'
+import { useTimer } from '../../../../hooks/useTimer'
 
 const typeTestArray = [
    {
@@ -44,33 +44,6 @@ const typeTestArray = [
    },
 ]
 
-const realEnglishWords = [
-   {
-      word: 'advantage',
-      id: 1,
-   },
-   {
-      word: 'advantage',
-      id: 2,
-   },
-   {
-      word: 'advantage',
-      id: 3,
-   },
-   {
-      word: 'advantage',
-      id: 4,
-   },
-   {
-      word: 'advantage',
-      id: 5,
-   },
-   {
-      word: 'advantage',
-      id: 6,
-   },
-]
-
 const buttonStyle = {
    '&:hover': {
       background: '#0015cf',
@@ -84,35 +57,14 @@ const buttonStyle = {
    display: 'flex',
    alignItems: 'center',
 }
-const buttonStyleGoBack = {
-   width: '105px',
-   height: '42px',
-   background: '#FFFFFF',
-   border: '2px solid #3A10E5',
-   borderRadius: '8px',
-   fontFamily: 'Gilroy',
-   fontSize: '14px',
-   lineHeight: '16px',
-}
-const buttonSave = {
-   width: '82px',
-   height: '42px',
-   background: '#2AB930',
-   borderRadius: '8px',
-   color: '#fff',
-   ':hover': {
-      background: 'red',
-   },
-}
+
 const AdminCreateTest = () => {
-   const [age, setAge] = useState('')
+   const { inputOnChange } = useTimer()
+   const [selectType, setSelectType] = useState('')
 
    const handleChange = (event) => {
-      setAge(event.target.value)
+      setSelectType(event.target.value)
    }
-
-   const sliceWordOne = realEnglishWords.slice(0, 3)
-   const sliceWordTwo = realEnglishWords.slice(3, 6)
 
    return (
       <DivCreateTest>
@@ -126,16 +78,26 @@ const AdminCreateTest = () => {
                   <TimeText>
                      Duration <br /> (in minutes)
                   </TimeText>
-                  <InputNewTime type="time" />
+                  <InputNewTime onChange={inputOnChange} type="number" />
                </DivTimerInput>
             </DivInputOne>
             <DivInputSecond>
                <InputLabelTextType id="demo-simple-select-helper-label">
                   Type
                </InputLabelTextType>
-               <SelectType value={age} onChange={handleChange}>
+               <SelectType value={selectType} onChange={handleChange}>
                   {typeTestArray.map((type) => (
-                     <MenuItem sx={{ marginLeft: '40px' }} value={type.id}>
+                     <MenuItem
+                        sx={{
+                           margin: '0 auto',
+                           display: 'flex',
+                           flexDirection: 'column',
+                           alignItems: 'start',
+                           width: '804px',
+                           height: '42px',
+                        }}
+                        value={type.type}
+                     >
                         {type.type}
                      </MenuItem>
                   ))}
@@ -147,39 +109,11 @@ const AdminCreateTest = () => {
             </Button>
          </DivInput>
          <TestSelectRealEnglishWords>
-            <TestSelectRealEnglishWordsLine>
-               {sliceWordOne.map((elem) => (
-                  <WordEnglish>
-                     <NumberWords>{elem.id}</NumberWords>
-                     <WordEnglishTest>{elem.word}</WordEnglishTest>
-                     <DivCheckboxAndDeleteButton>
-                        <Checkboxes color="success" />
-                        <Delete src={DeleteIcon} alt="sdgsdfsd" />
-                     </DivCheckboxAndDeleteButton>
-                  </WordEnglish>
-               ))}
-            </TestSelectRealEnglishWordsLine>
-            <TestSelectRealEnglishWordsLine>
-               {sliceWordTwo.map((elem) => (
-                  <WordEnglish>
-                     <NumberWords>{elem.id}</NumberWords>
-                     <WordEnglishTest>{elem.word}</WordEnglishTest>
-                     <DivCheckboxAndDeleteButton>
-                        <Checkboxes color="success" />
-                        <Delete src={DeleteIcon} alt="sdgsdfsd" />
-                     </DivCheckboxAndDeleteButton>
-                  </WordEnglish>
-               ))}
-            </TestSelectRealEnglishWordsLine>
-            <TestSelectRealEnglishWordssss>
-               <Button sx={buttonStyleGoBack}>go Back</Button>
-               <Button sx={buttonSave}>Save</Button>
-            </TestSelectRealEnglishWordssss>
+            <TypeTest selectType={selectType} />
          </TestSelectRealEnglishWords>
       </DivCreateTest>
    )
 }
-
 export default AdminCreateTest
 
 const DivCreateTest = styled('div')(() => ({
@@ -191,24 +125,27 @@ const DivCreateTest = styled('div')(() => ({
    borderRadius: '20px',
    boxShadow:
       ' rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
-   paddingTop: '50px',
-   paddingBottom: '50px',
 }))
 const DivInput = styled('div')(() => ({
-   margin: '18px 80px 50px 80px',
+   padding: '50px 80px 22px 80px',
 }))
-
 const DivInputOne = styled('div')(() => ({
    width: '697px',
    height: '99px',
    display: 'flex',
 }))
-
 const InputOne = styled('input')(() => ({
-   width: '690px',
+   width: '674px',
    height: '46px',
    borderRadius: '8px',
    border: 'solid 1.53px #D4D0D0',
+   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontStyle: 'normal',
+   fontWeight: 400,
+   fontSize: '16px',
+   lineHeight: '18px',
+   color: '#4C4859',
+   paddingLeft: '16px',
 }))
 const TextTitle = styled('h1')(() => ({
    fontFamily: 'NextRoundedLTW04-Medium',
@@ -226,6 +163,13 @@ const InputNewTime = styled('input')(() => ({
    borderRadius: '8px',
    borderColor: ' #D4D0D0',
    border: 'solid 1.53px #D4D0D0',
+   textAlign: 'center',
+   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontStyle: 'normal',
+   fontWeight: 400,
+   fontSize: '16px',
+   lineHeight: '18px',
+   color: '#4C4859',
 }))
 
 const TimeText = styled('h1')(() => ({
@@ -266,6 +210,8 @@ const SelectType = styled(Select)(() => ({
    background: '#FFFFFF',
    borderRadius: '8px',
    marginTop: '12px',
+   display: 'flex',
+   textAlign: 'center',
 }))
 
 const ImageVector = styled('img')(() => ({
@@ -284,69 +230,9 @@ const DivAddOptions = styled('div')(() => ({
    color: ' #FFFFFF',
    marginLeft: '15.5px',
 }))
+
 const TestSelectRealEnglishWords = styled('div')(() => ({
-   height: '184px',
+   height: 'auto',
    width: '820px',
    margin: '0 auto',
-   background: '#ffffff',
-}))
-const TestSelectRealEnglishWordssss = styled('div')(() => ({
-   width: '203px',
-   display: 'flex',
-   gap: '16px',
-   marginLeft: '617px',
-   marginTop: '32px',
-}))
-
-const TestSelectRealEnglishWordsLine = styled('div')(() => ({
-   width: '821px',
-   height: '46px',
-   margin: '0 auto',
-   display: 'flex',
-   gap: '19px',
-   marginBottom: '18px',
-}))
-
-const WordEnglish = styled('div')(() => ({
-   width: '261px',
-   height: '46px',
-   background: '#FFFFFF',
-   border: '1.53px solid #D4D0D0',
-   borderRadius: '8px',
-   display: 'flex',
-   alignItems: 'center',
-}))
-
-const NumberWords = styled('div')(() => ({
-   width: '9px',
-   height: '18px',
-   marginLeft: '16px',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '16px',
-   lineHeight: '18px',
-   color: ' #4C4859',
-}))
-
-const WordEnglishTest = styled('div')(() => ({
-   width: '72px',
-   height: '18px',
-   fontStyle: 'normal',
-   fontweight: 400,
-   fontSize: '16px',
-   lineHeight: '18px',
-   color: '#4C4859',
-   marginLeft: '15.94px',
-}))
-
-const DivCheckboxAndDeleteButton = styled('div')(() => ({
-   display: 'flex',
-   alignItems: 'center',
-   marginLeft: '78px',
-   width: '54px',
-}))
-const Delete = styled('img')(() => ({
-   width: '20px',
-   height: '20px',
-   cursor: 'pointer',
 }))

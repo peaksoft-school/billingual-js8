@@ -1,8 +1,8 @@
 import { styled } from '@mui/material'
 import { toast } from 'react-toastify'
 
-export const useSnackbar = (type, title, message) => {
-   const notify = () =>
+export const useSnackbar = () => {
+   const notify = (type, title, message) =>
       toast[type](
          <>
             <Title>{title}</Title>

@@ -1,12 +1,12 @@
-import AdminRoute from './routes/admin/AdminRoute'
+import Snackbar from './components/UI/snackbar/Snackbar'
 import MainRoutes from './routes/MainRoutes'
 
 const App = () => {
    return (
-      <div>
+      <>
          <MainRoutes />
-         <AdminRoute />
-      </div>
+         <Snackbar />
+      </>
    )
 }
 

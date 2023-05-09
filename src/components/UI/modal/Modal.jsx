@@ -3,17 +3,16 @@ import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import { styled } from '@mui/material'
 
-const Modal = ({ handleClose, isOpen, children }) => {
+const ModalReusable = ({ modalStyle, handleClose, isOpen, children }) => {
    return (
       <Modal open={isOpen} onClose={handleClose}>
-         <BoxStyle>{children}</BoxStyle>
+         <BoxStyle sx={modalStyle}>{children}</BoxStyle>
       </Modal>
    )
 }
 
-export default Modal
+export default ModalReusable
 const BoxStyle = styled(Box)(({ theme }) => ({
-   padding: '36px 89px 36px 89px',
    position: 'absolute',
    top: '45%',
    left: '50%',

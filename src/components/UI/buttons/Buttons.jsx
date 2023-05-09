@@ -3,8 +3,6 @@ import { styled } from '@mui/material/styles'
 import MuiButton from '@mui/material/Button'
 
 const BaseButton = styled(MuiButton)(() => ({
-   display: 'flex',
-   alignItems: 'center',
    borderRadius: '8px',
 }))
 
