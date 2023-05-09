@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { signIn, signUp } from './auth.thunk'
+import { signIn, signOut, signUp } from './auth.thunk'
 import { STORAGE_KEYS } from '../../utils/constants/common'
 
 const getInitialState = () => {
@@ -42,6 +42,14 @@ export const authSlice = createSlice({
          state.token = payload.token
          state.email = payload.email
          state.role = payload.role
+         state.isLoading = false
+         state.error = ''
+      })
+      builder.addCase(signOut.fulfilled, (state) => {
+         state.isAuthorized = false
+         state.token = ''
+         state.email = ''
+         state.role = ''
          state.isLoading = false
          state.error = ''
       })

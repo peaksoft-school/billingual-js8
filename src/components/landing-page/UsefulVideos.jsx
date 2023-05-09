@@ -73,7 +73,6 @@ const Container = styled(Grid)(() => ({
 
 const FirstSection = styled(Grid)(() => ({
    display: 'flex',
-   width: '1250px',
    margin: '0 auto',
    flexDirection: 'column',
 }))
@@ -93,8 +92,8 @@ const Title = styled(Typography)(() => ({
 }))
 const SecondSection = styled(Grid)(() => ({
    display: 'flex',
-   justifyContent: 'center',
-   gap: '70px',
+   justifyContent: 'space-evenly',
+   flexWrap: 'wrap',
    marginBottom: '120px',
    marginTop: '48px',
 }))

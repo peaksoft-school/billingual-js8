@@ -1,75 +1,11 @@
 import { styled } from '@mui/material'
-import paperAirline from '../../assets/images/paperAirline.png'
-import globus from '../../assets/images/globus.png'
-import piggyBank from '../../assets/images/piggyBank.png'
+
 import accessible from '../../assets/images/accessible.png'
 import speech from '../../assets/images/speech.png'
 import extensive from '../../assets/images/extensive.png'
 import tutoring from '../../assets/images/tutoring.png'
 import booksImage from '../../assets/images/imgBookEnglish.png'
-import OurTeamImg1 from '../../assets/images/person1.png'
-import OurTeamImg2 from '../../assets/images/person2.png'
-import OurTeamImg3 from '../../assets/images/person3.png'
-import OurTeamImg4 from '../../assets/images/person4.png'
-import OurTeamImg5 from '../../assets/images/person5.png'
-import OurTeamImg6 from '../../assets/images/person6.png'
-
-const infoCardArray = [
-   {
-      img: paperAirline,
-      text: 'Over 10,000 fee waivers for the Bilingual English Test areoffered annually.',
-      id: 1,
-   },
-   {
-      img: globus,
-      text: 'Students from over 200 countries and territories have benefitted.',
-      id: 2,
-   },
-   {
-      img: piggyBank,
-      text: 'Eligible students can take the test with absolutely zero cost to them.',
-      id: 3,
-   },
-]
-
-const ourTeamArray = [
-   {
-      img: OurTeamImg1,
-      name: 'Alice Archie',
-      employee: 'Founder Bilingual',
-      id: 1,
-   },
-   {
-      img: OurTeamImg2,
-      name: 'Mia George',
-      employee: 'Marketer',
-      id: 2,
-   },
-   {
-      img: OurTeamImg3,
-      name: 'Oscar Ryan',
-      employee: 'Developer',
-      id: 3,
-   },
-   {
-      img: OurTeamImg4,
-      name: 'Jack William',
-      employee: 'UX/UI Designer',
-      id: 4,
-   },
-   {
-      img: OurTeamImg5,
-      name: 'Rose Thomas',
-      employee: 'Chief Editor',
-      id: 5,
-   },
-   {
-      img: OurTeamImg6,
-      name: 'Albert Stanley',
-      employee: 'Chief Editor',
-      id: 6,
-   },
-]
+import { infoCardArray, ourTeamArray } from '../../utils/constants/common'
 
 const Card = styled('div')(() => ({
    width: '100%',
@@ -79,13 +15,9 @@ const Card = styled('div')(() => ({
 }))
 
 const InfoCard = styled('div')(() => ({
-   height: '248px',
-   width: '1203px',
-   margin: '0 auto',
-   borderRadius: '0px',
    display: 'flex',
-   padding: '0px',
-   gap: '120px',
+   justifyContent: 'space-evenly',
+   flexWrap: 'wrap',
 }))
 
 const Img = styled('img')(() => ({
@@ -101,7 +33,6 @@ const Img1DivOne = styled('div')(() => ({
    alignItems: 'center',
 }))
 const Over = styled('p')(() => ({
-   width: '335px',
    height: '48px',
    marginTop: '23px',
    fontFamily: 'Poppins',
@@ -113,12 +44,11 @@ const Over = styled('p')(() => ({
    color: '#23212A',
 }))
 const Description = styled('div')(() => ({
-   width: '1205.81px',
    height: ' 437px',
-   margin: '0 auto',
    marginLeft: '110px',
    marginTop: '120px',
    display: 'flex',
+   justifyContent: 'space-between',
    marginBottom: '121.39px',
 }))
 
@@ -127,16 +57,13 @@ const UserExpiriance = styled('div')(() => ({
    fontSize: '40px',
    fontWeight: 700,
    lineHeight: '48px',
-   letterSpacing: '0em',
    textAlign: 'left',
-   height: '96px',
-   width: '338px',
+   width: '21.125rem',
    color: '#3752B4',
 }))
 
 const DescriptionText = styled('div')(() => ({
-   width: '640px',
-   height: '120px',
+   width: '90%',
    marginTop: '34px',
    fontFamily: 'Poppins',
    fontStyle: 'normal',
@@ -239,27 +166,21 @@ const DivTutoring = styled('div')(() => ({
 }))
 
 const ImgBook = styled('img')(() => ({
-   width: '460.81px',
-   height: '420px',
-   marginLeft: '104px',
    marginTop: '17px',
    marginRight: '154.19px',
+   width: '35%',
 }))
 const DivSeparation = styled('div')(() => ({
    display: 'flex',
    gap: '67.88px',
 }))
 const OurTeam = styled('div')(() => ({
-   width: '1232px',
    height: '335px',
-   marginTop: '1045px',
-   margin: '0 auto',
+   display: 'grid',
+   justifyItems: 'center',
 }))
 
 const TextOurTeam = styled('div')(() => ({
-   width: '180px',
-   height: '52px',
-   margin: '0 auto',
    fontFamily: 'Gilroy',
    fontStyle: 'normal',
    fontWeight: 700,
@@ -275,12 +196,11 @@ const OurTeamImage = styled('img')(() => ({
 const DivImage = styled('div')(() => ({
    display: 'flex',
    marginTop: '48px',
+   flexWrap: 'wrap',
 }))
 const DivImageEmployeeName = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
-   width: '180px',
-   height: '235px',
    marginRight: '30px',
 }))
 
