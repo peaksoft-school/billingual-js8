@@ -1,4 +1,4 @@
-import { CircularProgress, Grid, Typography, styled } from '@mui/material'
+import { Grid, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,6 +13,7 @@ import {
    signUpValidation,
 } from '../../utils/constants/general'
 import { useSnackbar } from '../../hooks/useSnackbar'
+import Spinner from '../../components/UI/spinner/Spinner'
 
 const SignupPage = () => {
    const dispatch = useDispatch()
@@ -57,41 +58,37 @@ const SignupPage = () => {
                <CloseModalIcon onClick={gotToLandingPage} />
             </IconContainer>
             <Container>
-               {isLoading ? (
-                  <SpinnerContainer>
-                     <CircularProgress />
-                  </SpinnerContainer>
-               ) : (
-                  <>
-                     <Icon2 />
-                     <Title> Create an Account</Title>
-                     {signUpInputArray.map((item) => {
-                        return (
-                           <StyledInput
-                              error={!!errors[item.name]}
-                              key={item.name}
-                              label={item.label}
-                              name={item.name}
-                              value={values[item.name]}
-                              onChange={handleChange}
-                              type={item.type}
-                           />
-                        )
-                     })}
+               <Icon2 />
+               <Title> Create an Account</Title>
+               {signUpInputArray.map((item) => {
+                  return (
+                     <StyledInput
+                        error={!!errors[item.name]}
+                        key={item.name}
+                        label={item.label}
+                        name={item.name}
+                        value={values[item.name]}
+                        onChange={handleChange}
+                        type={item.type}
+                     />
+                  )
+               })}
 
-                     <Error>{CheckEmail}</Error>
-                     <Error> {CheckPassword}</Error>
-                     <Error>{error}</Error>
-                     <StyledButton variant="contained" type="submit">
-                        Sign up
-                     </StyledButton>
-                     <DefoultIcon />
-                     <StyledText>
-                        ALREADY HAVE AN ACCOUNT?
-                        <NavLink to="/sign-in">LOG IN</NavLink>
-                     </StyledText>
-                  </>
+               <Error>{CheckEmail}</Error>
+               <Error> {CheckPassword}</Error>
+               <Error>{error}</Error>
+               {isLoading ? (
+                  <Spinner />
+               ) : (
+                  <StyledButton variant="contained" type="submit">
+                     sign up
+                  </StyledButton>
                )}
+               <DefoultIcon />
+               <StyledText>
+                  ALREADY HAVE AN ACCOUNT?
+                  <NavLink to="/sign-in">LOG IN</NavLink>
+               </StyledText>
             </Container>
          </SignUpForm>
       </Background>
@@ -99,13 +96,6 @@ const SignupPage = () => {
 }
 
 export default SignupPage
-
-const SpinnerContainer = styled('div')(() => ({
-   display: 'flex',
-   justifyContent: 'center',
-   alignItems: 'center',
-   height: '100%',
-}))
 
 const Error = styled('p')(() => ({
    margin: '0 0 10px 0',

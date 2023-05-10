@@ -107,9 +107,10 @@ const Background = styled(Grid)(() => ({
 }))
 const Contain = styled(Grid)(() => ({
    display: 'flex',
-   width: '1229px',
    margin: '0 auto',
+   // justifyContent: 'center',
    flexDirection: 'column',
+   padding: '0 80px',
 }))
 
 const TitleContainer = styled(Grid)(() => ({
@@ -130,9 +131,7 @@ const StyledIcon = styled(Roadmap)(() => ({
    zIndex: '1',
    left: '0',
    right: '0',
-   marginLeft: 'auto',
-   marginRight: 'auto',
-   marginTop: '107px',
+   margin: '107px auto',
 }))
 
 const Title1 = styled(Typography)(() => ({

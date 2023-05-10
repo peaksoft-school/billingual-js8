@@ -15,9 +15,13 @@ const Header = ({ title, endpoint }) => {
          .then(() => navigate('/sign-in'))
    }
 
+   const goToHomePage = () => {
+      navigate('/')
+   }
+
    return (
       <StyledHeader>
-         <Logo />
+         <Logotype onClick={goToHomePage} />
          <Container>
             <TestBtn onClick={() => navigate(endpoint)}>TESTS</TestBtn>
             <SubmitBtn>{title} RESULTS</SubmitBtn>
@@ -35,6 +39,10 @@ const StyledHeader = styled('header')(() => ({
    padding: '26px 120px',
    alignItems: 'center',
    background: '#ffffff',
+}))
+
+const Logotype = styled(Logo)(() => ({
+   cursor: 'pointer',
 }))
 
 const LogOut = styled(Button)(() => ({
