@@ -1,16 +1,14 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import useAuth from '../hooks/useAuth'
+import { useSelector } from 'react-redux'
 
-const ProtectedRoute = () => {
-   const { roles, user } = useAuth()
+const ProtectedRoute = ({ roles, fallbackPath }) => {
+   const { role, isAuthorized } = useSelector((state) => state.auth)
 
-   const isAllowed = ['User']
-
-   return user.loggedIn && roles?.find((r) => isAllowed?.includes(r.role)) ? (
+   return isAuthorized && roles?.includes(role) ? (
       <Outlet />
    ) : (
-      <Navigate to="/login" replace />
+      <Navigate to={fallbackPath} replace />
    )
 }
 

@@ -1,18 +1,31 @@
 import React from 'react'
 import { Button, styled } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
+import { signOut } from '../../redux/auth/auth.thunk'
 
 const Header = ({ title, endpoint }) => {
    const navigate = useNavigate()
+   const dispatch = useDispatch()
+
+   const onLogout = () => {
+      dispatch(signOut())
+         .unwrap()
+         .then(() => navigate('/sign-in'))
+   }
+
+   const goToHomePage = () => {
+      navigate('/')
+   }
 
    return (
       <StyledHeader>
-         <Logo />
+         <Logotype onClick={goToHomePage} />
          <Container>
             <TestBtn onClick={() => navigate(endpoint)}>TESTS</TestBtn>
             <SubmitBtn>{title} RESULTS</SubmitBtn>
-            <LogOut>LOG OUT</LogOut>
+            <LogOut onClick={onLogout}>LOG OUT</LogOut>
          </Container>
       </StyledHeader>
    )
@@ -26,6 +39,10 @@ const StyledHeader = styled('header')(() => ({
    padding: '26px 120px',
    alignItems: 'center',
    background: '#ffffff',
+}))
+
+const Logotype = styled(Logo)(() => ({
+   cursor: 'pointer',
 }))
 
 const LogOut = styled(Button)(() => ({
@@ -43,7 +60,7 @@ const LogOut = styled(Button)(() => ({
    marginLeft: '60px',
    ':hover': {
       background: '#3A10E5',
-      color: '#2c2c2c',
+      color: '#fff',
       border: '2px solid #3A10E5',
    },
 }))

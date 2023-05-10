@@ -1,91 +1,128 @@
 import { Grid, Typography, styled } from '@mui/material'
-import * as Yup from 'yup'
 import { useFormik } from 'formik'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { ReactComponent as System } from '../../assets/icons/system.svg'
 import { ReactComponent as Layer } from '../../assets/icons/layer 2.svg'
 import { ReactComponent as Defoult } from '../../assets/icons/defoult.svg'
 import Input from '../../components/UI/input/Input'
 import Checkboxes from '../../components/UI/checkbox/Checkbox'
 import Button from '../../components/UI/buttons/Buttons'
+import { signIn } from '../../redux/auth/auth.thunk'
+import { useSnackbar } from '../../hooks/useSnackbar'
+import { signInValidation } from '../../utils/constants/general'
+import Spinner from '../../components/UI/spinner/Spinner'
 
 const SigninPage = () => {
-   // eslint-disable-next-line no-unused-vars
-   const signInSchema = Yup.object().shape({
-      email: Yup.string().email().required('Email is required'),
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+   const { error, isLoading } = useSelector((state) => state.auth)
 
-      password: Yup.string()
-         .required('Password is required')
-         .min(6, 'Password is too short - should be 6 chars minimum'),
-   })
+   const { notify } = useSnackbar()
+
+   const submitHandler = (values) => {
+      dispatch(signIn(values))
+         .unwrap()
+         .then(() =>
+            notify('success', 'Authentication', 'Successfully sign in')
+         )
+         .then(() => navigate('/admin/test'))
+         .catch(() => notify('error', 'Authentication', 'Failed to sign in'))
+   }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
          email: '',
          password: '',
       },
-      validationSchema: signInSchema,
+      validationSchema: signInValidation,
       onSubmit: (values) => {
-         console.log(values, 'VALUES')
+         submitHandler(values)
       },
    })
+
+   const gotToLandingPage = () => {
+      navigate('/')
+   }
+
    return (
       <Background>
-         <Card onSubmit={handleSubmit}>
-            <Icon1 />
+         <SignInForm onSubmit={handleSubmit}>
+            <IconContainer>
+               <CloseModalIcon onClick={gotToLandingPage} />
+            </IconContainer>
             <Container>
                <Icon2 />
                <Title> Sign in</Title>
                <StyledInput
                   label="Email"
                   name="email"
-                  error={errors.email}
+                  error={!!errors.email}
                   value={values.email}
                   onChange={handleChange}
+                  type="email"
                />
                <StyledInput
                   label="Password"
                   name="password"
-                  error={errors.password}
+                  error={!!errors.password}
                   value={values.password}
                   onChange={handleChange}
+                  type="password"
                />
                <CheckboxContain>
                   <StyledCheckbox />
                   <Text>To remember me</Text>
                </CheckboxContain>
-               <StyledButton variant="contained" type="submit">
-                  Sign in
-               </StyledButton>
+               <Error>{errors.email}</Error>
+               <Error>{errors.password}</Error>
+               <Error>{error}</Error>
+               {isLoading ? (
+                  <Spinner />
+               ) : (
+                  <StyledButton variant="contained" type="submit">
+                     sign in
+                  </StyledButton>
+               )}
                <DefoultIcon />
                <StyledText>
                   DON`T HAVE AN ACCOUNT?
                   <NavLink to="/sign-up">REGISTER</NavLink>
                </StyledText>
             </Container>
-         </Card>
+         </SignInForm>
       </Background>
    )
 }
 export default SigninPage
-const Background = styled(Grid)(() => ({
-   background: 'linear-gradient(90.76deg, #6B0FA9 0.74%, #520FB6 88.41%)',
-   height: '100vh',
-   position: 'absolute',
-   width: '100vw',
+
+const Error = styled('p')(() => ({
+   margin: '0 0 10px 0',
+   color: '#f00',
+   textAlign: 'center',
 }))
 
-const Card = styled('form')(() => ({
-   width: '616px',
-   height: '620px',
+const Background = styled(Grid)(() => ({
+   background: 'linear-gradient(90.76deg, #6B0FA9 0.74%, #520FB6 88.41%)',
+   padding: '40px',
+   height: '100%',
+}))
+
+const SignInForm = styled('form')(() => ({
+   width: '38.5rem',
+   height: 'auto',
    background: '#FFFFFF',
    borderRadius: '10px',
    margin: '0 auto',
-   marginTop: '74px',
+   padding: '30px',
 }))
-const Icon1 = styled(System)(() => ({
-   marginLeft: '562px',
-   marginTop: '20px',
+
+const IconContainer = styled('div')(() => ({
+   textAlign: 'end',
+}))
+
+const CloseModalIcon = styled(System)(() => ({
+   cursor: 'pointer',
 }))
 const Container = styled(Grid)(() => ({
    display: 'flex',
