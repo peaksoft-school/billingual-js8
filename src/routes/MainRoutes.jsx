@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 import LandingPage from '../components/landing-page/LandingPage'
 import AdminTest from '../containers/admin/pages/test/AdminTest'
@@ -10,7 +10,7 @@ import CurrentTest from '../containers/user/CurrentTest'
 import SigninPage from '../containers/public/SigninPage'
 import SignupPage from '../containers/public/SignupPage'
 import CreateTest from '../containers/admin/pages/test/CreateTest'
-import AddQuestions from '../containers/admin/pages/test/AddQuestions'
+import AddQuestions from '../containers/admin/pages/test/Questions'
 
 const MainRoutes = () => {
    return (
@@ -28,6 +28,7 @@ const MainRoutes = () => {
                }
             >
                <Route path="/user/" element={<UserRoute />}>
+                  <Route index element={<Navigate to="tests" />} />
                   <Route path="tests" element={<GetAllTests />} />
                   <Route path="tests/:testId" element={<CurrentTest />} />
                </Route>
@@ -36,6 +37,7 @@ const MainRoutes = () => {
             {/* Admin */}
             <Route element={<ProtectedRoute roles="ADMIN" fallbackPath="/" />}>
                <Route path="/admin/" element={<AdminRoute />}>
+                  <Route index element={<Navigate to="test" />} />
                   <Route path="test" element={<AdminTest />} />
                   <Route path="test/add-new-test" element={<CreateTest />} />
                   <Route path="test/update-test" element={<CreateTest />} />

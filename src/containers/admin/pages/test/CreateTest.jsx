@@ -1,51 +1,65 @@
 import React from 'react'
 import { Grid, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import FormContainer from '../../../../components/UI/form/FormContainer'
 import Input from '../../../../components/UI/input/Input'
 import Button from '../../../../components/UI/buttons/Buttons'
 import { createTestValidation } from '../../../../utils/constants/general'
-import { postTest, updateTest } from '../../../../redux/tests/test.thunk'
+import { postTestRequest } from '../../../../api/testService'
+import { useSnackbar } from '../../../../hooks/useSnackbar'
+import { updateTest } from '../../../../redux/tests/test.thunk'
 
 const CreateTest = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const { state } = useLocation()
+   const { notify } = useSnackbar()
 
    const goBackHandler = () => {
       navigate('/admin/test')
    }
 
-   const submitHandler = (values) => {
+   const submitHandler = async (values) => {
+      values.isActive = true
+
       if (state) {
          dispatch(
             updateTest({
                id: state.id,
                title: values.title,
                shortDescription: values.shortDescription,
+               isActive: values.isActive,
             })
          )
-            .unwrap()
-            .then(() => goBackHandler())
+         notify('success', 'Update test', 'Successfully updated')
       } else {
-         dispatch(postTest(values))
-            .unwrap()
-            .then(() => goBackHandler())
+         try {
+            await postTestRequest(values)
+            notify('success', 'Created test', 'Successfully created')
+         } catch (error) {
+            return notify('error', 'Test', error.response?.data.message)
+         }
       }
+      return goBackHandler()
    }
 
    const { handleChange, handleSubmit, values, errors } = useFormik({
       initialValues: {
-         title: state?.title,
-         shortDescription: state?.shortDescription,
+         title: state?.title || '',
+         shortDescription: state?.shortDescription || '',
       },
       validationSchema: createTestValidation,
       onSubmit: (values) => {
          submitHandler(values)
       },
    })
+
+   // const createAndAddTest = async () => {
+   //    await submitHandler(values)
+   //    // navigate(`/admin/test/${state.id}`)
+   // }
 
    return (
       <FormContainer>
@@ -74,9 +88,9 @@ const CreateTest = () => {
                <GoBackButton variant="outlined" onClick={goBackHandler}>
                   Go back
                </GoBackButton>
-               <Button color="success" variant="contained" type="submit">
+               <SaveButton color="success" variant="contained" type="submit">
                   Save
-               </Button>
+               </SaveButton>
                {state ? null : (
                   <Button variant="contained">+ Add question</Button>
                )}
@@ -95,6 +109,12 @@ const Error = styled(Typography)(() => ({
 const CreateTestForm = styled('form')(() => ({}))
 
 const Label = styled(Typography)(() => ({
+   fontFamily: 'Poppins',
+   fontStyle: 'normal',
+   fontWeight: '500',
+   fontSize: '16px',
+   lineHeight: '18px',
+   color: '#4B4759',
    marginBottom: 12,
 }))
 
@@ -110,6 +130,14 @@ const ButtonContainer = styled(Grid)(() => ({
 
 const GoBackButton = styled(Button)(() => ({
    '&:hover': {
-      background: '',
+      background: '#3A10E5',
+      color: '#fff',
+   },
+}))
+
+const SaveButton = styled(Button)(() => ({
+   background: '#2AB930',
+   '&:hover': {
+      background: '#31CF38',
    },
 }))
