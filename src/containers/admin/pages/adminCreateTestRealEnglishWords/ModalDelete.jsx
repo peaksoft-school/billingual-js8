@@ -7,7 +7,7 @@ import ModalReusable from '../../../../components/UI/modal/Modal'
 
 const style = { borderRadius: '20px', borderStyle: 'none' }
 
-const ModalkaDelete = ({ isOpenModal, openModal }) => {
+const ModalDelete = ({ isOpenModal, openModal, deleteTest }) => {
    return (
       <ModalReusable
          modalStyle={style}
@@ -21,13 +21,15 @@ const ModalkaDelete = ({ isOpenModal, openModal }) => {
             <Text>You can t restore this file </Text>
             <Buttons>
                <StyledButton onClick={openModal}>Cancel</StyledButton>
-               <DeleteButton variant="contained">Delete</DeleteButton>
+               <DeleteButton variant="contained" onClick={deleteTest}>
+                  Delete
+               </DeleteButton>
             </Buttons>
          </StyledModal>
       </ModalReusable>
    )
 }
-export default ModalkaDelete
+export default ModalDelete
 const StyledModal = styled('div')(() => ({
    width: '520px',
    height: '368px',

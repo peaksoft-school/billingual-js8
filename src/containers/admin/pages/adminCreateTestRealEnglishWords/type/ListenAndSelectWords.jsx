@@ -6,8 +6,8 @@ import { ReactComponent as Volumeup } from '../../../../../assets/icons/volumeup
 import Checkboxes from '../../../../../components/UI/checkbox/Checkbox'
 import DeleteIcon from '../../../../../assets/icons/DeletedIcon.svg'
 import closeCross from '../../../../../assets/icons/closeCross.svg'
-import ModalkaDelete from '../DeleteModal'
 import ModalReusable from '../../../../../components/UI/modal/Modal'
+import ModalDelete from '../ModalDelete'
 
 const realEnglishWords = [
    {
@@ -37,23 +37,23 @@ const realEnglishWords = [
 ]
 
 const buttonStyleGoBack = {
-   width: '105px',
+   width: '12.8%',
    height: '42px',
    background: '#FFFFFF',
    border: '2px solid #3A10E5',
    borderRadius: '8px',
    fontFamily: 'Gilroy',
-   fontSize: '14px',
+   fontSize: '0.875rem',
    lineHeight: '16px',
 }
 const buttonSave = {
-   width: '82px',
+   width: '10%',
    height: '42px',
    background: '#2AB930',
    borderRadius: '8px',
    color: '#fff',
    ':hover': {
-      background: 'red',
+      background: '#1eff00',
    },
 }
 const modalStyleDiv = {
@@ -85,8 +85,14 @@ const buttonStyleSave = {
    },
 }
 
+const styleCheckboxes = {
+   width: '6.97%',
+   height: '43.48%',
+   marginLeft: '17.97%',
+}
+
 const ListenWords = ({ audio }) => {
-   const [isOpenModal, setState] = useState(false)
+   const [isOpenModal, setIsOpenModal] = useState(false)
    const [isOpenModalSave, setIsOpenModalSave] = useState(false)
    const [upploadFile, setUpploadFile] = useState({})
    const soundPlay = (src) => {
@@ -97,7 +103,7 @@ const ListenWords = ({ audio }) => {
       sound.play()
    }
    const openModal = () => {
-      setState((prevState) => !prevState)
+      setIsOpenModal((prevState) => !prevState)
    }
    const openModalSave = () => {
       setIsOpenModalSave((prevState) => !prevState)
@@ -106,10 +112,14 @@ const ListenWords = ({ audio }) => {
    const changeFileName = (event) => {
       setUpploadFile(event.target.files[0])
    }
-   const sliceWordOne = realEnglishWords.slice(0, 3)
-   const sliceWordTwo = realEnglishWords.slice(3, 6)
+   const sliceListenWordOne = realEnglishWords.slice(0, 3)
+   const sliceListenWordTwo = realEnglishWords.slice(3, 6)
+
+   const deleteTest = () => {
+      setIsOpenModal((prevState) => !prevState)
+   }
    return (
-      <div style={{ paddingBottom: '50px' }}>
+      <>
          <ModalReusable
             isOpen={isOpenModalSave}
             handleClose={openModalSave}
@@ -119,18 +129,16 @@ const ListenWords = ({ audio }) => {
             <DivTitle>
                <TitleText>Title</TitleText>
                <InfoTypeTest>Listen and select English word</InfoTypeTest>
-               <div
-                  style={{ display: 'flex', alignItems: 'center', gap: '18px' }}
-               >
+               <StyleDivUpploadFile>
                   <UpploadFile htmlFor="file">Uppload audio file</UpploadFile>
                   <UpploadAudioFile
                      id="file"
                      type="file"
-                     accept="image/*"
+                     accept="audio/*"
                      onChange={changeFileName}
                   />
                   <UpploadFileName>{upploadFile.name}</UpploadFileName>
-               </div>
+               </StyleDivUpploadFile>
             </DivTitle>
             <DivButtonGoBackAndSave>
                <DivButton>
@@ -141,70 +149,64 @@ const ListenWords = ({ audio }) => {
                </DivButton>
             </DivButtonGoBackAndSave>
          </ModalReusable>
-         <ModalkaDelete openModal={openModal} isOpenModal={isOpenModal} />
-         <TestSelectRealEnglishWordsLine>
-            {sliceWordOne.map((elem) => (
-               <WordEnglish>
-                  <NumberWords>{elem.id}</NumberWords>
+         <ModalDelete
+            deleteFunction={deleteTest}
+            openModal={openModal}
+            isOpenModal={isOpenModal}
+         />
+         <TestListenAndSelectEnglishWords>
+            {sliceListenWordOne.map((elem) => (
+               <ListenWordEnglish>
+                  <NumberListenWords>{elem.id}</NumberListenWords>
                   <StyledVolumeup onClick={() => soundPlay(audio)} />
-                  <WordEnglishTest>{elem.word}</WordEnglishTest>
-                  <DivCheckboxAndDeleteButton>
-                     <Checkboxes color="success" />
-                     <Delete
-                        onClick={openModal}
-                        src={DeleteIcon}
-                        alt="sdgsdfsd"
-                     />
-                  </DivCheckboxAndDeleteButton>
-               </WordEnglish>
+                  <ListenWordEnglishTest>{elem.word}</ListenWordEnglishTest>
+                  <Checkboxes sx={styleCheckboxes} color="success" />
+                  <Delete onClick={openModal} src={DeleteIcon} />
+               </ListenWordEnglish>
             ))}
-         </TestSelectRealEnglishWordsLine>
-         <TestSelectRealEnglishWordsLine>
-            {sliceWordTwo.map((elem) => (
-               <WordEnglish>
-                  <NumberWords>{elem.id}</NumberWords>
+         </TestListenAndSelectEnglishWords>
+         <TestListenAndSelectEnglishWords>
+            {sliceListenWordTwo.map((elem) => (
+               <ListenWordEnglish>
+                  <NumberListenWords>{elem.id}</NumberListenWords>
                   <StyledVolumeup onClick={() => soundPlay(audio)} />
-                  <WordEnglishTest>{elem.word}</WordEnglishTest>
-                  <DivCheckboxAndDeleteButton>
-                     <Checkboxes color="success" />
-                     <Delete
-                        onClick={openModal}
-                        src={DeleteIcon}
-                        alt="sdgsdfsd"
-                     />
-                  </DivCheckboxAndDeleteButton>
-               </WordEnglish>
+                  <ListenWordEnglishTest>{elem.word}</ListenWordEnglishTest>
+                  <Checkboxes sx={styleCheckboxes} color="success" />
+                  <Delete onClick={openModal} src={DeleteIcon} alt="sdgsdfsd" />
+               </ListenWordEnglish>
             ))}
-         </TestSelectRealEnglishWordsLine>
-         <TestSelectRealEnglishWordssss>
+         </TestListenAndSelectEnglishWords>
+         <DivButtonSaveandGoBack>
             <Button sx={buttonStyleGoBack}>go Back</Button>
             <Button sx={buttonSave} onClick={openModalSave}>
                Save
             </Button>
-         </TestSelectRealEnglishWordssss>
-      </div>
+         </DivButtonSaveandGoBack>
+      </>
    )
 }
 export default ListenWords
-const TestSelectRealEnglishWordssss = styled('div')(() => ({
-   width: '203px',
+const DivButtonSaveandGoBack = styled('div')(() => ({
+   width: '100%',
+   height: '42px',
    display: 'flex',
-   gap: '16px',
-   marginLeft: '617px',
+   alignItems: 'center',
+   justifyContent: 'end',
    marginTop: '32px',
+   gap: '1.95%',
 }))
 
-const TestSelectRealEnglishWordsLine = styled('div')(() => ({
-   width: '821px',
+const TestListenAndSelectEnglishWords = styled('div')(() => ({
+   width: '100%',
    height: '46px',
    margin: '0 auto',
    display: 'flex',
-   gap: '19px',
+   gap: '2.2%',
    marginBottom: '18px',
 }))
 
-const WordEnglish = styled('div')(() => ({
-   width: '261px',
+const ListenWordEnglish = styled('div')(() => ({
+   width: '31.83%',
    height: '46px',
    background: '#FFFFFF',
    border: '1.53px solid #D4D0D0',
@@ -213,10 +215,11 @@ const WordEnglish = styled('div')(() => ({
    alignItems: 'center',
 }))
 
-const NumberWords = styled('div')(() => ({
-   width: '9px',
-   height: '18px',
-   marginLeft: '16px',
+const NumberListenWords = styled('div')(() => ({
+   width: '3.47%',
+   height: '39.13%',
+   margin: '14px 6% 14px 6.46%',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '16px',
@@ -224,30 +227,28 @@ const NumberWords = styled('div')(() => ({
    color: ' #4C4859',
 }))
 
-const WordEnglishTest = styled('div')(() => ({
-   width: '72px',
-   height: '18px',
+const ListenWordEnglishTest = styled('div')(() => ({
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
-   fontweight: 400,
-   fontSize: '16px',
-   lineHeight: '18px',
-   color: '#4C4859',
+   fontWeight: 500,
+   fontSize: '0.875rem',
+   textTransform: 'uppercase',
+   lineHeight: '16px',
+   color: ' #4C4859',
+   width: '26.82%',
+   height: '34.78%',
+   marginLeft: '5.26%',
 }))
 
-const DivCheckboxAndDeleteButton = styled('div')(() => ({
-   display: 'flex',
-   alignItems: 'center',
-   marginLeft: '40px',
-   width: '54px',
-}))
 const Delete = styled('img')(() => ({
-   width: '20px',
-   height: '20px',
+   width: '7.66%',
+   height: '43.48%',
    cursor: 'pointer',
+   marginLeft: '4.98%',
 }))
 const StyledVolumeup = styled(Volumeup)(() => ({
-   margin: '16px 13px 16.23px 13px',
-   alignItems: 'center',
+   width: '8.43%',
+   height: '47.83%',
    cursor: 'pointer',
 }))
 const DivTitle = styled('div')(() => ({
@@ -348,4 +349,9 @@ const StyledIcon = styled('img')(() => ({
       borderRadius: '300px',
       textColor: '#fff',
    },
+}))
+const StyleDivUpploadFile = styled('div')(() => ({
+   display: 'flex',
+   alignItems: 'center',
+   gap: '18px',
 }))

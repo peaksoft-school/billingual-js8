@@ -4,8 +4,8 @@ import Checkboxes from '../../../../../components/UI/checkbox/Checkbox'
 import DeleteIcon from '../../../../../assets/icons/DeletedIcon.svg'
 import closeCross from '../../../../../assets/icons/closeCross.svg'
 import Button from '../../../../../components/UI/buttons/Buttons'
-import ModalkaDelete from '../DeleteModal'
 import ModalReusable from '../../../../../components/UI/modal/Modal'
+import ModalDelete from '../ModalDelete'
 
 const realEnglishWords = [
    {
@@ -35,23 +35,23 @@ const realEnglishWords = [
 ]
 
 const buttonStyleGoBack = {
-   width: '105px',
+   width: '12.8%',
    height: '42px',
    background: '#FFFFFF',
    border: '2px solid #3A10E5',
    borderRadius: '8px',
    fontFamily: 'Gilroy',
-   fontSize: '14px',
+   fontSize: '0.875rem',
    lineHeight: '16px',
 }
 const buttonSave = {
-   width: '82px',
+   width: '10%',
    height: '42px',
    background: '#2AB930',
    borderRadius: '8px',
    color: '#fff',
    ':hover': {
-      background: 'red',
+      background: '#00ff2a',
    },
 }
 
@@ -84,6 +84,12 @@ const buttonStyleSave = {
          'linear-gradient(90deg, #29bf26 12%, #00ff37 50%, #35bf43 86%)',
    },
 }
+
+const styleCheckboxes = {
+   width: '6.97%',
+   height: '43.48%',
+   marginLeft: '29.89%',
+}
 const SelectRealEnglishWords = () => {
    const [isOpenModalDelete, setIsOpenModalDelete] = useState(false)
    const [isOpenModalSave, setIsOpenModalSave] = useState(false)
@@ -95,11 +101,13 @@ const SelectRealEnglishWords = () => {
    const openModalSave = () => {
       setIsOpenModalSave((prevState) => !prevState)
    }
+   const deleteTest = () => {}
    return (
       <>
-         <ModalkaDelete
+         <ModalDelete
             openModal={openModalDelete}
             isOpenModal={isOpenModalDelete}
+            deleteTest={deleteTest}
          />
          <ModalReusable
             isOpen={isOpenModalSave}
@@ -124,16 +132,14 @@ const SelectRealEnglishWords = () => {
                </DivButton>
             </DivButtonGoBackAndSave>
          </ModalReusable>
-         <CreateTest style={{ paddingBottom: '50px' }}>
+         <CreateTest>
             <TestSelectRealEnglishWordsLine>
                {sliceWordOne.map((elem) => (
                   <WordEnglish>
                      <NumberWords>{elem.id}</NumberWords>
                      <WordEnglishTest>{elem.word}</WordEnglishTest>
-                     <DivCheckboxAndDeleteButton>
-                        <Checkboxes color="success" />
-                        <Delete onClick={openModalDelete} src={DeleteIcon} />
-                     </DivCheckboxAndDeleteButton>
+                     <Checkboxes sx={styleCheckboxes} color="success" />
+                     <Delete onClick={openModalDelete} src={DeleteIcon} />
                   </WordEnglish>
                ))}
             </TestSelectRealEnglishWordsLine>
@@ -142,19 +148,17 @@ const SelectRealEnglishWords = () => {
                   <WordEnglish>
                      <NumberWords>{elem.id}</NumberWords>
                      <WordEnglishTest>{elem.word}</WordEnglishTest>
-                     <DivCheckboxAndDeleteButton>
-                        <Checkboxes color="success" />
-                        <Delete onClick={openModalDelete} src={DeleteIcon} />
-                     </DivCheckboxAndDeleteButton>
+                     <Checkboxes sx={styleCheckboxes} color="success" />
+                     <Delete onClick={openModalDelete} src={DeleteIcon} />
                   </WordEnglish>
                ))}
             </TestSelectRealEnglishWordsLine>
-            <TestSelectRealEnglishWordssss>
+            <DivButtonSaveandGoBack>
                <Button sx={buttonStyleGoBack}>go Back</Button>
                <Button sx={buttonSave} onClick={openModalSave}>
                   Save
                </Button>
-            </TestSelectRealEnglishWordssss>
+            </DivButtonSaveandGoBack>
          </CreateTest>
       </>
    )
@@ -162,25 +166,17 @@ const SelectRealEnglishWords = () => {
 
 export default SelectRealEnglishWords
 
-const TestSelectRealEnglishWordssss = styled('div')(() => ({
-   width: '203px',
-   display: 'flex',
-   gap: '16px',
-   marginLeft: '617px',
-   marginTop: '32px',
-}))
-
 const TestSelectRealEnglishWordsLine = styled('div')(() => ({
-   width: '821px',
+   width: '100%',
    height: '46px',
    margin: '0 auto',
    display: 'flex',
-   gap: '19px',
+   gap: '2.2%',
    marginBottom: '18px',
 }))
 
 const WordEnglish = styled('div')(() => ({
-   width: '261px',
+   width: '31.83%',
    height: '46px',
    background: '#FFFFFF',
    border: '1.53px solid #D4D0D0',
@@ -190,9 +186,10 @@ const WordEnglish = styled('div')(() => ({
 }))
 
 const NumberWords = styled('div')(() => ({
-   width: '9px',
-   height: '18px',
-   marginLeft: '16px',
+   width: '3.47%',
+   height: '39.13%',
+   margin: '14px 6% 14px 6.13%',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '16px',
@@ -201,26 +198,21 @@ const NumberWords = styled('div')(() => ({
 }))
 
 const WordEnglishTest = styled('div')(() => ({
-   width: '72px',
-   height: '18px',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
-   fontweight: 400,
-   fontSize: '16px',
+   fontWeight: 400,
+   fontSize: '1rem',
    lineHeight: '18px',
-   color: '#4C4859',
-   marginLeft: '15.94px',
+   color: ' #4C4859',
+   width: '27.59%',
+   height: '39.13%',
 }))
 
-const DivCheckboxAndDeleteButton = styled('div')(() => ({
-   display: 'flex',
-   alignItems: 'center',
-   marginLeft: '78px',
-   width: '54px',
-}))
 const Delete = styled('img')(() => ({
-   width: '20px',
-   height: '20px',
+   width: '7.66%',
+   height: '43.48%',
    cursor: 'pointer',
+   marginLeft: '4.98%',
 }))
 const DivButtonGoBackAndSave = styled('div')(() => ({
    width: '637px',
@@ -295,4 +287,16 @@ const StyledIcon = styled('img')(() => ({
    },
 }))
 const DivTrueOption = styled('div')(() => ({ display: 'flex', gap: '5px' }))
-const CreateTest = styled('div')(() => ({ display: 'flex', gap: '5px' }))
+const CreateTest = styled('div')(() => ({
+   gap: '5px',
+}))
+
+const DivButtonSaveandGoBack = styled('div')(() => ({
+   width: '100%',
+   height: '42px',
+   display: 'flex',
+   alignItems: 'center',
+   justifyContent: 'end',
+   marginTop: '32px',
+   gap: '1.95%',
+}))
