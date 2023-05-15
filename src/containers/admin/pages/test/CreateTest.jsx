@@ -31,7 +31,6 @@ const CreateTest = () => {
                isActive: values.isActive,
             })
          )
-         notify('success', 'Update test', 'Successfully updated')
       } else {
          try {
             await postTestRequest(values)

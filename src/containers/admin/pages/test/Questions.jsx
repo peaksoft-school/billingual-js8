@@ -30,8 +30,12 @@ const AddQuestions = () => {
    const { notify } = useSnackbar()
 
    const getTest = async () => {
-      const { data } = await getTestById(testId)
-      setTest(data)
+      try {
+         const { data } = await getTestById(testId)
+         setTest(data)
+      } catch (error) {
+         notify('error', 'Test', 'Failed to get test')
+      }
    }
 
    useEffect(() => {

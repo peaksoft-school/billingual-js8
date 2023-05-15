@@ -24,11 +24,7 @@ const AdminTest = () => {
    const { notify } = useSnackbar()
 
    useEffect(() => {
-      try {
-         dispatch(getTests())
-      } catch (error) {
-         notify('error', 'Test', 'Failed to get tests')
-      }
+      dispatch(getTests(notify))
    }, [])
 
    const createTestHandler = () => {
@@ -39,22 +35,19 @@ const AdminTest = () => {
    }
 
    const deleteHandler = (id) => {
-      try {
-         dispatch(deleteTest(id))
-         notify('success', 'Test', 'Delete test')
-      } catch (error) {
-         notify('error', 'Test', 'Failed to delete test')
-      }
+      dispatch(deleteTest({ id, notify }))
    }
 
    const updateIsActive = async ({ id, title, isActive, shortDescription }) => {
-      try {
-         dispatch(
-            updateTest({ id, title, shortDescription, isActive: !isActive })
-         )
-      } catch (error) {
-         notify('error', 'Test', 'Failed to update test')
-      }
+      dispatch(
+         updateTest({
+            id,
+            title,
+            shortDescription,
+            isActive: !isActive,
+            notify,
+         })
+      )
    }
 
    return (
