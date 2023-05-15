@@ -15,7 +15,7 @@ import { getTestById } from '../../../../api/testService'
 import Button from '../../../../components/UI/buttons/Buttons'
 import Switcher from '../../../../components/UI/checkbox/Switcher'
 import MyIconButton from '../../../../components/UI/Icon-button/IconButton'
-import { ReactComponent as EditIcon } from '../../../../assets/icons/editicon.svg'
+import { ReactComponent as EditIcon } from '../../../../assets/icons/editIcon.svg'
 import { ReactComponent as DeleteIcon } from '../../../../assets/icons/deletedIcon.svg'
 import Spinner from '../../../../components/UI/spinner/Spinner'
 import { formatTime } from '../../../../utils/helpers/formatTime'
@@ -85,31 +85,35 @@ const AddQuestions = () => {
                         </TableRow>
                      </TableHead>
                      <TableBody>
-                        {test.questions.map((question, i) => (
-                           <StyledTr hover key={question.id}>
-                              <StyledTd>{i + 1}</StyledTd>
-                              <StyledTd>{question.title}</StyledTd>
-                              <StyledTd>
-                                 {formatTime(question.duration)}
-                              </StyledTd>
-                              <StyledTd>{question.questionType}</StyledTd>
-                              <StyledTd>
-                                 <IconsContainer>
-                                    <Switcher checked={question.isActive} />
-                                    <MyIconButton>
-                                       <StyledEditIcon />
-                                    </MyIconButton>
-                                    <MyIconButton
-                                       onClick={() =>
-                                          deleteHandler(question.id)
-                                       }
-                                    >
-                                       <StyledDeleteIcon />
-                                    </MyIconButton>
-                                 </IconsContainer>
-                              </StyledTd>
-                           </StyledTr>
-                        ))}
+                        {test.questions !== null ? (
+                           test.questions.map((question, i) => (
+                              <StyledTr hover key={question.id}>
+                                 <StyledTd>{i + 1}</StyledTd>
+                                 <StyledTd>{question.title}</StyledTd>
+                                 <StyledTd>
+                                    {formatTime(question.duration)}
+                                 </StyledTd>
+                                 <StyledTd>{question.questionType}</StyledTd>
+                                 <StyledTd>
+                                    <IconsContainer>
+                                       <Switcher checked={question.isActive} />
+                                       <MyIconButton>
+                                          <StyledEditIcon />
+                                       </MyIconButton>
+                                       <MyIconButton
+                                          onClick={() =>
+                                             deleteHandler(question.id)
+                                          }
+                                       >
+                                          <StyledDeleteIcon />
+                                       </MyIconButton>
+                                    </IconsContainer>
+                                 </StyledTd>
+                              </StyledTr>
+                           ))
+                        ) : (
+                           <p>Question is empty</p>
+                        )}
                      </TableBody>
                   </StyledTable>
                )}
@@ -189,6 +193,9 @@ const StyledTd = styled(TableCell)(() => ({
    fontSize: '16px',
    lineHeight: '18px',
    color: ' #4C4859',
+   maxWidth: '70px',
+   overflow: 'hidden',
+   textOverflow: 'ellipsis',
 
    ':first-of-type': {
       padding: '0 0 0 16px',

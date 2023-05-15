@@ -59,7 +59,7 @@ const Switcher = ({ onClick, checked, ...rest }) => {
    }))
    return (
       <FormControlLabel
-         control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+         control={<IOSSwitch sx={{ m: 1 }} />}
          onClick={onClick}
          checked={checked}
          {...rest}

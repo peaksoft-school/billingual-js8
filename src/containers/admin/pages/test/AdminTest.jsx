@@ -6,7 +6,7 @@ import FormContainer from '../../../../components/UI/form/FormContainer'
 import Button from '../../../../components/UI/buttons/Buttons'
 import Switcher from '../../../../components/UI/checkbox/Switcher'
 
-import { ReactComponent as EditIcon } from '../../../../assets/icons/editicon.svg'
+import { ReactComponent as EditIcon } from '../../../../assets/icons/editIcon.svg'
 import { ReactComponent as DeleteIcon } from '../../../../assets/icons/deletedIcon.svg'
 import MyIconButton from '../../../../components/UI/Icon-button/IconButton'
 import {
@@ -15,14 +15,20 @@ import {
    updateTest,
 } from '../../../../redux/tests/test.thunk'
 import Spinner from '../../../../components/UI/spinner/Spinner'
+import { useSnackbar } from '../../../../hooks/useSnackbar'
 
 const AdminTest = () => {
    const dispatch = useDispatch()
    const { tests, isLoading } = useSelector((state) => state.tests)
    const navigate = useNavigate()
+   const { notify } = useSnackbar()
 
    useEffect(() => {
-      dispatch(getTests())
+      try {
+         dispatch(getTests())
+      } catch (error) {
+         notify('error', 'Test', 'Failed to get tests')
+      }
    }, [])
 
    const createTestHandler = () => {
@@ -33,11 +39,22 @@ const AdminTest = () => {
    }
 
    const deleteHandler = (id) => {
-      dispatch(deleteTest(id))
+      try {
+         dispatch(deleteTest(id))
+         notify('success', 'Test', 'Delete test')
+      } catch (error) {
+         notify('error', 'Test', 'Failed to delete test')
+      }
    }
 
    const updateIsActive = async ({ id, title, isActive, shortDescription }) => {
-      dispatch(updateTest({ id, title, shortDescription, isActive: !isActive }))
+      try {
+         dispatch(
+            updateTest({ id, title, shortDescription, isActive: !isActive })
+         )
+      } catch (error) {
+         notify('error', 'Test', 'Failed to update test')
+      }
    }
 
    return (

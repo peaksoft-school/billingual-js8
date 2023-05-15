@@ -22,9 +22,7 @@ const CreateTest = () => {
    }
 
    const submitHandler = async (values) => {
-      values.isActive = true
-
-      if (state) {
+      if (state !== null) {
          dispatch(
             updateTest({
                id: state.id,
@@ -49,6 +47,7 @@ const CreateTest = () => {
       initialValues: {
          title: state?.title || '',
          shortDescription: state?.shortDescription || '',
+         isActive: true,
       },
       validationSchema: createTestValidation,
       onSubmit: (values) => {
@@ -91,7 +90,7 @@ const CreateTest = () => {
                <SaveButton color="success" variant="contained" type="submit">
                   Save
                </SaveButton>
-               {state ? null : (
+               {state !== null ? null : (
                   <Button variant="contained">+ Add question</Button>
                )}
             </ButtonContainer>
