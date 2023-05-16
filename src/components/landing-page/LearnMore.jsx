@@ -1,4 +1,5 @@
 import { Grid, Typography, styled } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { ReactComponent as Roadmap } from '../../assets/icons/roadmap.svg'
 import { ReactComponent as Icon1 } from '../../assets/icons/globe.svg'
 import { ReactComponent as Icon2 } from '../../assets/icons/research.svg'
@@ -8,6 +9,12 @@ import { ReactComponent as Icon5 } from '../../assets/icons/img-secure-design.sv
 import LandingButton from '../UI/buttons/LandingButtton'
 
 const LearnMore = () => {
+   const navigate = useNavigate()
+
+   const goToTests = () => {
+      navigate('/user/')
+   }
+
    return (
       <Background>
          <Contain>
@@ -86,7 +93,7 @@ const LearnMore = () => {
                <Icon5 style={{ position: 'relative', zIndex: 1 }} />
             </Container4>
             <StyledButton>
-               <LandingButton />
+               <LandingButton onClick={goToTests} />
             </StyledButton>
          </Contain>
       </Background>
@@ -100,9 +107,10 @@ const Background = styled(Grid)(() => ({
 }))
 const Contain = styled(Grid)(() => ({
    display: 'flex',
-   width: '1229px',
    margin: '0 auto',
+   // justifyContent: 'center',
    flexDirection: 'column',
+   padding: '0 80px',
 }))
 
 const TitleContainer = styled(Grid)(() => ({
@@ -123,9 +131,7 @@ const StyledIcon = styled(Roadmap)(() => ({
    zIndex: '1',
    left: '0',
    right: '0',
-   marginLeft: 'auto',
-   marginRight: 'auto',
-   marginTop: '107px',
+   margin: '107px auto',
 }))
 
 const Title1 = styled(Typography)(() => ({

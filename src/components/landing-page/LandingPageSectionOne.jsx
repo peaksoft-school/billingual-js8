@@ -1,62 +1,56 @@
 import { styled } from '@mui/material'
-import logo from '../../assets/logo/layer1.png'
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import logo from '../../assets/icons/logo.svg'
 import imageBubble from '../../assets/images/bubble.png'
 import cap from '../../assets/images/cap.png'
 import imageBook from '../../assets/images/books.png'
 import LandingButton from '../UI/buttons/LandingButtton'
 import Button from '../UI/buttons/Buttons'
+import { signOut } from '../../redux/auth/auth.thunk'
 
 const LandingPage = styled('div')(() => ({
-   height: '778px',
    width: '100%',
-   bottom: ' 90.3%',
    background: ' #FCD200',
-   zIndex: '-44',
+}))
+
+const LogoAndButtonDiv = styled('div')(({ bgColor }) => ({
+   position: 'fixed',
+   display: 'flex',
+   justifyContent: 'space-between',
+   alignItems: 'center',
+   zIndex: 1000,
+   backgroundColor: bgColor ? '' : '#fff',
+   padding: '20px 0',
+   width: '100%',
+   transition: 'background 0.2s ease',
 }))
 
 const Logo = styled('img')(() => ({
-   position: 'absolute',
    height: '48px',
-   left: '80px',
-   right: '78.13%',
-   top: '24px',
-   bottom: '99.1%',
-}))
-
-const LogoAndButtonDiv = styled('div')(() => ({
-   display: 'flex',
+   padding: '0 0 0 80px',
 }))
 
 const ButtonDiv = styled('div')(() => ({
-   position: 'absolute',
-   width: '16.1875rem',
    display: 'flex',
-   height: '42px',
-   right: '80px',
-   top: '27px',
+   gap: '20px',
+   padding: '0 80px',
 }))
-const ButtonToComeIn = {
-   width: '122px',
-   height: '42',
-   marginRight: '24px',
+const ButtonToComeIn = styled(Button)(() => ({
+   padding: '12px 20px',
    fontSize: '14px',
-   background: '#3A10E5',
    fontFamily: 'Poppins',
    lineHeight: '16px',
-   alignItems: 'center',
-   textAlign: 'center',
    letterSpacing: ' 0.02em',
-}
-const ButtonSx = {
-   width: '113px',
-   height: '42',
+}))
+
+const RegisterBtn = styled(Button)(() => ({
    fontSize: '14px',
    background: '#ffffff',
    color: '#4C4C4C',
    fontFamily: 'Poppins',
    lineHeight: '16px',
-   alignItems: 'center',
-   textAlign: 'center',
    letterSpacing: ' 0.02em',
    boxShadow:
       '0px 1px 2px rgba(76, 72, 89, 0.2), 0px 1px 2px rgba(76, 72, 89, 0.2)',
@@ -65,28 +59,23 @@ const ButtonSx = {
       background: '#3A10E5',
       color: '#fff',
    },
-}
+}))
 const ImgBubble = styled('img')(() => ({
-   height: '659.9998779296875px',
+   height: '41.25rem',
    width: '100%',
-   position: 'absolute',
-   top: ' 1.47%',
-   bottom: ' 90.3%',
    mixBlendMode: 'overlay',
-   marginTop: '107px',
+   marginTop: '-550px',
 }))
 const EnglishProficiency = styled('div')(() => ({
-   position: 'absolute',
-   width: '680px',
+   width: '50%',
    height: '219px',
-   marginTop: '192px',
+   margin: '0 0 50px',
+   position: 'relative',
+   zIndex: 1,
 }))
 const ProveYourEnglish = styled('h1')(() => ({
    fontFamily: 'Gilroy',
-   marginTop: '0px',
-   marginBottom: '0px',
-   width: '680px',
-   height: '141px',
+   margin: '0px',
    fontStyle: 'normal',
    fontWeight: 700,
    fontSize: '60px',
@@ -94,13 +83,13 @@ const ProveYourEnglish = styled('h1')(() => ({
    color: ' #43404E',
 }))
 const DivInfo = styled('div')(() => ({
-   marginLeft: '80px',
+   padding: '180px 0',
+   margin: '0 0 0 4.5625rem',
    lineHeight: '73px',
+   position: 'relative',
+   zIndex: 1,
 }))
 const Bilingual = styled('h1')(() => ({
-   width: '320px',
-   height: '85px',
-   marginleft: '80px',
    fontFamily: 'Gilroy',
    fontStyle: 'normal',
    fontWeight: 900,
@@ -112,11 +101,8 @@ const Bilingual = styled('h1')(() => ({
 }))
 
 const TextDivInfo = styled('div')(() => ({
-   position: 'absolute',
-   width: '772px',
-   height: '60px',
+   width: '60%',
    marginleft: '80px',
-   top: '440px',
    fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
@@ -127,45 +113,95 @@ const TextDivInfo = styled('div')(() => ({
 
 const AcademicCap = styled('img')(() => ({
    position: 'absolute',
-   width: ' 236.09px',
+   width: '236.09px',
    height: '243px',
-   left: '869px',
    top: '189px',
+   right: '25%',
 }))
 
 const ImageBooks = styled('img')(() => ({
    position: 'absolute',
    width: '594.78px',
    height: '499px',
-   marginLeft: '820px',
-   marginTop: '279px',
-   zIndex: 10,
+   top: '293px',
+   right: '0',
 }))
 
 const ButtonToBegin = styled('div')(() => ({
-   height: '59.99999237060547px',
-   width: ' 200px',
    marginleft: '80px',
    top: '530px',
    position: 'absolute',
-   bottom: ' 92.65%',
+   zIndex: 1,
 }))
 
 const LandingPageSectionOne = () => {
+   const dispatch = useDispatch()
+   const { isAuthorized } = useSelector((state) => state.auth)
+   const navigate = useNavigate()
+   const [bgColor, setBgColor] = useState(true)
+
+   const changeColor = () => {
+      if (window.scrollY) {
+         setBgColor(false)
+      }
+      if (window.scrollY <= 80) {
+         setBgColor(true)
+      }
+      return bgColor
+   }
+   useEffect(() => {
+      changeColor()
+      window.addEventListener('scroll', changeColor)
+   })
+
+   const goToSignInPage = () => {
+      navigate('/sign-in')
+   }
+
+   const goToSignUpPage = () => {
+      navigate('/sign-up')
+   }
+
+   const goToTests = () => {
+      navigate('/user/tests')
+   }
+
+   const onLogOut = () => {
+      dispatch(signOut())
+   }
+
    return (
       <LandingPage>
-         <LogoAndButtonDiv>
+         {/* Header */}
+         <LogoAndButtonDiv bgColor={bgColor}>
             <Logo src={logo} />
             <ButtonDiv>
-               <Button sx={ButtonToComeIn} variant="contained">
-                  To come in
-               </Button>
-               <Button sx={ButtonSx} variant="contained">
-                  Register
-               </Button>
+               {isAuthorized ? (
+                  <>
+                     <Button variant="contained" onClick={onLogOut}>
+                        Log out
+                     </Button>
+                     <Button variant="contained" onClick={goToTests}>
+                        Tests
+                     </Button>
+                  </>
+               ) : (
+                  <>
+                     <ButtonToComeIn
+                        variant="contained"
+                        onClick={goToSignInPage}
+                     >
+                        To come in
+                     </ButtonToComeIn>
+                     <RegisterBtn variant="outlined" onClick={goToSignUpPage}>
+                        Register
+                     </RegisterBtn>
+                  </>
+               )}
             </ButtonDiv>
          </LogoAndButtonDiv>
-         <ImgBubble src={imageBubble} />
+         {/* Header */}
+
          <DivInfo>
             <EnglishProficiency>
                <ProveYourEnglish>
@@ -179,9 +215,12 @@ const LandingPageSectionOne = () => {
                languages.
             </TextDivInfo>
             <ButtonToBegin>
-               <LandingButton textButton="toBeggin" />
+               <LandingButton textButton="toBeggin" onClick={goToTests} />
             </ButtonToBegin>
          </DivInfo>
+
+         <ImgBubble src={imageBubble} />
+
          <AcademicCap src={cap} />
          <ImageBooks src={imageBook} />
       </LandingPage>

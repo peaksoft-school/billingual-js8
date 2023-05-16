@@ -2,6 +2,7 @@ import { Grid, Rating, Typography, styled } from '@mui/material'
 import React, { useState } from 'react'
 
 import Slider from 'react-slick'
+<<<<<<< HEAD
 import avatar1 from '../../assets/images/Avatar1.jpg'
 import avatar2 from '../../assets/images/Avatar2.jpg'
 import avatar3 from '../../assets/images/Avatar3.jpg'
@@ -54,6 +55,13 @@ const humans = [
       avatar: avatar5,
    },
 ]
+=======
+import { ReactComponent as NextIcon } from '../../assets/icons/nextIcon.svg'
+import { ReactComponent as PrevIcon } from '../../assets/icons/prevIcon.svg'
+import { ReactComponent as Pagination } from '../../assets/icons/pagination.svg'
+import { ReactComponent as ActivePagination } from '../../assets/icons/activePagination.svg'
+import { humans } from '../../utils/constants/common'
+>>>>>>> ae434aab2333ef2b2e6f3bb4af649edfc82d741b
 
 const PrevArrow = ({ className, style, onClick }) => {
    return (
@@ -147,7 +155,7 @@ const Container = styled(Grid)(() => ({
 }))
 
 const UserImg = styled('img')(({ prop }) => ({
-   width: prop ? '260px' : '180px',
+   width: prop ? '80%' : '50%',
    height: prop ? '260px' : '180px',
    borderRadius: '50%',
    margin: prop ? '40px 30px' : '40px 60px',
@@ -156,10 +164,10 @@ const UserImg = styled('img')(({ prop }) => ({
 const UserContainer = styled(Grid)(({ prop }) => ({
    textAlign: 'center',
    background: prop ? '#666CA7' : '',
-   transition: prop ? 'transform 2000ms' : 'transform 1000ms',
+   transition: prop ? 'all 0.5s ease' : 'all 0.5s ease',
    transform: prop ? 'scale(1.1)' : '',
    padding: prop ? '0 0 50px 0' : '0 0 50px 0',
-   maxWidth: prop ? '330px' : '',
+   maxWidth: prop ? '350px' : '',
    borderRadius: prop ? '40px' : '40px',
    color: prop ? 'white' : '',
 }))
@@ -186,15 +194,16 @@ const UserName = styled(Typography)(({ prop }) => ({
 }))
 
 const StyledSlider = styled(Slider)({
-   padding: '0',
+   padding: '0 30px',
    display: 'grid',
-   gridTemplateColumns: 'repeat(3, 1fr)',
+   gridTemplateColumns: 'repeat(3, auto)',
    gridTemplateRows: 'repeat(1, auto)',
    alignItems: 'center',
    justifyItems: 'center',
+   gridAutoFlow: 'dense',
 
    '& .slick-slide': {
-      // width: '700px',
+      width: '700px',
       background: '#e5e5e5',
       borderRadius: '40px',
    },
@@ -203,12 +212,12 @@ const StyledSlider = styled(Slider)({
       display: 'flex',
       gap: '30px',
       justifyContent: 'center',
-      width: '564px',
+      // width: '564px',
       paddingTop: '50px',
    },
 
    '& .slick-list': {
-      width: '1000px',
+      width: '80%',
       height: '760px',
       overflow: 'hidden',
       padding: '50px',
@@ -216,7 +225,7 @@ const StyledSlider = styled(Slider)({
 
    '& .slick-arrow': {
       display: 'flex',
-      justifyContent: 'center',
+      justifyContent: 'flex-end',
       width: '60px',
       height: '60px',
       borderRadius: '50%',
