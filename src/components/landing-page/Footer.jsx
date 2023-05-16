@@ -6,10 +6,10 @@ import {
    styled,
 } from '@mui/material'
 import React from 'react'
-import { ReactComponent as Bilingual } from '../../assets/icons/footerLogo.svg'
-import { ReactComponent as YouTube } from '../../assets/icons/youTube.svg'
-import { ReactComponent as Facebook } from '../../assets/icons/facebook.svg'
-import { ReactComponent as Instagram } from '../../assets/icons/instagram.svg'
+import { ReactComponent as Bilingual } from '../../assets/icons/FooterLogo.svg'
+import { ReactComponent as YouTube } from '../../assets/icons/YouTube.svg'
+import { ReactComponent as Facebook } from '../../assets/icons/Facebook.svg'
+import { ReactComponent as Instagram } from '../../assets/icons/Instagram.svg'
 import { ReactComponent as PlusIcon } from '../../assets/icons/plus.svg'
 
 const FAQ = [

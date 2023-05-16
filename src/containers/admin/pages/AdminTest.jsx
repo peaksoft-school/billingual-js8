@@ -1,11 +1,12 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Grid, Typography, styled } from '@mui/material'
 import FormContainer from '../../../components/UI/form/FormContainer'
 import Button from '../../../components/UI/buttons/Buttons'
 import Switcher from '../../../components/UI/checkbox/Switcher'
 
-import { ReactComponent as EditIcon } from '../../../assets/icons/editicon.svg'
-import { ReactComponent as DeleteIcon } from '../../../assets/icons/deletedIcon.svg'
+import { ReactComponent as EditIcon } from '../../../assets/icons/Editicon.svg'
+import { ReactComponent as DeleteIcon } from '../../../assets/icons/DeletedIcon.svg'
 import MyIconButton from '../../../components/UI/Icon-button/IconButton'
 
 const data = [
@@ -24,10 +25,16 @@ const data = [
 ]
 
 const AdminTest = () => {
+   const navigate = useNavigate()
+   const goToPage = (path) => {
+      navigate(path)
+   }
    return (
       <FormContainer>
          <ButtonContainer>
-            <Button variant="contained">+ Add new Test</Button>
+            <Button variant="contained" onClick={() => goToPage('createtest')}>
+               + Add new Test
+            </Button>
          </ButtonContainer>
          {data.map((item) => (
             <Container key={item.id}>
