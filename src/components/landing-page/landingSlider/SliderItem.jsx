@@ -35,7 +35,7 @@ const InfoStyle = styled(Grid)(() => ({
    flexDirection: 'column',
 }))
 
-const TitleStyle = styled(Typography)(({ textColor }) => ({
+const TitleStyle = styled('p')(({ textColor }) => ({
    color: textColor,
    fontfamily: 'Gilroy',
    fontStyle: 'normal',

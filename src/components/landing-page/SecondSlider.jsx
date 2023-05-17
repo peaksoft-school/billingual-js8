@@ -2,58 +2,11 @@ import { Grid, Rating, Typography, styled } from '@mui/material'
 import React, { useState } from 'react'
 
 import Slider from 'react-slick'
-import avatar1 from '../../assets/images/avatar1.jpg'
-import avatar2 from '../../assets/images/avatar2.jpg'
-import avatar3 from '../../assets/images/avatar3.jpg'
-import avatar4 from '../../assets/images/avatar4.jpg'
-import avatar5 from '../../assets/images/avatar5.jpg'
 import { ReactComponent as NextIcon } from '../../assets/icons/nextIcon.svg'
 import { ReactComponent as PrevIcon } from '../../assets/icons/prevIcon.svg'
 import { ReactComponent as Pagination } from '../../assets/icons/pagination.svg'
 import { ReactComponent as ActivePagination } from '../../assets/icons/activePagination.svg'
-
-const humans = [
-   {
-      id: 1,
-      description:
-         'Great way to learn a language. Fun, interactive, and engaging. I am enjoying the course immensely and would recommend it to anyone who wishes to learn a second language.',
-      name: 'Aibek Atabekov',
-      rating: 5,
-      avatar: avatar1,
-   },
-   {
-      id: 2,
-      description:
-         'Bilingual has helped me to get a good grasp of the language in a fun and challenging way. I enjoy the dialogues and scenarios, which include helpful phrases that can be used in various situations.',
-      name: 'Alina Begishova',
-      rating: 5,
-      avatar: avatar2,
-   },
-   {
-      id: 3,
-      description:
-         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Minura Telegenova',
-      rating: 5,
-      avatar: avatar3,
-   },
-   {
-      id: 4,
-      description:
-         'Great way to learn a language. Fun, interactive, and engaging. I am enjoying the course immensely and would recommend it to anyone who wishes to learn a second language.',
-      name: 'Aibek Atabekov',
-      rating: 5,
-      avatar: avatar4,
-   },
-   {
-      id: 5,
-      description:
-         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Alina Begishova',
-      rating: 5,
-      avatar: avatar5,
-   },
-]
+import { humans } from '../../utils/constants/common'
 
 const PrevArrow = ({ className, style, onClick }) => {
    return (
@@ -147,7 +100,7 @@ const Container = styled(Grid)(() => ({
 }))
 
 const UserImg = styled('img')(({ prop }) => ({
-   width: prop ? '260px' : '180px',
+   width: prop ? '80%' : '50%',
    height: prop ? '260px' : '180px',
    borderRadius: '50%',
    margin: prop ? '40px 30px' : '40px 60px',
@@ -156,10 +109,10 @@ const UserImg = styled('img')(({ prop }) => ({
 const UserContainer = styled(Grid)(({ prop }) => ({
    textAlign: 'center',
    background: prop ? '#666CA7' : '',
-   transition: prop ? 'transform 2000ms' : 'transform 1000ms',
+   transition: prop ? 'all 0.5s ease' : 'all 0.5s ease',
    transform: prop ? 'scale(1.1)' : '',
    padding: prop ? '0 0 50px 0' : '0 0 50px 0',
-   maxWidth: prop ? '330px' : '',
+   maxWidth: prop ? '350px' : '',
    borderRadius: prop ? '40px' : '40px',
    color: prop ? 'white' : '',
 }))
@@ -186,15 +139,16 @@ const UserName = styled(Typography)(({ prop }) => ({
 }))
 
 const StyledSlider = styled(Slider)({
-   padding: '0',
+   padding: '0 30px',
    display: 'grid',
-   gridTemplateColumns: 'repeat(3, 1fr)',
+   gridTemplateColumns: 'repeat(3, auto)',
    gridTemplateRows: 'repeat(1, auto)',
    alignItems: 'center',
    justifyItems: 'center',
+   gridAutoFlow: 'dense',
 
    '& .slick-slide': {
-      // width: '700px',
+      width: '700px',
       background: '#e5e5e5',
       borderRadius: '40px',
    },
@@ -203,12 +157,12 @@ const StyledSlider = styled(Slider)({
       display: 'flex',
       gap: '30px',
       justifyContent: 'center',
-      width: '564px',
+      // width: '564px',
       paddingTop: '50px',
    },
 
    '& .slick-list': {
-      width: '1000px',
+      width: '80%',
       height: '760px',
       overflow: 'hidden',
       padding: '50px',
@@ -216,7 +170,7 @@ const StyledSlider = styled(Slider)({
 
    '& .slick-arrow': {
       display: 'flex',
-      justifyContent: 'center',
+      justifyContent: 'flex-end',
       width: '60px',
       height: '60px',
       borderRadius: '50%',
