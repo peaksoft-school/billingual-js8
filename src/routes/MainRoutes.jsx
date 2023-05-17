@@ -9,6 +9,7 @@ import GetAllTests from '../containers/user/GetAllTests'
 import CurrentTest from '../containers/user/CurrentTest'
 import SigninPage from '../containers/public/SigninPage'
 import SignupPage from '../containers/public/SignupPage'
+import TypeWhatHear from '../containers/admin/pages/TypeWhatHear'
 
 const MainRoutes = () => {
    return (
@@ -31,6 +32,7 @@ const MainRoutes = () => {
             <Route element={<ProtectedRoute />}>
                <Route path="/admin/" element={<AdminRoute />}>
                   <Route path="test" element={<AdminTest />} />
+                  <Route path="typeWhatHear" element={<TypeWhatHear />} />
                </Route>
             </Route>
          </Routes>

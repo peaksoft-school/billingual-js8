@@ -14,5 +14,5 @@ export default AdminRoute
 
 const Admin = styled('div')(() => ({
    background: '#D7E1F8',
-   height: '100vh',
+   height: '100%',
 }))
