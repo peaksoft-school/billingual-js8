@@ -1,15 +1,16 @@
 import axios from 'axios'
 import { store } from '../../redux'
-import { signOut } from '../../redux/auth/auth.thunk'
+import { BASE_URL } from './Instanse'
+import { postFiles } from '../../redux/tests/test.thunk'
 
-export const BASE_URL =
-   'http://ec2-3-67-99-132.eu-central-1.compute.amazonaws.com/'
-
-export const instanse = axios.create({
+export const fileAxiosInstanse = axios.create({
    baseURL: BASE_URL,
+   headers: {
+      'Content-Type': 'multipart/form-data',
+   },
 })
 
-instanse.interceptors.request.use(
+fileAxiosInstanse.interceptors.request.use(
    (config) => {
       const configUpdate = { ...config }
       const { token } = store.getState().auth
@@ -24,13 +25,13 @@ instanse.interceptors.request.use(
    }
 )
 
-instanse.interceptors.response.use(
+fileAxiosInstanse.interceptors.response.use(
    (response) => {
       return Promise.resolve(response)
    },
    (error) => {
       if (error.response?.status === 401) {
-         store.dispatch(signOut())
+         store.dispatch(postFiles())
          throw new Error('401 unauthotized')
       }
       return Promise.reject(error)
