@@ -1,4 +1,3 @@
-// import { useState } from 'react'
 import { Grid, Typography, styled } from '@mui/material'
 import redCross from '../../../../assets/icons/redCross.svg'
 import closeCross from '../../../../assets/icons/closeCross.svg'
@@ -7,7 +6,7 @@ import ModalReusable from '../../../../components/UI/modal/Modal'
 
 const style = { borderRadius: '20px', borderStyle: 'none' }
 
-const ModalDelete = ({ isOpenModal, openModal, deleteTest }) => {
+const ModalDelete = ({ isOpenModal, openModal, deleteFunction }) => {
    return (
       <ModalReusable
          modalStyle={style}
@@ -21,7 +20,7 @@ const ModalDelete = ({ isOpenModal, openModal, deleteTest }) => {
             <Text>You can t restore this file </Text>
             <Buttons>
                <StyledButton onClick={openModal}>Cancel</StyledButton>
-               <DeleteButton variant="contained" onClick={deleteTest}>
+               <DeleteButton variant="contained" onClick={deleteFunction}>
                   Delete
                </DeleteButton>
             </Buttons>

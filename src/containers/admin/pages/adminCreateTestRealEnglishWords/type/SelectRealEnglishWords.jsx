@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material'
 import Checkboxes from '../../../../../components/UI/checkbox/Checkbox'
-import DeleteIcon from '../../../../../assets/icons/DeletedIcon.svg'
+import DeleteIcon from '../../../../../assets/icons/deletedIcon.svg'
 import closeCross from '../../../../../assets/icons/closeCross.svg'
 import Button from '../../../../../components/UI/buttons/Buttons'
 import ModalReusable from '../../../../../components/UI/modal/Modal'
@@ -80,8 +82,8 @@ const buttonStyleSave = {
    borderRadius: '8px',
    color: '#fff',
    ':hover': {
-      background:
-         'linear-gradient(90deg, #29bf26 12%, #00ff37 50%, #35bf43 86%)',
+      background: '#059903',
+      boxShadow: '0px -0.5px 10px 0px rgba(0, 0, 0, 0.5)',
    },
 }
 
@@ -93,21 +95,33 @@ const styleCheckboxes = {
 const SelectRealEnglishWords = () => {
    const [isOpenModalDelete, setIsOpenModalDelete] = useState(false)
    const [isOpenModalSave, setIsOpenModalSave] = useState(false)
+   const [idListen, setListenId] = useState()
+   const [deleteArrayListen, setDeleteArrayListen] = useState()
    const sliceWordOne = realEnglishWords.slice(0, 3)
    const sliceWordTwo = realEnglishWords.slice(3, 6)
-   const openModalDelete = () => {
+   const navigate = useNavigate()
+   const openModalDelete = (id) => {
       setIsOpenModalDelete((prevState) => !prevState)
+      setListenId(id)
    }
    const openModalSave = () => {
       setIsOpenModalSave((prevState) => !prevState)
    }
-   const deleteTest = () => {}
+   const deleteTest = () => {
+      setIsOpenModalDelete((prevState) => !prevState)
+      setDeleteArrayListen(
+         realEnglishWords.filter((elem) => elem.id !== idListen)
+      )
+   }
+   const navigateGoBackTest = () => {
+      navigate(-1)
+   }
    return (
       <>
          <ModalDelete
             openModal={openModalDelete}
             isOpenModal={isOpenModalDelete}
-            deleteTest={deleteTest}
+            deleteFunction={deleteTest}
          />
          <ModalReusable
             isOpen={isOpenModalSave}
@@ -139,7 +153,10 @@ const SelectRealEnglishWords = () => {
                      <NumberWords>{elem.id}</NumberWords>
                      <WordEnglishTest>{elem.word}</WordEnglishTest>
                      <Checkboxes sx={styleCheckboxes} color="success" />
-                     <Delete onClick={openModalDelete} src={DeleteIcon} />
+                     <Delete
+                        onClick={() => openModalDelete(elem.id)}
+                        src={DeleteIcon}
+                     />
                   </WordEnglish>
                ))}
             </TestSelectRealEnglishWordsLine>
@@ -149,12 +166,17 @@ const SelectRealEnglishWords = () => {
                      <NumberWords>{elem.id}</NumberWords>
                      <WordEnglishTest>{elem.word}</WordEnglishTest>
                      <Checkboxes sx={styleCheckboxes} color="success" />
-                     <Delete onClick={openModalDelete} src={DeleteIcon} />
+                     <Delete
+                        onClick={() => openModalDelete(elem.id)}
+                        src={DeleteIcon}
+                     />
                   </WordEnglish>
                ))}
             </TestSelectRealEnglishWordsLine>
             <DivButtonSaveandGoBack>
-               <Button sx={buttonStyleGoBack}>go Back</Button>
+               <Button sx={buttonStyleGoBack} onClick={navigateGoBackTest}>
+                  go Back
+               </Button>
                <Button sx={buttonSave} onClick={openModalSave}>
                   Save
                </Button>

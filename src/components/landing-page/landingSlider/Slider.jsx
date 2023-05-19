@@ -2,16 +2,16 @@ import React, { useState } from 'react'
 import Slider from 'react-slick'
 import { Grid, Typography, styled } from '@mui/material'
 import { ReactComponent as Globus } from '../../../assets/icons/globus.svg'
-import { ReactComponent as NextIcon } from '../../../assets/icons/NextIcon.svg'
-import { ReactComponent as PrevIcon } from '../../../assets/icons/PrevIcon.svg'
-import { ReactComponent as Pagination } from '../../../assets/icons/Pagination.svg'
-import { ReactComponent as ActivePagination } from '../../../assets/icons/ActivePagination.svg'
+import { ReactComponent as NextIcon } from '../../../assets/icons/nextIcon.svg'
+import { ReactComponent as PrevIcon } from '../../../assets/icons/prevIcon.svg'
+import { ReactComponent as Pagination } from '../../../assets/icons/pagination.svg'
+import { ReactComponent as ActivePagination } from '../../../assets/icons/activePagination.svg'
 import SlideItem from './SliderItem'
 
 const info = [
    {
       title: 'Confirm your English proficiency today!',
-      text: 'For nearly 30 years, learners have turned to Rosetta Stone to build the fluency and confidence they need to speak new languages.',
+      text: 'For nearly 30 years, lea rners have turned to Rosetta Stone to build the fluency and confidence they need to speak new languages.',
       img: <Globus />,
       id: new Date().toISOString(),
       titleColor: '#FE9102',

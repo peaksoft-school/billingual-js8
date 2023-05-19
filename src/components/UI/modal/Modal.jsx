@@ -1,13 +1,13 @@
 import React from 'react'
 import Box from '@mui/material/Box'
-import { Modal as MuiModal } from '@mui/material/Modal'
-import { styled } from '@mui/material'
+// import { Modal as MuiModal } from '@mui/material/Modal'
+import { Modal, styled } from '@mui/material'
 
 const ModalReusable = ({ modalStyle, handleClose, isOpen, children }) => {
    return (
-      <MuiModal open={isOpen} onClose={handleClose}>
-         <BoxStyle>{children}</BoxStyle>
-      </MuiModal>
+      <Modal open={isOpen} onClose={handleClose}>
+         <BoxStyle sx={modalStyle}>{children}</BoxStyle>
+      </Modal>
    )
 }
 

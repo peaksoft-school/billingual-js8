@@ -1,15 +1,16 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react'
 import { styled } from '@mui/material'
 import { Howl } from 'howler'
 import Button from '../../../../../components/UI/buttons/Buttons'
 import { ReactComponent as Volumeup } from '../../../../../assets/icons/volumeup.svg'
 import Checkboxes from '../../../../../components/UI/checkbox/Checkbox'
-import DeleteIcon from '../../../../../assets/icons/DeletedIcon.svg'
+import DeleteIcon from '../../../../../assets/icons/deletedIcon.svg'
 import closeCross from '../../../../../assets/icons/closeCross.svg'
 import ModalReusable from '../../../../../components/UI/modal/Modal'
 import ModalDelete from '../ModalDelete'
 
-const realEnglishWords = [
+const listenEglishWords = [
    {
       word: 'word 1',
       id: 1,
@@ -95,6 +96,8 @@ const ListenWords = ({ audio }) => {
    const [isOpenModal, setIsOpenModal] = useState(false)
    const [isOpenModalSave, setIsOpenModalSave] = useState(false)
    const [upploadFile, setUpploadFile] = useState({})
+   const [idListen, setListenId] = useState()
+   const [deleteArrayListen, setDeleteArrayListen] = useState()
    const soundPlay = (src) => {
       const sound = new Howl({
          src,
@@ -102,8 +105,9 @@ const ListenWords = ({ audio }) => {
       })
       sound.play()
    }
-   const openModal = () => {
+   const openModal = (id) => {
       setIsOpenModal((prevState) => !prevState)
+      setListenId(id)
    }
    const openModalSave = () => {
       setIsOpenModalSave((prevState) => !prevState)
@@ -112,11 +116,14 @@ const ListenWords = ({ audio }) => {
    const changeFileName = (event) => {
       setUpploadFile(event.target.files[0])
    }
-   const sliceListenWordOne = realEnglishWords.slice(0, 3)
-   const sliceListenWordTwo = realEnglishWords.slice(3, 6)
+   const sliceListenWordOne = listenEglishWords.slice(0, 3)
+   const sliceListenWordTwo = listenEglishWords.slice(3, 6)
 
    const deleteTest = () => {
       setIsOpenModal((prevState) => !prevState)
+      setDeleteArrayListen(
+         listenEglishWords.filter((elem) => elem.id !== idListen)
+      )
    }
    return (
       <>
@@ -161,7 +168,7 @@ const ListenWords = ({ audio }) => {
                   <StyledVolumeup onClick={() => soundPlay(audio)} />
                   <ListenWordEnglishTest>{elem.word}</ListenWordEnglishTest>
                   <Checkboxes sx={styleCheckboxes} color="success" />
-                  <Delete onClick={openModal} src={DeleteIcon} />
+                  <Delete onClick={() => openModal(elem.id)} src={DeleteIcon} />
                </ListenWordEnglish>
             ))}
          </TestListenAndSelectEnglishWords>

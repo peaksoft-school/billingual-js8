@@ -2,16 +2,15 @@ import { Grid, Rating, Typography, styled } from '@mui/material'
 import React, { useState } from 'react'
 
 import Slider from 'react-slick'
-<<<<<<< HEAD
 import avatar1 from '../../assets/images/Avatar1.jpg'
 import avatar2 from '../../assets/images/Avatar2.jpg'
 import avatar3 from '../../assets/images/Avatar3.jpg'
 import avatar4 from '../../assets/images/Avatar4.jpg'
 import avatar5 from '../../assets/images/Avatar5.jpg'
-import { ReactComponent as NextIcon } from '../../assets/icons/NextIcon.svg'
-import { ReactComponent as PrevIcon } from '../../assets/icons/PrevIcon.svg'
-import { ReactComponent as Pagination } from '../../assets/icons/Pagination.svg'
-import { ReactComponent as ActivePagination } from '../../assets/icons/ActivePagination.svg'
+import { ReactComponent as NextIcon } from '../../assets/icons/nextIcon.svg'
+import { ReactComponent as PrevIcon } from '../../assets/icons/prevIcon.svg'
+import { ReactComponent as Pagination } from '../../assets/icons/pagination.svg'
+import { ReactComponent as ActivePagination } from '../../assets/icons/activePagination.svg'
 
 const humans = [
    {
@@ -55,13 +54,6 @@ const humans = [
       avatar: avatar5,
    },
 ]
-=======
-import { ReactComponent as NextIcon } from '../../assets/icons/nextIcon.svg'
-import { ReactComponent as PrevIcon } from '../../assets/icons/prevIcon.svg'
-import { ReactComponent as Pagination } from '../../assets/icons/pagination.svg'
-import { ReactComponent as ActivePagination } from '../../assets/icons/activePagination.svg'
-import { humans } from '../../utils/constants/common'
->>>>>>> ae434aab2333ef2b2e6f3bb4af649edfc82d741b
 
 const PrevArrow = ({ className, style, onClick }) => {
    return (

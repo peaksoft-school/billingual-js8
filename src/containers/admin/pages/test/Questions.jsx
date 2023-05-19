@@ -70,7 +70,12 @@ const AddQuestions = () => {
                   </StyledTypography>
                </TestInfo>
                <ButtonContainer>
-                  <Button variant="contained">+ Add more questions</Button>
+                  <Button
+                     variant="contained"
+                     onClick={() => navigate(`createtest`)}
+                  >
+                     + Add more questions
+                  </Button>
                </ButtonContainer>
 
                <Hr />
