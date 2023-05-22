@@ -179,7 +179,7 @@ const ListenWords = ({ audio }) => {
                   <StyledVolumeup onClick={() => soundPlay(audio)} />
                   <ListenWordEnglishTest>{elem.word}</ListenWordEnglishTest>
                   <Checkboxes sx={styleCheckboxes} color="success" />
-                  <Delete onClick={openModal} src={DeleteIcon} alt="sdgsdfsd" />
+                  <Delete onClick={openModal} src={DeleteIcon} />
                </ListenWordEnglish>
             ))}
          </TestListenAndSelectEnglishWords>
