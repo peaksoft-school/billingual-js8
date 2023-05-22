@@ -97,7 +97,7 @@ const ListenWords = ({ audio }) => {
    const [isOpenModalSave, setIsOpenModalSave] = useState(false)
    const [upploadFile, setUpploadFile] = useState({})
    const [idListen, setListenId] = useState()
-   const [deleteArrayListen, setDeleteArrayListen] = useState()
+   const [deleteArrayListen, setDeleteArrayListen] = useState(listenEglishWords)
    const soundPlay = (src) => {
       const sound = new Howl({
          src,
@@ -116,13 +116,13 @@ const ListenWords = ({ audio }) => {
    const changeFileName = (event) => {
       setUpploadFile(event.target.files[0])
    }
-   const sliceListenWordOne = listenEglishWords.slice(0, 3)
-   const sliceListenWordTwo = listenEglishWords.slice(3, 6)
+   const sliceListenWordOne = deleteArrayListen.slice(0, 3)
+   const sliceListenWordTwo = deleteArrayListen.slice(3, 6)
 
    const deleteTest = () => {
       setIsOpenModal((prevState) => !prevState)
       setDeleteArrayListen(
-         listenEglishWords.filter((elem) => elem.id !== idListen)
+         deleteArrayListen.filter((elem) => elem.id !== idListen)
       )
    }
    return (

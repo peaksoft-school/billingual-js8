@@ -1,4 +1,4 @@
-import { Grid, Typography, styled } from '@mui/material'
+import { Typography, styled } from '@mui/material'
 import redCross from '../../../../assets/icons/redCross.svg'
 import closeCross from '../../../../assets/icons/closeCross.svg'
 import Button from '../../../../components/UI/buttons/Buttons'
@@ -15,7 +15,7 @@ const ModalDelete = ({ isOpenModal, openModal, deleteFunction }) => {
       >
          <StyledModal>
             <StyledIcon src={closeCross} onClick={openModal} />
-            <RedCrossImage src={redCross} alt="wefwefS" />
+            <RedCrossImage src={redCross} />
             <Title>Do you want delete? </Title>
             <Text>You can t restore this file </Text>
             <Buttons>
@@ -72,7 +72,7 @@ const Text = styled(Typography)(() => ({
    marginLeft: '165px',
    marginBottom: '48px',
 }))
-const Buttons = styled(Grid)(() => ({
+const Buttons = styled('div')(() => ({
    background: '#F0F1F1',
    borderRadius: '0px 0px 20px 20px',
    paddingTop: '26px',
