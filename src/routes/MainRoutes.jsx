@@ -35,7 +35,11 @@ const MainRoutes = () => {
             </Route>
 
             {/* Admin */}
-            <Route element={<ProtectedRoute roles="ADMIN" fallbackPath="/" />}>
+            <Route
+               element={
+                  <ProtectedRoute roles="ADMIN" fallbackPath="/sign-in" />
+               }
+            >
                <Route path="/admin/" element={<AdminRoute />}>
                   <Route index element={<Navigate to="test" />} />
                   <Route path="test" element={<AdminTest />} />
