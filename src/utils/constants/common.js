@@ -7,12 +7,11 @@ import OurTeamImg3 from '../../assets/images/person3.png'
 import OurTeamImg4 from '../../assets/images/person4.png'
 import OurTeamImg5 from '../../assets/images/person5.png'
 import OurTeamImg6 from '../../assets/images/person6.png'
-
-import avatar1 from '../../assets/images/avatar1.jpg'
-import avatar2 from '../../assets/images/avatar2.jpg'
-import avatar3 from '../../assets/images/avatar3.jpg'
-import avatar4 from '../../assets/images/avatar4.jpg'
-import avatar5 from '../../assets/images/avatar5.jpg'
+import avatar1 from '../../assets/images/Avatar1.jpg'
+import avatar2 from '../../assets/images/Avatar2.jpg'
+import avatar3 from '../../assets/images/Avatar3.jpg'
+import avatar4 from '../../assets/images/Avatar4.jpg'
+import avatar5 from '../../assets/images/Avatar5.jpg'
 
 export const STORAGE_KEYS = {
    BILINGUAL_USER_KEY: 'BILINGUAL_USER_KEY',

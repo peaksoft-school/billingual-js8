@@ -11,6 +11,7 @@ import SigninPage from '../containers/public/SigninPage'
 import SignupPage from '../containers/public/SignupPage'
 import CreateTest from '../containers/admin/pages/test/CreateTest'
 import AddQuestions from '../containers/admin/pages/test/Questions'
+import TestQuestions from '../containers/admin/pages/adminCreateTestRealEnglishWords/TestQuestions'
 
 const MainRoutes = () => {
    return (
@@ -42,6 +43,10 @@ const MainRoutes = () => {
                   <Route path="test/add-new-test" element={<CreateTest />} />
                   <Route path="test/update-test" element={<CreateTest />} />
                   <Route path="test/:testId" element={<AddQuestions />} />
+                  <Route
+                     path="test/:testId/createtest"
+                     element={<TestQuestions />}
+                  />
                </Route>
             </Route>
          </Routes>
