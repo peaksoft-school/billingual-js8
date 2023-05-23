@@ -1,10 +1,11 @@
+import { fileAxiosInstanse } from '../config/axios-instanse/fileAxiosInstanse'
 import { instanse } from '../config/axios-instanse/Instanse'
 
-export const typeWhatYourHearRequest = () => {
-   return instanse.post('api/questions/type-what-you-hear')
+export const typeWhatYourHearRequest = (formValues) => {
+   return instanse.post('api/questions/type-what-you-hear', formValues)
 }
 export const postAudioFileRequest = (formData) => {
-   return instanse.post('/api/s3-file', formData)
+   return fileAxiosInstanse.post('/api/s3-file', formData)
 }
 export const deleteQuestionRequest = (id) => {
    return instanse.delete(`api/questions/${id}`)

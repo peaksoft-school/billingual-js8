@@ -1,34 +1,44 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useDropzone } from 'react-dropzone'
+import { useDispatch } from 'react-redux'
 import { InputLabel, styled } from '@mui/material'
-// import { useDispatch } from 'react-redux'
-import { ReactComponent as PlayAudio } from '../../../assets/icons/playIcon.svg'
-import { ReactComponent as PauseAudio } from '../../../assets/icons/pauseIcon.svg'
-import Button from '../../../components/UI/buttons/Buttons'
-
-import FormContainer from '../../../components/UI/form/FormContainer'
-import Input from '../../../components/UI/input/Input'
-import { instanse } from '../../../config/axios-instanse/Instanse'
+import { ReactComponent as PlayAudio } from '../../../../assets/icons/playIcon.svg'
+import { ReactComponent as PauseAudio } from '../../../../assets/icons/pauseIcon.svg'
+import Button from '../../../../components/UI/buttons/Buttons'
+import FormContainer from '../../../../components/UI/form/FormContainer'
+import Input from '../../../../components/UI/input/Input'
+import { typeWhatHearThunk } from '../../../../redux/question/question.thunk'
+import { useSnackbar } from '../../../../hooks/useSnackbar'
 
 const TypeWhatHear = () => {
-   // const dispatch = useDispatch()
+   const dispatch = useDispatch()
    const audioRef = useRef(null)
    const [isPlaying, setIsPlaying] = useState(false)
    const [audioUrl, setAudioUrl] = useState()
    const [audioName, setAudioName] = useState('')
+   const [formValues, setFormValues] = useState({
+      numberOfReplays: 0,
+      correctAnswer: '',
+   })
 
-   const postS3file = async () => {
-      const formData = new FormData()
-      formData.set('multipartFile', audioUrl)
-      await instanse.post('/api/s3-file', formData)
+   const { notify } = useSnackbar()
+
+   const handleInputChange = (event) => {
+      const { name, value } = event.target
+      setFormValues((prevValues) => ({
+         ...prevValues,
+         [name]: value,
+      }))
    }
-
-   useEffect(() => {
-      if (audioName) {
-         postS3file()
-      }
-   }, [audioName])
+   // const postS3file = async () => {
+   //    dispatch(postFiles({ audioUrl, notify }))
+   // }
+   // useEffect(() => {
+   //    if (audioName) {
+   //       postS3file()
+   //    }
+   // }, [audioName])
 
    const handleToggle = () => {
       if (audioUrl) {
@@ -45,11 +55,24 @@ const TypeWhatHear = () => {
    const handleAudioEnded = () => {
       setIsPlaying(false)
    }
+   const handleSubmit = () => {
+      const requestData = {
+         title: '',
+         duration: 15,
+         questionOrder: 2,
+         numberOfReplays: formValues.numberOfReplays,
+         correctAnswer: formValues.correctAnswer,
+         testId: 1,
+         isActive: true,
+      }
+
+      dispatch(typeWhatHearThunk({ requestData, notify, audioFile: audioUrl }))
+   }
 
    const onDrop = (acceptedFiles) => {
       const file = acceptedFiles[0]
       setAudioName(file.name)
-      // const audioUrl = URL.createObjectURL(file)
+      const audioUrl = URL.createObjectURL(file)
       setAudioUrl(file)
       audioRef.current.src = audioUrl
    }
@@ -67,7 +90,11 @@ const TypeWhatHear = () => {
                   Number off
                   <br /> Replays
                </InputLabel>
-               <InputStyled />
+               <InputStyled
+                  name="numberOfReplays"
+                  value={formValues.numberOfReplays}
+                  onChange={handleInputChange}
+               />
             </ReplaysStyled>
 
             <audio
@@ -97,11 +124,17 @@ const TypeWhatHear = () => {
          </AudioContainer>
 
          <InputLabel>Correct answer</InputLabel>
-         <Input />
+         <Input
+            name="correctAnswer"
+            value={formValues.correctAnswer}
+            onChange={handleInputChange}
+         />
 
          <ContainerBtn>
             <GoBackButton variant="outlined">Go back</GoBackButton>
-            <SaveButton variant="contained">Save</SaveButton>
+            <SaveButton variant="contained" onClick={() => handleSubmit()}>
+               Save
+            </SaveButton>
          </ContainerBtn>
       </StyledForm>
    )

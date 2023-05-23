@@ -9,7 +9,7 @@ import GetAllTests from '../containers/user/GetAllTests'
 import CurrentTest from '../containers/user/CurrentTest'
 import SigninPage from '../containers/public/SigninPage'
 import SignupPage from '../containers/public/SignupPage'
-import TypeWhatHear from '../containers/admin/pages/TypeWhatHear'
+import TypeWhatHear from '../containers/admin/pages/test/TypeWhatHear'
 import CreateTest from '../containers/admin/pages/test/CreateTest'
 import AddQuestions from '../containers/admin/pages/test/Questions'
 
