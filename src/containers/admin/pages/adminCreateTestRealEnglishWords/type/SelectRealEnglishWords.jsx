@@ -96,9 +96,9 @@ const SelectRealEnglishWords = () => {
    const [isOpenModalDelete, setIsOpenModalDelete] = useState(false)
    const [isOpenModalSave, setIsOpenModalSave] = useState(false)
    const [idListen, setListenId] = useState()
-   const [deleteArrayListen, setDeleteArrayListen] = useState()
-   const sliceWordOne = realEnglishWords.slice(0, 3)
-   const sliceWordTwo = realEnglishWords.slice(3, 6)
+   const [deleteArrayListen, setDeleteArrayListen] = useState(realEnglishWords)
+   const sliceWordOne = deleteArrayListen.slice(0, 3)
+   const sliceWordTwo = deleteArrayListen.slice(3, 6)
    const navigate = useNavigate()
    const openModalDelete = (id) => {
       setIsOpenModalDelete((prevState) => !prevState)
@@ -110,7 +110,7 @@ const SelectRealEnglishWords = () => {
    const deleteTest = () => {
       setIsOpenModalDelete((prevState) => !prevState)
       setDeleteArrayListen(
-         realEnglishWords.filter((elem) => elem.id !== idListen)
+         deleteArrayListen.filter((elem) => elem.id !== idListen)
       )
    }
    const navigateGoBackTest = () => {

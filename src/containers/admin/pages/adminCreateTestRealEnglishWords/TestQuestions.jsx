@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { InputLabel, MenuItem, Select, styled } from '@mui/material'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
+// import { useFormik } from 'formik'
+// import * as Yup from 'yup'
 import Button from '../../../../components/UI/buttons/Buttons'
 import Vector from '../../../../assets/icons/Vector.png'
 import TypeTest from './TypeTest'
@@ -71,19 +71,51 @@ const menuItemStyle = {
 }
 
 const TestQuestions = () => {
-   const { values, handleChange, handleSubmit, errors, touched } = useFormik({
-      initialValues: {
+   const [selectType, setSelectType] = useState('')
+   const [title, setTitle] = useState('')
+   const [duration, setDuration] = useState('')
+   const [errorObject, setError] = useState({})
+   const titleOnChangeFunction = (e) => {
+      setTitle(e.target.value)
+      setError((prevState) => ({
+         ...prevState,
          title: '',
-         duration: '',
-         select: '',
-      },
-      validationSchema: Yup.object().shape({
-         title: Yup.string().required('Title enter please!'),
-         duration: Yup.string().required('Enter time'),
-         select: Yup.string().required('Select the type of test'),
-      }),
-   })
+      }))
+   }
 
+   const durationOnChange = (e) => {
+      setDuration(e.target.value)
+      setError((prevState) => ({
+         ...prevState,
+         duration: '',
+      }))
+   }
+   const selectFunction = (e) => {
+      setSelectType(e.target.value)
+      setError((prevState) => ({
+         ...prevState,
+         select: '',
+      }))
+   }
+
+   const handleSubmit = (e) => {
+      e.preventDefault()
+      if (title === '' && duration === '' && selectType === '') {
+         setError((prevState) => ({
+            ...prevState,
+            title: 'Please title enter!',
+            duration: 'Enter time!',
+            select: 'Please select the type of test!',
+         }))
+      } else {
+         setError((prevState) => ({
+            ...prevState,
+            title: '',
+            duration: '',
+            select: '',
+         }))
+      }
+   }
    return (
       <DivCreateTest>
          <FormSubmit onSubmit={handleSubmit}>
@@ -97,29 +129,38 @@ const TestQuestions = () => {
                >
                   <TextTitle>Title</TextTitle>
                   <InputOne
-                     style={errors.title && { border: '1px solid #d60b0b' }}
+                     style={
+                        errorObject.title
+                           ? { border: '1px solid #d60b0b' }
+                           : { border: '1px solid #6a6666c1' }
+                     }
                      placeholder="Name of the test"
                      name="title"
-                     onChange={handleChange}
-                     value={values.title}
+                     onChange={titleOnChangeFunction}
+                     value={title}
                   />
-                  {errors.title && touched.title && (
-                     <Warning>{errors.title}</Warning>
-                  )}
+                  {errorObject.title && <Warning>{errorObject.title}</Warning>}
                </div>
                <DivTimerInput>
                   <TimeText htmlFor="timeInput">
                      Duration <br /> (in minutes)
                   </TimeText>
                   <InputNewTime
-                     style={errors.duration && { border: '1px solid #d60b0b' }}
-                     error={touched.duration && Boolean(errors.duration)}
-                     placeholder={errors.duration ? errors.duration : '15:00'}
+                     style={
+                        errorObject.duration
+                           ? {
+                                border: '1px solid #d60b0b',
+                             }
+                           : { border: '1px solid #6a6666c1' }
+                     }
+                     placeholder={
+                        errorObject.duration ? errorObject.duration : '15:00'
+                     }
                      id="timeInput"
                      name="duration"
-                     onChange={handleChange}
+                     onChange={durationOnChange}
                      type="number"
-                     value={values.duration}
+                     value={duration}
                   />
                </DivTimerInput>
             </DivInputOne>
@@ -129,9 +170,9 @@ const TestQuestions = () => {
                </InputLabelTextType>
                <SelectType
                   name="select"
-                  value={values.select}
-                  onChange={handleChange}
-                  error={touched.select && Boolean(errors.select)}
+                  value={selectType}
+                  onChange={selectFunction}
+                  error={errorObject.select}
                   displayEmpty
                >
                   <MenuItem value="" disabled>
@@ -147,9 +188,7 @@ const TestQuestions = () => {
                      </MenuItem>
                   ))}
                </SelectType>
-               {errors.select && touched.select && (
-                  <Warning>{errors.select}</Warning>
-               )}
+               {errorObject.select && <Warning>{errorObject.select}</Warning>}
             </DivInputSecond>
             <Button sx={buttonStyle} type="submit">
                <ImageVector src={Vector} />
@@ -157,7 +196,7 @@ const TestQuestions = () => {
             </Button>
          </FormSubmit>
          <TestSelectRealEnglishWords>
-            <TypeTest selectType={values.select} />
+            <TypeTest selectType={selectType} />
          </TestSelectRealEnglishWords>
       </DivCreateTest>
    )
