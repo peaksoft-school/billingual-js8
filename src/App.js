@@ -1,5 +1,4 @@
 import Snackbar from './components/UI/snackbar/Snackbar'
-import RecordSayingStatement from './containers/admin/pages/questions/RecordSayingStatement'
 import MainRoutes from './routes/MainRoutes'
 
 const App = () => {
@@ -7,7 +6,6 @@ const App = () => {
       <>
          <MainRoutes />
          <Snackbar />
-         <RecordSayingStatement />
       </>
    )
 }

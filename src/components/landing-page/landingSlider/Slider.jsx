@@ -11,7 +11,7 @@ import SlideItem from './SliderItem'
 const info = [
    {
       title: 'Confirm your English proficiency today!',
-      text: 'For nearly 30 years, learners have turned to Rosetta Stone to build the fluency and confidence they need to speak new languages.',
+      text: 'For nearly 30 years, lea rners have turned to Rosetta Stone to build the fluency and confidence they need to speak new languages.',
       img: <Globus />,
       id: new Date().toISOString(),
       titleColor: '#FE9102',

@@ -1,28 +1,37 @@
 import React, { useState } from 'react'
 import { Typography, styled } from '@mui/material'
-import FormContainer from '../../../../components/UI/form/FormContainer'
-import Input from '../../../../components/UI/input/Input'
-import Button from '../../../../components/UI/buttons/Buttons'
-import { postRecordSayingStatement } from '../../../../api/questionService'
+import { useNavigate } from 'react-router-dom'
+import Input from '../../../../../components/UI/input/Input'
+import Button from '../../../../../components/UI/buttons/Buttons'
+import { postRecordSayingStatement } from '../../../../../api/questionService'
+import { useSnackbar } from '../../../../../hooks/useSnackbar'
 
-const RecordSayingStatement = () => {
+const RecordSayingStatement = ({ title, duration, testId }) => {
    const [statement, setStatement] = useState('')
+   const navigate = useNavigate()
+   const { notify } = useSnackbar()
+
+   const goBack = () => {
+      navigate('/admin/test')
+   }
 
    const submitHandler = async () => {
       try {
          const data = {
-            title: 'title1',
+            title,
             statement,
-            correctAnswer: 'null',
-            duration: 90,
-            questionOrder: 1,
-            testId: 2,
+            // correctAnswer в фигме нету, поэтому здесь просто написал
+            correctAnswer: 'Hello, how is it going?',
+            duration,
+            questionOrder: 5,
+            testId,
             isActive: true,
          }
          await postRecordSayingStatement(data)
-         return 'a'
+         goBack()
+         return notify('success', 'Question', 'Successfully added')
       } catch (error) {
-         return error
+         return notify('error', 'Question', error.response?.data.message)
       }
    }
 
@@ -31,11 +40,13 @@ const RecordSayingStatement = () => {
    }
 
    return (
-      <FormContainer>
+      <>
          <Label>Statement</Label>
          <StyledInput value={statement} onChange={changeStatementHandler} />
          <ButtonContainer>
-            <GoBackButton variant="outlined">Go back</GoBackButton>
+            <GoBackButton variant="outlined" onClick={goBack}>
+               Go back
+            </GoBackButton>
             <SaveButton
                variant="contained"
                onClick={submitHandler}
@@ -44,7 +55,7 @@ const RecordSayingStatement = () => {
                Save
             </SaveButton>
          </ButtonContainer>
-      </FormContainer>
+      </>
    )
 }
 
@@ -62,12 +73,14 @@ const Label = styled(Typography)(() => ({
 const StyledInput = styled(Input)(() => ({
    border: '1.53px solid #D4D0D0',
    borderRadius: '8px',
+   width: '100%',
 }))
 
 const ButtonContainer = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'flex-end',
    gap: '16px',
+   marginTop: '30px',
 }))
 
 const GoBackButton = styled(Button)(() => ({
