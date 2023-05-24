@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { InputLabel, MenuItem, Select, styled } from '@mui/material'
 // import { useFormik } from 'formik'
 // import * as Yup from 'yup'
+import { useParams } from 'react-router-dom'
 import Button from '../../../../components/UI/buttons/Buttons'
 import Vector from '../../../../assets/icons/Vector.png'
 import TypeTest from './TypeTest'
@@ -82,6 +83,7 @@ const TestQuestions = () => {
          title: '',
       }))
    }
+   const { testId } = useParams()
 
    const durationOnChange = (e) => {
       setDuration(e.target.value)
@@ -196,7 +198,12 @@ const TestQuestions = () => {
             </Button>
          </FormSubmit>
          <TestSelectRealEnglishWords>
-            <TypeTest selectType={selectType} />
+            <TypeTest
+               selectType={selectType}
+               title={title}
+               duration={duration}
+               testId={testId}
+            />
          </TestSelectRealEnglishWords>
       </DivCreateTest>
    )
