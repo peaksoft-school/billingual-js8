@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getTests, postFiles } from './test.thunk'
+import { getTests } from './test.thunk'
 
 const initialState = {
    tests: [],
    isLoading: true,
    error: '',
-   imageLink: '',
 }
 
 export const testSlice = createSlice({
@@ -24,9 +23,6 @@ export const testSlice = createSlice({
          .addCase(getTests.rejected, (state, action) => {
             state.error = action.payload
             state.isLoading = false
-         })
-         .addCase(postFiles.fulfilled, (state, action) => {
-            state.imageLink = action.payload.link
          })
    },
 })

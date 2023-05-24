@@ -1,51 +1,65 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import {
-   describeImageReq,
    getAllTests,
-   postFilesReq,
+   deleteTestRequest,
+   updateTestRequest,
 } from '../../api/testService'
 
 export const getTests = createAsyncThunk(
    'tests/getTests',
-   async (_, { rejectWithValue }) => {
+   async (notify, { rejectWithValue }) => {
       try {
          const { data } = await getAllTests()
-
-         return data
-      } catch (error) {
-         return rejectWithValue(error)
-      }
-   }
-)
-
-export const postFiles = createAsyncThunk(
-   'tests/postFiles',
-   async (payload, { rejectWithValue }) => {
-      try {
-         const formData = new FormData()
-         formData.append('multipartFile', payload)
-         const { data } = await postFilesReq(formData)
+         notify(
+            'success',
+            'Update test',
+            'The tests were successfully received'
+         )
          return data
       } catch (error) {
          if (AxiosError(error)) {
             return rejectWithValue(error.response?.data.message)
          }
-         return rejectWithValue('Error')
+         notify('error', 'Test', 'Failed to get tests')
+         return rejectWithValue('Something went wrong')
       }
    }
 )
-export const postDescribeImage = createAsyncThunk(
-   'tests/postDescribeImage',
-   async (payload, { rejectWithValue }) => {
+
+export const deleteTest = createAsyncThunk(
+   'test/deleteTest',
+   async ({ id, notify }, { rejectWithValue, dispatch }) => {
       try {
-         const { data } = await describeImageReq(payload)
-         return data
+         await deleteTestRequest(id)
+         notify('success', 'Update test', 'Successfully deleted')
+         return dispatch(getTests())
       } catch (error) {
          if (AxiosError(error)) {
             return rejectWithValue(error.response?.data.message)
          }
-         return rejectWithValue('Error')
+         notify('error', 'Test', 'Failed to delete test')
+         return rejectWithValue('Something went wrong')
+      }
+   }
+)
+
+export const updateTest = createAsyncThunk(
+   'test/updateTest',
+   async (
+      { id, title, shortDescription, isActive, notify },
+      { rejectWithValue, dispatch }
+   ) => {
+      try {
+         await updateTestRequest({ id, title, shortDescription, isActive })
+         notify('success', 'Update test', 'Successfully updated')
+         return dispatch(getTests())
+      } catch (error) {
+         if (AxiosError(error)) {
+            return rejectWithValue(error.response?.data.message)
+         }
+         notify('error', 'Test', 'Failed to update test')
+         return rejectWithValue('Something went wrong')
       }
    }
 )

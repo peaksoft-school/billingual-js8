@@ -48,3 +48,17 @@ export const signInValidation = Yup.object().shape({
       .required('Password is required')
       .min(8, 'Password is too short - should be 8 chars minimum'),
 })
+
+export const createTestValidation = Yup.object().shape({
+   title: Yup.string()
+      .min(5, 'the length should be from 5 to 70')
+      .max(70, 'the length should be from 5 to 70')
+      .required('Required field')
+      .trim(),
+   shortDescription: Yup.string()
+      .min(5, 'the length should be from 5 to 70')
+      .max(70, 'the length should be from 5 to 70')
+      .required('Required field')
+      .trim(),
+   isActive: Yup.boolean(),
+})

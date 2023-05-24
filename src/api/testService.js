@@ -15,3 +15,19 @@ export const postFilesReq = (files) => {
 export const describeImageReq = (payload) => {
    return instanse.post('/api/questions/describe-image', payload)
 }
+export const postTestRequest = (test) => {
+   return instanse.post(`/api/tests`, test)
+}
+
+export const deleteTestRequest = (id) => {
+   return instanse.delete(`api/tests/${id}`)
+}
+
+export const updateTestRequest = ({
+   id,
+   title,
+   shortDescription,
+   isActive,
+}) => {
+   return instanse.put(`api/tests/${id}`, { title, shortDescription, isActive })
+}

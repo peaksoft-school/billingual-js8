@@ -2,8 +2,7 @@ import axios from 'axios'
 import { store } from '../../redux'
 import { signOut } from '../../redux/auth/auth.thunk'
 
-export const BASE_URL =
-   'http://ec2-3-67-99-132.eu-central-1.compute.amazonaws.com/'
+export const BASE_URL = 'http://bilingualb8.peaksoftprojects.com/'
 
 export const instanse = axios.create({
    baseURL: BASE_URL,

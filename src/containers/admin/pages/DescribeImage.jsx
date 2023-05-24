@@ -4,11 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import img from '../../../assets/images/describeimage.png'
 import Input from '../../../components/UI/input/Input'
 import Button from '../../../components/UI/buttons/Buttons'
-import { postDescribeImage, postFiles } from '../../../redux/tests/test.thunk'
+import {
+   postDescribeImage,
+   postFiles,
+} from '../../../redux/question/question.thunk'
 
 const DescribeImage = () => {
    const dispatch = useDispatch()
-   const { imageLink } = useSelector((state) => state.tests)
+   const { imageLink } = useSelector((state) => state.questions)
    const inputRef = useRef(null)
    const [input, setInput] = useState('')
 
@@ -21,8 +24,11 @@ const DescribeImage = () => {
    const handleImageChange1 = async (event) => {
       const files = event.target.files[0]
       setImgName(files.name)
+      console.log(files)
       dispatch(postFiles(files))
    }
+
+   console.log(imageLink)
 
    useEffect(() => {
       setImgFile(imageLink)
