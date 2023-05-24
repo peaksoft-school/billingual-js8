@@ -65,12 +65,14 @@ export const typeWhatHearThunk = createAsyncThunk(
             postFiles({ file: audioFile })
          ).unwrap()
          if (!audioLink || !audioLink?.link) {
+            notify('error', 'Audio link', 'Failed to get audio link')
             return rejectWithValue('Something went wrong')
          }
          const { data } = await typeWhatYourHearRequest({
             ...requestData,
             fileRequest: audioLink.link,
          })
+         notify('success', 'New question', 'Posted successfully')
          return data
       } catch (error) {
          if (AxiosError(error)) {
