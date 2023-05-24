@@ -1,22 +1,28 @@
 import { Grid, Typography, styled } from '@mui/material'
 import { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import img from '../../../assets/images/describeimage.png'
-import Input from '../../../components/UI/input/Input'
-import Button from '../../../components/UI/buttons/Buttons'
-import {
-   postDescribeImage,
-   postFiles,
-} from '../../../redux/question/question.thunk'
+import { useNavigate } from 'react-router-dom'
+import img from '../../../../../assets/images/describeimage.png'
+import Input from '../../../../../components/UI/input/Input'
+import Button from '../../../../../components/UI/buttons/Buttons'
+import { postDescribeImage } from '../../../../../redux/question/question.thunk'
+import { useSnackbar } from '../../../../../hooks/useSnackbar'
 
-const DescribeImage = () => {
+const DescribeImage = ({ title, duration, testId }) => {
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { imageLink } = useSelector((state) => state.questions)
    const inputRef = useRef(null)
    const [input, setInput] = useState('')
+   const { notify } = useSnackbar()
 
    const [imgFile, setImgFile] = useState(null)
+   const [imgUrl, setImgUrl] = useState(null)
    const [imgName, setImgName] = useState('')
+
+   const goBackHandler = () => {
+      navigate('/admin/test')
+   }
 
    const handleImageClick = () => {
       inputRef.current.click()
@@ -24,28 +30,28 @@ const DescribeImage = () => {
    const handleImageChange1 = async (event) => {
       const files = event.target.files[0]
       setImgName(files.name)
-      console.log(files)
-      dispatch(postFiles(files))
+      setImgFile(files)
+      const imgUrl = URL.createObjectURL(files)
+      setImgUrl(imgUrl)
    }
-
-   console.log(imageLink)
 
    useEffect(() => {
       setImgFile(imageLink)
    }, [imageLink])
 
    const submitTests = (e) => {
-      const data = {
-         title: 'title1',
+      e.preventDefault()
+      const describeImgData = {
+         title,
          correctAnswer: input,
-         duration: 90,
+         duration,
          questionOrder: 11,
          file: imgFile,
-         testId: 1,
+         testId,
          isActive: true,
       }
-      dispatch(postDescribeImage(data))
-      e.preventDefault()
+      dispatch(postDescribeImage({ describeImgData, notify, imgFile }))
+      goBackHandler()
    }
 
    const changeInputHandler = (e) => {
@@ -53,10 +59,10 @@ const DescribeImage = () => {
    }
 
    return (
-      <Contain onSubmit={onsubmit}>
+      <Contain onSubmit={submitTests}>
          <SectionOne onClick={handleImageClick}>
             {imgFile ? (
-               <Image src={imgFile} alt="" />
+               <Image src={imgUrl} alt="" />
             ) : (
                <Image src={img} alt="" />
             )}
@@ -76,8 +82,10 @@ const DescribeImage = () => {
             <StyledInput value={input} onChange={changeInputHandler} />
          </SectionTwo>
          <Buttons>
-            <GoBack variant="outlined"> GO BACK</GoBack>
-            <SaveButton type="submit" variant="contained" onClick={submitTests}>
+            <GoBack variant="outlined" onClick={goBackHandler}>
+               GO BACK
+            </GoBack>
+            <SaveButton type="submit" variant="contained">
                Save
             </SaveButton>
          </Buttons>

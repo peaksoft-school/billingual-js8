@@ -38,12 +38,11 @@ export const deleteQuestion = createAsyncThunk(
 
 export const postFiles = createAsyncThunk(
    'questions/postFiles',
-   async (payload, { rejectWithValue }) => {
+   async ({ file }, { rejectWithValue }) => {
       try {
          const formData = new FormData()
-         formData.append('multipartFile', payload)
+         formData.append('multipartFile', file)
          const { data } = await postFilesReq(formData)
-
          return data
       } catch (error) {
          if (AxiosError(error)) {
@@ -53,17 +52,29 @@ export const postFiles = createAsyncThunk(
       }
    }
 )
+
 export const postDescribeImage = createAsyncThunk(
    'questions/postDescribeImage',
-   async (payload, { rejectWithValue }) => {
+   async (
+      { describeImgData, notify, imgFile },
+      { rejectWithValue, dispatch }
+   ) => {
       try {
-         const { data } = await describeImageReq(payload)
+         const imageLink = await dispatch(postFiles({ file: imgFile })).unwrap()
+         if (!imageLink || !imageLink?.link) {
+            return rejectWithValue('Something went wrong')
+         }
+         const { data } = await describeImageReq({
+            ...describeImgData,
+            file: imageLink.link,
+         })
          return data
       } catch (error) {
          if (AxiosError(error)) {
             return rejectWithValue(error.response?.data.message)
          }
-         return rejectWithValue('Error')
+         notify('error', 'Describe image', 'Failed to post')
+         return rejectWithValue('Something went wrong')
       }
    }
 )

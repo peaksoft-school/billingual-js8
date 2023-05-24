@@ -1,11 +1,11 @@
-import DescribeImage from './containers/admin/pages/DescribeImage'
 import MainRoutes from './routes/MainRoutes'
+import Snackbar from './components/UI/snackbar/Snackbar'
 
 const App = () => {
    return (
       <>
          <MainRoutes />
-         <DescribeImage />
+         <Snackbar />
       </>
    )
 }

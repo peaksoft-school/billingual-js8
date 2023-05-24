@@ -7,7 +7,6 @@ import OurTeamImg3 from '../../assets/images/person3.png'
 import OurTeamImg4 from '../../assets/images/person4.png'
 import OurTeamImg5 from '../../assets/images/person5.png'
 import OurTeamImg6 from '../../assets/images/person6.png'
-
 import avatar1 from '../../assets/images/avatar1.jpg'
 import avatar2 from '../../assets/images/avatar2.jpg'
 import avatar3 from '../../assets/images/avatar3.jpg'
