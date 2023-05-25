@@ -2,6 +2,7 @@ import React from 'react'
 import ListenWords from './type/ListenAndSelectWords'
 import SelectRealEnglishWords from './type/SelectRealEnglishWords'
 import TypeWhatHear from './type/TypeWhatHear'
+import RecordSayingStatement from './type/RecordSayingStatement'
 
 const TypeTest = ({ selectType, title, duration, testId }) => {
    switch (selectType) {
@@ -12,6 +13,13 @@ const TypeTest = ({ selectType, title, duration, testId }) => {
       case 'Type what you hear':
          return (
             <TypeWhatHear title={title} duration={duration} testId={testId} />
+      case 'Record saying statement':
+         return (
+            <RecordSayingStatement
+               title={title}
+               duration={duration}
+               testId={testId}
+            />
          )
       default:
          return <div />
