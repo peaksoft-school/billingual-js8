@@ -23,7 +23,7 @@ const RespondNwords = ({ title, duration, testId }) => {
       const { name, value } = event.target
 
       if (name === 'minWords') {
-         if (/^\d{0,2}$/.test(value) && value >= 0 && value <= 10) {
+         if (/^\d{0,2}$/.test(value) && value >= 0 && value <= 200) {
             setFormValues((prevValues) => ({
                ...prevValues,
                [name]: value,
@@ -35,7 +35,7 @@ const RespondNwords = ({ title, duration, testId }) => {
          }
          return setValidationErrors((prevErrors) => ({
             ...prevErrors,
-            [name]: 'Please enter a number between 1 and 10 for replays.',
+            [name]: 'Please enter a number between 1 and 200 for replays.',
          }))
       }
 
@@ -119,9 +119,10 @@ const RespondNwords = ({ title, duration, testId }) => {
 
 export default RespondNwords
 const InputStyled = styled(Input)(() => ({
-   input: { padding: '.75rem  0.8rem .75rem 0.7rem ' },
+   input: { padding: '0rem  0.8rem 0rem 0.7rem ' },
    width: '7%',
    borderRadius: '.5rem',
+   textAlign: 'center',
    border: 'solid .0956rem #D4D0D0',
 }))
 
