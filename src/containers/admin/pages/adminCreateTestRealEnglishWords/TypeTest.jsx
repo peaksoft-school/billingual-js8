@@ -1,5 +1,6 @@
 import React from 'react'
 import ListenWords from './type/ListenAndSelectWords'
+import RespondNwords from './type/RespondNwords'
 import SelectRealEnglishWords from './type/SelectRealEnglishWords'
 import TypeWhatHear from './type/TypeWhatHear'
 
@@ -12,6 +13,10 @@ const TypeTest = ({ selectType, title, duration, testId }) => {
       case 'Type what you hear':
          return (
             <TypeWhatHear title={title} duration={duration} testId={testId} />
+         )
+      case 'Respond in at least N words':
+         return (
+            <RespondNwords title={title} duration={duration} testId={testId} />
          )
       default:
          return <div />
