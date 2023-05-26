@@ -237,7 +237,6 @@ const ContainerBtn = styled('div')(() => ({
    gap: '15px',
    display: 'flex',
    justifyContent: 'flex-end',
-   marginTop: '3.75rem',
    padding: '32px 0  0 0 ',
 }))
 
