@@ -57,7 +57,7 @@ export const postFiles = createAsyncThunk(
 export const typeWhatHearThunk = createAsyncThunk(
    'question/postTypeWhatHear',
    async (
-      { requestData, notify, audioFile },
+      { requestData, notify, audioFile, navigate },
       { rejectWithValue, dispatch }
    ) => {
       try {
@@ -73,6 +73,7 @@ export const typeWhatHearThunk = createAsyncThunk(
             fileRequest: audioLink.link,
          })
          notify('success', 'New question', 'Posted successfully')
+         navigate('/admin/test')
          return data
       } catch (error) {
          if (AxiosError(error)) {
