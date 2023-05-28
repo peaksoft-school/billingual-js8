@@ -1,7 +1,7 @@
 import React from 'react'
 import ListenWords from './type/ListenAndSelectWords'
 import SelectRealEnglishWords from './type/SelectRealEnglishWords'
-import DescribeImage from './type/DescribeImage'
+import RecordSayingStatement from './type/RecordSayingStatement'
 
 const TypeTest = ({ selectType, title, duration, testId }) => {
    switch (selectType) {
@@ -9,9 +9,13 @@ const TypeTest = ({ selectType, title, duration, testId }) => {
          return <SelectRealEnglishWords />
       case 'Listen and select English word':
          return <ListenWords />
-      case 'Describe image':
+      case 'Record saying statement':
          return (
-            <DescribeImage title={title} duration={duration} testId={testId} />
+            <RecordSayingStatement
+               title={title}
+               duration={duration}
+               testId={testId}
+            />
          )
       default:
          return <div />
