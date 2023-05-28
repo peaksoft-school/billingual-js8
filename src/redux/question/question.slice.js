@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllQuestions } from './question.thunk'
+import { getAllQuestions, postFiles } from './question.thunk'
 
 const initialState = {
    questions: [],
    isLoading: false,
    error: null,
+   imageLink: '',
 }
 
 const questionSlice = createSlice({
@@ -24,6 +25,9 @@ const questionSlice = createSlice({
       builder.addCase(getAllQuestions.pending, (state) => {
          state.isLoading = true
          state.error = null
+      })
+      builder.addCase(postFiles.fulfilled, (state, action) => {
+         state.imageLink = action.payload.link
       })
    },
 })
