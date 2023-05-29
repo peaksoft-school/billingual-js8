@@ -119,7 +119,7 @@ const RespondNwords = ({ title, duration, testId }) => {
 
 export default RespondNwords
 const InputStyled = styled(Input)(() => ({
-   input: { padding: '0rem  0.8rem 0rem 0.7rem ' },
+   input: { padding: '0.75rem  0.6rem 0.75rem 1.2rem ' },
    width: '7%',
    borderRadius: '.5rem',
    textAlign: 'center',
