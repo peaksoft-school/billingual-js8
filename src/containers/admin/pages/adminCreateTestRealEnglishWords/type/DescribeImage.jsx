@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router-dom'
 import img from '../../../../../assets/images/describeimage.png'
 import Input from '../../../../../components/UI/input/Input'
 import Button from '../../../../../components/UI/buttons/Buttons'
-import { postDescribeImage } from '../../../../../redux/question/question.thunk'
+
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
+import { postDescribeImage } from '../../../../../redux/question/question.thunk'
 
 const DescribeImage = ({ title, duration, testId }) => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { imageLink } = useSelector((state) => state.questions)
+   const { link } = useSelector((state) => state.questions)
    const inputRef = useRef(null)
    const [input, setInput] = useState('')
    const { notify } = useSnackbar()
@@ -36,8 +37,8 @@ const DescribeImage = ({ title, duration, testId }) => {
    }
 
    useEffect(() => {
-      setImgFile(imageLink)
-   }, [imageLink])
+      setImgFile(link)
+   }, [link])
 
    const submitTests = (e) => {
       e.preventDefault()
