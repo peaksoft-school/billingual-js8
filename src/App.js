@@ -1,5 +1,5 @@
-import Snackbar from './components/UI/snackbar/Snackbar'
 import MainRoutes from './routes/MainRoutes'
+import Snackbar from './components/UI/snackbar/Snackbar'
 
 const App = () => {
    return (
