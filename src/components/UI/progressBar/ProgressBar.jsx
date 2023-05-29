@@ -1,18 +1,14 @@
 import { styled } from '@mui/material'
 
 const GridStyle = styled('div')(() => ({
-   width: '1092px',
-   height: '540px',
+   width: '90.44%',
    margin: '0 auto',
-   marginTop: '100px',
    paddingTop: '1px',
 }))
 
 const DivProgressBar = styled('div')(() => ({
-   minWidth: '814px',
-   maxWidth: '1006px',
+   width: '100%',
    height: '52px',
-   margin: '40px 43px 0px 43px',
 }))
 const Time = styled('h3')(() => ({
    width: '61px',
@@ -27,7 +23,7 @@ const Time = styled('h3')(() => ({
 
 const ProgressLine = styled('progress')(() => ({
    height: '15px',
-   width: '1006px',
+   width: '100%',
    accentColor: ' #3909fa',
 }))
 
