@@ -10,3 +10,7 @@ export const getAllQuestionsRequest = () => {
 export const postRecordSayingStatement = (recordData) => {
    return instanse.post('api/questions/record-saying-statement', recordData)
 }
+
+export const postHighlightTheAnswer = (data) => {
+   return instanse.post('/api/questions/highlight-the-answer', data)
+}
