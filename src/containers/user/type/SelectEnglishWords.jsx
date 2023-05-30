@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react'
 import { styled, Typography } from '@mui/material'
-// import { useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import DragAndDrop from '../../../components/DragAndDrop'
 import Button from '../../../components/UI/buttons/Buttons'
 import FormContainer from '../../../components/UI/form/FormContainer'
 import ModalReusable from '../../../components/UI/modal/Modal'
 import ProgressBar from '../../../components/UI/progressBar/ProgressBar'
-// import { useProgressBar } from '../../../hooks/useTime'
-import { useTimer } from '../../../hooks/useTimer'
+import { useProgressBar } from '../../../hooks/useTime'
 
 const modalStyleDiv = {
    width: '407px',
@@ -46,7 +44,6 @@ const QuitButton = styled(Button)(() => ({
 const SelectEnglishWords = () => {
    const [isOpenModal, setOpenModal] = useState(false)
    const navigate = useNavigate()
-   const { timeObject, timeProgress, inputOnChange, add, time } = useTimer()
    const closeHandler = () => {
       setOpenModal((prevState) => !prevState)
    }
@@ -58,34 +55,22 @@ const SelectEnglishWords = () => {
       navigate('/test')
    }
 
-   // const duration = 120
-   useEffect(() => {
-      // const duration = 120
-      inputOnChange(9)
-   }, [])
-   const func = () => {
-      add()
+   const duration = 120
+
+   const handleTimeUp = () => {
+      // Логика, когда время истекло
    }
-   // useEffect(() => {}, [timeProgress])
-   // useEffect(() => {
-   //    add()
-   // }, [])
 
-   // const handleTimeUp = () => {
-   // Логика, когда время истекло
-   // }
-
-   // const { time, chartPercent } = useProgressBar(duration, handleTimeUp)
-   // const minutes = Math.floor(time / 60)
-   // const seconds = Math.floor(time % 60)
-   // const timeObject = {
-   //    minute: minutes.toString().padStart(2, '0'),
-   //    seconds: seconds.toString().padStart(2, '0'),
-   // }
+   const { time, chartPercent } = useProgressBar(duration, handleTimeUp)
+   const minutes = Math.floor(time / 60)
+   const seconds = Math.floor(time % 60)
+   const timeObject = {
+      minute: minutes.toString().padStart(2, '0'),
+      seconds: seconds.toString().padStart(2, '0'),
+   }
 
    return (
       <main>
-         <button onClick={func}>addTime</button>
          <QuitButton onClick={openHandler}>Quit test</QuitButton>
          <ModalReusable
             modalStyle={modalStyleDiv}
@@ -105,11 +90,7 @@ const SelectEnglishWords = () => {
             </ContainerBtn>
          </ModalReusable>
          <FormContainer>
-            <ProgressBar
-               timeObject={timeObject}
-               time={time}
-               timeProgress={timeProgress}
-            />
+            <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
             <DragAndDrop />
             <NextBtn>
                <Button style={{ padding: '12.5px 54px' }} variant="contained">

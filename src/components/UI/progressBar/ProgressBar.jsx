@@ -2,6 +2,7 @@ import { styled } from '@mui/material'
 
 const GridStyle = styled('div')(() => ({
    width: '90.44%',
+   // height: '540px',
    margin: '0 auto',
    paddingTop: '1px',
 }))
