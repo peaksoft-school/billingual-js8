@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import {
-   deleteTestRequest,
    getAllTests,
+   deleteTestRequest,
    updateTestRequest,
 } from '../../api/testService'
 
