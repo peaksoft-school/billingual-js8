@@ -5,7 +5,7 @@ const initialState = {
    questions: [],
    isLoading: false,
    error: null,
-   audioLink: '',
+   link: '',
 }
 
 const questionSlice = createSlice({

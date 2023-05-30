@@ -2,8 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import {
    deleteQuestionRequest,
+   describeImageReq,
    getAllQuestionsRequest,
-   postAudioFileRequest,
+   postFileRequest,
    typeWhatYourHearRequest,
 } from '../../api/questionService'
 
@@ -38,12 +39,12 @@ export const deleteQuestion = createAsyncThunk(
 )
 
 export const postFiles = createAsyncThunk(
-   'question/postFiles',
+   'questions/postFiles',
    async ({ file }, { rejectWithValue }) => {
       try {
          const formData = new FormData()
          formData.append('multipartFile', file)
-         const { data } = await postAudioFileRequest(formData)
+         const { data } = await postFileRequest(formData)
          return data
       } catch (error) {
          if (AxiosError(error)) {
@@ -79,6 +80,32 @@ export const typeWhatHearThunk = createAsyncThunk(
             return rejectWithValue(error.response?.data.message)
          }
          notify('error', 'Type what hear', 'Failed to post')
+         return rejectWithValue('Something went wrong')
+      }
+   }
+)
+
+export const postDescribeImage = createAsyncThunk(
+   'questions/postDescribeImage',
+   async (
+      { describeImgData, notify, imgFile },
+      { rejectWithValue, dispatch }
+   ) => {
+      try {
+         const imageLink = await dispatch(postFiles({ file: imgFile })).unwrap()
+         if (!imageLink || !imageLink?.link) {
+            return rejectWithValue('Something went wrong')
+         }
+         const { data } = await describeImageReq({
+            ...describeImgData,
+            file: imageLink.link,
+         })
+         return data
+      } catch (error) {
+         if (AxiosError(error)) {
+            return rejectWithValue(error.response?.data.message)
+         }
+         notify('error', 'Describe image', 'Failed to post')
          return rejectWithValue('Something went wrong')
       }
    }
