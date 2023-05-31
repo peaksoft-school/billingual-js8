@@ -14,6 +14,9 @@ export const deleteQuestionRequest = (id) => {
 export const getAllQuestionsRequest = () => {
    return instanse.get('api/questions')
 }
+export const postRespondWords = (requestData) => {
+   return instanse.post('api/questions/respond-n-words', requestData)
+}
 
 export const postRecordSayingStatement = (recordData) => {
    return instanse.post('api/questions/record-saying-statement', recordData)

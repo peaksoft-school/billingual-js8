@@ -2,10 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import {
    deleteQuestionRequest,
+   describeImageReq,
    getAllQuestionsRequest,
    postFileRequest,
    typeWhatYourHearRequest,
-   describeImageReq,
 } from '../../api/questionService'
 
 export const getAllQuestions = createAsyncThunk(
