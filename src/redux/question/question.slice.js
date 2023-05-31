@@ -27,7 +27,7 @@ const questionSlice = createSlice({
          state.error = null
       })
       builder.addCase(postFiles.fulfilled, (state, action) => {
-         state.audioLink = action.payload.link
+         state.link = action.payload.link
          state.isLoading = false
          state.error = null
       })

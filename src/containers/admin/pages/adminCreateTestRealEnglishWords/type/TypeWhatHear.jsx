@@ -101,9 +101,13 @@ const TypeWhatHear = ({ title, duration, testId }) => {
          }
 
          dispatch(
-            typeWhatHearThunk({ requestData, notify, audioFile: audioUrl })
+            typeWhatHearThunk({
+               requestData,
+               notify,
+               audioFile: audioUrl,
+               navigate,
+            })
          )
-         navigate('/admin/test')
       }
    }
 
@@ -164,7 +168,7 @@ const TypeWhatHear = ({ title, duration, testId }) => {
                   <PauseAudio onClick={handleToggle} />
                )}
             </PlayingContainer>
-            <p>{audioUrl ? audioName : 'File_name_of_the_audio_file.mp3'}</p>
+            <p>{audioUrl ? audioName : 'file_name_not_found!'}</p>
          </AudioContainer>
 
          <LabelStyled>Correct answer</LabelStyled>
@@ -233,7 +237,6 @@ const ContainerBtn = styled('div')(() => ({
    gap: '15px',
    display: 'flex',
    justifyContent: 'flex-end',
-   marginTop: '3.75rem',
    padding: '32px 0  0 0 ',
 }))
 

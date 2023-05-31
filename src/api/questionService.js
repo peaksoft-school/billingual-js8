@@ -21,7 +21,6 @@ export const postRespondWords = (requestData) => {
 export const postRecordSayingStatement = (recordData) => {
    return instanse.post('api/questions/record-saying-statement', recordData)
 }
-
 export const describeImageReq = (payload) => {
    return instanse.post('/api/questions/describe-image', payload)
 }

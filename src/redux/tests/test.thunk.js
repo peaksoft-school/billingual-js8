@@ -11,11 +11,7 @@ export const getTests = createAsyncThunk(
    async (notify, { rejectWithValue }) => {
       try {
          const { data } = await getAllTests()
-         notify(
-            'success',
-            'Update test',
-            'The tests were successfully received'
-         )
+         notify('success', 'Test', 'The tests were successfully received')
          return data
       } catch (error) {
          if (AxiosError(error)) {
