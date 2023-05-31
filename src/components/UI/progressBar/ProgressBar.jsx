@@ -28,7 +28,7 @@ const ProgressLine = styled('progress')(() => ({
    accentColor: ' #3909fa',
 }))
 
-const ProgressBar = ({ timeObject, time, timeProgress }) => {
+const ProgressBar = ({ timeObject, timeProgress }) => {
    return (
       <div>
          <GridStyle>
@@ -36,7 +36,7 @@ const ProgressBar = ({ timeObject, time, timeProgress }) => {
                <Time>
                   {timeObject.minute}:{timeObject.seconds}
                </Time>
-               <ProgressLine value={time} max={timeProgress} />
+               <ProgressLine value={timeProgress} />
             </DivProgressBar>
          </GridStyle>
       </div>
