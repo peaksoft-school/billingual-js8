@@ -6,7 +6,6 @@ import {
    getAllQuestionsRequest,
    postFileRequest,
    typeWhatYourHearRequest,
-   describeImageReq,
 } from '../../api/questionService'
 
 export const getAllQuestions = createAsyncThunk(
