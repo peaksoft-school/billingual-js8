@@ -4,7 +4,7 @@ import { InputLabel, MenuItem, Select, styled } from '@mui/material'
 // import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
 import Button from '../../../../components/UI/buttons/Buttons'
-import Vector from '../../../../assets/icons/Vector.png'
+import Vector from '../../../../assets/icons/vector.png'
 import TypeTest from './TypeTest'
 
 const typeTestArray = [
