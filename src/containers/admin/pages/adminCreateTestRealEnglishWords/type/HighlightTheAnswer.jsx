@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material'
 import Input from '../../../../../components/UI/input/Input'
@@ -10,44 +10,73 @@ import { postHighlightTheAnswer } from '../../../../../api/questionService'
 const HighlightTheAnswer = ({ title, duration, testId }) => {
    const [statement, setStatement] = useState('')
    const [passage, setPassage] = useState('')
+   const [warningInputPassage, setWarningInputPassage] = useState({})
+   const divRef = useRef(null)
    const navigate = useNavigate()
    const { notify } = useSnackbar()
 
    const guestionsThePassage = (e) => {
       setStatement(e.target.value)
+      setWarningInputPassage((prevState) => ({
+         ...prevState,
+         questionsToThePassage: '',
+      }))
    }
    const changePassageFunction = (e) => {
       setPassage(e.target.value)
+      setWarningInputPassage((prevState) => ({
+         ...prevState,
+         passage: '',
+      }))
    }
 
-   const correctAnswer = 'aergrae'
    const goBackFunction = () => {
-      navigate(-1)
+      navigate('/admin/test')
    }
    const saveHandler = async () => {
-      try {
-         const data = {
-            title,
-            statement,
-            passage,
-            correctAnswer,
-            duration,
-            questionOrder: 7,
-            testId,
-            isActive: true,
+      if (statement === '' && passage === '') {
+         setWarningInputPassage((prevState) => ({
+            ...prevState,
+            questionsToThePassage: 'Please write a question!',
+            passage: 'Please write an answer to your question!',
+         }))
+      } else if (passage === '') {
+         setWarningInputPassage((prevState) => ({
+            ...prevState,
+            passage: 'passage write',
+         }))
+      } else if (window.getSelection().toString() === '') {
+         setWarningInputPassage((prevState) => ({
+            ...prevState,
+            correctAnswer: 'Highlight correct answer!',
+         }))
+      } else {
+         try {
+            const data = {
+               title,
+               statement,
+               passage,
+               correctAnswer: window.getSelection().toString(),
+               duration,
+               questionOrder: 7,
+               testId,
+               isActive: true,
+            }
+            await postHighlightTheAnswer(data)
+            goBackFunction()
+            return notify('success', 'Question', 'Succesfull')
+         } catch (error) {
+            return notify('error', 'Question', error.response?.data.message)
          }
-         await postHighlightTheAnswer(data)
-         goBackFunction()
-         return notify('success', 'Question', 'Succesfull')
-      } catch (error) {
-         return notify('error', 'Question', error.response?.data.message)
       }
+      return null
    }
+
    return (
       <>
          <QuestionsToThePassageDiv>
             <LabelQuestion htmlFor="questionsToThePassage">
-               Guestions to the Passage
+               Questions to the Passage
             </LabelQuestion>
             <InputQuestion
                type="text"
@@ -55,27 +84,35 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
                onChange={guestionsThePassage}
             />
          </QuestionsToThePassageDiv>
+         {warningInputPassage.questionsToThePassage && (
+            <Warning>{warningInputPassage.questionsToThePassage}</Warning>
+         )}
          <PassageDiv>
             <LabelPassage htmlFor="passageLabel">Passage</LabelPassage>
             <TextAreaPassage
-               sx={{ borderRadius: '8px' }}
                id="passageLabel"
                handleChange={changePassageFunction}
             />
          </PassageDiv>
+         {warningInputPassage.passage && (
+            <Warning>{warningInputPassage.passage}</Warning>
+         )}
          <HighlightCorrectAnswerDiv>
             {passage && (
                <>
-                  <p>Highlight correct answer :</p>
-                  <HighlightCorrectAnswer value={passage} />
+                  <HighlightCorrectAnswerLabel>
+                     Highlight correct answer :
+                  </HighlightCorrectAnswerLabel>
+                  <DivCorrectAnswer ref={divRef}>{passage}</DivCorrectAnswer>
                </>
+            )}
+            {warningInputPassage.correctAnswer && (
+               <Warning>{warningInputPassage.correctAnswer}</Warning>
             )}
          </HighlightCorrectAnswerDiv>
          <ButtonContainer>
             <GoBackButton onClick={goBackFunction}>Go back</GoBackButton>
-            <SaveButton disabled={!statement} onClick={saveHandler}>
-               Save
-            </SaveButton>
+            <SaveButton onClick={saveHandler}>Save</SaveButton>
          </ButtonContainer>
       </>
    )
@@ -86,14 +123,14 @@ export default HighlightTheAnswer
 const QuestionsToThePassageDiv = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
-   gap: '12px',
+   gap: '0.75rem',
 }))
 const LabelQuestion = styled('label')(() => ({
    fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 500,
-   fontSize: '16px',
-   lineHeight: '16px',
+   fontSize: '1rem',
+   lineHeight: '1rem',
    display: 'flex',
    alignItems: 'center',
    color: '#4C4859',
@@ -102,19 +139,19 @@ const LabelPassage = styled('label')(() => ({
    fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: '500',
-   fontSize: '16px',
-   lineHeight: '16px',
+   fontSize: '1rem',
+   lineHeight: '1rem',
    display: 'flex',
    alignItems: 'center',
    color: ' #4C4859',
-   marginBottom: '12px',
+   marginBottom: '0.75rem',
 }))
 
 const InputQuestion = styled(Input)(() => ({
    boxSizing: 'border-box',
    input: {
-      height: '46px',
-      padding: '0px',
+      height: '1.125rem',
+      border: '0.875rem 1rem 0.875rem 1rem',
    },
    background: '#FFFFFF',
 }))
@@ -126,9 +163,7 @@ const TextAreaPassage = styled(TextArea)(() => ({
    ' & .MuiInputBase-root': {
       background: ' #FFFFFF',
       border: '0.1px solid #ffffff',
-      '&:onChange': {
-         padding: '14px 16px 40px 16px',
-      },
+      padding: '0.875rem 1rem 0.875rem 1rem',
    },
    ' & .MuiInputBase-input': {
       fontFamily: 'Poppins',
@@ -145,40 +180,10 @@ const HighlightCorrectAnswerDiv = styled('div')(() => ({
    width: '100%',
 }))
 
-const HighlightCorrectAnswer = styled(TextArea)(() => ({
-   input: {},
-   '& .MuiInputBase-input': {
-      width: '100%',
-      fontFamily: 'Poppins',
-      fontStyle: 'normal',
-      fontWeight: 400,
-      fontSize: '16px',
-      lineHeight: ' 144%',
-      letterSpacing: '0.03em',
-      color: '#4C4859',
-   },
-   ' & .MuiInputBase-root': {
-      border: '0.1px solid #ffffff',
-      padding: '0px',
-   },
-   '& .MuiOutlinedInput-root': {
-      '&.Mui-focused fieldset': {
-         border: 'none',
-      },
-      '&:hover fieldset': {
-         border: 'none',
-      },
-      '& fieldset': {
-         border: 'none',
-      },
-   },
-   maxWidth: '100%',
-}))
-
 const GoBackButton = styled(Button)(() => ({
-   width: '105px',
-   height: '42px',
-   border: '2px solid #3A10E5',
+   width: '6.5625rem',
+   height: '2.625rem',
+   border: '0.125rem solid #3A10E5',
    borderRadius: '8px',
    '&:hover': {
       background: '#3A10E5',
@@ -187,7 +192,7 @@ const GoBackButton = styled(Button)(() => ({
 }))
 
 const SaveButton = styled(Button)(({ disabled }) => ({
-   width: '105px',
+   width: '6.5625rem',
    height: '42px',
    border: `${disabled ? '1px solid #2AB930' : 'none'}`,
    background: `${disabled ? '#fff' : '#2AB930'}`,
@@ -202,4 +207,24 @@ const ButtonContainer = styled('div')(() => ({
    justifyContent: 'flex-end',
    marginTop: '32px',
    gap: '16px',
+}))
+const Warning = styled('p')(() => ({
+   color: '#ff0000',
+   textTransform: 'uppercase',
+   marginTop: '0px',
+}))
+const DivCorrectAnswer = styled('div')(() => ({
+   '::selection': {
+      color: '#0015ff',
+      textDecoration: 'underline',
+   },
+}))
+
+const HighlightCorrectAnswerLabel = styled('h1')(() => ({
+   fontFamily: 'DINNextRoundedLTW04-Medium',
+   fontStyle: 'normal',
+   fontWeight: 500,
+   fontSize: '1rem',
+   lineHeight: '1.125rem',
+   color: '#4C4859',
 }))
