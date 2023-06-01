@@ -5,7 +5,7 @@ const initialState = {
    questions: [],
    isLoading: false,
    error: null,
-   imageLink: '',
+   link: '',
 }
 
 const questionSlice = createSlice({
@@ -27,7 +27,17 @@ const questionSlice = createSlice({
          state.error = null
       })
       builder.addCase(postFiles.fulfilled, (state, action) => {
-         state.imageLink = action.payload.link
+         state.link = action.payload.link
+         state.isLoading = false
+         state.error = null
+      })
+      builder.addCase(postFiles.pending, (state) => {
+         state.isLoading = true
+         state.error = null
+      })
+      builder.addCase(postFiles.rejected, (state, action) => {
+         state.isLoading = false
+         state.error = action.payload
       })
    },
 })
