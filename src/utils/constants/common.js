@@ -116,3 +116,15 @@ export const humans = [
       avatar: avatar5,
    },
 ]
+
+export const questionTypes = {
+   SelectRealEnglishWords: 'Select real English words',
+   ListenAndSelect: 'Listen and select English word',
+   TypeWhatYourHear: 'Type what you hear',
+   DescribeImage: 'Describe image',
+   RecordSayingStatement: 'Record saying statement',
+   RespondInAtLeastNWords: 'Respond in at least N words',
+   HighlightTheAnswer: 'Highlight the answer',
+   SelectTheMainIdea: 'Select the main idea',
+   SelectBestTitle: 'Select best title',
+}

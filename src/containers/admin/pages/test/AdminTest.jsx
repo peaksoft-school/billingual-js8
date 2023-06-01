@@ -53,16 +53,13 @@ const AdminTest = () => {
    return (
       <FormContainer>
          <ButtonContainer>
-            {isLoading ? (
-               <Spinner />
-            ) : (
-               <Button variant="contained" onClick={createTestHandler}>
-                  + Add new Test
-               </Button>
-            )}
+            <Button variant="contained" onClick={createTestHandler}>
+               + Add new Test
+            </Button>
          </ButtonContainer>
 
-         {tests !== null && tests.length === 0 ? (
+         {isLoading && <Spinner />}
+         {!isLoading && tests !== null && tests.length === 0 ? (
             <Typography sx={{ textAlign: 'center' }}>
                Test list is empty
             </Typography>
