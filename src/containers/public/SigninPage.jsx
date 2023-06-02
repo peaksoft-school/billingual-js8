@@ -1,7 +1,8 @@
-import { Grid, Typography, styled } from '@mui/material'
+import { Grid, InputAdornment, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
 import { ReactComponent as System } from '../../assets/icons/system.svg'
 import { ReactComponent as Layer } from '../../assets/icons/layer 2.svg'
 import { ReactComponent as Defoult } from '../../assets/icons/defoult.svg'
@@ -12,11 +13,21 @@ import { signIn } from '../../redux/auth/auth.thunk'
 import { useSnackbar } from '../../hooks/useSnackbar'
 import { signInValidation } from '../../utils/constants/general'
 import Spinner from '../../components/UI/spinner/Spinner'
+import MyIconButton from '../../components/UI/Icon-button/IconButton'
+import { ReactComponent as EyeIcon } from '../../assets/icons/eyeDefaultIcon.svg'
+import { ReactComponent as EyeIconOff } from '../../assets/icons/eyeOffIcon.svg'
 
 const SigninPage = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const { error, isLoading } = useSelector((state) => state.auth)
+   const [showPassword, setShowPassword] = useState(false)
+
+   const handleClickShowPassword = () => setShowPassword((show) => !show)
+
+   const handleMouseDownPassword = (event) => {
+      event.preventDefault()
+   }
 
    const { notify } = useSnackbar()
 
@@ -62,13 +73,27 @@ const SigninPage = () => {
                   onChange={handleChange}
                   type="email"
                />
+
                <StyledInput
                   label="Password"
                   name="password"
                   error={!!errors.password}
                   value={values.password}
                   onChange={handleChange}
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
+                  InputProps={{
+                     endAdornment: (
+                        <InputAdornment position="end">
+                           <MyIconButton
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                           >
+                              {showPassword ? <EyeIconOff /> : <EyeIcon />}
+                           </MyIconButton>
+                        </InputAdornment>
+                     ),
+                  }}
                />
                <CheckboxContain>
                   <StyledCheckbox />
@@ -105,7 +130,7 @@ const Error = styled('p')(() => ({
 const Background = styled(Grid)(() => ({
    background: 'linear-gradient(90.76deg, #6B0FA9 0.74%, #520FB6 88.41%)',
    padding: '40px',
-   height: '100%',
+   height: '100vh',
 }))
 
 const SignInForm = styled('form')(() => ({

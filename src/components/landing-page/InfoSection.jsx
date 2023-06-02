@@ -1,4 +1,4 @@
-import { styled } from '@mui/material'
+import { keyframes, styled } from '@mui/material'
 
 import accessible from '../../assets/images/accessible.png'
 import speech from '../../assets/images/speech.png'
@@ -6,6 +6,24 @@ import extensive from '../../assets/images/extensive.png'
 import tutoring from '../../assets/images/tutoring.png'
 import booksImage from '../../assets/images/imgBookEnglish.png'
 import { infoCardArray, ourTeamArray } from '../../utils/constants/common'
+
+const fadeIn = keyframes`
+   from {
+      opacity: 0;
+   }
+   to {
+      opacity: 1;
+   }
+`
+
+const slideIn = keyframes`
+   from {
+      transform: translateX(-100%);
+   }
+   to {
+      transform: translateX(0);
+   }
+`
 
 const Card = styled('div')(() => ({
    width: '100%',
@@ -31,6 +49,7 @@ const Img1DivOne = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
+   animation: `${fadeIn} 1s ease-in-out`,
 }))
 const Over = styled('p')(() => ({
    height: '48px',
@@ -178,6 +197,7 @@ const OurTeam = styled('div')(() => ({
    height: '335px',
    display: 'grid',
    justifyItems: 'center',
+   animation: `${slideIn} 1s ease-in-out`,
 }))
 
 const TextOurTeam = styled('div')(() => ({

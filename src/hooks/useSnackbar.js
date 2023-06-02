@@ -10,7 +10,7 @@ export const useSnackbar = () => {
          </>,
          {
             position: 'top-right',
-            autoClose: true,
+            autoClose: 700,
             hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
@@ -22,7 +22,7 @@ export const useSnackbar = () => {
 }
 
 const Title = styled('h4')(() => ({
-   fontFamily: 'DINNextRoundedLTPro-Bold',
+   fontFamily: 'Gilroy',
    margin: '10px 0 0 0',
    fontSize: '16px',
    lineHeight: '18.75px',
@@ -31,7 +31,7 @@ const Title = styled('h4')(() => ({
 
 const Message = styled('p')(() => ({
    margin: '8px 0 10px 0',
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '16px',

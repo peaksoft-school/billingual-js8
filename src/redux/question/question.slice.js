@@ -5,13 +5,37 @@ const initialState = {
    questions: [],
    isLoading: false,
    error: null,
+   options: [],
    link: '',
 }
 
 const questionSlice = createSlice({
    name: 'questions',
    initialState,
-   reducers: {},
+   reducers: {
+      addOption: (state, action) => {
+         state.options.push(action.payload)
+      },
+      changeTrueOption: (state, action) => {
+         state.options = state.options.map((item) => {
+            if (item.id === action.payload) {
+               return {
+                  ...item,
+                  isCorrect: !item.isCorrect,
+               }
+            }
+            return item
+         })
+      },
+      deleteOption: (state, action) => {
+         state.options = state.options.filter(
+            (item) => item.id !== action.payload
+         )
+      },
+      clearOptions(state) {
+         state.options = []
+      },
+   },
    extraReducers: (builder) => {
       builder.addCase(getAllQuestions.fulfilled, (state, action) => {
          state.questions = action.payload
@@ -43,3 +67,5 @@ const questionSlice = createSlice({
 })
 
 export default questionSlice
+
+export const questionActions = questionSlice.actions

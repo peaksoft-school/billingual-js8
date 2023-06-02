@@ -19,7 +19,10 @@ import { ReactComponent as EditIcon } from '../../../../assets/icons/editIcon.sv
 import { ReactComponent as DeleteIcon } from '../../../../assets/icons/deletedIcon.svg'
 import Spinner from '../../../../components/UI/spinner/Spinner'
 import { formatTime } from '../../../../utils/helpers/formatTime'
-import { deleteQuestionRequest } from '../../../../api/questionService'
+import {
+   deleteQuestionRequest,
+   updateQuestionRequest,
+} from '../../../../api/questionService'
 import { useSnackbar } from '../../../../hooks/useSnackbar'
 
 const AddQuestions = () => {
@@ -50,6 +53,18 @@ const AddQuestions = () => {
          notify('error', 'Question', error.response?.data.message)
       }
       return getTest()
+   }
+
+   const updateQuestion = async (question) => {
+      const newQuestion = { ...question, isActive: !question.isActive }
+
+      try {
+         await updateQuestionRequest(newQuestion)
+         notify('success', 'Question', 'Successfully updated')
+         return getTest()
+      } catch (error) {
+         return notify('error', 'Question', error.response?.data.message)
+      }
    }
 
    return (
@@ -83,48 +98,55 @@ const AddQuestions = () => {
                {test.questions !== null && test.questions.length === 0 ? (
                   <Typography>Question list is empty</Typography>
                ) : (
-                  <StyledTable>
-                     <TableHead>
-                        <TableRow>
-                           <StyledTh>#</StyledTh>
-                           <StyledTh>Name</StyledTh>
-                           <StyledTh>Duration</StyledTh>
-                           <StyledTh>Question type</StyledTh>
-                           <StyledTh />
-                        </TableRow>
-                     </TableHead>
-                     <TableBody>
-                        {test.questions !== null ? (
-                           test.questions.map((question, i) => (
-                              <StyledTr hover key={question.id}>
-                                 <StyledTd>{i + 1}</StyledTd>
-                                 <StyledTd>{question.title}</StyledTd>
-                                 <StyledTd>
-                                    {formatTime(question.duration)}
-                                 </StyledTd>
-                                 <StyledTd>{question.questionType}</StyledTd>
-                                 <StyledTd>
-                                    <IconsContainer>
-                                       <Switcher checked={question.isActive} />
-                                       <MyIconButton>
-                                          <StyledEditIcon />
-                                       </MyIconButton>
-                                       <MyIconButton
-                                          onClick={() =>
-                                             deleteHandler(question.id)
-                                          }
-                                       >
-                                          <StyledDeleteIcon />
-                                       </MyIconButton>
-                                    </IconsContainer>
-                                 </StyledTd>
-                              </StyledTr>
-                           ))
-                        ) : (
-                           <p>Question is empty</p>
-                        )}
-                     </TableBody>
-                  </StyledTable>
+                  <div style={{ overflowX: 'auto', padding: '10px' }}>
+                     <StyledTable>
+                        <TableHead>
+                           <TableRow>
+                              <StyledTh>#</StyledTh>
+                              <StyledTh>Name</StyledTh>
+                              <StyledTh>Duration</StyledTh>
+                              <StyledTh>Question type</StyledTh>
+                              <StyledTh />
+                           </TableRow>
+                        </TableHead>
+                        <TableBody>
+                           {test.questions !== null ? (
+                              test.questions.map((question, i) => (
+                                 <StyledTr hover key={question.id}>
+                                    <StyledTd>{i + 1}</StyledTd>
+                                    <StyledTd>{question.title}</StyledTd>
+                                    <StyledTd>
+                                       {formatTime(question.duration)}
+                                    </StyledTd>
+                                    <StyledTd>{question.questionType}</StyledTd>
+                                    <StyledTd>
+                                       <IconsContainer>
+                                          <Switcher
+                                             checked={question.isActive}
+                                             onClick={() =>
+                                                updateQuestion(question)
+                                             }
+                                          />
+                                          <MyIconButton>
+                                             <StyledEditIcon />
+                                          </MyIconButton>
+                                          <MyIconButton
+                                             onClick={() =>
+                                                deleteHandler(question.id)
+                                             }
+                                          >
+                                             <StyledDeleteIcon />
+                                          </MyIconButton>
+                                       </IconsContainer>
+                                    </StyledTd>
+                                 </StyledTr>
+                              ))
+                           ) : (
+                              <p>Question is empty</p>
+                           )}
+                        </TableBody>
+                     </StyledTable>
+                  </div>
                )}
                <ButtonContainer>
                   <GoBackButton onClick={() => navigate('/admin/test')}>
@@ -202,7 +224,6 @@ const StyledTd = styled(TableCell)(() => ({
    fontSize: '16px',
    lineHeight: '18px',
    color: ' #4C4859',
-   maxWidth: '70px',
    overflow: 'hidden',
    textOverflow: 'ellipsis',
 
