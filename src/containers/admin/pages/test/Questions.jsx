@@ -60,6 +60,7 @@ const AddQuestions = () => {
 
       try {
          await updateQuestionRequest(newQuestion)
+         notify('success', 'Question', 'Successfully updated')
          return getTest()
       } catch (error) {
          return notify('error', 'Question', error.response?.data.message)

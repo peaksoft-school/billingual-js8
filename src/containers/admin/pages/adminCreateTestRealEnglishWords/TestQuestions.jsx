@@ -84,7 +84,6 @@ const TestQuestions = () => {
    }
 
    const { testId } = useParams()
-
    const durationOnChange = (e) => {
       setDuration(e.target.value)
       setError((prevState) => ({

@@ -1,10 +1,13 @@
 import React from 'react'
 import ListenWords from './type/ListenAndSelectWords'
+import RespondNwords from './type/RespondNwords'
 import SelectRealEnglishWords from './type/SelectRealEnglishWords'
+import TypeWhatHear from './type/TypeWhatHear'
 import RecordSayingStatement from './type/RecordSayingStatement'
 import SelectBestTitle from './type/SelectBestTitle'
 import SelectMainIdea from './type/SelectMainIdea'
 import { questionTypes } from '../../../../utils/constants/common'
+import DescribeImage from './type/DescribeImage'
 
 const TypeTest = ({ selectType, title, duration, testId }) => {
    switch (selectType) {
@@ -20,6 +23,14 @@ const TypeTest = ({ selectType, title, duration, testId }) => {
                testId={testId}
             />
          )
+      case questionTypes.TypeWhatYourHear:
+         return (
+            <TypeWhatHear title={title} duration={duration} testId={testId} />
+         )
+      case questionTypes.RespondInAtLeastNWords:
+         return (
+            <RespondNwords title={title} duration={duration} testId={testId} />
+         )
       case questionTypes.SelectTheMainIdea:
          return (
             <SelectMainIdea title={title} duration={duration} testId={testId} />
@@ -31,6 +42,10 @@ const TypeTest = ({ selectType, title, duration, testId }) => {
                duration={duration}
                testId={testId}
             />
+         )
+      case questionTypes.DescribeImage:
+         return (
+            <DescribeImage title={title} duration={duration} testId={testId} />
          )
       default:
          return <div />
