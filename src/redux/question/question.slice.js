@@ -32,6 +32,9 @@ const questionSlice = createSlice({
             (item) => item.id !== action.payload
          )
       },
+      clearOptions(state) {
+         state.options = []
+      },
    },
    extraReducers: (builder) => {
       builder.addCase(getAllQuestions.fulfilled, (state, action) => {
