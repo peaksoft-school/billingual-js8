@@ -23,48 +23,59 @@ const RespondNwords = ({ title, duration, testId }) => {
       const { name, value } = event.target
 
       if (name === 'minWords') {
-         if (/^\d{0,2}$/.test(value) && value >= 0 && value <= 200) {
+         if (/^\d{0,3}$/.test(value) && value >= 0 && value <= 200) {
             setFormValues((prevValues) => ({
                ...prevValues,
                [name]: value,
             }))
-            return setValidationErrors((prevErrors) => ({
+            setValidationErrors((prevErrors) => ({
                ...prevErrors,
                [name]: '',
             }))
+         } else {
+            setValidationErrors((prevErrors) => ({
+               ...prevErrors,
+               [name]: 'Please enter a number between 1 and 200 for words.',
+            }))
          }
-         return setValidationErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: 'Please enter a number between 1 and 200 for replays.',
-         }))
       }
 
       if (name === 'statement') {
          if (value.trim().length === 0) {
-            return setValidationErrors((prevErrors) => ({
+            setValidationErrors((prevErrors) => ({
                ...prevErrors,
-               [name]: 'Correct answer cannot be negative.',
+               [name]: 'Please enter a statement.',
+            }))
+         } else {
+            setValidationErrors((prevErrors) => ({
+               ...prevErrors,
+               [name]: '',
             }))
          }
          setFormValues((prevValues) => ({
             ...prevValues,
             [name]: value,
          }))
-         return setValidationErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: '',
-         }))
       }
-      return undefined
    }
 
    const submitHandler = async () => {
+      if (formValues.statement.trim().length === 0) {
+         notify(
+            'error',
+            'Attention!',
+            'Please enter a statement before saving.'
+         )
+         throw new Error('Statement is required.')
+      }
+
       if (Object.values(validationErrors).some((error) => error !== '')) {
          notify(
             'error',
             'Attention!',
             'Please fix the validation errors before saving.'
          )
+         throw new Error('Validation errors.')
       }
 
       try {
@@ -119,8 +130,8 @@ const RespondNwords = ({ title, duration, testId }) => {
 
 export default RespondNwords
 const InputStyled = styled(Input)(() => ({
-   input: { padding: '0rem  0.8rem 0rem 0.7rem ' },
-   width: '7%',
+   input: { padding: '0.75rem  0.6rem 0.75rem 0.9rem ' },
+   width: '8%',
    borderRadius: '.5rem',
    textAlign: 'center',
    border: 'solid .0956rem #D4D0D0',
