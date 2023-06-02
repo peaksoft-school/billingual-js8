@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { useDropzone } from 'react-dropzone'
 import { useDispatch } from 'react-redux'
 import { InputLabel, styled } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useDropzone } from 'react-dropzone'
 import { ReactComponent as PlayAudio } from '../../../../../assets/icons/playIcon.svg'
 import { ReactComponent as PauseAudio } from '../../../../../assets/icons/pauseIcon.svg'
 import Button from '../../../../../components/UI/buttons/Buttons'

@@ -116,3 +116,27 @@ export const humans = [
       avatar: avatar5,
    },
 ]
+
+export const questionTypes = {
+   SelectRealEnglishWords: 'Select real English words',
+   ListenAndSelect: 'Listen and select English word',
+   TypeWhatYourHear: 'Type what you hear',
+   DescribeImage: 'Describe image',
+   RecordSayingStatement: 'Record saying statement',
+   RespondInAtLeastNWords: 'Respond in at least N words',
+   HighlightTheAnswer: 'Highlight the answer',
+   SelectTheMainIdea: 'Select the main idea',
+   SelectBestTitle: 'Select best title',
+}
+
+export const questionsApi = {
+   selectRealEnglishWords: 'api/questions/select-real-english-word',
+   listenAndSelect: 'api/questions/listen-and-selectenglish-word',
+   typeWhatYourHear: 'api/questions/type-what-your-hear',
+   describeImage: 'api/questions/describe-image',
+   recordSayingStatement: 'api/questions/record-saying-statement',
+   respondInAtLeastNWords: 'api/questions/respond-n-words',
+   highlightTheAnswer: 'api/questions/highlight-the-answer',
+   selectTheMainIdea: 'api/questions/select-the-main-idea',
+   selectBestTitle: 'api/questions/select-best-title',
+}
