@@ -21,12 +21,10 @@ export const postRespondWords = (requestData) => {
 export const postRecordSayingStatement = (recordData) => {
    return instanse.post('api/questions/record-saying-statement', recordData)
 }
-<<<<<<< HEAD
 
 export const postHighlightTheAnswer = (data) => {
    return instanse.post('/api/questions/highlight-the-answer', data)
-=======
+}
 export const describeImageReq = (payload) => {
    return instanse.post('/api/questions/describe-image', payload)
->>>>>>> 5f249a54d202d54a4bf1087f6d21957f81b677b8
 }
