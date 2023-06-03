@@ -1,7 +1,8 @@
-import { Grid, Typography, styled } from '@mui/material'
+import { Grid, InputAdornment, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
 import { ReactComponent as System } from '../../assets/icons/system.svg'
 import { ReactComponent as Layer } from '../../assets/icons/layer 2.svg'
 import { ReactComponent as Defoult } from '../../assets/icons/defoult.svg'
@@ -14,10 +15,16 @@ import {
 } from '../../utils/constants/general'
 import { useSnackbar } from '../../hooks/useSnackbar'
 import Spinner from '../../components/UI/spinner/Spinner'
+import MyIconButton from '../../components/UI/Icon-button/IconButton'
+import { ReactComponent as EyeIcon } from '../../assets/icons/eyeDefaultIcon.svg'
+import { ReactComponent as EyeIconOff } from '../../assets/icons/eyeOffIcon.svg'
 
 const SignupPage = () => {
    const dispatch = useDispatch()
    const { error, isLoading } = useSelector((state) => state.auth)
+   const [showPassword, setShowPassword] = useState(false)
+
+   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
    const navigate = useNavigate()
    const { notify } = useSnackbar()
@@ -70,6 +77,22 @@ const SignupPage = () => {
                         value={values[item.name]}
                         onChange={handleChange}
                         type={item.type}
+                        InputProps={{
+                           endAdornment: item.name === 'password' && (
+                              <InputAdornment position="end">
+                                 <MyIconButton
+                                    onClick={handleClickShowPassword}
+                                    edge="end"
+                                 >
+                                    {showPassword ? (
+                                       <EyeIconOff />
+                                    ) : (
+                                       <EyeIcon />
+                                    )}
+                                 </MyIconButton>
+                              </InputAdornment>
+                           ),
+                        }}
                      />
                   )
                })}

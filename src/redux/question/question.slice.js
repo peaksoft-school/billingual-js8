@@ -5,13 +5,37 @@ const initialState = {
    questions: [],
    isLoading: false,
    error: null,
-   imageLink: '',
+   options: [],
+   link: '',
 }
 
 const questionSlice = createSlice({
    name: 'questions',
    initialState,
-   reducers: {},
+   reducers: {
+      addOption: (state, action) => {
+         state.options.push(action.payload)
+      },
+      changeTrueOption: (state, action) => {
+         state.options = state.options.map((item) => {
+            if (item.id === action.payload) {
+               return {
+                  ...item,
+                  isCorrect: !item.isCorrect,
+               }
+            }
+            return item
+         })
+      },
+      deleteOption: (state, action) => {
+         state.options = state.options.filter(
+            (item) => item.id !== action.payload
+         )
+      },
+      clearOptions(state) {
+         state.options = []
+      },
+   },
    extraReducers: (builder) => {
       builder.addCase(getAllQuestions.fulfilled, (state, action) => {
          state.questions = action.payload
@@ -27,9 +51,21 @@ const questionSlice = createSlice({
          state.error = null
       })
       builder.addCase(postFiles.fulfilled, (state, action) => {
-         state.imageLink = action.payload.link
+         state.link = action.payload.link
+         state.isLoading = false
+         state.error = null
+      })
+      builder.addCase(postFiles.pending, (state) => {
+         state.isLoading = true
+         state.error = null
+      })
+      builder.addCase(postFiles.rejected, (state, action) => {
+         state.isLoading = false
+         state.error = action.payload
       })
    },
 })
 
 export default questionSlice
+
+export const questionActions = questionSlice.actions

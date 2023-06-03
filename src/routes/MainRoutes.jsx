@@ -1,5 +1,6 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import ProtectedRoute from './ProtectedRoute'
 import LandingPage from '../components/landing-page/LandingPage'
 import AdminTest from '../containers/admin/pages/test/AdminTest'
@@ -15,18 +16,30 @@ import TestQuestions from '../containers/admin/pages/adminCreateTestRealEnglishW
 import MyResults from '../containers/user/MyResults'
 
 const MainRoutes = () => {
+   const { role, isAuthorized } = useSelector((state) => state.auth)
+
    return (
       <div>
          <Routes>
             {/* Guest */}
-            <Route path="/" element={<LandingPage />} />
+            <Route
+               path="/"
+               element={
+                  role !== 'ADMIN' ? <LandingPage /> : <Navigate to="/admin" />
+               }
+            />
             <Route path="/sign-in" element={<SigninPage />} />
             <Route path="/sign-up" element={<SignupPage />} />
 
             {/* User */}
             <Route
                element={
-                  <ProtectedRoute roles="USER" fallbackPath="/admin/test" />
+                  <ProtectedRoute
+                     roles="USER"
+                     fallbackPath="/admin/test"
+                     isAuthorized={isAuthorized}
+                     role={role}
+                  />
                }
             >
                <Route path="/user/" element={<UserRoute />}>
@@ -38,7 +51,16 @@ const MainRoutes = () => {
             </Route>
 
             {/* Admin */}
-            <Route element={<ProtectedRoute roles="ADMIN" fallbackPath="/" />}>
+            <Route
+               element={
+                  <ProtectedRoute
+                     roles="ADMIN"
+                     fallbackPath="/sign-in"
+                     isAuthorized={isAuthorized}
+                     role={role}
+                  />
+               }
+            >
                <Route path="/admin/" element={<AdminRoute />}>
                   <Route index element={<Navigate to="test" />} />
                   <Route path="test" element={<AdminTest />} />
