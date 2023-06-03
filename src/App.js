@@ -1,5 +1,5 @@
+import { Snackbar } from '@mui/material'
 import MainRoutes from './routes/MainRoutes'
-import Snackbar from './components/UI/snackbar/Snackbar'
 
 const App = () => {
    return (

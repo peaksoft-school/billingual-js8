@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
 import { signOut } from '../../redux/auth/auth.thunk'
 
-const Header = ({ title, endpoint }) => {
+const Header = ({ title, endpoint, resultEndpoint }) => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
 
@@ -24,7 +24,9 @@ const Header = ({ title, endpoint }) => {
          <Logotype onClick={goToHomePage} />
          <Container>
             <TestBtn onClick={() => navigate(endpoint)}>TESTS</TestBtn>
-            <SubmitBtn>{title} RESULTS</SubmitBtn>
+            <SubmitBtn onClick={() => navigate(resultEndpoint)}>
+               {title} RESULTS
+            </SubmitBtn>
             <LogOut onClick={onLogout}>LOG OUT</LogOut>
          </Container>
       </StyledHeader>
