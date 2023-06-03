@@ -214,6 +214,9 @@ const Warning = styled('p')(() => ({
    marginTop: '0px',
 }))
 const DivCorrectAnswer = styled('div')(() => ({
+   width: '100%',
+   height: 'auto',
+   wordWrap: 'break-word',
    '::selection': {
       color: '#0015ff',
       textDecoration: 'underline',
