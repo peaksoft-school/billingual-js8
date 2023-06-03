@@ -18,6 +18,8 @@ import FormContainer from '../../components/UI/form/FormContainer'
 import { getTestById } from '../../api/testService'
 import { useSnackbar } from '../../hooks/useSnackbar'
 
+// let mount = false
+
 const CurrentTest = () => {
    const navigate = useNavigate()
    const { notify } = useSnackbar()
@@ -46,6 +48,10 @@ const CurrentTest = () => {
       getOneTest()
    }, [])
 
+   const tryTestHandle = (questions) => {
+      return navigate(`practice`, { state: questions })
+   }
+
    return (
       <FormContainer>
          {isLoading && (
@@ -56,7 +62,7 @@ const CurrentTest = () => {
          {test && test.length > 0 ? (
             test.map((item) => {
                return (
-                  <StyledForm>
+                  <StyledForm key={item.id}>
                      <TitleStyle>{item.title}</TitleStyle>
                      <ContentContainer>
                         <CurrentImg />
@@ -91,7 +97,12 @@ const CurrentTest = () => {
                         >
                            Cancel
                         </CancelButton>
-                        <Button variant="contained">Practice Test</Button>
+                        <Button
+                           variant="contained"
+                           onClick={() => tryTestHandle(item.questions)}
+                        >
+                           Practice Test
+                        </Button>
                      </ContainerBtn>
                   </StyledForm>
                )

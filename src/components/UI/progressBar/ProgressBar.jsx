@@ -36,7 +36,7 @@ const ProgressBar = ({ timeObject, timeProgress }) => {
                <Time>
                   {timeObject.minute}:{timeObject.seconds}
                </Time>
-               <ProgressLine value={timeProgress} />
+               <ProgressLine value={100 - timeProgress} max="100" />
             </DivProgressBar>
          </GridStyle>
       </div>

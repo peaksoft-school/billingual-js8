@@ -14,11 +14,10 @@ export const useProgressBar = (duration, onTimeUp) => {
    }, [calculatePercentage])
 
    const timeTicking = useCallback(() => {
-      if (time <= 0) {
-         onTimeUp()
-      } else {
-         setTime((prevTime) => prevTime - 0.1)
+      if (time === 0 || time <= 0) {
+         return onTimeUp()
       }
+      return setTime((prevTime) => prevTime - 0.1)
    }, [time, onTimeUp])
 
    useEffect(() => {

@@ -13,13 +13,9 @@ const GetAllTests = () => {
    const dispatch = useDispatch()
    const { tests, isLoading } = useSelector((state) => state.tests)
    const { notify } = useSnackbar()
+
    useEffect(() => {
-      dispatch(getTests())
-         .unwrap()
-         .then(() =>
-            notify('success', 'All tests', 'Tests received successfully!')
-         )
-         .catch(() => notify('error', 'All tests', 'Failed to fetch test!'))
+      dispatch(getTests(notify))
    }, [])
 
    const navigate = useNavigate()

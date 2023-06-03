@@ -1,12 +1,17 @@
 import { styled } from '@mui/material'
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation, useParams } from 'react-router-dom'
 import Header from '../../components/header/Header'
 
 const UserLayout = () => {
+   const { pathname } = useLocation()
+   const { testId } = useParams()
+
    return (
       <>
-         <Header title="MY" endpoint="/user/tests" />
+         {pathname === `/user/tests/${testId}/practice` ? null : (
+            <Header title="MY" endpoint="/user/tests" />
+         )}
          <BackgroundContainer>
             <Outlet />
          </BackgroundContainer>

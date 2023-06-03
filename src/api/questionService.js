@@ -25,3 +25,7 @@ export const postRecordSayingStatement = (recordData) => {
 export const describeImageReq = (payload) => {
    return instanse.post('/api/questions/describe-image', payload)
 }
+
+export const selectWordsRequest = (id) => {
+   return instanse.get(`api/questions/${id}`)
+}

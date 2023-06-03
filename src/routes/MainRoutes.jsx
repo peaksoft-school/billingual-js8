@@ -12,6 +12,7 @@ import SignupPage from '../containers/public/SignupPage'
 import CreateTest from '../containers/admin/pages/test/CreateTest'
 import AddQuestions from '../containers/admin/pages/test/Questions'
 import TestQuestions from '../containers/admin/pages/adminCreateTestRealEnglishWords/TestQuestions'
+import PracticeTest from '../containers/user/type/container/PracticeTest'
 
 const MainRoutes = () => {
    return (
@@ -32,15 +33,15 @@ const MainRoutes = () => {
                   <Route index element={<Navigate to="tests" />} />
                   <Route path="tests" element={<GetAllTests />} />
                   <Route path="tests/:testId" element={<CurrentTest />} />
+                  <Route
+                     path="tests/:testId/practice"
+                     element={<PracticeTest />}
+                  />
                </Route>
             </Route>
 
             {/* Admin */}
-            <Route
-               element={
-                  <ProtectedRoute roles="ADMIN" fallbackPath="/sign-in" />
-               }
-            >
+            <Route element={<ProtectedRoute roles="ADMIN" fallbackPath="/" />}>
                <Route path="/admin/" element={<AdminRoute />}>
                   <Route index element={<Navigate to="test" />} />
                   <Route path="test" element={<AdminTest />} />
