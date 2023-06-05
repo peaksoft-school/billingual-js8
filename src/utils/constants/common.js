@@ -128,3 +128,15 @@ export const questionTypes = {
    SelectTheMainIdea: 'Select the main idea',
    SelectBestTitle: 'Select best title',
 }
+
+export const questionsApi = {
+   selectRealEnglishWords: 'api/questions/select-real-english-word',
+   listenAndSelect: 'api/questions/listen-and-selectenglish-word',
+   typeWhatYourHear: 'api/questions/type-what-your-hear',
+   describeImage: 'api/questions/describe-image',
+   recordSayingStatement: 'api/questions/record-saying-statement',
+   respondInAtLeastNWords: 'api/questions/respond-n-words',
+   highlightTheAnswer: 'api/questions/highlight-the-answer',
+   selectTheMainIdea: 'api/questions/select-the-main-idea',
+   selectBestTitle: 'api/questions/select-best-title',
+}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { keyframes, styled } from '@mui/material'
+import { Typography, keyframes, styled } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
@@ -60,7 +60,8 @@ const SelectMainIdea = ({ title, duration, testId }) => {
          }
          await postSelectMainIdea(data)
          goBack()
-         return notify('success', 'Question', 'Successfully added')
+         notify('success', 'Question', 'Successfully added')
+         return dispatch(questionActions.clearOptions())
       } catch (error) {
          if (AxiosError(error)) {
             return notify('error', 'Question', error.response?.data.message)
@@ -89,7 +90,9 @@ const SelectMainIdea = ({ title, duration, testId }) => {
             </ButtonContainer>
             <OptionsContainer>
                {options.length === 0 ? (
-                  <p>Please add options</p>
+                  <StyledTypography onClick={openModalHandler}>
+                     Please add options!
+                  </StyledTypography>
                ) : (
                   options.map((item, i) => (
                      <Options key={item.title}>
@@ -120,6 +123,17 @@ const SelectMainIdea = ({ title, duration, testId }) => {
 }
 
 export default SelectMainIdea
+
+const StyledTypography = styled(Typography)(() => ({
+   fontFamily: 'Poppins',
+   fontStyle: 'normal',
+   fontWeight: '500',
+   fontSize: '18px',
+   lineHeight: '16px',
+   textDecoration: 'underline',
+   cursor: 'pointer',
+   color: '#3a10e5',
+}))
 
 const slideInDown = keyframes`
    from {
