@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { styled } from '@mui/material'
 import { Howl } from 'howler'
 import Button from '../../../../../components/UI/buttons/Buttons'
@@ -93,6 +94,7 @@ const styleCheckboxes = {
 }
 
 const ListenWords = ({ audio }) => {
+   const { options } = useSelector((data) => data.questions)
    const [isOpenModal, setIsOpenModal] = useState(false)
    const [isOpenModalSave, setIsOpenModalSave] = useState(false)
    const [upploadFile, setUpploadFile] = useState({})
@@ -109,6 +111,7 @@ const ListenWords = ({ audio }) => {
       setIsOpenModal((prevState) => !prevState)
       setListenId(id)
    }
+   console.log(options)
    const openModalSave = () => {
       setIsOpenModalSave((prevState) => !prevState)
    }

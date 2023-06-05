@@ -12,9 +12,17 @@ import DescribeImage from './type/DescribeImage'
 const TypeTest = ({ selectType, title, duration, testId }) => {
    switch (selectType) {
       case questionTypes.SelectRealEnglishWords:
-         return <SelectRealEnglishWords />
+         return (
+            <SelectRealEnglishWords
+               title={title}
+               duration={duration}
+               testId={testId}
+            />
+         )
       case questionTypes.ListenAndSelect:
-         return <ListenWords />
+         return (
+            <ListenWords title={title} duration={duration} testId={testId} />
+         )
       case questionTypes.RecordSayingStatement:
          return (
             <RecordSayingStatement
