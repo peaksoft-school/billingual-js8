@@ -1,26 +1,43 @@
 import { Grid, Typography, styled } from '@mui/material'
 import { useState } from 'react'
-import { Howl } from 'howler'
+import { Howl, Howler } from 'howler'
 import { ReactComponent as Volumeup } from '../../../assets/icons/volumeup.svg'
 import { ReactComponent as Check } from '../../../assets/icons/check (1).svg'
 
 const MultiplySelect = ({ id, word, audio }) => {
    const [color, setColor] = useState(false)
+   const [isPlaying, setIsPlaying] = useState(false)
+
    const selectHandler = () => {
       setColor((prev) => !prev)
    }
 
-   const soundPlay = (src) => {
-      const sound = new Howl({
-         src,
-         html5: true,
-      })
-      sound.play()
+   const stopSound = () => {
+      Howler.stop()
+      setIsPlaying(false)
    }
+
+   const soundPlay = (src) => {
+      if (isPlaying) {
+         stopSound()
+      } else {
+         const sound = new Howl({
+            src,
+            html5: true,
+            onend: () => setIsPlaying(false),
+         })
+         sound.play()
+         setIsPlaying(true)
+      }
+   }
+
    return (
       <Main color={color} key={id}>
          <Content>
-            <StyledVolumeup onClick={() => soundPlay(audio)} />
+            <StyledVolumeup
+               isActive={isPlaying}
+               onClick={() => soundPlay(audio)}
+            />
 
             <Word>
                {word} {id}
@@ -47,8 +64,7 @@ const Main = styled(Grid)(({ color }) => ({
 }))
 
 const Content = styled(Grid)(() => ({
-   borderTopLeftRadius: '8px',
-   borderBottomLeftRadius: '8px',
+   borderRadius: '8px 0 0 8px',
    display: 'flex',
    alignItems: 'center',
    background: 'white',
@@ -56,10 +72,13 @@ const Content = styled(Grid)(() => ({
    height: '39px',
 }))
 
-const StyledVolumeup = styled(Volumeup)(() => ({
+const StyledVolumeup = styled(Volumeup)(({ isActive }) => ({
    margin: '16px 13px 16.23px 13px',
    alignItems: 'center',
    cursor: 'pointer',
+   path: {
+      fill: isActive ? '#3A10E5' : '#655F5F',
+   },
 }))
 
 const Word = styled(Typography)(() => ({
