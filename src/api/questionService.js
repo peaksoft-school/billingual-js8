@@ -24,6 +24,9 @@ export const postRecordSayingStatement = (recordData) => {
    return instanse.post(questionsApi.recordSayingStatement, recordData)
 }
 
+export const postHighlightTheAnswer = (data) => {
+   return instanse.post(questionsApi.highlightTheAnswer, data)
+}
 export const postSelectMainIdea = (data) => {
    return instanse.post(questionsApi.selectTheMainIdea, data)
 }
