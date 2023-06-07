@@ -1,4 +1,4 @@
-import { styled } from '@mui/material'
+import { keyframes, styled } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,9 +6,32 @@ import logo from '../../assets/icons/logo.svg'
 import imageBubble from '../../assets/images/bubble.png'
 import cap from '../../assets/images/cap.png'
 import imageBook from '../../assets/images/books.png'
-import LandingButton from '../UI/buttons/LandingButtton'
+// import LandingButton from '../UI/buttons/LandingButtton'
 import Button from '../UI/buttons/Buttons'
 import { signOut } from '../../redux/auth/auth.thunk'
+import ButtonLanding from '../UI/buttons/LandingButton'
+
+const fadeInAnimation = keyframes`
+   0% {
+      opacity: 0;
+      transform: translateY(20px);
+   }
+   100% {
+      opacity: 1;
+      transform: translateY(0);
+   }
+`
+
+const slideInAnimation = keyframes`
+   0% {
+      opacity: 0;
+      transform: translateY(100px);
+   }
+   100% {
+      opacity: 1;
+      transform: translateY(0);
+   }
+`
 
 const LandingPage = styled('div')(() => ({
    width: '100%',
@@ -64,12 +87,12 @@ const ImgBubble = styled('img')(() => ({
    height: '41.25rem',
    width: '100%',
    mixBlendMode: 'overlay',
-   marginTop: '-550px',
+   marginTop: '-43.75rem',
+   animation: `${slideInAnimation} 1s ease-in-out`,
 }))
 const EnglishProficiency = styled('div')(() => ({
    width: '50%',
-   height: '219px',
-   margin: '0 0 50px',
+   margin: '0 0 30px',
    position: 'relative',
    zIndex: 1,
 }))
@@ -81,6 +104,7 @@ const ProveYourEnglish = styled('h1')(() => ({
    fontSize: '60px',
    lineHeight: '73px',
    color: ' #43404E',
+   animation: `${fadeInAnimation} 1s ease-in-out`,
 }))
 const DivInfo = styled('div')(() => ({
    padding: '180px 0',
@@ -88,6 +112,7 @@ const DivInfo = styled('div')(() => ({
    lineHeight: '73px',
    position: 'relative',
    zIndex: 1,
+   animation: `${slideInAnimation} 1s ease-in-out`,
 }))
 const Bilingual = styled('h1')(() => ({
    fontFamily: 'Gilroy',
@@ -96,19 +121,20 @@ const Bilingual = styled('h1')(() => ({
    fontSize: '60px',
    lineHeight: '74.88px',
    color: '#C93D7D',
-   marginTop: '5px',
+   margin: '5px 0 0',
    textTransform: 'uppercase',
 }))
 
 const TextDivInfo = styled('div')(() => ({
    width: '60%',
-   marginleft: '80px',
+   margin: '0 0 2.8125rem',
    fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '20px',
    lineHeight: '30px',
    color: '#23212A',
+   animation: `${fadeInAnimation} 1s ease-in-out`,
 }))
 
 const AcademicCap = styled('img')(() => ({
@@ -117,6 +143,7 @@ const AcademicCap = styled('img')(() => ({
    height: '243px',
    top: '189px',
    right: '25%',
+   animation: `${slideInAnimation} 1s ease-in-out`,
 }))
 
 const ImageBooks = styled('img')(() => ({
@@ -125,13 +152,11 @@ const ImageBooks = styled('img')(() => ({
    height: '499px',
    top: '293px',
    right: '0',
+   animation: `${slideInAnimation} 1s ease-in-out`,
 }))
 
 const ButtonToBegin = styled('div')(() => ({
-   marginleft: '80px',
-   top: '530px',
-   position: 'absolute',
-   zIndex: 1,
+   // marginleft: '80px',
 }))
 
 const LandingPageSectionOne = () => {
@@ -215,7 +240,7 @@ const LandingPageSectionOne = () => {
                languages.
             </TextDivInfo>
             <ButtonToBegin>
-               <LandingButton textButton="toBeggin" onClick={goToTests} />
+               <ButtonLanding onClick={goToTests}>to begin</ButtonLanding>
             </ButtonToBegin>
          </DivInfo>
 

@@ -1,11 +1,33 @@
-import { styled } from '@mui/material'
+import { keyframes, styled } from '@mui/material'
 
+import { motion } from 'framer-motion'
 import accessible from '../../assets/images/accessible.png'
 import speech from '../../assets/images/speech.png'
 import extensive from '../../assets/images/extensive.png'
 import tutoring from '../../assets/images/tutoring.png'
-import booksImage from '../../assets/images/imgBookEnglish.png'
+import booksBackground from '../../assets/icons/background.svg'
+import bookImg from '../../assets/icons/bookImg.svg'
+import learnImg from '../../assets/icons/learnImg.svg'
+import readingImg from '../../assets/icons/reading.svg'
 import { infoCardArray, ourTeamArray } from '../../utils/constants/common'
+
+const fadeIn = keyframes`
+   from {
+      opacity: 0;
+   }
+   to {
+      opacity: 1;
+   }
+`
+
+const slideIn = keyframes`
+   from {
+      transform: translateX(-100%);
+   }
+   to {
+      transform: translateX(0);
+   }
+`
 
 const Card = styled('div')(() => ({
    width: '100%',
@@ -31,6 +53,7 @@ const Img1DivOne = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
+   animation: `${fadeIn} 1s ease-in-out`,
 }))
 const Over = styled('p')(() => ({
    height: '48px',
@@ -165,11 +188,47 @@ const DivTutoring = styled('div')(() => ({
    marginTop: '48.98px',
 }))
 
-const ImgBook = styled('img')(() => ({
+const ImgBackground = styled('div')(({ backgroundImage }) => ({
+   position: 'relative',
    marginTop: '17px',
    marginRight: '154.19px',
-   width: '35%',
+   width: '115rem',
+   backgroundImage: `url(${backgroundImage})`,
+   backgroundSize: 'cover',
+   backgroundPosition: 'center',
 }))
+
+const ChildContainer = styled(motion.div)(() => ({
+   position: 'absolute',
+   top: 0,
+   left: 0,
+   right: 0,
+   bottom: 0,
+}))
+
+const ImgBook = styled(motion.img)(() => ({
+   position: 'relative',
+   zIndex: '2',
+   left: '3.5rem',
+   top: '4.5rem',
+}))
+const ImgLearn = styled(motion.img)(() => ({
+   position: 'relative',
+   zIndex: '4',
+   right: '20rem',
+   bottom: '13rem',
+}))
+const ImgReading = styled(motion.img)(() => ({
+   position: 'relative',
+   zIndex: '3',
+   left: '21.5rem',
+   bottom: '14rem',
+}))
+// const ImgAnimation = styled('div')(() => ({
+//    marginTop: '17px',
+//    marginRight: '154.19px',
+//    width: '35%',
+// }))
 const DivSeparation = styled('div')(() => ({
    display: 'flex',
    gap: '67.88px',
@@ -178,6 +237,7 @@ const OurTeam = styled('div')(() => ({
    height: '335px',
    display: 'grid',
    justifyItems: 'center',
+   animation: `${slideIn} 1s ease-in-out`,
 }))
 
 const TextOurTeam = styled('div')(() => ({
@@ -237,6 +297,27 @@ const Employee = styled('div')(() => ({
    color: '#020202',
 }))
 
+const blockAnimate = {
+   offscreen: {
+      opacity: 0,
+   },
+   onscreen: {
+      opacity: 1,
+      transition: {
+         duration: 1,
+         damping: 3,
+      },
+   },
+   animate: {
+      rotate: [-2, 3, -7, 4, 4], // Rotate back and forth with smaller values
+      transition: {
+         duration: 2.5,
+         repeat: Infinity,
+         repeatType: 'reverse',
+      },
+   },
+}
+
 const InfoSection = () => {
    return (
       <Card>
@@ -284,7 +365,31 @@ const InfoSection = () => {
                   </DivTutoring>
                </DivSeparation>
             </div>
-            <ImgBook src={booksImage} />
+            <ImgBackground backgroundImage={booksBackground}>
+               <ChildContainer>
+                  <ImgBook
+                     variants={blockAnimate}
+                     initial="offscreen"
+                     whileInView="onscreen"
+                     animate="animate"
+                     src={bookImg}
+                  />
+                  <ImgLearn
+                     variants={blockAnimate}
+                     initial="offscreen"
+                     whileInView="onscreen"
+                     animate="animate"
+                     src={learnImg}
+                  />
+                  <ImgReading
+                     variants={blockAnimate}
+                     initial="offscreen"
+                     whileInView="onscreen"
+                     animate="animate"
+                     src={readingImg}
+                  />
+               </ChildContainer>
+            </ImgBackground>
          </Description>
          <OurTeam>
             <TextOurTeam>Our Team</TextOurTeam>

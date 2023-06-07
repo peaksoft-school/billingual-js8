@@ -1,11 +1,13 @@
 import { styled, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import Button from '../../../../components/UI/buttons/Buttons'
-import FormContainer from '../../../../components/UI/form/FormContainer'
 import ModalReusable from '../../../../components/UI/modal/Modal'
-import ProgressBar from '../../../../components/UI/progressBar/ProgressBar'
-import { useProgressBar } from '../../../../hooks/useTime'
+import Spinner from '../../../../components/UI/spinner/Spinner'
+import { userQuestionActions } from '../../../../redux/user/user.slice'
+import { questionComponents } from '../../../../utils/constants/common'
+import UserTest from './UserTest'
 
 const modalStyleDiv = {
    width: '407px',
@@ -17,11 +19,18 @@ const modalStyleDiv = {
 }
 
 const PracticeTest = () => {
+   const dispatch = useDispatch()
+   const [count, setCountPage] = useState(0)
    const [isOpenModal, setOpenModal] = useState(false)
    const navigate = useNavigate()
    const { state } = useLocation()
+   const { testId } = useParams()
 
-   console.log(state)
+   useEffect(() => {
+      dispatch(userQuestionActions.addTestId(testId))
+   }, [])
+
+   const QuestionComponent = questionComponents[state?.[count]?.questionType]
 
    const closeHandler = () => {
       setOpenModal((prevState) => !prevState)
@@ -34,47 +43,44 @@ const PracticeTest = () => {
       navigate('/user/tests')
    }
 
-   const duration = 10
+   if (state?.length > 0) {
+      if (count > state.length - 1) return 'complete'
 
-   const handleTimeUp = () => {
-      // Логика, когда время истекло
+      return (
+         <BackgroundContainer>
+            <QuitButton onClick={openHandler}>Quit test</QuitButton>
+            <ModalReusable
+               modalStyle={modalStyleDiv}
+               isOpen={isOpenModal}
+               handleClose={closeHandler}
+            >
+               <Typography>
+                  Are you sure you want to leave your practice test?
+               </Typography>
+               <ContainerBtn>
+                  <Button variant="outlined" onClick={navigateGoBackTest}>
+                     quit test
+                  </Button>
+                  <Button variant="contained" onClick={closeHandler}>
+                     continue test
+                  </Button>
+               </ContainerBtn>
+            </ModalReusable>
+            <UserTest
+               questions={state}
+               setCountPage={setCountPage}
+               count={count}
+            >
+               {QuestionComponent ? (
+                  <QuestionComponent question={state[count]} count={count} />
+               ) : (
+                  <h1>Not Found</h1>
+               )}
+            </UserTest>
+         </BackgroundContainer>
+      )
    }
-
-   const { time, chartPercent } = useProgressBar(duration, handleTimeUp)
-   const minutes = Math.trunc(time / 60)
-   const seconds = Math.trunc(time % 60)
-
-   const timeObject = {
-      minute: minutes.toString().padStart(2, '0'),
-      seconds: seconds.toString().padStart(2, '0'),
-   }
-
-   return (
-      <BackgroundContainer>
-         <QuitButton onClick={openHandler}>Quit test</QuitButton>
-         <ModalReusable
-            modalStyle={modalStyleDiv}
-            isOpen={isOpenModal}
-            handleClose={closeHandler}
-         >
-            <Typography>
-               Are you sure you want to leave your practice test?
-            </Typography>
-            <ContainerBtn>
-               <Button variant="outlined" onClick={navigateGoBackTest}>
-                  quit test
-               </Button>
-               <Button variant="contained" onClick={closeHandler}>
-                  continue test
-               </Button>
-            </ContainerBtn>
-         </ModalReusable>
-         <FormContainer>
-            <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
-            <TitleStyle>Select the real english words in this list</TitleStyle>
-         </FormContainer>
-      </BackgroundContainer>
-   )
+   return <Spinner />
 }
 
 export default PracticeTest
@@ -82,18 +88,8 @@ export default PracticeTest
 const BackgroundContainer = styled('main')(() => ({
    backgroundColor: '#D7E1F8',
    height: '100vh',
-}))
-
-const TitleStyle = styled(Typography)(() => ({
-   textAlign: 'center',
-   fontFamily: 'DINNextRoundedLTW01-Regular',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '28px',
-   lineHeight: '32px',
-   color: '#4C4859',
-   marginTop: '50px',
-   letterSpacing: '1.5px',
+   display: 'flex',
+   flexDirection: 'column',
 }))
 
 const ContainerBtn = styled('div')(() => ({
@@ -104,6 +100,7 @@ const ContainerBtn = styled('div')(() => ({
 }))
 
 const QuitButton = styled(Button)(() => ({
+   alignSelf: 'end',
    fontSize: '14px',
    padding: '12px 24px',
    textAlign: 'end',

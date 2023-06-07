@@ -1,18 +1,18 @@
 import React from 'react'
 import Box from '@mui/material/Box'
-// import { Modal as MuiModal } from '@mui/material/Modal'
 import { Modal, styled } from '@mui/material'
 
-const ModalReusable = ({ modalStyle, handleClose, isOpen, children }) => {
+const ModalReusable = ({ handleClose, isOpen, children }) => {
    return (
       <Modal open={isOpen} onClose={handleClose}>
-         <BoxStyle sx={modalStyle}>{children}</BoxStyle>
+         <BoxStyle>{children}</BoxStyle>
       </Modal>
    )
 }
 
 export default ModalReusable
 const BoxStyle = styled(Box)(({ theme }) => ({
+   padding: '36px 89px',
    position: 'absolute',
    top: '45%',
    left: '50%',

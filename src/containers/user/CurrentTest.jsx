@@ -18,8 +18,6 @@ import FormContainer from '../../components/UI/form/FormContainer'
 import { getTestById } from '../../api/testService'
 import { useSnackbar } from '../../hooks/useSnackbar'
 
-// let mount = false
-
 const CurrentTest = () => {
    const navigate = useNavigate()
    const { notify } = useSnackbar()
@@ -31,11 +29,6 @@ const CurrentTest = () => {
    const getOneTest = async () => {
       try {
          const { data } = await getTestById(testId)
-         notify(
-            'success',
-            'Current test',
-            'Сurrent test received successfully!'
-         )
          setTest([data])
          setIsLoading(false)
       } catch (error) {
@@ -74,7 +67,8 @@ const CurrentTest = () => {
                            <ListItem>
                               <Time />
                               <span>
-                                 Practice takes just {item.duration / 60}
+                                 Practice takes just{' '}
+                                 {(item.duration / 60).toFixed(0)}
                                  minutes
                               </span>
                            </ListItem>

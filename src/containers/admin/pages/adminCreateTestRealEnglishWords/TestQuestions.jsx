@@ -1,43 +1,42 @@
 import React, { useState } from 'react'
 import { InputLabel, MenuItem, Select, styled } from '@mui/material'
-// import { useFormik } from 'formik'
-// import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
 import Button from '../../../../components/UI/buttons/Buttons'
 import Vector from '../../../../assets/icons/vector.png'
 import TypeTest from './TypeTest'
+import { questionTypes } from '../../../../utils/constants/common'
 
 const typeTestArray = [
    {
-      type: 'Select real English words',
+      type: questionTypes.SelectRealEnglishWords,
       id: Math.random(),
    },
    {
-      type: 'Listen and select English word',
+      type: questionTypes.ListenAndSelect,
       id: Math.random(),
    },
    {
-      type: 'Type what you hear',
+      type: questionTypes.TypeWhatYourHear,
       id: Math.random(),
    },
    {
-      type: 'Describe image',
+      type: questionTypes.DescribeImage,
       id: Math.random(),
    },
    {
-      type: 'Record saying statement',
+      type: questionTypes.RecordSayingStatement,
       id: Math.random(),
    },
    {
-      type: 'Respond in at least N words',
+      type: questionTypes.RespondInAtLeastNWords,
       id: Math.random(),
    },
    {
-      type: 'Highlight the answer',
+      type: questionTypes.HighlightTheAnswer,
       id: Math.random(),
    },
    {
-      type: 'Select the main idea',
+      type: questionTypes.SelectTheMainIdea,
       id: Math.random(),
    },
    {
@@ -83,6 +82,7 @@ const TestQuestions = () => {
          title: '',
       }))
    }
+
    const { testId } = useParams()
    const durationOnChange = (e) => {
       setDuration(e.target.value)
@@ -117,6 +117,7 @@ const TestQuestions = () => {
          }))
       }
    }
+
    return (
       <DivCreateTest>
          <FormSubmit onSubmit={handleSubmit}>
@@ -173,7 +174,7 @@ const TestQuestions = () => {
                   name="select"
                   value={selectType}
                   onChange={selectFunction}
-                  error={errorObject.select}
+                  error={!!errorObject.select}
                   displayEmpty
                >
                   <MenuItem value="" disabled>
@@ -191,10 +192,13 @@ const TestQuestions = () => {
                </SelectType>
                {errorObject.select && <Warning>{errorObject.select}</Warning>}
             </DivInputSecond>
-            <Button sx={buttonStyle} type="submit">
-               <ImageVector src={Vector} />
-               Add Options
-            </Button>
+            {selectType === questionTypes.SelectRealEnglishWords ||
+            selectType === questionTypes.ListenAndSelect ? (
+               <Button sx={buttonStyle} type="submit">
+                  <ImageVector src={Vector} />
+                  Add Options
+               </Button>
+            ) : null}
          </FormSubmit>
          <TestSelectRealEnglishWords>
             <TypeTest
@@ -210,7 +214,7 @@ const TestQuestions = () => {
 export default TestQuestions
 
 const DivCreateTest = styled('div')(() => ({
-   margin: '0 auto',
+   margin: '50px auto',
    width: '68%',
    height: 'auto',
    background: '#ffffff',

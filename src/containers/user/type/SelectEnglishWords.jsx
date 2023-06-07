@@ -1,26 +1,63 @@
-import { styled } from '@mui/material'
-import React from 'react'
+import { styled, Typography } from '@mui/material'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import DragAndDrop from '../../../components/DragAndDrop'
 import Button from '../../../components/UI/buttons/Buttons'
+import { userQuestionActions } from '../../../redux/user/user.slice'
 
-const NextBtn = styled('div')(() => ({
-   display: 'flex',
-   justifyContent: 'flex-end',
-   borderTop: '2px solid #D4D0D0',
-   padding: '32px 0  0 0 ',
-}))
+const SelectEnglishWords = ({ question, handleNextClick }) => {
+   const dispatch = useDispatch()
+   const [words, setWords] = useState([])
 
-const SelectEnglishWords = () => {
+   const nextHandler = () => {
+      const optionIds = words.map((item) => item.id)
+      const answerData = {
+         questionId: question.id,
+         data: new Date().toLocaleDateString(),
+         optionIds,
+      }
+      dispatch(userQuestionActions.addAnswer(answerData))
+      handleNextClick()
+   }
+
    return (
       <>
-         <DragAndDrop />
-         <NextBtn>
-            <Button style={{ padding: '12.5px 54px' }} variant="contained">
-               Next
+         <TitleStyle>{question.title}</TitleStyle>
+         <DragAndDrop
+            data={question.options}
+            setWords={setWords}
+            words={words}
+         />
+         <ContainerBtn>
+            <Button
+               onClick={nextHandler}
+               variant="contained"
+               style={{ padding: '12px 54px' }}
+            >
+               NEXT
             </Button>
-         </NextBtn>
+         </ContainerBtn>
       </>
    )
 }
 
-export default SelectEnglishWords
+export default React.memo(SelectEnglishWords)
+
+const TitleStyle = styled(Typography)(() => ({
+   textAlign: 'center',
+   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontStyle: 'normal',
+   fontWeight: 400,
+   fontSize: '28px',
+   lineHeight: '32px',
+   color: '#4C4859',
+   marginTop: '50px',
+   letterSpacing: '1.5px',
+}))
+const ContainerBtn = styled('div')(() => ({
+   display: 'flex',
+   justifyContent: 'end',
+   marginTop: '3.75rem',
+   borderTop: '1.5296px solid #D4D0D0',
+   padding: '32px 0  0 0 ',
+}))

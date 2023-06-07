@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, styled } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
 import { signOut } from '../../redux/auth/auth.thunk'
+import ModalReusable from '../UI/modal/Modal'
 
 const Header = ({ title, endpoint }) => {
+   const [openModal, setOpenModal] = useState(false)
    const navigate = useNavigate()
    const dispatch = useDispatch()
 
@@ -15,23 +17,48 @@ const Header = ({ title, endpoint }) => {
          .then(() => navigate('/sign-in'))
    }
 
+   const handleOpenModal = () => {
+      setOpenModal(true)
+   }
+
+   const handleCloseModal = () => {
+      setOpenModal(false)
+   }
+
    const goToHomePage = () => {
       navigate('/')
    }
 
    return (
-      <StyledHeader>
-         <Logotype onClick={goToHomePage} />
-         <Container>
-            <TestBtn onClick={() => navigate(endpoint)}>TESTS</TestBtn>
-            <SubmitBtn>{title} RESULTS</SubmitBtn>
-            <LogOut onClick={onLogout}>LOG OUT</LogOut>
-         </Container>
-      </StyledHeader>
+      <>
+         <ModalReusable isOpen={openModal} handleClose={handleCloseModal}>
+            <p>Are you sure you want to log out?</p>
+            <ButtonContainer>
+               <Button variant="outlined" onClick={handleCloseModal}>
+                  Cancel
+               </Button>
+               <Button variant="contained" onClick={onLogout}>
+                  Yes
+               </Button>
+            </ButtonContainer>
+         </ModalReusable>
+         <StyledHeader>
+            <Logotype onClick={goToHomePage} />
+            <Container>
+               <TestBtn to={endpoint}>TESTS</TestBtn>
+               <SubmitBtn to="test/add-new-test">{title} RESULTS</SubmitBtn>
+               <LogOut onClick={handleOpenModal}>LOG OUT</LogOut>
+            </Container>
+         </StyledHeader>
+      </>
    )
 }
 
 export default Header
+const ButtonContainer = styled('div')(() => ({
+   display: 'flex',
+   justifyContent: 'space-evenly',
+}))
 
 const StyledHeader = styled('header')(() => ({
    display: 'flex',
@@ -70,17 +97,19 @@ const Container = styled('div')(() => ({
    alignItems: 'center',
 }))
 
-const TestBtn = styled(Button)(() => ({
+const TestBtn = styled(NavLink)(() => ({
    fontSize: '15px',
    lineHeight: '18px',
    textTransform: 'uppercase',
-   color: '#3A10E5',
+   color: '#4C4859',
    fontWeight: 700,
    cursor: 'pointer',
    textDecoration: 'none',
+
+   '&.active': { color: '#3A10E5' },
 }))
 
-const SubmitBtn = styled(Button)(() => ({
+const SubmitBtn = styled(NavLink)(() => ({
    fontSize: '15px',
    fontWeight: 700,
    lineHeight: '18px',
@@ -89,4 +118,5 @@ const SubmitBtn = styled(Button)(() => ({
    marginLeft: '60px',
    cursor: 'pointer',
    textDecoration: 'none',
+   '&.active': { color: '#3A10E5' },
 }))

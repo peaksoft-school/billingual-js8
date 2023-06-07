@@ -4,23 +4,18 @@ import RespondNwords from './type/RespondNwords'
 import SelectRealEnglishWords from './type/SelectRealEnglishWords'
 import TypeWhatHear from './type/TypeWhatHear'
 import RecordSayingStatement from './type/RecordSayingStatement'
+import SelectBestTitle from './type/SelectBestTitle'
+import SelectMainIdea from './type/SelectMainIdea'
+import { questionTypes } from '../../../../utils/constants/common'
 import DescribeImage from './type/DescribeImage'
 
 const TypeTest = ({ selectType, title, duration, testId }) => {
    switch (selectType) {
-      case 'Select real English words':
+      case questionTypes.SelectRealEnglishWords:
          return <SelectRealEnglishWords />
-      case 'Listen and select English word':
+      case questionTypes.ListenAndSelect:
          return <ListenWords />
-      case 'Type what you hear':
-         return (
-            <TypeWhatHear title={title} duration={duration} testId={testId} />
-         )
-      case 'Respond in at least N words':
-         return (
-            <RespondNwords title={title} duration={duration} testId={testId} />
-         )
-      case 'Record saying statement':
+      case questionTypes.RecordSayingStatement:
          return (
             <RecordSayingStatement
                title={title}
@@ -28,7 +23,27 @@ const TypeTest = ({ selectType, title, duration, testId }) => {
                testId={testId}
             />
          )
-      case 'Describe image':
+      case questionTypes.TypeWhatYourHear:
+         return (
+            <TypeWhatHear title={title} duration={duration} testId={testId} />
+         )
+      case questionTypes.RespondInAtLeastNWords:
+         return (
+            <RespondNwords title={title} duration={duration} testId={testId} />
+         )
+      case questionTypes.SelectTheMainIdea:
+         return (
+            <SelectMainIdea title={title} duration={duration} testId={testId} />
+         )
+      case questionTypes.SelectBestTitle:
+         return (
+            <SelectBestTitle
+               title={title}
+               duration={duration}
+               testId={testId}
+            />
+         )
+      case questionTypes.DescribeImage:
          return (
             <DescribeImage title={title} duration={duration} testId={testId} />
          )

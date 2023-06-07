@@ -30,8 +30,16 @@ export const useProgressBar = (duration, onTimeUp) => {
       }
    }, [timeTicking])
 
+   const minutes = Math.trunc(time / 60)
+   const seconds = Math.trunc(time % 60)
+
+   const timeObject = {
+      minute: minutes.toString().padStart(2, '0'),
+      seconds: seconds.toString().padStart(2, '0'),
+   }
+
    return {
-      time,
+      timeObject,
       chartPercent,
    }
 }

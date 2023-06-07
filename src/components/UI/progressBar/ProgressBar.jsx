@@ -1,4 +1,5 @@
 import { styled } from '@mui/material'
+import React from 'react'
 
 const GridStyle = styled('div')(() => ({
    width: '90.44%',
@@ -43,4 +44,4 @@ const ProgressBar = ({ timeObject, timeProgress }) => {
    )
 }
 
-export default ProgressBar
+export default React.memo(ProgressBar)

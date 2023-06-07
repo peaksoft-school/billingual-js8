@@ -28,9 +28,9 @@ instanse.interceptors.response.use(
       return Promise.resolve(response)
    },
    (error) => {
-      if (error.response?.status === 401) {
+      if (error?.code === 403) {
          store.dispatch(signOut())
-         throw new Error('401 unauthotized')
+         throw new Error('Unauthotized')
       }
       return Promise.reject(error)
    }
