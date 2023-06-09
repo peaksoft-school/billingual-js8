@@ -12,6 +12,11 @@ const UserLayout = () => {
          {pathname === `/user/tests/${testId}/practice` ? null : (
             <Header title="MY" endpoint="/user/tests" />
          )}
+         <Header
+            title="MY"
+            endpoint="/user/tests"
+            resultEndpoint="/user/my-result"
+         />
          <BackgroundContainer>
             <Outlet />
          </BackgroundContainer>
