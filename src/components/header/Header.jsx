@@ -47,9 +47,7 @@ const Header = ({ title, endpoint, resultEndpoint }) => {
             <Logotype onClick={goToHomePage} />
             <Container>
                <TestBtn to={endpoint}>TESTS</TestBtn>
-               <SubmitBtn onClick={() => navigate(resultEndpoint)}>
-                  {title} RESULTS
-               </SubmitBtn>
+               <SubmitBtn to={resultEndpoint}>{title} RESULTS</SubmitBtn>
                <LogOut onClick={handleOpenModal}>LOG OUT</LogOut>
             </Container>
          </StyledHeader>

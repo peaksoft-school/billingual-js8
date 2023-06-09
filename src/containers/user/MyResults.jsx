@@ -1,4 +1,5 @@
 import {
+   Grid,
    Table,
    TableBody,
    TableCell,
@@ -12,18 +13,31 @@ import FormContainer from '../../components/UI/form/FormContainer'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/deletedIcon.svg'
 import { deleteResultRequest, getAllResults } from '../../api/resultService'
 import { useSnackbar } from '../../hooks/useSnackbar'
+import Spinner from '../../components/UI/spinner/Spinner'
+import ModalDelete from '../admin/pages/adminCreateTestRealEnglishWords/ModalDelete'
 
 const MyResults = () => {
    const [results, setResults] = useState(null)
+   const [isLoading, setIsLoading] = useState(true)
+   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false)
+   const [resultId, setResultId] = useState(null)
+
+   const openModalDelete = (id) => {
+      setIsOpenModalDelete((prevState) => !prevState)
+      setResultId(id)
+   }
 
    const { notify } = useSnackbar()
 
    const getResult = async () => {
       try {
+         setIsLoading(true)
          const { data } = await getAllResults()
-         return setResults(data)
+         setResults(data)
+         setIsLoading(false)
       } catch (error) {
-         return notify('error', 'Result', 'Something went wrong')
+         notify('error', 'Result', 'Something went wrong')
+         setIsLoading(false)
       }
    }
    useEffect(() => {
@@ -33,6 +47,7 @@ const MyResults = () => {
       try {
          await deleteResultRequest(id)
          notify('success', 'Result', 'Delete result')
+         setIsOpenModalDelete(false)
       } catch (error) {
          notify('error', 'Result', error.response?.data.message)
       }
@@ -40,57 +55,71 @@ const MyResults = () => {
    }
 
    return (
-      <FormContainer>
-         <StyledTable>
-            <TableHead>
-               <TableRow>
-                  <StyledTh> # </StyledTh>
-                  <StyledTh> Date of Submition </StyledTh>
-                  <StyledTh> Test name </StyledTh>
-                  <StyledTh> Status </StyledTh>
-                  <StyledTh> Score </StyledTh>
-               </TableRow>
-            </TableHead>
-            <TableBody>
-               {results !== null ? (
-                  results.map((result) => (
-                     <StyledTr key={result.id}>
-                        <StyledTd>{result.id} </StyledTd>
-                        <StyledTd>{result.dateOfSubmission}</StyledTd>
-                        <StyledTd>{result.testName} </StyledTd>
-                        <StyledTd
-                           sx={{
-                              color:
-                                 result.resultStatus === 'NOT_EVALUATED'
-                                    ? '#f00'
-                                    : '#2AB930',
-                           }}
-                        >
-                           {result.resultStatus}
-                        </StyledTd>
-                        <StyledTd
-                           sx={{
-                              color:
-                                 result.resultStatus === 'NOT_EVALUATED'
-                                    ? '#f00'
-                                    : '#2AB930',
-                           }}
-                        >
-                           {result.score}
-                        </StyledTd>
-                        <StyledTd>
-                           <DeleteIcon
-                              onClick={() => deleteHandler(result.id)}
-                           />
-                        </StyledTd>
-                     </StyledTr>
-                  ))
-               ) : (
-                  <Typography> Not Found</Typography>
-               )}
-            </TableBody>
-         </StyledTable>
-      </FormContainer>
+      <>
+         <ModalDelete
+            openModal={openModalDelete}
+            isOpenModal={isOpenModalDelete}
+            deleteFunction={() => deleteHandler(resultId)}
+         />
+         <FormContainer>
+            <StyledTable>
+               <TableHead>
+                  <TableRow>
+                     <StyledTh> # </StyledTh>
+                     <StyledTh> Date of Submition </StyledTh>
+                     <StyledTh> Test name </StyledTh>
+                     <StyledTh> Status </StyledTh>
+                     <StyledTh> Score </StyledTh>
+                  </TableRow>
+               </TableHead>
+               <TableBody>
+                  {isLoading && (
+                     <SpinnerContainer>
+                        <Spinner />
+                     </SpinnerContainer>
+                  )}
+                  {results && results.length > 0 ? (
+                     results.map((result) => {
+                        return (
+                           <StyledTr key={result.id}>
+                              <StyledTd>{result.id} </StyledTd>
+                              <StyledTd>{result.dateOfSubmission}</StyledTd>
+                              <StyledTd>{result.testName} </StyledTd>
+                              <StyledTd
+                                 sx={{
+                                    color:
+                                       result.resultStatus === 'NOT_EVALUATED'
+                                          ? '#f00'
+                                          : '#2AB930',
+                                 }}
+                              >
+                                 {result.resultStatus}
+                              </StyledTd>
+                              <StyledTd
+                                 sx={{
+                                    color:
+                                       result.resultStatus === 'NOT_EVALUATED'
+                                          ? '#f00'
+                                          : '#2AB930',
+                                 }}
+                              >
+                                 {result.score}
+                              </StyledTd>
+                              <StyledTd>
+                                 <DeleteIcon
+                                    onClick={() => openModalDelete(result.id)}
+                                 />
+                              </StyledTd>
+                           </StyledTr>
+                        )
+                     })
+                  ) : (
+                     <Text>Извините ничего не найдено</Text>
+                  )}
+               </TableBody>
+            </StyledTable>
+         </FormContainer>
+      </>
    )
 }
 
@@ -134,4 +163,16 @@ const StyledTh = styled(TableCell)(() => ({
    color: '#4C4859',
    borderBottom: 'none',
    padding: 0,
+}))
+const Text = styled(Typography)(() => ({
+   marginTop: '60px',
+   fontSize: '20px',
+   marginRight: '-600px',
+   marginLeft: '18.50rem',
+   color: '#f00',
+}))
+const SpinnerContainer = styled(Grid)(() => ({
+   marginRight: '-600px',
+   marginTop: '50px',
+   marginLeft: '13rem',
 }))
