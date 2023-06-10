@@ -61,26 +61,29 @@ const ButtonDiv = styled('div')(() => ({
    padding: '0 80px',
 }))
 const ButtonToComeIn = styled(Button)(() => ({
-   padding: '12px 20px',
+   padding: '13px 24px',
    fontSize: '14px',
-   fontFamily: 'Poppins',
+   fontFamily: 'Gilroy',
    lineHeight: '16px',
    letterSpacing: ' 0.02em',
 }))
 
 const RegisterBtn = styled(Button)(() => ({
+   border: 'none',
    fontSize: '14px',
    background: '#ffffff',
    color: '#4C4C4C',
-   fontFamily: 'Poppins',
+   fontFamily: 'Gilroy',
    lineHeight: '16px',
+   fontWeight: 400,
    letterSpacing: ' 0.02em',
    boxShadow:
       '0px 1px 2px rgba(76, 72, 89, 0.2), 0px 1px 2px rgba(76, 72, 89, 0.2)',
    borderRadius: '8px',
    ':hover': {
-      background: '#3A10E5',
-      color: '#fff',
+      background: '#F0EDED',
+      color: '#4C4C4C',
+      border: 'none',
    },
 }))
 const ImgBubble = styled('img')(() => ({
