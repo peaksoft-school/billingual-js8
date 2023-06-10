@@ -2,10 +2,11 @@ import { Grid, InputAdornment, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { signInWithPopup } from 'firebase/auth'
 import { ReactComponent as System } from '../../assets/icons/system.svg'
 import { ReactComponent as Layer } from '../../assets/icons/layer 2.svg'
-import { ReactComponent as Defoult } from '../../assets/icons/defoult.svg'
+import { ReactComponent as Google } from '../../assets/icons/google.svg'
 import Input from '../../components/UI/input/Input'
 import Checkboxes from '../../components/UI/checkbox/Checkbox'
 import Button from '../../components/UI/buttons/Buttons'
@@ -16,12 +17,45 @@ import Spinner from '../../components/UI/spinner/Spinner'
 import MyIconButton from '../../components/UI/Icon-button/IconButton'
 import { ReactComponent as EyeIcon } from '../../assets/icons/eyeDefaultIcon.svg'
 import { ReactComponent as EyeIconOff } from '../../assets/icons/eyeOffIcon.svg'
+import { auth, provider } from '../../config/axios-instanse/firebaseConfig'
+import { STORAGE_KEYS } from '../../utils/constants/common'
+import { authActions } from '../../redux/auth/auth.slice'
 
 const SigninPage = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { error, isLoading } = useSelector((state) => state.auth)
+   const { error, isLoading, isAuthorized } = useSelector((state) => state.auth)
    const [showPassword, setShowPassword] = useState(false)
+
+   const googleSignInHandler = () => {
+      signInWithPopup(auth, provider).then((data) => {
+         const userData = {
+            token: data.user.accessToken,
+            email: data.user.email,
+            role: 'USER',
+         }
+
+         localStorage.setItem(
+            STORAGE_KEYS.BILINGUAL_USER_KEY,
+            JSON.stringify(userData)
+         )
+         navigate('/user/tests')
+      })
+   }
+
+   useEffect(() => {
+      const userInfo = JSON.parse(
+         localStorage.getItem(STORAGE_KEYS.BILINGUAL_USER_KEY)
+      )
+      if (userInfo) {
+         const authorizedUserCredentials = {
+            token: userInfo.token,
+            email: userInfo.email,
+            role: userInfo.role,
+         }
+         dispatch(authActions.login(authorizedUserCredentials))
+      }
+   }, [isAuthorized])
 
    const handleClickShowPassword = () => setShowPassword((show) => !show)
 
@@ -37,11 +71,11 @@ const SigninPage = () => {
          .then(() =>
             notify('success', 'Authentication', 'Successfully sign in')
          )
-         .then(() => navigate('/admin/test'))
+         .then(() => navigate('/user/tests'))
          .catch(() => notify('error', 'Authentication', 'Failed to sign in'))
    }
 
-   const { values, handleChange, handleSubmit, errors } = useFormik({
+   const { values, handleChange, handleSubmit, errors, touched } = useFormik({
       initialValues: {
          email: '',
          password: '',
@@ -77,7 +111,7 @@ const SigninPage = () => {
                <StyledInput
                   label="Password"
                   name="password"
-                  error={!!errors.password}
+                  error={touched.password && !!errors.password}
                   value={values.password}
                   onChange={handleChange}
                   type={showPassword ? 'text' : 'password'}
@@ -99,8 +133,8 @@ const SigninPage = () => {
                   <StyledCheckbox />
                   <Text>To remember me</Text>
                </CheckboxContain>
-               <Error>{errors.email}</Error>
-               <Error>{errors.password}</Error>
+               <Error>{touched.email && errors.email}</Error>
+               <Error>{touched.password && errors.password}</Error>
                <Error>{error}</Error>
                {isLoading ? (
                   <Spinner />
@@ -109,10 +143,13 @@ const SigninPage = () => {
                      sign in
                   </StyledButton>
                )}
-               <DefoultIcon />
+               <ButtonContainer onClick={googleSignInHandler}>
+                  <GoogleIcon />
+                  sign in with google
+               </ButtonContainer>
                <StyledText>
                   DON`T HAVE AN ACCOUNT?
-                  <NavLink to="/sign-up">REGISTER</NavLink>
+                  <StyledNavLink to="/sign-up">REGISTER</StyledNavLink>
                </StyledText>
             </Container>
          </SignInForm>
@@ -129,7 +166,8 @@ const Error = styled('p')(() => ({
 
 const Background = styled(Grid)(() => ({
    background: 'linear-gradient(90.76deg, #6B0FA9 0.74%, #520FB6 88.41%)',
-   padding: '40px',
+   padding: '40px 0',
+   height: '100vh',
 }))
 
 const SignInForm = styled('form')(() => ({
@@ -138,7 +176,7 @@ const SignInForm = styled('form')(() => ({
    background: '#FFFFFF',
    borderRadius: '10px',
    margin: '0 auto',
-   padding: '30px',
+   padding: '20px',
 }))
 
 const IconContainer = styled('div')(() => ({
@@ -194,11 +232,30 @@ const Text = styled(Typography)(() => ({
 const StyledButton = styled(Button)(() => ({
    height: '52px',
 }))
-const DefoultIcon = styled(Defoult)(() => ({
-   margin: '0 auto',
-   marginTop: '34px',
+const ButtonContainer = styled(Button)(() => ({
+   margin: '34px auto 0',
+   border: ' 1px solid #BDBDBD',
+   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
+   borderRadius: '8px',
+   padding: '10px 10px',
+   color: '#757575',
+}))
+const GoogleIcon = styled(Google)(() => ({
+   margin: '0 8px 0 0',
 }))
 const StyledText = styled(Typography)(() => ({
    textAlign: 'center',
    marginTop: '24px',
+   fontFamily: 'Poppins',
+   fontStyle: 'normal',
+   fontWeight: '500',
+   fontSize: '14px',
+   lineHeight: '21px',
+   letterSpacing: '0.02em',
+   color: '#757575',
+}))
+
+const StyledNavLink = styled(NavLink)(() => ({
+   color: '#3A10E5',
+   textDecoration: 'none',
 }))

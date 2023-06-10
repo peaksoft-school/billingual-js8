@@ -1,29 +1,106 @@
-import { keyframes, styled } from '@mui/material'
+import { styled } from '@mui/material'
 
+import { motion } from 'framer-motion'
 import accessible from '../../assets/images/accessible.png'
 import speech from '../../assets/images/speech.png'
 import extensive from '../../assets/images/extensive.png'
 import tutoring from '../../assets/images/tutoring.png'
 import booksImage from '../../assets/images/imgBookEnglish.png'
 import { infoCardArray, ourTeamArray } from '../../utils/constants/common'
+import { animation, textAnimation } from '../../utils/helpers/animations'
 
-const fadeIn = keyframes`
-   from {
-      opacity: 0;
-   }
-   to {
-      opacity: 1;
-   }
-`
+const imgAnimation = {
+   hidden: {
+      opacity: 0,
+      x: 100,
+   },
+   visible: (custom) => ({
+      opacity: 1,
+      x: 0,
+      transition: { delay: custom * 0.1 },
+   }),
+}
 
-const slideIn = keyframes`
-   from {
-      transform: translateX(-100%);
-   }
-   to {
-      transform: translateX(0);
-   }
-`
+const InfoSection = () => {
+   return (
+      <Card>
+         <InfoCard
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.5 }}
+         >
+            {infoCardArray.map((elem) => (
+               <Img1DivOne key={elem.id} variants={animation}>
+                  <Img src={elem.img} />
+                  <Over>{elem.text}</Over>
+               </Img1DivOne>
+            ))}
+         </InfoCard>
+         <Description>
+            <div>
+               <UserExpiriance>Unparalleled user experience</UserExpiriance>
+               <DescriptionText>
+                  The most effective way to perfect a language is by immersing
+                  yourself in it. Rosetta Stone for Enterprise delivers an
+                  effective end-to-end experience, founded on a wealth of
+                  carefully structured content. Each learner has the opportunity
+                  to balance independent study with optional online tutoring in
+                  a way that fits their schedule and language learning goals.
+               </DescriptionText>
+               <DivSeparation>
+                  <DivAccessible>
+                     <ImgAccessible src={accessible} />
+                     <ImgAccessibleText>
+                        Accessible anytime, anywhere
+                     </ImgAccessibleText>
+                  </DivAccessible>
+                  <DivExtensive>
+                     <ImgExtensive src={extensive} />
+                     <ImgExtensiveText>
+                        Extensive business content
+                     </ImgExtensiveText>
+                  </DivExtensive>
+               </DivSeparation>
+               <DivSeparation>
+                  <DivSpeech>
+                     <ImgSpeech src={speech} />
+                     <ImgSpeechText>Leading speech recognition</ImgSpeechText>
+                  </DivSpeech>
+                  <DivTutoring>
+                     <ImgTutoring src={tutoring} />
+                     <TutoringText>Unlimited live tutoring</TutoringText>
+                  </DivTutoring>
+               </DivSeparation>
+            </div>
+            <ImgBook src={booksImage} />
+         </Description>
+         <OurTeam
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.2 }}
+         >
+            <TextOurTeam variants={textAnimation}>Our Team</TextOurTeam>
+            <DivImage>
+               {ourTeamArray.map((elem, i) => (
+                  <DivImageEmployeeName
+                     key={elem.id}
+                     custom={i + 1}
+                     variants={imgAnimation}
+                  >
+                     <OurTeamImage src={elem.img} />
+                     <DivEmployeeNamePerson>
+                        <NamePersonEmployee>{elem.name}</NamePersonEmployee>
+                        <Employee>{elem.employee}</Employee>
+                     </DivEmployeeNamePerson>
+                  </DivImageEmployeeName>
+               ))}
+            </DivImage>
+         </OurTeam>
+      </Card>
+   )
+}
+
+export default InfoSection
 
 const Card = styled('div')(() => ({
    width: '100%',
@@ -32,7 +109,7 @@ const Card = styled('div')(() => ({
    background: '#f0f0dc',
 }))
 
-const InfoCard = styled('div')(() => ({
+const InfoCard = styled(motion.div)(() => ({
    display: 'flex',
    justifyContent: 'space-evenly',
    flexWrap: 'wrap',
@@ -43,13 +120,12 @@ const Img = styled('img')(() => ({
    height: '176px',
    top: '898px',
 }))
-const Img1DivOne = styled('div')(() => ({
+const Img1DivOne = styled(motion.div)(() => ({
    width: '335px',
    height: '248px',
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
-   animation: `${fadeIn} 1s ease-in-out`,
 }))
 const Over = styled('p')(() => ({
    height: '48px',
@@ -193,14 +269,13 @@ const DivSeparation = styled('div')(() => ({
    display: 'flex',
    gap: '67.88px',
 }))
-const OurTeam = styled('div')(() => ({
+const OurTeam = styled(motion.div)(() => ({
    height: '335px',
    display: 'grid',
    justifyItems: 'center',
-   animation: `${slideIn} 1s ease-in-out`,
 }))
 
-const TextOurTeam = styled('div')(() => ({
+const TextOurTeam = styled(motion.div)(() => ({
    fontFamily: 'Gilroy',
    fontStyle: 'normal',
    fontWeight: 700,
@@ -213,12 +288,12 @@ const OurTeamImage = styled('img')(() => ({
    width: '180px',
    height: '180px',
 }))
-const DivImage = styled('div')(() => ({
+const DivImage = styled(motion.div)(() => ({
    display: 'flex',
    marginTop: '48px',
    flexWrap: 'wrap',
 }))
-const DivImageEmployeeName = styled('div')(() => ({
+const DivImageEmployeeName = styled(motion.div)(() => ({
    display: 'flex',
    flexDirection: 'column',
    marginRight: '30px',
@@ -256,72 +331,3 @@ const Employee = styled('div')(() => ({
    textAlign: 'center',
    color: '#020202',
 }))
-
-const InfoSection = () => {
-   return (
-      <Card>
-         <InfoCard>
-            {infoCardArray.map((elem) => (
-               <Img1DivOne key={elem.id}>
-                  <Img src={elem.img} />
-                  <Over>{elem.text}</Over>
-               </Img1DivOne>
-            ))}
-         </InfoCard>
-         <Description>
-            <div>
-               <UserExpiriance>Unparalleled user experience</UserExpiriance>
-               <DescriptionText>
-                  The most effective way to perfect a language is by immersing
-                  yourself in it. Rosetta Stone for Enterprise delivers an
-                  effective end-to-end experience, founded on a wealth of
-                  carefully structured content. Each learner has the opportunity
-                  to balance independent study with optional online tutoring in
-                  a way that fits their schedule and language learning goals.
-               </DescriptionText>
-               <DivSeparation>
-                  <DivAccessible>
-                     <ImgAccessible src={accessible} />
-                     <ImgAccessibleText>
-                        Accessible anytime, anywhere
-                     </ImgAccessibleText>
-                  </DivAccessible>
-                  <DivExtensive>
-                     <ImgExtensive src={extensive} />
-                     <ImgExtensiveText>
-                        Extensive business content
-                     </ImgExtensiveText>
-                  </DivExtensive>
-               </DivSeparation>
-               <DivSeparation>
-                  <DivSpeech>
-                     <ImgSpeech src={speech} />
-                     <ImgSpeechText>Leading speech recognition</ImgSpeechText>
-                  </DivSpeech>
-                  <DivTutoring>
-                     <ImgTutoring src={tutoring} />
-                     <TutoringText>Unlimited live tutoring</TutoringText>
-                  </DivTutoring>
-               </DivSeparation>
-            </div>
-            <ImgBook src={booksImage} />
-         </Description>
-         <OurTeam>
-            <TextOurTeam>Our Team</TextOurTeam>
-            <DivImage>
-               {ourTeamArray.map((elem) => (
-                  <DivImageEmployeeName key={elem.id}>
-                     <OurTeamImage src={elem.img} />
-                     <DivEmployeeNamePerson>
-                        <NamePersonEmployee>{elem.name}</NamePersonEmployee>
-                        <Employee>{elem.employee}</Employee>
-                     </DivEmployeeNamePerson>
-                  </DivImageEmployeeName>
-               ))}
-            </DivImage>
-         </OurTeam>
-      </Card>
-   )
-}
-
-export default InfoSection

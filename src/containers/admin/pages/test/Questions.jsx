@@ -24,6 +24,7 @@ import {
    updateQuestionRequest,
 } from '../../../../api/questionService'
 import { useSnackbar } from '../../../../hooks/useSnackbar'
+import ModalDelete from '../adminCreateTestRealEnglishWords/ModalDelete'
 
 const AddQuestions = () => {
    const [test, setTest] = useState(null)
@@ -31,6 +32,17 @@ const AddQuestions = () => {
    const navigate = useNavigate()
 
    const { notify } = useSnackbar()
+   const [openModal, setOpenModal] = useState(false)
+   const [questionId, setQuestionId] = useState(null)
+
+   const openModalHandler = (id) => {
+      setOpenModal(true)
+      setQuestionId(id)
+   }
+
+   const closeModalHandler = () => {
+      setOpenModal(false)
+   }
 
    const getTest = async () => {
       try {
@@ -49,6 +61,7 @@ const AddQuestions = () => {
       try {
          await deleteQuestionRequest(id)
          notify('success', 'Question', 'Delete question')
+         setOpenModal(false)
       } catch (error) {
          notify('error', 'Question', error.response?.data.message)
       }
@@ -68,96 +81,105 @@ const AddQuestions = () => {
    }
 
    return (
-      <FormContainer>
-         {test !== null ? (
-            <Grid>
-               <TestInfo>
-                  <StyledTypography>
-                     Title: <StyledSpan>{test.title}</StyledSpan>
-                  </StyledTypography>
-                  <StyledTypography>
-                     Short Description:
-                     <StyledSpan> {test.shortDescription}</StyledSpan>
-                  </StyledTypography>
-                  <StyledTypography>
-                     Duration:
-                     <StyledSpan> {formatTime(test.duration)}</StyledSpan>
-                  </StyledTypography>
-               </TestInfo>
-               <ButtonContainer>
-                  <Button
-                     variant="contained"
-                     onClick={() => navigate(`createtest`)}
-                  >
-                     + Add more questions
-                  </Button>
-               </ButtonContainer>
+      <>
+         <ModalDelete
+            isOpenModal={openModal}
+            openModal={closeModalHandler}
+            deleteFunction={() => deleteHandler(questionId)}
+         />
+         <FormContainer>
+            {test !== null ? (
+               <Grid>
+                  <TestInfo>
+                     <StyledTypography>
+                        Title: <StyledSpan>{test.title}</StyledSpan>
+                     </StyledTypography>
+                     <StyledTypography>
+                        Short Description:
+                        <StyledSpan> {test.shortDescription}</StyledSpan>
+                     </StyledTypography>
+                     <StyledTypography>
+                        Duration:
+                        <StyledSpan> {formatTime(test.duration)}</StyledSpan>
+                     </StyledTypography>
+                  </TestInfo>
+                  <ButtonContainer>
+                     <Button
+                        variant="contained"
+                        onClick={() => navigate(`createtest`)}
+                     >
+                        + Add more questions
+                     </Button>
+                  </ButtonContainer>
 
-               <Hr />
+                  <Hr />
 
-               {test.questions !== null && test.questions.length === 0 ? (
-                  <Typography>Question list is empty</Typography>
-               ) : (
-                  <div style={{ overflowX: 'auto', padding: '10px' }}>
-                     <StyledTable>
-                        <TableHead>
-                           <TableRow>
-                              <StyledTh>#</StyledTh>
-                              <StyledTh>Name</StyledTh>
-                              <StyledTh>Duration</StyledTh>
-                              <StyledTh>Question type</StyledTh>
-                              <StyledTh />
-                           </TableRow>
-                        </TableHead>
-                        <TableBody>
-                           {test.questions !== null ? (
-                              test.questions.map((question, i) => (
-                                 <StyledTr hover key={question.id}>
-                                    <StyledTd>{i + 1}</StyledTd>
-                                    <StyledTd>{question.title}</StyledTd>
-                                    <StyledTd>
-                                       {formatTime(question.duration)}
-                                    </StyledTd>
-                                    <StyledTd>{question.questionType}</StyledTd>
-                                    <StyledTd>
-                                       <IconsContainer>
-                                          <Switcher
-                                             checked={question.isActive}
-                                             onClick={() =>
-                                                updateQuestion(question)
-                                             }
-                                          />
-                                          <MyIconButton>
-                                             <StyledEditIcon />
-                                          </MyIconButton>
-                                          <MyIconButton
-                                             onClick={() =>
-                                                deleteHandler(question.id)
-                                             }
-                                          >
-                                             <StyledDeleteIcon />
-                                          </MyIconButton>
-                                       </IconsContainer>
-                                    </StyledTd>
-                                 </StyledTr>
-                              ))
-                           ) : (
-                              <p>Question is empty</p>
-                           )}
-                        </TableBody>
-                     </StyledTable>
-                  </div>
-               )}
-               <ButtonContainer>
-                  <GoBackButton onClick={() => navigate('/admin/test')}>
-                     Go back
-                  </GoBackButton>
-               </ButtonContainer>
-            </Grid>
-         ) : (
-            <Spinner />
-         )}
-      </FormContainer>
+                  {test.questions !== null && test.questions.length === 0 ? (
+                     <Typography>Question list is empty</Typography>
+                  ) : (
+                     <div style={{ overflowX: 'auto', padding: '10px' }}>
+                        <StyledTable>
+                           <TableHead>
+                              <TableRow>
+                                 <StyledTh>#</StyledTh>
+                                 <StyledTh>Name</StyledTh>
+                                 <StyledTh>Duration</StyledTh>
+                                 <StyledTh>Question type</StyledTh>
+                                 <StyledTh />
+                              </TableRow>
+                           </TableHead>
+                           <TableBody>
+                              {test.questions !== null ? (
+                                 test.questions.map((question, i) => (
+                                    <StyledTr hover key={question.id}>
+                                       <StyledTd>{i + 1}</StyledTd>
+                                       <StyledTd>{question.title}</StyledTd>
+                                       <StyledTd>
+                                          {formatTime(question.duration)}
+                                       </StyledTd>
+                                       <StyledTd>
+                                          {question.questionType}
+                                       </StyledTd>
+                                       <StyledTd>
+                                          <IconsContainer>
+                                             <Switcher
+                                                checked={question.isActive}
+                                                onClick={() =>
+                                                   updateQuestion(question)
+                                                }
+                                             />
+                                             <MyIconButton>
+                                                <StyledEditIcon />
+                                             </MyIconButton>
+                                             <MyIconButton
+                                                onClick={() =>
+                                                   openModalHandler(question.id)
+                                                }
+                                             >
+                                                <StyledDeleteIcon />
+                                             </MyIconButton>
+                                          </IconsContainer>
+                                       </StyledTd>
+                                    </StyledTr>
+                                 ))
+                              ) : (
+                                 <p>Question is empty</p>
+                              )}
+                           </TableBody>
+                        </StyledTable>
+                     </div>
+                  )}
+                  <ButtonContainer>
+                     <GoBackButton onClick={() => navigate('/admin/test')}>
+                        Go back
+                     </GoBackButton>
+                  </ButtonContainer>
+               </Grid>
+            ) : (
+               <Spinner />
+            )}
+         </FormContainer>
+      </>
    )
 }
 

@@ -4,13 +4,20 @@ import { Howl, Howler } from 'howler'
 import { ReactComponent as Volumeup } from '../../../assets/icons/volumeup.svg'
 import { ReactComponent as Check } from '../../../assets/icons/check (1).svg'
 
-const MultiplySelect = ({ id, word, audio }) => {
+const MultiplySelect = ({ id, word, audio, setAudio, audioIds }) => {
    const [color, setColor] = useState(false)
    const [isPlaying, setIsPlaying] = useState(false)
 
-   const selectHandler = () => {
-      setColor((prev) => !prev)
+   const selectHandler = (id) => {
+      if (audioIds.find((item) => item === id)) {
+         setColor(false)
+         return setAudio((prev) => prev.filter((item) => item !== id))
+      }
+      setColor(true)
+      return setAudio((prev) => [...prev, id])
    }
+
+   console.log(audioIds)
 
    const stopSound = () => {
       Howler.stop()
@@ -44,7 +51,7 @@ const MultiplySelect = ({ id, word, audio }) => {
             </Word>
          </Content>
          <Actions>
-            <Check onClick={selectHandler} />
+            <Check onClick={() => selectHandler(id)} />
          </Actions>
       </Main>
    )

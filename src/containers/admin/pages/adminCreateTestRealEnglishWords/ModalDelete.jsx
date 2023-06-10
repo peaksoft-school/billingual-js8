@@ -1,18 +1,13 @@
-import { Typography, styled } from '@mui/material'
+import { Box, Modal, Typography, styled } from '@mui/material'
 import redCross from '../../../../assets/icons/redCross.svg'
 import closeCross from '../../../../assets/icons/closeCross.svg'
 import Button from '../../../../components/UI/buttons/Buttons'
-import ModalReusable from '../../../../components/UI/modal/Modal'
 
 const style = { borderRadius: '20px', borderStyle: 'none' }
 
 const ModalDelete = ({ isOpenModal, openModal, deleteFunction }) => {
    return (
-      <ModalReusable
-         modalStyle={style}
-         isOpen={isOpenModal}
-         handleClose={openModal}
-      >
+      <Modal modalStyle={style} open={isOpenModal} onClose={openModal}>
          <StyledModal>
             <StyledIcon src={closeCross} onClick={openModal} />
             <RedCrossImage src={redCross} />
@@ -25,14 +20,19 @@ const ModalDelete = ({ isOpenModal, openModal, deleteFunction }) => {
                </DeleteButton>
             </Buttons>
          </StyledModal>
-      </ModalReusable>
+      </Modal>
    )
 }
 export default ModalDelete
-const StyledModal = styled('div')(() => ({
+const StyledModal = styled(Box)(() => ({
    width: '520px',
    height: '368px',
    borderRadius: '20px',
+   position: 'absolute',
+   top: '45%',
+   left: '50%',
+   transform: 'translate(-50%, -50%)',
+   background: '#fff',
 }))
 const StyledIcon = styled('img')(() => ({
    marginLeft: '475px',

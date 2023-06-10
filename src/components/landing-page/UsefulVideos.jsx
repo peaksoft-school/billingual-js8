@@ -1,10 +1,12 @@
 import { Grid, Typography, styled } from '@mui/material'
 import { DefaultPlayer as Video } from 'react-html5video'
 import 'react-html5video/dist/styles.css'
+import { motion } from 'framer-motion'
 import video1 from '../../assets/videos/video1.MP4'
 import video2 from '../../assets/videos/video2.MP4'
 import video3 from '../../assets/videos/video3.MP4'
 import poster from '../../assets/images/poster.jpg'
+import { textAnimation } from '../../utils/helpers/animations'
 
 const videos = [
    {
@@ -30,17 +32,37 @@ const videos = [
    },
 ]
 
+const videosAnimation = {
+   hidden: {
+      opacity: 0,
+      y: 100,
+   },
+   visible: (custom) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: custom * 0.1 },
+   }),
+}
+
 const UsefulVideos = () => {
    return (
-      <Container>
+      <Container
+         initial="hidden"
+         whileInView="visible"
+         viewport={{ amount: 0.4 }}
+      >
          <FirstSection>
-            <TitleContainer>
+            <TitleContainer variants={textAnimation}>
                <Title> Useful videos </Title>
             </TitleContainer>
             <SecondSection>
                {videos.map((item) => {
                   return (
-                     <VideoContainer key={item.id}>
+                     <VideoContainer
+                        key={item.id}
+                        variants={videosAnimation}
+                        custom={item.id}
+                     >
                         <StyledVideo
                            controle={[
                               'PlayPause',
@@ -67,7 +89,7 @@ const UsefulVideos = () => {
 
 export default UsefulVideos
 
-const Container = styled(Grid)(() => ({
+const Container = styled(motion(Grid))(() => ({
    background: '#F0F0DC',
 }))
 
@@ -77,7 +99,7 @@ const FirstSection = styled(Grid)(() => ({
    flexDirection: 'column',
 }))
 
-const TitleContainer = styled(Grid)(() => ({
+const TitleContainer = styled(motion(Grid))(() => ({
    textAlign: 'center',
 }))
 
@@ -104,7 +126,7 @@ const StyledVideo = styled(Video)(() => ({
    height: '261px',
 }))
 
-const VideoContainer = styled(Grid)(() => ({
+const VideoContainer = styled(motion(Grid))(() => ({
    background: '#FFFFFF',
    border: '1px solid #DDDDDD',
    borderRadius: '16px',

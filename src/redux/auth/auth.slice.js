@@ -1,33 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { signIn, signOut, signUp } from './auth.thunk'
-import { STORAGE_KEYS } from '../../utils/constants/common'
 
-const getInitialState = () => {
-   const json = localStorage.getItem(STORAGE_KEYS.BILINGUAL_USER_KEY)
-   if (json) {
-      const userData = JSON.parse(json)
-      return {
-         isAuthorized: true,
-         token: userData.token,
-         email: userData.email,
-         role: userData.role,
-      }
-   }
-
-   return {
-      isAuthorized: false,
-      token: '',
-      email: '',
-      role: 'GUEST',
-      error: '',
-      isLoading: false,
-   }
+const initialState = {
+   isAuthorized: false,
+   token: '',
+   email: '',
+   role: 'GUEST',
+   error: '',
+   isLoading: false,
 }
 
 export const authSlice = createSlice({
    name: 'auth',
-   initialState: getInitialState(),
-   reducers: {},
+   initialState,
+   reducers: {
+      login(state, { payload }) {
+         state.token = payload.token
+         state.role = payload.role
+         state.email = payload.email
+         state.isAuthorized = true
+      },
+   },
    extraReducers: (builder) => {
       builder.addCase(signIn.fulfilled, (state, { payload }) => {
          state.isAuthorized = true
@@ -71,3 +64,5 @@ export const authSlice = createSlice({
       })
    },
 })
+
+export const authActions = authSlice.actions
