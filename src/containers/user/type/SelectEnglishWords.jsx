@@ -33,6 +33,7 @@ const SelectEnglishWords = ({ question, handleNextClick }) => {
                onClick={nextHandler}
                variant="contained"
                style={{ padding: '12px 54px' }}
+               disabled={words.length === 0}
             >
                NEXT
             </Button>

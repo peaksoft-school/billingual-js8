@@ -10,13 +10,13 @@ const UserLayout = () => {
    return (
       <>
          {pathname === `/user/tests/${testId}/practice` ? null : (
-            <Header title="MY" endpoint="/user/tests" />
+            <Header
+               title="MY"
+               endpoint="/user/tests"
+               resultEndpoint="/user/my-result"
+            />
          )}
-         <Header
-            title="MY"
-            endpoint="/user/tests"
-            resultEndpoint="/user/my-result"
-         />
+         {/* <Header title="MY" endpoint="/user/tests" /> */}
          <BackgroundContainer>
             <Outlet />
          </BackgroundContainer>

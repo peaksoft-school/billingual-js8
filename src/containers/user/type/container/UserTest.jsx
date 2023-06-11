@@ -23,11 +23,7 @@ const UserTest = ({ questions, setCountPage, count, children }) => {
 
    return (
       <FormContainer>
-         <ProgressBar
-            timeObject={timeObject}
-            duration={duration}
-            timeProgress={chartPercent}
-         />
+         <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
          <>{React.cloneElement(children, { handleNextClick })}</>
       </FormContainer>
    )
