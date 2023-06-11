@@ -41,5 +41,6 @@ export const useProgressBar = (duration, onTimeUp) => {
    return {
       timeObject,
       chartPercent,
+      setTime,
    }
 }
