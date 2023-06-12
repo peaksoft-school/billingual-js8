@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
 import { styled } from '@mui/material'
 import Checkboxes from '../../../../../components/UI/checkbox/Checkbox'
-import DeleteIcon from '../../../../../assets/icons/deletedIcon.svg'
+import { ReactComponent as DeleteIcon } from '../../../../../assets/icons/deletedIcon.svg'
 import Button from '../../../../../components/UI/buttons/Buttons'
-import ModalDelete from '../ModalDelete'
+import ModalDelete from '../../../../../components/UI/modal/ModalDelete'
 import QuestionModal from '../../../../../components/UI/modal/QuestionModal'
 import { questionActions } from '../../../../../redux/question/question.slice'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
 import { postSelectRealEnglishWord } from '../../../../../api/questionService'
+import MyIconButton from '../../../../../components/UI/Icon-button/IconButton'
 
 const buttonStyleGoBack = {
    width: '12.8%',
@@ -138,10 +139,9 @@ const SelectRealEnglishWords = ({ title, duration, testId }) => {
                         checked={elem.isCorrect}
                         onClick={() => checkedFunc(elem.id)}
                      />
-                     <Delete
-                        onClick={() => openModalDelete(elem.id)}
-                        src={DeleteIcon}
-                     />
+                     <MyIconButton onClick={() => openModalDelete(elem.id)}>
+                        <DeleteIconLogo />
+                     </MyIconButton>
                   </WordEnglish>
                ))}
             </TestSelectRealEnglishWordsLine>
@@ -156,10 +156,9 @@ const SelectRealEnglishWords = ({ title, duration, testId }) => {
                         checked={elem.isCorrect}
                         onClick={() => checkedFunc(elem.id)}
                      />
-                     <Delete
-                        onClick={() => openModalDelete(elem.id)}
-                        src={DeleteIcon}
-                     />
+                     <MyIconButton onClick={() => openModalDelete(elem.id)}>
+                        <DeleteIconLogo />
+                     </MyIconButton>
                   </WordEnglish>
                ))}
             </TestSelectRealEnglishWordsLine>
@@ -227,79 +226,7 @@ const Delete = styled('img')(() => ({
    cursor: 'pointer',
    marginLeft: '4.98%',
 }))
-const DivButtonGoBackAndSave = styled('div')(() => ({
-   width: '637px',
-   height: '94px',
-   background: ' #F0F1F1',
-   borderRadius: '0px 0px 20px 20px',
-   marginTop: '80px',
-   display: 'flex',
-   alignItems: 'center',
-}))
 
-const DivTitle = styled('div')(() => ({
-   width: '517px',
-   height: '120px',
-   margin: '0 auto',
-   marginTop: '40px',
-}))
-const TitleText = styled('div')(() => ({
-   width: '37.28px',
-   height: '18px',
-   fontFamily: 'DINNextRoundedLTW04-Medium',
-   fontStyle: 'normal',
-   fontWeight: 500,
-   fontSize: '16px',
-   lineHeight: '18px',
-   display: 'flex',
-   alignItems: 'center',
-   color: '#4B4759',
-   paddingBottom: '16px',
-}))
-
-const InfoTypeTest = styled('div')(() => ({
-   boxSizing: 'border-box',
-   width: '517px',
-   height: '46px',
-   background: '#FFFFFF',
-   border: ' 1.53px solid #D4D0D0',
-   borderRadius: '8px',
-   paddingLeft: '16px',
-   paddingTop: '11.1px',
-}))
-
-const IsTrueOption = styled('div')(() => ({
-   width: '99px',
-   textAlign: 'center',
-   height: '18px',
-   fontFamily: 'DINNextRoundedLTW01-Regular',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '16px',
-   lineHeight: '18px',
-   color: ' #4C4859',
-   marginTop: '20px',
-}))
-
-const DivButton = styled('div')(() => ({
-   width: '203px',
-   height: '42px',
-   marginLeft: '374px',
-   display: 'flex',
-   gap: '16px',
-}))
-const StyledIcon = styled('img')(() => ({
-   marginLeft: '583px',
-   marginTop: '20px',
-   marginRight: '32px',
-   cursor: 'pointer',
-   ':hover': {
-      backgroundColor: '#b6ea7f',
-      borderRadius: '300px',
-      textColor: '#fff',
-   },
-}))
-const DivTrueOption = styled('div')(() => ({ display: 'flex', gap: '5px' }))
 const CreateTest = styled('div')(() => ({
    gap: '5px',
 }))
@@ -313,8 +240,14 @@ const DivButtonSaveandGoBack = styled('div')(() => ({
    marginTop: '32px',
    gap: '1.95%',
 }))
-
-const ImageVector = styled('img')(() => ({
-   width: '6.77%',
-   height: '35%',
+const DeleteIconLogo = styled(DeleteIcon)(({ theme }) => ({
+   width: '20px',
+   height: '20px',
+   cursor: 'pointer',
+   marginLeft: '10px',
+   '&:hover': {
+      path: {
+         stroke: theme.palette.secondary.main,
+      },
+   },
 }))

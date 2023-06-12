@@ -1,7 +1,7 @@
 import { Typography, styled, Modal } from '@mui/material'
-import redCross from '../../../../assets/icons/redCross.svg'
-import closeCross from '../../../../assets/icons/closeCross.svg'
-import Button from '../../../../components/UI/buttons/Buttons'
+import redCross from '../../../assets/icons/redCross.svg'
+import closeCross from '../../../assets/icons/closeCross.svg'
+import Button from '../buttons/Buttons'
 
 const style = {
    borderRadius: '20px',
