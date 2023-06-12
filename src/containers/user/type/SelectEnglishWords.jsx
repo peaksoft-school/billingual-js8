@@ -18,6 +18,7 @@ const SelectEnglishWords = ({ question, handleNextClick }) => {
       }
       dispatch(userQuestionActions.addAnswer(answerData))
       handleNextClick()
+      setWords([])
    }
 
    return (
