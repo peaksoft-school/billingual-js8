@@ -13,6 +13,7 @@ import SignupPage from '../containers/public/SignupPage'
 import CreateTest from '../containers/admin/pages/test/CreateTest'
 import AddQuestions from '../containers/admin/pages/test/Questions'
 import TestQuestions from '../containers/admin/pages/adminCreateTestRealEnglishWords/TestQuestions'
+import MyResults from '../containers/user/MyResults'
 
 const MainRoutes = () => {
    const { role, isAuthorized } = useSelector((state) => state.auth)
@@ -42,6 +43,7 @@ const MainRoutes = () => {
                }
             >
                <Route path="/user/" element={<UserRoute />}>
+                  <Route path="my-result" element={<MyResults />} />
                   <Route index element={<Navigate to="tests" />} />
                   <Route path="tests" element={<GetAllTests />} />
                   <Route path="tests/:testId" element={<CurrentTest />} />

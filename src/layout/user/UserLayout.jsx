@@ -6,7 +6,11 @@ import Header from '../../components/header/Header'
 const UserLayout = () => {
    return (
       <>
-         <Header title="MY" endpoint="/user/tests" />
+         <Header
+            title="MY"
+            endpoint="/user/tests"
+            resultEndpoint="/user/my-result"
+         />
          <BackgroundContainer>
             <Outlet />
          </BackgroundContainer>

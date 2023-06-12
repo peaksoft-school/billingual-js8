@@ -6,8 +6,9 @@ import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
 import { signOut } from '../../redux/auth/auth.thunk'
 import ModalReusable from '../UI/modal/Modal'
 
-const Header = ({ title, endpoint }) => {
+const Header = ({ title, endpoint, resultEndpoint }) => {
    const [openModal, setOpenModal] = useState(false)
+
    const navigate = useNavigate()
    const dispatch = useDispatch()
 
@@ -46,7 +47,7 @@ const Header = ({ title, endpoint }) => {
             <Logotype onClick={goToHomePage} />
             <Container>
                <TestBtn to={endpoint}>TESTS</TestBtn>
-               <SubmitBtn to="test/add-new-test">{title} RESULTS</SubmitBtn>
+               <SubmitBtn to={resultEndpoint}>{title} RESULTS</SubmitBtn>
                <LogOut onClick={handleOpenModal}>LOG OUT</LogOut>
             </Container>
          </StyledHeader>
