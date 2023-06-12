@@ -1,12 +1,12 @@
 import { styled, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import Button from '../../../../components/UI/buttons/Buttons'
-import ModalReusable from '../../../../components/UI/modal/Modal'
-import Spinner from '../../../../components/UI/spinner/Spinner'
-import { userQuestionActions } from '../../../../redux/user/user.slice'
-import { questionComponents } from '../../../../utils/constants/common'
+import Button from '../../../components/UI/buttons/Buttons'
+import ModalReusable from '../../../components/UI/modal/Modal'
+import Spinner from '../../../components/UI/spinner/Spinner'
+import { userQuestionActions } from '../../../redux/user/user.slice'
+import { questionComponents } from '../../../utils/constants/common'
 import UserTest from './UserTest'
 
 const modalStyleDiv = {
@@ -25,6 +25,8 @@ const PracticeTest = () => {
    const navigate = useNavigate()
    const { state } = useLocation()
    const { testId } = useParams()
+
+   console.log(useSelector((state) => state.user.answers))
 
    useEffect(() => {
       dispatch(userQuestionActions.addTestId(testId))
@@ -71,11 +73,17 @@ const PracticeTest = () => {
                setCountPage={setCountPage}
                count={count}
             >
-               {QuestionComponent ? (
-                  <QuestionComponent question={state[count]} count={count} />
-               ) : (
-                  <h1>Not Found</h1>
-               )}
+               {(isEnded) => {
+                  return QuestionComponent ? (
+                     <QuestionComponent
+                        question={state[count]}
+                        count={count}
+                        isEnded={isEnded}
+                     />
+                  ) : (
+                     <h1>Not Found</h1>
+                  )
+               }}
             </UserTest>
          </BackgroundContainer>
       )

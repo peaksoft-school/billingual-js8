@@ -13,8 +13,9 @@ import SignupPage from '../containers/public/SignupPage'
 import CreateTest from '../containers/admin/pages/test/CreateTest'
 import AddQuestions from '../containers/admin/pages/test/Questions'
 import TestQuestions from '../containers/admin/pages/adminCreateTestRealEnglishWords/TestQuestions'
-import PracticeTest from '../containers/user/type/container/PracticeTest'
+
 import MyResults from '../containers/user/MyResults'
+import PracticeTest from '../containers/user/practicePage/PracticeTest'
 
 const MainRoutes = () => {
    const { role, isAuthorized } = useSelector((state) => state.auth)

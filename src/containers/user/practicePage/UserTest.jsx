@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import FormContainer from '../../../../components/UI/form/FormContainer'
-import ProgressBar from '../../../../components/UI/progressBar/ProgressBar'
-import { useProgressBar } from '../../../../hooks/useTime'
+import FormContainer from '../../../components/UI/form/FormContainer'
+import ProgressBar from '../../../components/UI/progressBar/ProgressBar'
+import { useProgressBar } from '../../../hooks/useTime'
 
 const UserTest = ({ questions, setCountPage, count, children }) => {
    const handleNextClick = () => {
@@ -14,10 +14,12 @@ const UserTest = ({ questions, setCountPage, count, children }) => {
    }
 
    const { duration } = questions[count]
+
    const handleTimeUp = () => {
       handleNextClick()
    }
-   const { timeObject, chartPercent, setTime } = useProgressBar(
+
+   const { timeObject, chartPercent, setTime, isEnded } = useProgressBar(
       duration,
       handleTimeUp
    )
@@ -25,10 +27,19 @@ const UserTest = ({ questions, setCountPage, count, children }) => {
    useEffect(() => {
       setTime(duration)
    }, [duration, count])
+
+   const childrenAsFunc =
+      typeof children === 'function' ? children(isEnded) : children
+
    return (
       <FormContainer>
          <ProgressBar timeObject={timeObject} timeProgress={chartPercent} />
-         <>{React.cloneElement(children, { handleNextClick })}</>
+         <>
+            {React.cloneElement(childrenAsFunc, {
+               handleNextClick,
+               handleTimeUp,
+            })}
+         </>
       </FormContainer>
    )
 }
