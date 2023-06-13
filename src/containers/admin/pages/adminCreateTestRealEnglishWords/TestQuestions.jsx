@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { InputLabel, MenuItem, Select, styled } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import Button from '../../../../components/UI/buttons/Buttons'
-import Vector from '../../../../assets/icons/vector.png'
 import TypeTest from './TypeTest'
 import { questionTypes } from '../../../../utils/constants/common'
 
@@ -45,22 +43,6 @@ const typeTestArray = [
    },
 ]
 
-const buttonStyle = {
-   '&:hover': {
-      background: '#0015cf',
-   },
-   width: '15.82%',
-   height: '42px',
-   background: '#3A10E5',
-   borderRadius: '8px',
-   marginLeft: '76.02%',
-   color: '#ffff',
-   gap: '10%',
-   whiteSpace: 'nowrap',
-   fontFamily: 'Poppins',
-   fontSize: '0.875rem',
-   lineHeight: '1rem',
-}
 const menuItemStyle = {
    margin: '0 auto',
    display: 'flex',
@@ -192,13 +174,6 @@ const TestQuestions = () => {
                </SelectType>
                {errorObject.select && <Warning>{errorObject.select}</Warning>}
             </DivInputSecond>
-            {selectType === questionTypes.SelectRealEnglishWords ||
-            selectType === questionTypes.ListenAndSelect ? (
-               <Button sx={buttonStyle} type="submit">
-                  <ImageVector src={Vector} />
-                  Add Options
-               </Button>
-            ) : null}
          </FormSubmit>
          <TestSelectRealEnglishWords>
             <TypeTest
@@ -254,7 +229,6 @@ const TextTitle = styled('h1')(() => ({
    lineHeight: '18px',
    color: '#4B4759',
    marginTop: '-2px',
-   // marginBottom: '17px',
 }))
 const InputNewTime = styled('input')(() => ({
    width: '95%',
@@ -267,7 +241,7 @@ const InputNewTime = styled('input')(() => ({
 }))
 
 const TimeText = styled('label')(() => ({
-   width: '83.84%',
+   width: '93.84%',
    height: '38.3%',
    fontFamily: 'DINNextRoundedLTW04-Medium',
    fontStyle: 'normal',
@@ -282,10 +256,8 @@ const TimeText = styled('label')(() => ({
 const DivTimerInput = styled('div')(() => ({
    width: '12.07%',
    height: '100%',
-   // gap: '10px',
    display: 'flex',
    flexDirection: 'column',
-   // marginLeft: '24px',
 }))
 
 const DivInputSecond = styled('div')(() => ({
@@ -312,22 +284,6 @@ const SelectType = styled(Select)(() => ({
    display: 'flex',
    textAlign: 'center',
 }))
-
-const ImageVector = styled('img')(() => ({
-   width: '6.77%',
-   height: '35%',
-}))
-
-// const DivAddOptions = styled('div')(() => ({
-//    width: '70%',
-//    height: '40.48%',
-//    fontFamily: 'Gilroy',
-//    fontSize: '0.875rem',
-//    lineHeight: '1rem',
-//    color: ' #FFFFFF',
-//    marginLeft: '10%',
-//    letterSpacing: '0.02em',
-// }))
 
 const TestSelectRealEnglishWords = styled('div')(() => ({
    height: 'auto',

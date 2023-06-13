@@ -132,7 +132,7 @@ export const questionTypes = {
 
 export const questionsApi = {
    selectRealEnglishWords: 'api/questions/select-real-english-word',
-   listenAndSelect: 'api/questions/listen-and-selectenglish-word',
+   listenAndSelect: 'api/questions/listen_and_select_english_words',
    typeWhatYourHear: 'api/questions/type-what-you-hear',
    describeImage: 'api/questions/describe-image',
    recordSayingStatement: 'api/questions/record-saying-statement',

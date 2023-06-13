@@ -38,6 +38,14 @@ export const describeImageReq = (payload) => {
    return instanse.post(questionsApi.describeImage, payload)
 }
 
+export const postSelectRealEnglishWord = (data) => {
+   return instanse.post(questionsApi.selectRealEnglishWords, data)
+}
+
+export const postListenSelectRealEnglishWord = (data) => {
+   return instanse.post(questionsApi.listenAndSelect, data)
+}
+
 export const updateQuestionRequest = (data) => {
    switch (data.questionType) {
       case 'SELECT_THE_MAIN_IDEA':
