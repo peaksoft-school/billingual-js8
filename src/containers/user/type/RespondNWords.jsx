@@ -15,37 +15,33 @@ const RespondNWords = ({ question }) => {
 
    return (
       <FormContainer>
-         {question.map((item) => (
-            <React.Fragment key={item.title}>
-               <TitleCont>
-                  <Title>{item.title}</Title>
-               </TitleCont>
-               <Container>
-                  <QuestionContainer>
-                     <QuestionStatement>{item.statement}</QuestionStatement>
-                  </QuestionContainer>
-                  <ResponseContainer>
-                     <TextArea
-                        value={responseText}
-                        handleChange={changeResponseTextHandler}
-                        fullWidth
-                        rows={6}
-                        maxRows={6}
-                        placeholder="Your response"
-                     />
-                     <Word>Word: {word.length - 1}</Word>
-                  </ResponseContainer>
-               </Container>
-               <BtnContainer>
-                  <NextBtn
-                     variant="contained"
-                     disabled={word.length <= item.minWords}
-                  >
-                     Next
-                  </NextBtn>
-               </BtnContainer>
-            </React.Fragment>
-         ))}
+         <TitleCont>
+            <Title>{question.title}</Title>
+         </TitleCont>
+         <Container>
+            <QuestionContainer>
+               <QuestionStatement>{question.statement}</QuestionStatement>
+            </QuestionContainer>
+            <ResponseContainer>
+               <TextArea
+                  value={responseText}
+                  handleChange={changeResponseTextHandler}
+                  fullWidth
+                  rows={6}
+                  maxRows={6}
+                  placeholder="Your response"
+               />
+               <Word>Word: {word.length - 1}</Word>
+            </ResponseContainer>
+         </Container>
+         <BtnContainer>
+            <NextBtn
+               variant="contained"
+               disabled={word.length <= question.minWords}
+            >
+               Next
+            </NextBtn>
+         </BtnContainer>
       </FormContainer>
    )
 }

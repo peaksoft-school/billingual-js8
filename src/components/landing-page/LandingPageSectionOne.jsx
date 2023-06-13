@@ -6,9 +6,10 @@ import logo from '../../assets/icons/logo.svg'
 import imageBubble from '../../assets/images/bubble.png'
 import cap from '../../assets/images/cap.png'
 import imageBook from '../../assets/images/books.png'
-import LandingButton from '../UI/buttons/LandingButtton'
+// import LandingButton from '../UI/buttons/LandingButtton'
 import Button from '../UI/buttons/Buttons'
 import { signOut } from '../../redux/auth/auth.thunk'
+import ButtonLanding from '../UI/buttons/LandingButton'
 
 const fadeInAnimation = keyframes`
    0% {
@@ -60,26 +61,29 @@ const ButtonDiv = styled('div')(() => ({
    padding: '0 80px',
 }))
 const ButtonToComeIn = styled(Button)(() => ({
-   padding: '12px 20px',
+   padding: '13px 24px',
    fontSize: '14px',
-   fontFamily: 'Poppins',
+   fontFamily: 'Gilroy',
    lineHeight: '16px',
    letterSpacing: ' 0.02em',
 }))
 
 const RegisterBtn = styled(Button)(() => ({
+   border: 'none',
    fontSize: '14px',
    background: '#ffffff',
    color: '#4C4C4C',
-   fontFamily: 'Poppins',
+   fontFamily: 'Gilroy',
    lineHeight: '16px',
+   fontWeight: 400,
    letterSpacing: ' 0.02em',
    boxShadow:
       '0px 1px 2px rgba(76, 72, 89, 0.2), 0px 1px 2px rgba(76, 72, 89, 0.2)',
    borderRadius: '8px',
    ':hover': {
-      background: '#3A10E5',
-      color: '#fff',
+      background: '#F0EDED',
+      color: '#4C4C4C',
+      border: 'none',
    },
 }))
 const ImgBubble = styled('img')(() => ({
@@ -155,7 +159,7 @@ const ImageBooks = styled('img')(() => ({
 }))
 
 const ButtonToBegin = styled('div')(() => ({
-   marginleft: '80px',
+   // marginleft: '80px',
 }))
 
 const LandingPageSectionOne = () => {
@@ -239,7 +243,7 @@ const LandingPageSectionOne = () => {
                languages.
             </TextDivInfo>
             <ButtonToBegin>
-               <LandingButton textButton="toBeggin" onClick={goToTests} />
+               <ButtonLanding onClick={goToTests}>to begin</ButtonLanding>
             </ButtonToBegin>
          </DivInfo>
 

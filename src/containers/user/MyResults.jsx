@@ -14,7 +14,7 @@ import { ReactComponent as DeleteIcon } from '../../assets/icons/deletedIcon.svg
 import { deleteResultRequest, getAllResults } from '../../api/resultService'
 import { useSnackbar } from '../../hooks/useSnackbar'
 import Spinner from '../../components/UI/spinner/Spinner'
-import ModalDelete from '../admin/pages/adminCreateTestRealEnglishWords/ModalDelete'
+import ModalDelete from '../../components/UI/modal/ModalDelete'
 
 const MyResults = () => {
    const [results, setResults] = useState(null)

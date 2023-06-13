@@ -18,6 +18,8 @@ import Spinner from '../../../../components/UI/spinner/Spinner'
 import { useSnackbar } from '../../../../hooks/useSnackbar'
 import ModalDelete from '../adminCreateTestRealEnglishWords/ModalDelete'
 
+let mount = false
+
 const AdminTest = () => {
    const dispatch = useDispatch()
    const { tests, isLoading } = useSelector((state) => state.tests)
@@ -36,7 +38,10 @@ const AdminTest = () => {
    }
 
    useEffect(() => {
-      dispatch(getTests())
+      if (mount) {
+         dispatch(getTests(notify))
+      }
+      mount = true
    }, [])
 
    const createTestHandler = () => {

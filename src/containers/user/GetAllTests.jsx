@@ -12,6 +12,7 @@ const GetAllTests = () => {
    const dispatch = useDispatch()
    const { tests, isLoading } = useSelector((state) => state.tests)
    const { notify } = useSnackbar()
+
    useEffect(() => {
       dispatch(getTests(notify))
    }, [])
@@ -33,7 +34,7 @@ const GetAllTests = () => {
                         <TestIconWrapper>
                            <TestList />
                         </TestIconWrapper>
-                        <span>{el.duration / 60} minutes</span>
+                        <span>{(el.duration / 60).toFixed(0)} minutes</span>
                         <StyledTitle>{el.title}</StyledTitle>
                         <StyledDescription>
                            {el.shortDescription}

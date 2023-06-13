@@ -1,99 +1,24 @@
 import { Typography, styled } from '@mui/material'
 import React, { useState } from 'react'
-import { v4 } from 'uuid'
+import { useDispatch } from 'react-redux'
+import { userQuestionActions } from '../redux/user/user.slice'
 
-const data = [
-   {
-      title: 'twall',
-      id: v4(),
-   },
-   {
-      title: 'greesey',
-      id: v4(),
-   },
-   {
-      title: 'jelance',
-      id: v4(),
-   },
-   {
-      title: 'cability',
-      id: v4(),
-   },
-   {
-      title: 'advantage',
-      id: v4(),
-   },
-   {
-      title: 'uncove',
-      id: v4(),
-   },
-   {
-      title: 'port',
-      id: v4(),
-   },
-   {
-      title: 'ecorated',
-      id: v4(),
-   },
-   {
-      title: 'beathing',
-      id: v4(),
-   },
-   {
-      title: 'distinge',
-      id: v4(),
-   },
-   {
-      title: 'soap',
-      id: v4(),
-   },
-   {
-      title: 'vivory',
-      id: v4(),
-   },
-   {
-      title: 'internate',
-      id: v4(),
-   },
-   {
-      title: 'outee',
-      id: v4(),
-   },
-   {
-      title: 'fold',
-      id: v4(),
-   },
-   {
-      title: 'beer',
-      id: v4(),
-   },
-   {
-      title: 'filend',
-      id: v4(),
-   },
-   {
-      title: 'living',
-      id: v4(),
-   },
-]
-
-const DragAndDrop = () => {
-   const [board, setBoard] = useState([])
+const DragAndDrop = ({ data, words }) => {
+   const dispatch = useDispatch()
    const [isDropped, setIsDropped] = useState(false)
    const [isDragging, setIsDragging] = useState(false)
 
    const dragEndHandler = (e, word) => {
       e.preventDefault()
       if (isDropped) {
-         setBoard((prev) => {
-            if (prev.find((item) => item.id === word.id)) {
-               return prev
-            }
-            return [...prev, word]
-         })
+         if (words.find((item) => item.id === word.id)) {
+            return words
+         }
+         return dispatch(userQuestionActions.setWords(word))
       }
       setIsDropped(false)
       setIsDragging(false)
+      return word
    }
 
    const dragOverHandler = (e) => {
@@ -107,7 +32,7 @@ const DragAndDrop = () => {
    }
 
    const removeWordHandler = (id) => {
-      setBoard((prev) => prev.filter((item) => item.id !== id))
+      dispatch(userQuestionActions.deleteWord(id))
    }
 
    return (
@@ -128,10 +53,10 @@ const DragAndDrop = () => {
             onDragOver={(e) => dragOverHandler(e)}
             onDrop={(e) => dropHandler(e)}
          >
-            {board.length === 0 ? (
+            {words.length === 0 ? (
                <span>Select and drag words here</span>
             ) : (
-               board.map((item) => (
+               words.map((item) => (
                   <WordsContainer
                      key={item.id}
                      onClick={() => removeWordHandler(item.id)}
