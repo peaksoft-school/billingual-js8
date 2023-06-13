@@ -20,7 +20,7 @@ const UserTest = ({ questions, setCountPage, count, children }) => {
 
    const handleTimeUp = () => {
       handleNextClick()
-      dispatch(userQuestionActions.clearWords())
+      dispatch(userQuestionActions.clearOptionsIds())
    }
 
    const { timeObject, chartPercent, setTime, isEnded } = useProgressBar(

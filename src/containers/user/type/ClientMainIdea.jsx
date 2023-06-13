@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { styled, Typography, Radio } from '@mui/material'
 import Button from '../../../components/UI/buttons/Buttons'
+import { userQuestionActions } from '../../../redux/user/user.slice'
 
 const ClientMainIdea = ({ question, handleNextClick }) => {
+   const dispatch = useDispatch()
    const [selectedOption, setSelectedOption] = useState(null)
 
    const handleOptionChange = (option) => {
@@ -14,9 +17,14 @@ const ClientMainIdea = ({ question, handleNextClick }) => {
    }
 
    const handleSubmit = () => {
+      const answerData = {
+         questionId: question.id,
+         data: new Date().toLocaleDateString(),
+         optionIds: [selectedOption],
+      }
+      dispatch(userQuestionActions.addAnswer(answerData))
       handleNextClick()
-      console.log(question)
-      console.log('Выбранный вариант ответа:', selectedOption)
+      dispatch(userQuestionActions.clearOptionsIds())
    }
 
    const isButtonDisabled = selectedOption === null
@@ -47,7 +55,7 @@ const ClientMainIdea = ({ question, handleNextClick }) => {
             <ButtonContainer>
                <Button
                   variant="contained"
-                  style={{ padding: '10px 54px' }}
+                  style={{ padding: '.625rem 3.375rem' }}
                   onClick={handleSubmit}
                   disabled={isButtonDisabled}
                >
@@ -63,32 +71,34 @@ export default ClientMainIdea
 
 const ButtonContainer = styled('div')(() => ({
    alignSelf: 'end',
-   padding: '20px 0 0 0',
+   padding: '1.25rem 0 0 0',
 }))
 
 const Title = styled('p')(() => ({
    fontFamily: 'DINNextRoundedLTW01-Regular',
    fontStyle: 'normal',
    fontWeight: 400,
-   fontSize: '26px',
-   lineHeight: '29px',
+   fontSize: '1.625rem',
+   lineHeight: '1.8125rem',
    color: '#4C4859',
-   margin: '0px 0px 30px 0px',
+   margin: '0rem 0rem 1.875rem 0rem',
 }))
 
 const Container = styled('div')(() => ({
    display: 'flex',
-   marginTop: '50px',
+   marginTop: '3.125rem',
+   width: '100%',
+   justifyContent: 'space-between',
 }))
 
 const OptionItem = styled('div')(() => ({
    display: 'flex',
    alignItems: 'center',
-   marginBottom: '14px',
-   border: '1px solid #D4D0D0',
-   borderRadius: '8px',
-   padding: '12px 18px',
-   width: '27.5625rem',
+   marginBottom: '.875rem',
+   border: '.0625rem solid #D4D0D0',
+   borderRadius: '.5rem',
+   padding: '.75rem 1.125rem',
+   width: '411px',
    boxSizing: 'border-box',
 }))
 
@@ -96,10 +106,10 @@ const OptionTitle = styled('p')(() => ({
    fontFamily: 'DINNextRoundedLTW01-Regular',
    fontStyle: 'normal',
    fontWeight: 400,
-   fontSize: '16px',
-   lineHeight: '20px',
+   fontSize: '1rem',
+   lineHeight: '1.25rem',
    color: '#4C4859',
-   paddingLeft: '8px',
+   paddingLeft: '.5rem',
    margin: 0,
    flexWrap: 'wrap',
 }))
@@ -107,23 +117,23 @@ const OptionTitle = styled('p')(() => ({
 const VariantContainer = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
-   paddingLeft: '40px',
-   minHeight: '15.9375rem',
+   paddingLeft: '2.5rem',
+   minHeight: '255px',
    justifyContent: 'space-between',
 }))
 
 const QuestionContainer = styled('div')(() => ({
-   border: '1px solid #D4D0D0',
-   borderRadius: '8px',
-   width: '34.6875rem',
+   border: '.0625rem solid #D4D0D0',
+   borderRadius: '.5rem',
+   width: '37.6875rem',
    backgroundColor: '#F7F7F7',
-   maxHeight: '455px',
+   maxHeight: '28.4375rem',
    overflow: 'auto',
 }))
 
 const PassageContainer = styled('div')(() => ({
-   borderBottom: '1px solid #D4D0D0',
-   padding: '16px 18px',
+   borderBottom: '.0625rem solid #D4D0D0',
+   padding: '1rem 1.125rem',
    textTransform: 'uppercase',
 }))
 
@@ -134,7 +144,7 @@ const StyledPassageText = styled(Typography)(() => ({
 }))
 
 const StatementContainer = styled('div')(() => ({
-   padding: '16px 18px',
+   padding: '1rem 1.125rem',
 }))
 
 const StyledStatementText = styled(Typography)(() => ({
