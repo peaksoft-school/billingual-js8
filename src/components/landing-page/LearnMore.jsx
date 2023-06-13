@@ -7,8 +7,8 @@ import { ReactComponent as Icon2 } from '../../assets/icons/research.svg'
 import { ReactComponent as Icon3 } from '../../assets/icons/thirdicon.svg'
 import { ReactComponent as Icon4 } from '../../assets/icons/dashboard.svg'
 import { ReactComponent as Icon5 } from '../../assets/icons/img-secure-design.svg'
-import LandingButton from '../UI/buttons/LandingButtton'
 import { textAnimation } from '../../utils/helpers/animations'
+import ButtonLanding from '../UI/buttons/LandingButton'
 
 const infoAnimation = {
    hidden: {
@@ -153,7 +153,7 @@ const LearnMore = () => {
                viewport={{ amount: 0.5 }}
                variants={textAnimation}
             >
-               <LandingButton onClick={goToTests} />
+               <ButtonLanding onClick={goToTests}>Get started</ButtonLanding>
             </StyledButton>
          </Contain>
       </Background>

@@ -24,7 +24,7 @@ import {
    updateQuestionRequest,
 } from '../../../../api/questionService'
 import { useSnackbar } from '../../../../hooks/useSnackbar'
-import ModalDelete from '../adminCreateTestRealEnglishWords/ModalDelete'
+import ModalDelete from '../../../../components/UI/modal/ModalDelete'
 
 const AddQuestions = () => {
    const [test, setTest] = useState(null)

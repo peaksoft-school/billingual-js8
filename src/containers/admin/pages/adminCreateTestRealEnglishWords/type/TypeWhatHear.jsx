@@ -92,11 +92,11 @@ const TypeWhatHear = ({ title, duration, testId }) => {
       } else {
          const requestData = {
             title,
-            duration,
+            duration: Number(duration),
             questionOrder: 2,
-            numberOfReplays: formValues.numberOfReplays,
+            numberOfReplays: Number(formValues.numberOfReplays),
             correctAnswer: formValues.correctAnswer,
-            testId,
+            testId: Number(testId),
             isActive: true,
          }
 

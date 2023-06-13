@@ -1,6 +1,6 @@
 import axios from 'axios'
+import { BASE_URL } from './Instance'
 import { store } from '../../redux'
-import { BASE_URL } from './Instanse'
 import { postFiles } from '../../redux/question/question.thunk'
 
 export const fileAxiosInstanse = axios.create({

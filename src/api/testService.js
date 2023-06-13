@@ -1,4 +1,4 @@
-import { instanse } from '../config/axios-instanse/Instanse'
+import { instanse } from '../config/axios-instanse/Instance'
 
 export const getAllTests = () => {
    return instanse.get('/api/tests')

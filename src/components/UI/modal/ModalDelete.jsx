@@ -1,13 +1,17 @@
-import { Box, Modal, Typography, styled } from '@mui/material'
-import redCross from '../../../../assets/icons/redCross.svg'
-import closeCross from '../../../../assets/icons/closeCross.svg'
-import Button from '../../../../components/UI/buttons/Buttons'
+import { Typography, styled, Modal } from '@mui/material'
+import redCross from '../../../assets/icons/redCross.svg'
+import closeCross from '../../../assets/icons/closeCross.svg'
+import Button from '../buttons/Buttons'
 
-const style = { borderRadius: '20px', borderStyle: 'none' }
+const style = {
+   borderRadius: '20px',
+   borderStyle: 'none',
+   alignItems: 'center',
+}
 
-const ModalDelete = ({ isOpenModal, openModal, deleteFunction }) => {
+const ModalDelete = ({ isOpenModal, openModal, deleteFunction, idListen }) => {
    return (
-      <Modal modalStyle={style} open={isOpenModal} onClose={openModal}>
+      <Modal style={style} open={isOpenModal} onClose={openModal}>
          <StyledModal>
             <StyledIcon src={closeCross} onClick={openModal} />
             <RedCrossImage src={redCross} />
@@ -15,7 +19,10 @@ const ModalDelete = ({ isOpenModal, openModal, deleteFunction }) => {
             <Text>You can t restore this file </Text>
             <Buttons>
                <StyledButton onClick={openModal}>Cancel</StyledButton>
-               <DeleteButton variant="contained" onClick={deleteFunction}>
+               <DeleteButton
+                  variant="contained"
+                  onClick={() => deleteFunction(idListen)}
+               >
                   Delete
                </DeleteButton>
             </Buttons>
@@ -24,15 +31,14 @@ const ModalDelete = ({ isOpenModal, openModal, deleteFunction }) => {
    )
 }
 export default ModalDelete
-const StyledModal = styled(Box)(() => ({
-   width: '520px',
-   height: '368px',
-   borderRadius: '20px',
+const StyledModal = styled('div')(() => ({
    position: 'absolute',
    top: '45%',
    left: '50%',
    transform: 'translate(-50%, -50%)',
-   background: '#fff',
+   backgroundColor: '#fff',
+   borderRadius: '15px',
+   boxShadow: '0px 4px 39px -5px rgba(196, 196, 196, 0.6)',
 }))
 const StyledIcon = styled('img')(() => ({
    marginLeft: '475px',

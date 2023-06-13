@@ -16,6 +16,10 @@ const QuestionModal = ({ isOpen, onClose }) => {
    const changeInput = (e) => {
       setTitle(e.target.value)
    }
+   const goBackFunc = () => {
+      setTitle('')
+      onClose()
+   }
 
    const changeCheckbox = (e) => {
       setChekOption(e.target.checked)
@@ -36,9 +40,9 @@ const QuestionModal = ({ isOpen, onClose }) => {
    }
 
    return (
-      <Modal open={isOpen} onClose={onClose}>
+      <Modal open={isOpen} onClose={goBackFunc}>
          <StyledBox>
-            <StyledIcon src={closeCross} onClick={onClose} />
+            <StyledIcon src={closeCross} onClick={goBackFunc} />
             <DivTitle>
                <TitleText>Title</TitleText>
                <Input fullWidth value={title} onChange={changeInput} />
@@ -54,7 +58,7 @@ const QuestionModal = ({ isOpen, onClose }) => {
             </DivTitle>
             <DivButtonGoBackAndSave>
                <DivButton>
-                  <GoBackButton onClick={onClose} variant="outlined">
+                  <GoBackButton onClick={goBackFunc} variant="outlined">
                      Go back
                   </GoBackButton>
                   <SaveButton

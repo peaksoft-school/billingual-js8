@@ -5,7 +5,10 @@ import accessible from '../../assets/images/accessible.png'
 import speech from '../../assets/images/speech.png'
 import extensive from '../../assets/images/extensive.png'
 import tutoring from '../../assets/images/tutoring.png'
-import booksImage from '../../assets/images/imgBookEnglish.png'
+import booksBackground from '../../assets/icons/background.svg'
+import bookImg from '../../assets/icons/bookImg.svg'
+import learnImg from '../../assets/icons/learnImg.svg'
+import readingImg from '../../assets/icons/reading.svg'
 import { infoCardArray, ourTeamArray } from '../../utils/constants/common'
 import { animation, textAnimation } from '../../utils/helpers/animations'
 
@@ -20,87 +23,6 @@ const imgAnimation = {
       transition: { delay: custom * 0.1 },
    }),
 }
-
-const InfoSection = () => {
-   return (
-      <Card>
-         <InfoCard
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ amount: 0.5 }}
-         >
-            {infoCardArray.map((elem) => (
-               <Img1DivOne key={elem.id} variants={animation}>
-                  <Img src={elem.img} />
-                  <Over>{elem.text}</Over>
-               </Img1DivOne>
-            ))}
-         </InfoCard>
-         <Description>
-            <div>
-               <UserExpiriance>Unparalleled user experience</UserExpiriance>
-               <DescriptionText>
-                  The most effective way to perfect a language is by immersing
-                  yourself in it. Rosetta Stone for Enterprise delivers an
-                  effective end-to-end experience, founded on a wealth of
-                  carefully structured content. Each learner has the opportunity
-                  to balance independent study with optional online tutoring in
-                  a way that fits their schedule and language learning goals.
-               </DescriptionText>
-               <DivSeparation>
-                  <DivAccessible>
-                     <ImgAccessible src={accessible} />
-                     <ImgAccessibleText>
-                        Accessible anytime, anywhere
-                     </ImgAccessibleText>
-                  </DivAccessible>
-                  <DivExtensive>
-                     <ImgExtensive src={extensive} />
-                     <ImgExtensiveText>
-                        Extensive business content
-                     </ImgExtensiveText>
-                  </DivExtensive>
-               </DivSeparation>
-               <DivSeparation>
-                  <DivSpeech>
-                     <ImgSpeech src={speech} />
-                     <ImgSpeechText>Leading speech recognition</ImgSpeechText>
-                  </DivSpeech>
-                  <DivTutoring>
-                     <ImgTutoring src={tutoring} />
-                     <TutoringText>Unlimited live tutoring</TutoringText>
-                  </DivTutoring>
-               </DivSeparation>
-            </div>
-            <ImgBook src={booksImage} />
-         </Description>
-         <OurTeam
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ amount: 0.2 }}
-         >
-            <TextOurTeam variants={textAnimation}>Our Team</TextOurTeam>
-            <DivImage>
-               {ourTeamArray.map((elem, i) => (
-                  <DivImageEmployeeName
-                     key={elem.id}
-                     custom={i + 1}
-                     variants={imgAnimation}
-                  >
-                     <OurTeamImage src={elem.img} />
-                     <DivEmployeeNamePerson>
-                        <NamePersonEmployee>{elem.name}</NamePersonEmployee>
-                        <Employee>{elem.employee}</Employee>
-                     </DivEmployeeNamePerson>
-                  </DivImageEmployeeName>
-               ))}
-            </DivImage>
-         </OurTeam>
-      </Card>
-   )
-}
-
-export default InfoSection
 
 const Card = styled('div')(() => ({
    width: '100%',
@@ -260,11 +182,47 @@ const DivTutoring = styled('div')(() => ({
    marginTop: '48.98px',
 }))
 
-const ImgBook = styled('img')(() => ({
+const ImgBackground = styled('div')(({ backgroundImage }) => ({
+   position: 'relative',
    marginTop: '17px',
    marginRight: '154.19px',
-   width: '35%',
+   width: '115rem',
+   backgroundImage: `url(${backgroundImage})`,
+   backgroundSize: 'cover',
+   backgroundPosition: 'center',
 }))
+
+const ChildContainer = styled(motion.div)(() => ({
+   position: 'absolute',
+   top: 0,
+   left: 0,
+   right: 0,
+   bottom: 0,
+}))
+
+const ImgBook = styled(motion.img)(() => ({
+   position: 'relative',
+   zIndex: '2',
+   left: '3.5rem',
+   top: '4.5rem',
+}))
+const ImgLearn = styled(motion.img)(() => ({
+   position: 'relative',
+   zIndex: '4',
+   right: '20rem',
+   bottom: '13rem',
+}))
+const ImgReading = styled(motion.img)(() => ({
+   position: 'relative',
+   zIndex: '3',
+   left: '21.5rem',
+   bottom: '14rem',
+}))
+// const ImgAnimation = styled('div')(() => ({
+//    marginTop: '17px',
+//    marginRight: '154.19px',
+//    width: '35%',
+// }))
 const DivSeparation = styled('div')(() => ({
    display: 'flex',
    gap: '67.88px',
@@ -331,3 +289,129 @@ const Employee = styled('div')(() => ({
    textAlign: 'center',
    color: '#020202',
 }))
+
+const blockAnimate = {
+   offscreen: {
+      opacity: 0,
+   },
+   onscreen: {
+      opacity: 1,
+      transition: {
+         duration: 1,
+         damping: 3,
+      },
+   },
+   animate: {
+      rotate: [-2, 3, -7, 4, 4], // Rotate back and forth with smaller values
+      transition: {
+         duration: 2.5,
+         repeat: Infinity,
+         repeatType: 'reverse',
+      },
+   },
+}
+
+const InfoSection = () => {
+   return (
+      <Card>
+         <InfoCard
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.5 }}
+         >
+            {infoCardArray.map((elem) => (
+               <Img1DivOne key={elem.id} variants={animation}>
+                  <Img src={elem.img} />
+                  <Over>{elem.text}</Over>
+               </Img1DivOne>
+            ))}
+         </InfoCard>
+         <Description>
+            <div>
+               <UserExpiriance>Unparalleled user experience</UserExpiriance>
+               <DescriptionText>
+                  The most effective way to perfect a language is by immersing
+                  yourself in it. Rosetta Stone for Enterprise delivers an
+                  effective end-to-end experience, founded on a wealth of
+                  carefully structured content. Each learner has the opportunity
+                  to balance independent study with optional online tutoring in
+                  a way that fits their schedule and language learning goals.
+               </DescriptionText>
+               <DivSeparation>
+                  <DivAccessible>
+                     <ImgAccessible src={accessible} />
+                     <ImgAccessibleText>
+                        Accessible anytime, anywhere
+                     </ImgAccessibleText>
+                  </DivAccessible>
+                  <DivExtensive>
+                     <ImgExtensive src={extensive} />
+                     <ImgExtensiveText>
+                        Extensive business content
+                     </ImgExtensiveText>
+                  </DivExtensive>
+               </DivSeparation>
+               <DivSeparation>
+                  <DivSpeech>
+                     <ImgSpeech src={speech} />
+                     <ImgSpeechText>Leading speech recognition</ImgSpeechText>
+                  </DivSpeech>
+                  <DivTutoring>
+                     <ImgTutoring src={tutoring} />
+                     <TutoringText>Unlimited live tutoring</TutoringText>
+                  </DivTutoring>
+               </DivSeparation>
+            </div>
+            <ImgBackground backgroundImage={booksBackground}>
+               <ChildContainer>
+                  <ImgBook
+                     variants={blockAnimate}
+                     initial="offscreen"
+                     whileInView="onscreen"
+                     animate="animate"
+                     src={bookImg}
+                  />
+                  <ImgLearn
+                     variants={blockAnimate}
+                     initial="offscreen"
+                     whileInView="onscreen"
+                     animate="animate"
+                     src={learnImg}
+                  />
+                  <ImgReading
+                     variants={blockAnimate}
+                     initial="offscreen"
+                     whileInView="onscreen"
+                     animate="animate"
+                     src={readingImg}
+                  />
+               </ChildContainer>
+            </ImgBackground>
+         </Description>
+         <OurTeam
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.2 }}
+         >
+            <TextOurTeam variants={textAnimation}>Our Team</TextOurTeam>
+            <DivImage>
+               {ourTeamArray.map((elem, i) => (
+                  <DivImageEmployeeName
+                     key={elem.id}
+                     custom={i + 1}
+                     variants={imgAnimation}
+                  >
+                     <OurTeamImage src={elem.img} />
+                     <DivEmployeeNamePerson>
+                        <NamePersonEmployee>{elem.name}</NamePersonEmployee>
+                        <Employee>{elem.employee}</Employee>
+                     </DivEmployeeNamePerson>
+                  </DivImageEmployeeName>
+               ))}
+            </DivImage>
+         </OurTeam>
+      </Card>
+   )
+}
+
+export default InfoSection
