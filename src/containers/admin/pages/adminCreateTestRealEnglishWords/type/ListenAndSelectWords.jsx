@@ -1,41 +1,21 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { AxiosError } from 'axios'
 import { styled } from '@mui/material'
-import { Howl } from 'howler'
 import Button from '../../../../../components/UI/buttons/Buttons'
-import { ReactComponent as Volumeup } from '../../../../../assets/icons/volumeup.svg'
+import volumeup from '../../../../../assets/icons/volumeup.svg'
 import Checkboxes from '../../../../../components/UI/checkbox/Checkbox'
-import DeleteIcon from '../../../../../assets/icons/deletedIcon.svg'
-import closeCross from '../../../../../assets/icons/closeCross.svg'
-import ModalReusable from '../../../../../components/UI/modal/Modal'
-import ModalDelete from '../ModalDelete'
+import { ReactComponent as DeleteIcon } from '../../../../../assets/icons/deletedIcon.svg'
+import ModalDelete from '../../../../../components/UI/modal/ModalDelete'
+import { questionActions } from '../../../../../redux/question/question.slice'
+import ModalUpploadFile from '../../../../../components/UI/modal/ModalUpploadFile'
+import volumeUpIcon from '../../../../../assets/icons/volumeOn.svg'
+import { useSnackbar } from '../../../../../hooks/useSnackbar'
+import MyIconButton from '../../../../../components/UI/Icon-button/IconButton'
 
-const listenEglishWords = [
-   {
-      word: 'word 1',
-      id: 1,
-   },
-   {
-      word: 'word 2',
-      id: 2,
-   },
-   {
-      word: 'word 3',
-      id: 3,
-   },
-   {
-      word: 'word 4',
-      id: 4,
-   },
-   {
-      word: 'word 5',
-      id: 5,
-   },
-   {
-      word: 'word 6',
-      id: 6,
-   },
-]
+import { postListenSelectRealEnglishWord } from '../../../../../api/questionService'
 
 const buttonStyleGoBack = {
    width: '12.8%',
@@ -57,135 +37,259 @@ const buttonSave = {
       background: '#1eff00',
    },
 }
-const modalStyleDiv = {
-   width: '637px',
-   height: '406px',
-   marginTop: '100px',
-   borderRadius: '20px',
-}
-const styleButtonGoBack = {
-   width: '105px',
-   height: '42px',
-   background: '#FFFFFF',
-   border: '2px solid #3A10E5',
-   borderRadius: '8px',
-   ':hover': {
-      background: '#3700ff',
-      color: '#fff',
-   },
-}
-const buttonStyleSave = {
-   width: '82px',
-   height: '42px',
-   background: '#2AB930',
-   borderRadius: '8px',
-   color: '#fff',
-   ':hover': {
-      background:
-         'linear-gradient(90deg, #29bf26 12%, #00ff37 50%, #35bf43 86%)',
-   },
-}
 
 const styleCheckboxes = {
    width: '6.97%',
    height: '43.48%',
    marginLeft: '17.97%',
 }
+const buttonStyle = {
+   '&:hover': {
+      background: '#0015cf',
+   },
+   width: '15.82%',
+   height: '42px',
+   background: '#3A10E5',
+   borderRadius: '8px',
+   marginLeft: '84.02%',
+   marginBottom: '22px',
+   color: '#ffff',
+   whiteSpace: 'nowrap',
+   fontFamily: 'Poppins',
+   fontSize: '0.875rem',
+   lineHeight: '1rem',
+}
 
-const ListenWords = ({ audio }) => {
+const ListenWords = ({ title, duration, testId }) => {
+   const { options } = useSelector((data) => data.questions)
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+   const { notify } = useSnackbar()
+   const [titleListen, setTitle] = useState('')
    const [isOpenModal, setIsOpenModal] = useState(false)
    const [isOpenModalSave, setIsOpenModalSave] = useState(false)
-   const [upploadFile, setUpploadFile] = useState({})
    const [idListen, setListenId] = useState()
-   const [deleteArrayListen, setDeleteArrayListen] = useState(listenEglishWords)
-   const soundPlay = (src) => {
-      const sound = new Howl({
-         src,
-         html5: true,
-      })
-      sound.play()
+   const [isPlaying, setIsPlaying] = useState(false)
+   const [deleteArrayListen, setDeleteArrayListen] = useState([])
+   const [audioUrl, setAudioUrl] = useState()
+   const [audioName, setAudioName] = useState('')
+   const [validationObject, setValidationObject] = useState({})
+   const [optionOrder, setOptionOrder] = useState(1)
+   const [id, setId] = useState('')
+   const audioRef = useRef('')
+
+   useEffect(() => {
+      setDeleteArrayListen(options)
+   }, [options])
+
+   const soundPlay = (elem) => {
+      setId(elem.id)
+      if (audioUrl) {
+         if (isPlaying) {
+            audioRef.current.pause()
+            setIsPlaying(false)
+            setId('')
+         } else {
+            audioRef.current.play()
+            setIsPlaying(true)
+         }
+      }
    }
+
+   const addOptions = () => {
+      if (titleListen === '' && audioName === '') {
+         setValidationObject((prevState) => ({
+            ...prevState,
+            titleInputWarning: 'Please add a title!',
+            fileURLValue: 'Please',
+         }))
+      } else if (titleListen === '') {
+         setValidationObject((prevState) => ({
+            ...prevState,
+            titleInputWarning: 'Please add a title!',
+         }))
+      } else if (audioName === '') {
+         setValidationObject((prevState) => ({
+            ...prevState,
+            fileURLValue: 'Please',
+         }))
+      } else {
+         const data = {
+            title: titleListen,
+            isCorrect: false,
+            fileUrl: audioUrl.path,
+            optionOrder,
+         }
+         setOptionOrder((prevState) => prevState + 1)
+         dispatch(questionActions.addOption(data))
+         setIsOpenModalSave((prevState) => !prevState)
+         setValidationObject({})
+         setTitle('')
+         setAudioName('')
+      }
+   }
+   const onDrop = (acceptedFiles) => {
+      setValidationObject((prevState) => ({
+         ...prevState,
+         fileURLValue: '',
+      }))
+      const file = acceptedFiles[0]
+      setAudioName(file.name)
+      const audioUrl = URL.createObjectURL(file)
+      setAudioUrl(file)
+      audioRef.current.src = audioUrl
+   }
+
    const openModal = (id) => {
       setIsOpenModal((prevState) => !prevState)
       setListenId(id)
    }
+
    const openModalSave = () => {
       setIsOpenModalSave((prevState) => !prevState)
    }
 
-   const changeFileName = (event) => {
-      setUpploadFile(event.target.files[0])
-   }
    const sliceListenWordOne = deleteArrayListen.slice(0, 3)
    const sliceListenWordTwo = deleteArrayListen.slice(3, 6)
 
-   const deleteTest = () => {
+   const deleteTest = (id) => {
+      dispatch(questionActions.deleteOption(id))
       setIsOpenModal((prevState) => !prevState)
-      setDeleteArrayListen(
-         deleteArrayListen.filter((elem) => elem.id !== idListen)
-      )
    }
+
+   const handleAudioEnded = () => {
+      setIsPlaying(false)
+   }
+
+   const titleChange = (e) => {
+      const valueInput = e.target.value
+      setTitle(valueInput)
+      setValidationObject((prevState) => ({
+         ...prevState,
+         titleInputWarning: '',
+      }))
+      if (!valueInput) {
+         setValidationObject((prevState) => ({
+            ...prevState,
+            titleInputWarning: 'Please add a title!',
+         }))
+      }
+   }
+
+   const goBackCloseFunction = (e) => {
+      e.preventDefault()
+      openModalSave()
+      setValidationObject({})
+      setAudioName('')
+      setAudioUrl()
+      setTitle('')
+   }
+
+   const goBack = () => {
+      navigate('/admin/test')
+   }
+
+   const checkedFunc = (id) => {
+      dispatch(questionActions.changeTrueOption(id))
+   }
+
+   const saveTest = async () => {
+      const data = {
+         title,
+         duration,
+         questionOrder: 2,
+         testId,
+         optionsRequest: options,
+         isActive: true,
+      }
+      try {
+         if (!title || !duration || options.length === 0) {
+            return notify('error', 'Question', 'Please fill in all fields')
+         }
+         await postListenSelectRealEnglishWord(data)
+         goBack()
+         notify('success', 'Question', 'Successfully added')
+         return dispatch(questionActions.clearOptions())
+      } catch (error) {
+         if (AxiosError(error)) {
+            return notify('error', 'Question', error.response?.data.message)
+         }
+         return notify('error', 'Question', 'Something went wrong')
+      }
+   }
+
    return (
       <>
-         <ModalReusable
-            isOpen={isOpenModalSave}
-            handleClose={openModalSave}
-            modalStyle={modalStyleDiv}
-         >
-            <StyledIcon src={closeCross} onClick={openModalSave} />
-            <DivTitle>
-               <TitleText>Title</TitleText>
-               <InfoTypeTest>Listen and select English word</InfoTypeTest>
-               <StyleDivUpploadFile>
-                  <UpploadFile htmlFor="file">Uppload audio file</UpploadFile>
-                  <UpploadAudioFile
-                     id="file"
-                     type="file"
-                     accept="audio/*"
-                     onChange={changeFileName}
-                  />
-                  <UpploadFileName>{upploadFile.name}</UpploadFileName>
-               </StyleDivUpploadFile>
-            </DivTitle>
-            <DivButtonGoBackAndSave>
-               <DivButton>
-                  <Button sx={styleButtonGoBack} onClick={openModalSave}>
-                     Go back
-                  </Button>
-                  <Button sx={buttonStyleSave}>Save</Button>
-               </DivButton>
-            </DivButtonGoBackAndSave>
-         </ModalReusable>
+         <ModalUpploadFile
+            audioName={audioName}
+            audioUrl={audioUrl}
+            addOptions={addOptions}
+            validationObject={validationObject}
+            onDrop={onDrop}
+            isOpenModalSave={isOpenModalSave}
+            goBackCloseFunction={goBackCloseFunction}
+            titleChange={titleChange}
+         />
          <ModalDelete
             deleteFunction={deleteTest}
             openModal={openModal}
             isOpenModal={isOpenModal}
+            idListen={idListen}
          />
-         <TestListenAndSelectEnglishWords>
+         <Button sx={buttonStyle} type="submit" onClick={openModalSave}>
+            + Add Options
+         </Button>
+         <TestListenAndSelectEnglishWords options={options}>
+            <audio
+               style={{ display: 'none' }}
+               ref={audioRef}
+               type="audio/mp3"
+               onEnded={handleAudioEnded}
+               controls
+            >
+               <track kind="captions" srcLang="en" label="English captions" />
+               <source src={audioUrl} type="audio/mp3" />
+            </audio>
             {sliceListenWordOne.map((elem) => (
-               <ListenWordEnglish>
+               <ListenWordEnglish options={options}>
                   <NumberListenWords>{elem.id}</NumberListenWords>
-                  <StyledVolumeup onClick={() => soundPlay(audio)} />
-                  <ListenWordEnglishTest>{elem.word}</ListenWordEnglishTest>
-                  <Checkboxes sx={styleCheckboxes} color="success" />
-                  <Delete onClick={() => openModal(elem.id)} src={DeleteIcon} />
+                  <StyledVolumeup
+                     src={elem.id === id ? volumeUpIcon : volumeup}
+                     onClick={() => soundPlay(elem)}
+                  />
+                  <ListenWordEnglishTest>{elem.title}</ListenWordEnglishTest>
+                  <Checkboxes
+                     sx={styleCheckboxes}
+                     color="success"
+                     onClick={() => checkedFunc(elem.id)}
+                  />
+                  <MyIconButton onClick={() => openModal(elem.id)}>
+                     <DeleteIconLogo />
+                  </MyIconButton>
                </ListenWordEnglish>
             ))}
          </TestListenAndSelectEnglishWords>
          <TestListenAndSelectEnglishWords>
             {sliceListenWordTwo.map((elem) => (
-               <ListenWordEnglish>
+               <ListenWordEnglish options={options}>
                   <NumberListenWords>{elem.id}</NumberListenWords>
-                  <StyledVolumeup onClick={() => soundPlay(audio)} />
-                  <ListenWordEnglishTest>{elem.word}</ListenWordEnglishTest>
+                  <StyledVolumeup
+                     src={elem.id === id ? volumeUpIcon : volumeup}
+                     onClick={() => soundPlay(elem)}
+                  />
+                  <ListenWordEnglishTest>{elem.title}</ListenWordEnglishTest>
                   <Checkboxes sx={styleCheckboxes} color="success" />
-                  <Delete onClick={openModal} src={DeleteIcon} />
+                  <MyIconButton onClick={() => openModal(elem.id)}>
+                     <DeleteIconLogo />
+                  </MyIconButton>
                </ListenWordEnglish>
             ))}
          </TestListenAndSelectEnglishWords>
          <DivButtonSaveandGoBack>
-            <Button sx={buttonStyleGoBack}>go Back</Button>
-            <Button sx={buttonSave} onClick={openModalSave}>
+            <Button sx={buttonStyleGoBack} onClick={goBack}>
+               go Back
+            </Button>
+            <Button sx={buttonSave} onClick={saveTest}>
                Save
             </Button>
          </DivButtonSaveandGoBack>
@@ -203,16 +307,16 @@ const DivButtonSaveandGoBack = styled('div')(() => ({
    gap: '1.95%',
 }))
 
-const TestListenAndSelectEnglishWords = styled('div')(() => ({
+const TestListenAndSelectEnglishWords = styled('div')(({ options }) => ({
    width: '100%',
-   height: '46px',
+   height: 'auto',
    margin: '0 auto',
    display: 'flex',
    gap: '2.2%',
-   marginBottom: '18px',
+   marginBottom: !options ? '18px' : '0px',
 }))
 
-const ListenWordEnglish = styled('div')(() => ({
+const ListenWordEnglish = styled('div')(({ options }) => ({
    width: '31.83%',
    height: '46px',
    background: '#FFFFFF',
@@ -220,6 +324,7 @@ const ListenWordEnglish = styled('div')(() => ({
    borderRadius: '8px',
    display: 'flex',
    alignItems: 'center',
+   marginBottom: '18px',
 }))
 
 const NumberListenWords = styled('div')(() => ({
@@ -247,118 +352,19 @@ const ListenWordEnglishTest = styled('div')(() => ({
    marginLeft: '5.26%',
 }))
 
-const Delete = styled('img')(() => ({
-   width: '7.66%',
-   height: '43.48%',
+const DeleteIconLogo = styled(DeleteIcon)(({ theme }) => ({
+   width: '20px',
+   height: '20px',
    cursor: 'pointer',
-   marginLeft: '4.98%',
-}))
-const StyledVolumeup = styled(Volumeup)(() => ({
-   width: '8.43%',
-   height: '47.83%',
-   cursor: 'pointer',
-}))
-const DivTitle = styled('div')(() => ({
-   width: '517px',
-   height: '120px',
-   margin: '0 auto',
-   marginTop: '74px',
-}))
-const TitleText = styled('div')(() => ({
-   width: '37.28px',
-   height: '18px',
-   fontFamily: 'Gilroy',
-   fontStyle: 'normal',
-   fontWeight: 500,
-   fontSize: '16px',
-   lineHeight: '18px',
-   display: 'flex',
-   alignItems: 'center',
-   color: '#4B4759',
-   paddingBottom: '16px',
-}))
-const InfoTypeTest = styled('div')(() => ({
-   boxSizing: 'border-box',
-   width: '517px',
-   height: '46px',
-   background: '#FFFFFF',
-   border: ' 1.53px solid #D4D0D0',
-   borderRadius: '8px',
-   paddingLeft: '16px',
-   paddingTop: '11.1px',
-   marginBottom: '24px',
-}))
-const DivButtonGoBackAndSave = styled('div')(() => ({
-   width: '637px',
-   height: '94px',
-   background: ' #F0F1F1',
-   borderRadius: '0px 0px 20px 20px',
-   marginTop: '110px',
-   display: 'flex',
-   alignItems: 'center',
-}))
-const DivButton = styled('div')(() => ({
-   width: '203px',
-   height: '42px',
-   marginLeft: '374px',
-   display: 'flex',
-   gap: '16px',
-}))
-const UpploadAudioFile = styled('input')(() => ({
-   background: '#FFFFFF',
-   border: '1.53px solid #3A10E5',
-   borderRadius: '8px',
-   fontFamily: 'DINNextRoundedLTW04-Medium',
-   fontStyle: 'normal',
-   fontWeight: 500,
-   fontSize: '16px',
-   lineHeight: '18px',
-   display: 'none',
-   width: '159px',
-   height: '46px',
-   alignItems: 'center',
-   textAlign: 'center',
-   color: '#3A10E5',
-   marginTop: '24px',
-}))
-const UpploadFile = styled('label')(() => ({
-   padding: '14px 16px 14px 16px',
-   background: '#FFFFFF',
-   border: '1.53px solid #3A10E5',
-   borderRadius: '8px',
-   color: '#3A10E5',
-   fontFamily: 'Gilroy',
-   fontStyle: 'normal',
-   fontWeight: 500,
-   fontSize: '16px',
-   lineHeight: '18px',
-   alignItems: 'center',
-   textAlign: 'center',
-   cursor: 'pointer',
-}))
-const UpploadFileName = styled('div')(() => ({
-   width: '233px',
-   height: '18px',
-   fontFamily: 'Gilroy',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '16px',
-   lineHeight: '18px',
-   color: '#4C4859',
-}))
-const StyledIcon = styled('img')(() => ({
-   marginLeft: '595px',
-   marginTop: '20px',
-   marginRight: '20px',
-   cursor: 'pointer',
-   ':hover': {
-      backgroundColor: '#b6ea7f',
-      borderRadius: '300px',
-      textColor: '#fff',
+   marginLeft: '10px',
+   '&:hover': {
+      path: {
+         stroke: theme.palette.secondary.main,
+      },
    },
 }))
-const StyleDivUpploadFile = styled('div')(() => ({
-   display: 'flex',
-   alignItems: 'center',
-   gap: '18px',
+const StyledVolumeup = styled('img')(() => ({
+   width: '22px',
+   height: '22px',
+   cursor: 'pointer',
 }))
