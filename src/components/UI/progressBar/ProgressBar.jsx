@@ -1,18 +1,16 @@
 import { styled } from '@mui/material'
+import React from 'react'
 
 const GridStyle = styled('div')(() => ({
-   width: '1092px',
-   height: '540px',
+   width: '90.44%',
+   // height: '540px',
    margin: '0 auto',
-   marginTop: '100px',
    paddingTop: '1px',
 }))
 
 const DivProgressBar = styled('div')(() => ({
-   minWidth: '814px',
-   maxWidth: '1006px',
+   width: '100%',
    height: '52px',
-   margin: '40px 43px 0px 43px',
 }))
 const Time = styled('h3')(() => ({
    width: '61px',
@@ -27,11 +25,11 @@ const Time = styled('h3')(() => ({
 
 const ProgressLine = styled('progress')(() => ({
    height: '15px',
-   width: '1006px',
+   width: '100%',
    accentColor: ' #3909fa',
 }))
 
-const ProgressBar = ({ timeObject, time, timeProgress }) => {
+const ProgressBar = ({ timeObject, timeProgress }) => {
    return (
       <div>
          <GridStyle>
@@ -39,11 +37,11 @@ const ProgressBar = ({ timeObject, time, timeProgress }) => {
                <Time>
                   {timeObject.minute}:{timeObject.seconds}
                </Time>
-               <ProgressLine value={time} max={timeProgress} />
+               <ProgressLine value={100 - timeProgress} max="100" />
             </DivProgressBar>
          </GridStyle>
       </div>
    )
 }
 
-export default ProgressBar
+export default React.memo(ProgressBar)

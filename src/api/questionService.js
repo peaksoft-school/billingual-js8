@@ -1,5 +1,5 @@
-import { fileAxiosInstanse } from '../config/axios-instanse/fileAxiosInstanse'
-import { instanse } from '../config/axios-instanse/Instanse'
+import { fileAxiosInstanse } from '../config/axios-instanse/fileAxiosInstance'
+import { instanse } from '../config/axios-instanse/Instance'
 import { questionsApi } from '../utils/constants/common'
 
 export const typeWhatYourHearRequest = (formValues) => {
@@ -15,6 +15,7 @@ export const deleteQuestionRequest = (id) => {
 export const getAllQuestionsRequest = () => {
    return instanse.get('api/questions')
 }
+
 export const postRespondWords = (requestData) => {
    return instanse.post(questionsApi.respondInAtLeastNWords, requestData)
 }

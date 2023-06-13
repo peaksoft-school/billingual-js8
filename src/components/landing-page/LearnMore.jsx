@@ -6,7 +6,7 @@ import { ReactComponent as Icon2 } from '../../assets/icons/research.svg'
 import { ReactComponent as Icon3 } from '../../assets/icons/thirdicon.svg'
 import { ReactComponent as Icon4 } from '../../assets/icons/dashboard.svg'
 import { ReactComponent as Icon5 } from '../../assets/icons/img-secure-design.svg'
-import LandingButton from '../UI/buttons/LandingButtton'
+import ButtonLanding from '../UI/buttons/LandingButton'
 
 const LearnMore = () => {
    const navigate = useNavigate()
@@ -93,7 +93,7 @@ const LearnMore = () => {
                <Icon5 style={{ position: 'relative', zIndex: 1 }} />
             </Container4>
             <StyledButton>
-               <LandingButton onClick={goToTests} />
+               <ButtonLanding onClick={goToTests}>Get started</ButtonLanding>
             </StyledButton>
          </Contain>
       </Background>
