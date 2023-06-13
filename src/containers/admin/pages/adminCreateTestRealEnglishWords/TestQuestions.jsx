@@ -311,6 +311,10 @@ const SelectType = styled(Select)(() => ({
    marginTop: '12px',
    display: 'flex',
    textAlign: 'center',
+   transitionDuration: '3333251ms',
+   // '.MuiMenu-paper': {
+   //    transitionDuration: '3333251ms',
+   // },
 }))
 
 const ImageVector = styled('img')(() => ({

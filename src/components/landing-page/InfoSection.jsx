@@ -1,20 +1,23 @@
+import { useState, useEffect } from 'react'
 import { keyframes, styled } from '@mui/material'
-
 import accessible from '../../assets/images/accessible.png'
 import speech from '../../assets/images/speech.png'
 import extensive from '../../assets/images/extensive.png'
 import tutoring from '../../assets/images/tutoring.png'
 import booksImage from '../../assets/images/imgBookEnglish.png'
-import { infoCardArray, ourTeamArray } from '../../utils/constants/common'
+import { ourTeamArray } from '../../utils/constants/common'
+import paperAirline from '../../assets/images/infoSectionImg/imgGroup1/group.png'
+import frame from '../../assets/images/infoSectionImg/imgGroup1/vector-7.png'
+import borderFrame from '../../assets/images/infoSectionImg/imgGroup1/vector-8.png'
 
-const fadeIn = keyframes`
-   from {
-      opacity: 0;
-   }
-   to {
-      opacity: 1;
-   }
-`
+// const fadeIn = keyframes`
+//    from {
+//       opacity: 0;
+//    }
+//    to {
+//       opacity: 1;
+//    }
+// `
 
 const slideIn = keyframes`
    from {
@@ -34,34 +37,38 @@ const Card = styled('div')(() => ({
 
 const InfoCard = styled('div')(() => ({
    display: 'flex',
-   justifyContent: 'space-evenly',
+   justifyContent: 'space-between',
    flexWrap: 'wrap',
+   background: 'red',
+   width: '83.54%',
+   height: 'auto',
+   margin: '0 auto',
 }))
 
-const Img = styled('img')(() => ({
-   width: '300.96px',
-   height: '176px',
-   top: '898px',
-}))
-const Img1DivOne = styled('div')(() => ({
-   width: '335px',
-   height: '248px',
-   display: 'flex',
-   flexDirection: 'column',
-   alignItems: 'center',
-   animation: `${fadeIn} 1s ease-in-out`,
-}))
-const Over = styled('p')(() => ({
-   height: '48px',
-   marginTop: '23px',
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '16px',
-   lineHeight: '24px',
-   textAlign: 'center',
-   color: '#23212A',
-}))
+// const Img = styled('img')(() => ({
+//    width: '300.96px',
+//    height: '176px',
+//    top: '898px',
+// }))
+// const Img1DivOne = styled('div')(() => ({
+//    width: '335px',
+//    height: '248px',
+//    display: 'flex',
+//    flexDirection: 'column',
+//    alignItems: 'center',
+//    animation: `${fadeIn} 1s ease-in-out`,
+// }))
+// const Over = styled('p')(() => ({
+//    height: '48px',
+//    marginTop: '23px',
+//    fontFamily: 'Poppins',
+//    fontStyle: 'normal',
+//    fontWeight: 400,
+//    fontSize: '16px',
+//    lineHeight: '24px',
+//    textAlign: 'center',
+//    color: '#23212A',
+// }))
 const Description = styled('div')(() => ({
    height: ' 437px',
    marginLeft: '110px',
@@ -256,17 +263,100 @@ const Employee = styled('div')(() => ({
    textAlign: 'center',
    color: '#020202',
 }))
+const InfoDivOne = styled('div')(() => ({
+   width: '27.85%',
+   height: 'auto',
+   background: 'blue',
+   display: 'flex',
+   justifyContent: 'center',
+}))
+const InfoDivSecond = styled('div')(() => ({
+   width: '27.1%',
+   height: 'auto',
+   background: 'blue',
+   display: 'flex',
+   justifyContent: 'center',
+}))
+const InfoDivThird = styled('div')(() => ({
+   width: '25.1%',
+   height: 'auto',
+   background: 'blue',
+   display: 'flex',
+   justifyContent: 'center',
+}))
+
+const ImagePaperAirline = styled('div')(() => ({
+   width: '89.84%',
+   height: '176px',
+   background: '#000',
+}))
+const ImageGlobus = styled('div')(() => ({
+   width: '92.36%',
+   height: '176px',
+   background: 'green',
+}))
+const ImagePiggyBank = styled('div')(() => ({
+   width: '99.66%',
+   height: '176px',
+   background: 'green',
+}))
+const ImagePaperAirline1 = styled('img')(() => ({
+   width: '100%',
+   height: '175.97px',
+}))
+const ImagePaperAirlineFrame = styled('img')(() => ({
+   width: '64.91%',
+   height: '88px',
+   zIndex: 100,
+   position: 'relative',
+   top: '-142px',
+   left: '19%',
+}))
+const ImageBorder = styled('img')(() => ({
+   width: '67.84%',
+   height: '96.8px',
+   position: 'relative',
+   top: '-240px',
+   left: '17.5%',
+}))
 
 const InfoSection = () => {
+   const [count, setCount] = useState(0)
+   useEffect(() => {
+      const handlescroll = () => {
+         const scrollPosition = window.scrollY || window.pageYOffset
+
+         setCount(scrollPosition)
+      }
+      window.addEventListener('scroll', handlescroll)
+
+      return () => {
+         window.removeEventListener('scroll', handlescroll)
+      }
+   }, [])
    return (
       <Card>
          <InfoCard>
-            {infoCardArray.map((elem) => (
+            <InfoDivOne>
+               <ImagePaperAirline>
+                  <ImagePaperAirline1 src={paperAirline} />
+                  <ImagePaperAirlineFrame src={frame} />
+                  <ImageBorder src={borderFrame} />
+                  <h1>{count}</h1>
+               </ImagePaperAirline>
+            </InfoDivOne>
+            <InfoDivSecond>
+               <ImageGlobus>dfbd</ImageGlobus>
+            </InfoDivSecond>
+            <InfoDivThird>
+               <ImagePiggyBank>dgre</ImagePiggyBank>
+            </InfoDivThird>
+            {/* {infoCardArray.map((elem) => (
                <Img1DivOne key={elem.id}>
                   <Img src={elem.img} />
                   <Over>{elem.text}</Over>
                </Img1DivOne>
-            ))}
+            ))} */}
          </InfoCard>
          <Description>
             <div>
