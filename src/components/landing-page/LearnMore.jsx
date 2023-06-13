@@ -59,7 +59,7 @@ const LearnMore = () => {
                whileInView="visible"
                viewport={{ amount: 0.5 }}
             >
-               <motion.Grid variants={infoAnimation}>
+               <motion.div variants={infoAnimation}>
                   <Title1>Expand your applicant pool</Title1>
                   <Text1>
                      Tap into a diverse pool of candidates from 210+ countries
@@ -68,7 +68,7 @@ const LearnMore = () => {
                      territories of origin, who have taken the Bilingual English
                      Test <br /> because of its radical accessibility.
                   </Text1>
-               </motion.Grid>
+               </motion.div>
 
                <Icon1 style={{ position: 'relative', zIndex: 1 }} />
             </Container>
@@ -78,7 +78,7 @@ const LearnMore = () => {
                viewport={{ amount: 0.5 }}
             >
                <Icon2 style={{ position: 'relative', zIndex: 1 }} />
-               <motion.Grid
+               <motion.div
                   style={{ overflow: 'hidden' }}
                   variants={secondInfoAnimation}
                >
@@ -93,14 +93,14 @@ const LearnMore = () => {
                      with other major assessments such as the TOEFL and the
                      <br /> IELTS.
                   </Text2>
-               </motion.Grid>
+               </motion.div>
             </Container1>
             <Container2
                initial="hidden"
                whileInView="visible"
                viewport={{ amount: 0.5 }}
             >
-               <motion.Grid variants={infoAnimation}>
+               <motion.div variants={infoAnimation}>
                   <Title1>Innovative test security</Title1>
                   <Text1>
                      Industry-leading security protocols, individual test
@@ -110,7 +110,7 @@ const LearnMore = () => {
                      <br />
                      cheating and ensure results you can trust.
                   </Text1>
-               </motion.Grid>
+               </motion.div>
                <Icon3 style={{ position: 'relative', zIndex: 1 }} />
             </Container2>
             <Container3
@@ -119,7 +119,7 @@ const LearnMore = () => {
                viewport={{ amount: 0.5 }}
             >
                <Icon4 style={{ position: 'relative', zIndex: 1 }} />
-               <motion.Grid variants={secondInfoAnimation}>
+               <motion.div variants={secondInfoAnimation}>
                   <Title2>Convenient results dashboard</Title2>
                   <Text2>
                      Access candidates’ certificates, video interviews, and
@@ -128,14 +128,14 @@ const LearnMore = () => {
                      samples through a free and secure dashboard. Quickly and
                      <br /> easily view applicant data with filtering tools.
                   </Text2>
-               </motion.Grid>
+               </motion.div>
             </Container3>
             <Container4
                initial="hidden"
                whileInView="visible"
                viewport={{ amount: 0.5 }}
             >
-               <motion.Grid variants={infoAnimation}>
+               <motion.div variants={infoAnimation}>
                   <Title1>Secure Design</Title1>
                   <Text1>
                      Adaptive test engine dynamically administers test questions
@@ -144,7 +144,7 @@ const LearnMore = () => {
                      times
                      <br /> to see a question repeated.
                   </Text1>
-               </motion.Grid>
+               </motion.div>
                <Icon5 style={{ position: 'relative', zIndex: 1 }} />
             </Container4>
             <StyledButton

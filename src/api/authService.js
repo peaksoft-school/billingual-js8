@@ -9,4 +9,8 @@ const signIn = (userData) => {
    return instanse.post('/api/auth/sign-in', userData)
 }
 
-export default { signUp, signIn }
+const authWithGoogle = (tokenId) => {
+   return instanse.post(`api/auth/auth-google?tokenId=${tokenId}`)
+}
+
+export default { signUp, signIn, authWithGoogle }

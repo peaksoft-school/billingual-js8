@@ -55,7 +55,7 @@ const MainRoutes = () => {
                element={
                   <ProtectedRoute
                      roles="ADMIN"
-                     fallbackPath="/sign-in"
+                     fallbackPath="/"
                      isAuthorized={isAuthorized}
                      role={role}
                   />

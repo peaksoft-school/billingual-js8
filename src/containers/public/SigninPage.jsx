@@ -20,6 +20,7 @@ import { ReactComponent as EyeIconOff } from '../../assets/icons/eyeOffIcon.svg'
 import { auth, provider } from '../../config/axios-instanse/firebaseConfig'
 import { STORAGE_KEYS } from '../../utils/constants/common'
 import { authActions } from '../../redux/auth/auth.slice'
+import authService from '../../api/authService'
 
 const SigninPage = () => {
    const dispatch = useDispatch()
@@ -28,17 +29,28 @@ const SigninPage = () => {
    const [showPassword, setShowPassword] = useState(false)
 
    const googleSignInHandler = () => {
-      signInWithPopup(auth, provider).then((data) => {
-         const userData = {
-            token: data.user.accessToken,
-            email: data.user.email,
-            role: 'USER',
+      signInWithPopup(auth, provider).then(async (data) => {
+         console.log(data)
+         try {
+            const res = await authService.authWithGoogle(
+               // eslint-disable-next-line no-underscore-dangle
+               data.user.accessToken
+            )
+            console.log(res.data)
+         } catch (error) {
+            console.log(error)
          }
 
-         localStorage.setItem(
-            STORAGE_KEYS.BILINGUAL_USER_KEY,
-            JSON.stringify(userData)
-         )
+         // const userData = {
+         //    token: data.user.accessToken,
+         //    email: data.user.email,
+         //    role: 'USER',
+         // }
+
+         // localStorage.setItem(
+         //    STORAGE_KEYS.BILINGUAL_USER_KEY,
+         //    JSON.stringify(userData)
+         // )
          navigate('/user/tests')
       })
    }
