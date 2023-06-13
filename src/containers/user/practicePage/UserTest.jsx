@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import FormContainer from '../../../components/UI/form/FormContainer'
 import ProgressBar from '../../../components/UI/progressBar/ProgressBar'
 import { useProgressBar } from '../../../hooks/useTime'
+import { userQuestionActions } from '../../../redux/user/user.slice'
 
 const UserTest = ({ questions, setCountPage, count, children }) => {
+   const dispatch = useDispatch()
    const handleNextClick = () => {
       setCountPage((prev) => {
          if (prev < questions.length) {
@@ -17,6 +20,7 @@ const UserTest = ({ questions, setCountPage, count, children }) => {
 
    const handleTimeUp = () => {
       handleNextClick()
+      dispatch(userQuestionActions.clearWords())
    }
 
    const { timeObject, chartPercent, setTime, isEnded } = useProgressBar(

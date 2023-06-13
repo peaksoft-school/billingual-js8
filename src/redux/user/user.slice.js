@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
    testId: null,
    answers: [],
+   words: [],
 }
 
 export const userSlice = createSlice({
@@ -14,6 +15,15 @@ export const userSlice = createSlice({
       },
       addTestId: (state, action) => {
          state.testId = action.payload
+      },
+      setWords: (state, action) => {
+         state.words.push(action.payload)
+      },
+      deleteWord: (state, action) => {
+         state.words = state.words.filter((item) => item.id !== action.payload)
+      },
+      clearWords: (state) => {
+         state.words = []
       },
    },
 })

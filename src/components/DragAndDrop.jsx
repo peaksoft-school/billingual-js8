@@ -1,22 +1,24 @@
 import { Typography, styled } from '@mui/material'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { userQuestionActions } from '../redux/user/user.slice'
 
-const DragAndDrop = ({ data, words, setWords }) => {
+const DragAndDrop = ({ data, words }) => {
+   const dispatch = useDispatch()
    const [isDropped, setIsDropped] = useState(false)
    const [isDragging, setIsDragging] = useState(false)
 
    const dragEndHandler = (e, word) => {
       e.preventDefault()
       if (isDropped) {
-         setWords((prev) => {
-            if (prev.find((item) => item.id === word.id)) {
-               return prev
-            }
-            return [...prev, word]
-         })
+         if (words.find((item) => item.id === word.id)) {
+            return words
+         }
+         return dispatch(userQuestionActions.setWords(word))
       }
       setIsDropped(false)
       setIsDragging(false)
+      return word
    }
 
    const dragOverHandler = (e) => {
@@ -30,7 +32,7 @@ const DragAndDrop = ({ data, words, setWords }) => {
    }
 
    const removeWordHandler = (id) => {
-      setWords((prev) => prev.filter((item) => item.id !== id))
+      dispatch(userQuestionActions.deleteWord(id))
    }
 
    return (

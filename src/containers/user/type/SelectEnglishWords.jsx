@@ -1,13 +1,13 @@
 import { styled, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import DragAndDrop from '../../../components/DragAndDrop'
 import Button from '../../../components/UI/buttons/Buttons'
 import { userQuestionActions } from '../../../redux/user/user.slice'
 
 const SelectEnglishWords = ({ question, handleNextClick }) => {
    const dispatch = useDispatch()
-   const [words, setWords] = useState([])
+   const { words } = useSelector((state) => state.user)
 
    const nextHandler = () => {
       const optionIds = words.map((item) => item.id)
@@ -18,17 +18,13 @@ const SelectEnglishWords = ({ question, handleNextClick }) => {
       }
       dispatch(userQuestionActions.addAnswer(answerData))
       handleNextClick()
-      setWords([])
+      dispatch(userQuestionActions.clearWords())
    }
 
    return (
       <>
          <TitleStyle>{question.title}</TitleStyle>
-         <DragAndDrop
-            data={question.options}
-            setWords={setWords}
-            words={words}
-         />
+         <DragAndDrop data={question.options} words={words} />
          <ContainerBtn>
             <Button
                onClick={nextHandler}

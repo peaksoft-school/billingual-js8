@@ -1,6 +1,6 @@
 import { styled, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import Button from '../../../components/UI/buttons/Buttons'
 import ModalReusable from '../../../components/UI/modal/Modal'
@@ -26,8 +26,6 @@ const PracticeTest = () => {
    const { state } = useLocation()
    const { testId } = useParams()
 
-   console.log(useSelector((state) => state.user.answers))
-
    useEffect(() => {
       dispatch(userQuestionActions.addTestId(testId))
    }, [])
@@ -50,7 +48,9 @@ const PracticeTest = () => {
 
       return (
          <BackgroundContainer>
-            <QuitButton onClick={openHandler}>Quit test</QuitButton>
+            <QuitButton onClick={openHandler} variant="contained">
+               Quit test
+            </QuitButton>
             <ModalReusable
                modalStyle={modalStyleDiv}
                isOpen={isOpenModal}
@@ -114,7 +114,8 @@ const QuitButton = styled(Button)(() => ({
    textAlign: 'end',
    margin: '30px',
    border: ' solid 2px #4C4859',
-   background: '#FFFFFF',
+   background: '#ffffff',
    color: '#4C4859',
    fontWeight: 'bolder',
+   '&:hover': { backgroundColor: '#e6e4e4' },
 }))
