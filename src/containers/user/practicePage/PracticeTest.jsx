@@ -1,7 +1,7 @@
 import { styled, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import Button from '../../../components/UI/buttons/Buttons'
 import ModalReusable from '../../../components/UI/modal/Modal'
 import Spinner from '../../../components/UI/spinner/Spinner'
@@ -44,7 +44,7 @@ const PracticeTest = () => {
    }
 
    if (state?.length > 0) {
-      if (count > state.length - 1) return 'complete'
+      if (count > state.length) return 'complete'
 
       return (
          <BackgroundContainer>
@@ -81,7 +81,7 @@ const PracticeTest = () => {
                         isEnded={isEnded}
                      />
                   ) : (
-                     <h1>Not Found</h1>
+                     <Navigate to="/user/tests" />
                   )
                }}
             </UserTest>
