@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import FormContainer from '../../../components/UI/form/FormContainer'
 import ProgressBar from '../../../components/UI/progressBar/ProgressBar'
 import { useProgressBar } from '../../../hooks/useTime'
@@ -15,8 +15,6 @@ const UserTest = ({ questions, setCountPage, count, children }) => {
          return prev
       })
    }
-
-   console.log(useSelector((state) => state.user.answers))
 
    const { duration } = questions[count]
 
