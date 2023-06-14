@@ -1,20 +1,32 @@
 import React, { useState } from 'react'
 import { Typography, styled } from '@mui/material'
-import FormContainer from '../../../components/UI/form/FormContainer'
+import { useDispatch } from 'react-redux'
 import TextArea from '../../../components/UI/textArea/TextArea'
 import Button from '../../../components/UI/buttons/Buttons'
+import { userQuestionActions } from '../../../redux/user/user.slice'
 
-const RespondNWords = ({ question }) => {
+const RespondNWords = ({ question, handleNextClick }) => {
+   const dispatch = useDispatch()
    const [responseText, setResponseText] = useState('')
 
    const changeResponseTextHandler = (e) => {
       setResponseText(e.target.value)
    }
 
+   const nextHandler = () => {
+      const answerData = {
+         questionId: question.id,
+         data: responseText,
+      }
+      dispatch(userQuestionActions.addAnswer(answerData))
+      handleNextClick()
+      setResponseText('')
+   }
+
    const word = responseText.split(' ')
 
    return (
-      <FormContainer>
+      <>
          <TitleCont>
             <Title>{question.title}</Title>
          </TitleCont>
@@ -38,11 +50,12 @@ const RespondNWords = ({ question }) => {
             <NextBtn
                variant="contained"
                disabled={word.length <= question.minWords}
+               onClick={nextHandler}
             >
                Next
             </NextBtn>
          </BtnContainer>
-      </FormContainer>
+      </>
    )
 }
 
@@ -64,6 +77,7 @@ const Title = styled('p')(() => ({
 const Container = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'space-between',
+   gap: '20px',
    minHeight: '190px',
    padding: '0 0 32px',
    borderBottom: '1.53px solid #D4D0D0',
@@ -71,6 +85,25 @@ const Container = styled('div')(() => ({
 
 const QuestionContainer = styled('div')(() => ({
    width: '55%',
+   maxHeight: '280px',
+   overflow: 'hidden',
+   overflowY: 'auto',
+
+   '& ::-webkit-scrollbar': {
+      width: '10px',
+      cursor: 'default',
+      margin: '0',
+   },
+   '& ::-webkit-scrollbar-track': {
+      background: '#fff',
+   },
+   '& ::-webkit-scrollbar-thumb': {
+      background: '#9A9A9A',
+      borderRadius: '100px',
+      '&:hover': {
+         background: '#838383',
+      },
+   },
 }))
 
 const QuestionStatement = styled(Typography)(() => ({

@@ -396,7 +396,11 @@ const InfoSection = () => {
             <TextOurTeam variants={textAnimation}>Our Team</TextOurTeam>
             <DivImage>
                {ourTeamArray.map((elem) => (
-                  <DivImageEmployeeName key={elem.id} variants={imgAnimation}>
+                  <DivImageEmployeeName
+                     key={elem.id}
+                     variants={imgAnimation}
+                     custom={elem.id}
+                  >
                      <OurTeamImage src={elem.img} />
                      <DivEmployeeNamePerson>
                         <NamePersonEmployee>{elem.name}</NamePersonEmployee>

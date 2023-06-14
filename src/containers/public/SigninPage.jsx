@@ -2,7 +2,7 @@ import { Grid, InputAdornment, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { signInWithPopup } from 'firebase/auth'
 import { ReactComponent as System } from '../../assets/icons/system.svg'
 import { ReactComponent as Layer } from '../../assets/icons/layer 2.svg'
@@ -18,14 +18,12 @@ import MyIconButton from '../../components/UI/Icon-button/IconButton'
 import { ReactComponent as EyeIcon } from '../../assets/icons/eyeDefaultIcon.svg'
 import { ReactComponent as EyeIconOff } from '../../assets/icons/eyeOffIcon.svg'
 import { auth, provider } from '../../config/axios-instanse/firebaseConfig'
-import { STORAGE_KEYS } from '../../utils/constants/common'
-import { authActions } from '../../redux/auth/auth.slice'
 import authService from '../../api/authService'
 
 const SigninPage = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { error, isLoading, isAuthorized } = useSelector((state) => state.auth)
+   const { error, isLoading } = useSelector((state) => state.auth)
    const [showPassword, setShowPassword] = useState(false)
 
    const googleSignInHandler = () => {
@@ -55,19 +53,19 @@ const SigninPage = () => {
       })
    }
 
-   useEffect(() => {
-      const userInfo = JSON.parse(
-         localStorage.getItem(STORAGE_KEYS.BILINGUAL_USER_KEY)
-      )
-      if (userInfo) {
-         const authorizedUserCredentials = {
-            token: userInfo.token,
-            email: userInfo.email,
-            role: userInfo.role,
-         }
-         dispatch(authActions.login(authorizedUserCredentials))
-      }
-   }, [isAuthorized])
+   // useEffect(() => {
+   //    const userInfo = JSON.parse(
+   //       localStorage.getItem(STORAGE_KEYS.BILINGUAL_USER_KEY)
+   //    )
+   //    if (userInfo) {
+   //       const authorizedUserCredentials = {
+   //          token: userInfo.token,
+   //          email: userInfo.email,
+   //          role: userInfo.role,
+   //       }
+   //       dispatch(authActions.login(authorizedUserCredentials))
+   //    }
+   // }, [isAuthorized])
 
    const handleClickShowPassword = () => setShowPassword((show) => !show)
 

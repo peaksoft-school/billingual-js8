@@ -1,11 +1,24 @@
 import React, { useRef, useState } from 'react'
 import { Typography, styled } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import Button from '../../../components/UI/buttons/Buttons'
 import TextArea from '../../../components/UI/textArea/TextArea'
+import { userQuestionActions } from '../../../redux/user/user.slice'
 
-const HighlightTheAnswer = ({ question }) => {
+const HighlightTheAnswer = ({ question, handleNextClick }) => {
+   const dispatch = useDispatch()
    const textRef = useRef(null)
    const [selectedText, setSelectedText] = useState('')
+
+   const nextHandler = () => {
+      const answerData = {
+         questionId: question.id,
+         data: selectedText,
+      }
+      dispatch(userQuestionActions.addAnswer(answerData))
+      handleNextClick()
+      setSelectedText('')
+   }
 
    const handleTextSelection = () => {
       setSelectedText(window.getSelection().toString())
@@ -47,6 +60,7 @@ const HighlightTheAnswer = ({ question }) => {
                      padding: '12px 54px',
                   }}
                   disabled={!selectedText}
+                  onClick={nextHandler}
                >
                   Next
                </Button>
@@ -84,6 +98,9 @@ const StyledPassageText = styled(Typography)(() => ({
 
 const StatementContainer = styled('div')(() => ({
    padding: '16px 18px',
+   maxHeight: '270px',
+   overflow: 'hidden',
+   overflowY: 'auto',
 }))
 
 const StyledStatementText = styled(Typography)(() => ({

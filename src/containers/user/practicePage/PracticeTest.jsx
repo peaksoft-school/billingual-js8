@@ -44,7 +44,7 @@ const PracticeTest = () => {
    }
 
    if (state?.length > 0) {
-      if (count > state.length - 1) return 'complete'
+      if (count > state.length) return 'complete'
 
       return (
          <BackgroundContainer>
@@ -81,7 +81,7 @@ const PracticeTest = () => {
                         isEnded={isEnded}
                      />
                   ) : (
-                     <h1>Not Found</h1>
+                     <h1>Coming soon</h1>
                   )
                }}
             </UserTest>

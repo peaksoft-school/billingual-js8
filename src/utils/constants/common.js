@@ -141,7 +141,7 @@ export const questionsApi = {
    respondInAtLeastNWords: 'api/questions/respond-n-words',
    highlightTheAnswer: 'api/questions/highlight-the-answer',
    selectTheMainIdea: 'api/questions/select-the-main-idea',
-   selectBestTitle: 'api/questions/select-best-title',
+   selectBestTitle: 'api/questions/select-best-title`',
 }
 
 export const questionComponents = {
