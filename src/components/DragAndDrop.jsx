@@ -72,7 +72,7 @@ const DragAndDrop = ({ data, words }) => {
 export default DragAndDrop
 
 const Container = styled('div')(() => ({
-   padding: '44px',
+   padding: '44px 0px',
    display: 'grid',
    justifyItems: 'end',
    gap: '30px',
