@@ -119,6 +119,7 @@ const ListenWords = ({ title, duration, testId }) => {
             isCorrect: false,
             fileUrl: audioUrl.path,
             optionOrder,
+            isActive: true,
          }
          setOptionOrder((prevState) => prevState + 1)
          dispatch(questionActions.addOption(data))

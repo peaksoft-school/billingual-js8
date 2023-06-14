@@ -25,6 +25,7 @@ import {
 } from '../../../../api/questionService'
 import { useSnackbar } from '../../../../hooks/useSnackbar'
 import ModalDelete from '../adminCreateTestRealEnglishWords/ModalDelete'
+import { questionName } from '../../../../utils/helpers/questionName'
 
 const AddQuestions = () => {
    const [test, setTest] = useState(null)
@@ -138,7 +139,7 @@ const AddQuestions = () => {
                                           {formatTime(question.duration)}
                                        </StyledTd>
                                        <StyledTd>
-                                          {question.questionType}
+                                          {questionName(question.questionType)}
                                        </StyledTd>
                                        <StyledTd>
                                           <IconsContainer>

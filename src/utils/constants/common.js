@@ -15,6 +15,8 @@ import avatar5 from '../../assets/images/avatar5.jpg'
 import SelectEnglishWords from '../../containers/user/type/SelectEnglishWords'
 import RespondNWords from '../../containers/user/type/RespondNWords'
 import HighlightTheAnswer from '../../containers/user/type/HighlightTheAnswer'
+import ClientBestTitle from '../../containers/user/type/ClientBestTitle'
+import ClientMainIdea from '../../containers/user/type/ClientMainIdea'
 
 export const STORAGE_KEYS = {
    BILINGUAL_USER_KEY: 'BILINGUAL_USER_KEY',
@@ -141,17 +143,17 @@ export const questionsApi = {
    respondInAtLeastNWords: 'api/questions/respond-n-words',
    highlightTheAnswer: 'api/questions/highlight-the-answer',
    selectTheMainIdea: 'api/questions/select-the-main-idea',
-   selectBestTitle: 'api/questions/select-best-title`',
+   selectBestTitle: 'api/questions/select-best-title',
 }
 
 export const questionComponents = {
    SELECT_ENGLISH_WORD: SelectEnglishWords,
-   SELECT_THE_MAIN_IDEA: 'ClientMainIdea',
+   SELECT_THE_MAIN_IDEA: ClientBestTitle,
    TYPE_WHAT_YOU_HEAR: 'ClientTypeHear',
    DESCRIBE_IMAGE: 'ClientDescribe',
    LISTEN_AND_SELECT_ENGLISH_WORD: 'ClientListenWords',
    RECORD_SAYING_STATEMENT: 'ClientRecordSaying',
    RESPOND_N_WORDS: RespondNWords,
-   SELECT_BEST_TITLE: 'ClientMainIdea',
+   SELECT_BEST_TITLE: ClientMainIdea,
    HIGHLIGHT_THE_ANSWER: HighlightTheAnswer,
 }

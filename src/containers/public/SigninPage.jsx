@@ -153,13 +153,21 @@ const SigninPage = () => {
                      sign in
                   </StyledButton>
                )}
-               <ButtonContainer onClick={googleSignInHandler}>
+               <ButtonContainer
+                  disabled={isLoading}
+                  onClick={googleSignInHandler}
+               >
                   <GoogleIcon />
                   sign in with google
                </ButtonContainer>
                <StyledText>
                   DON`T HAVE AN ACCOUNT?
-                  <StyledNavLink to="/sign-up">REGISTER</StyledNavLink>
+                  <StyledNavLink
+                     disabled={isLoading}
+                     to={isLoading ? '' : '/sign-up'}
+                  >
+                     REGISTER
+                  </StyledNavLink>
                </StyledText>
             </Container>
          </SignInForm>
@@ -265,7 +273,8 @@ const StyledText = styled(Typography)(() => ({
    color: '#757575',
 }))
 
-const StyledNavLink = styled(NavLink)(() => ({
-   color: '#3A10E5',
+const StyledNavLink = styled(NavLink)(({ disabled }) => ({
+   color: disabled ? '#bdbdbd' : '#3A10E5',
    textDecoration: 'none',
+   cursor: disabled ? 'default' : 'pointer',
 }))

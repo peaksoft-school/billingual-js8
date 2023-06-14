@@ -28,7 +28,7 @@ const GetAllTests = () => {
          )}
          {tests && tests.length > 0 ? (
             tests.map((el) => {
-               return (
+               return el.isActive ? (
                   <TestsContainer key={el.id}>
                      <InfoContainer>
                         <TestIconWrapper>
@@ -48,7 +48,7 @@ const GetAllTests = () => {
                         try test
                      </StyledButton>
                   </TestsContainer>
-               )
+               ) : null
             })
          ) : (
             <Typography>

@@ -99,6 +99,7 @@ const SelectRealEnglishWords = ({ title, duration, testId }) => {
          questionOrder: 1,
          testId,
          options,
+         isActive: true,
       }
       try {
          if (!title || !duration || options.length === 0) {

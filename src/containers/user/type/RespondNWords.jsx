@@ -41,7 +41,7 @@ const RespondNWords = ({ question, handleNextClick }) => {
                   fullWidth
                   rows={6}
                   maxRows={6}
-                  placeholder="Your response"
+                  placeholder={`Your response (min words: ${question.minWords})`}
                />
                <Word>Word: {word.length - 1}</Word>
             </ResponseContainer>

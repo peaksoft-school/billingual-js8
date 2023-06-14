@@ -1,13 +1,13 @@
 import { styled, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import Button from '../../../components/UI/buttons/Buttons'
 import ModalReusable from '../../../components/UI/modal/Modal'
-import Spinner from '../../../components/UI/spinner/Spinner'
 import { userQuestionActions } from '../../../redux/user/user.slice'
 import { questionComponents } from '../../../utils/constants/common'
 import UserTest from './UserTest'
+import FormContainer from '../../../components/UI/form/FormContainer'
 
 const modalStyleDiv = {
    width: '407px',
@@ -81,14 +81,23 @@ const PracticeTest = () => {
                         isEnded={isEnded}
                      />
                   ) : (
-                     <h1>Coming soon</h1>
+                     <Navigate to="/user/tests" />
                   )
                }}
             </UserTest>
          </BackgroundContainer>
       )
    }
-   return <Spinner />
+   return (
+      <FormContainer>
+         <div style={{ textAlign: 'center' }}>
+            <h2 style={{ textAlign: 'center' }}>This test is empty</h2>
+            <Button onClick={navigateGoBackTest} variant="contained">
+               Go Back
+            </Button>
+         </div>
+      </FormContainer>
+   )
 }
 
 export default PracticeTest
