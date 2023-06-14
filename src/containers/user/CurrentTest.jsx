@@ -29,11 +29,6 @@ const CurrentTest = () => {
    const getOneTest = async () => {
       try {
          const { data } = await getTestById(testId)
-         notify(
-            'success',
-            'Current test',
-            'Сurrent test received successfully!'
-         )
          setTest([data])
          setIsLoading(false)
       } catch (error) {
@@ -46,6 +41,10 @@ const CurrentTest = () => {
       getOneTest()
    }, [])
 
+   const tryTestHandle = (questions) => {
+      return navigate(`practice`, { state: questions })
+   }
+
    return (
       <FormContainer>
          {isLoading && (
@@ -56,7 +55,7 @@ const CurrentTest = () => {
          {test && test.length > 0 ? (
             test.map((item) => {
                return (
-                  <StyledForm>
+                  <StyledForm key={item.id}>
                      <TitleStyle>{item.title}</TitleStyle>
                      <ContentContainer>
                         <CurrentImg />
@@ -68,7 +67,8 @@ const CurrentTest = () => {
                            <ListItem>
                               <Time />
                               <span>
-                                 Practice takes just {item.duration / 60}
+                                 Practice takes just{' '}
+                                 {(item.duration / 60).toFixed(0)}
                                  minutes
                               </span>
                            </ListItem>
@@ -91,7 +91,12 @@ const CurrentTest = () => {
                         >
                            Cancel
                         </CancelButton>
-                        <Button variant="contained">Practice Test</Button>
+                        <Button
+                           variant="contained"
+                           onClick={() => tryTestHandle(item.questions)}
+                        >
+                           Practice Test
+                        </Button>
                      </ContainerBtn>
                   </StyledForm>
                )

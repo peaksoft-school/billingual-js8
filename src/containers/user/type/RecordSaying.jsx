@@ -1,45 +1,58 @@
-/* eslint-disable no-unused-vars */
 import { Grid, Typography, styled } from '@mui/material'
 import { WaveformAudioRecorder } from 'waveform-audio-recorder'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import FormContainer from '../../../components/UI/form/FormContainer'
 import { ReactComponent as Img } from '../../../assets/icons/img-speak.svg'
 import Button from '../../../components/UI/buttons/Buttons'
 import { ReactComponent as Recording } from '../../../assets/icons/recording.svg'
-import { postFiles } from '../../../redux/question/question.thunk'
+import { userQuestionActions } from '../../../redux/user/user.slice'
+import { postFileRequest } from '../../../api/questionService'
+import { useSnackbar } from '../../../hooks/useSnackbar'
 
-const RecordSaying = ({ question }) => {
+const RecordSaying = ({ question, handleNextClick }) => {
    const [recorderState, setRecorderState] = useState(null)
+   const { notify } = useSnackbar()
    const dispatch = useDispatch()
    const onClickButton = recorderState?.initRecording
       ? recorderState?.saveRecording
       : recorderState?.startRecording
-   console.log(recorderState)
 
-   const nextButtonHandler = () => {
-      const audioBlob = recorderState.audio
+   const nextButtonHandler = async () => {
+      const audioBlob = recorderState?.audio
       const audioFile = new File([audioBlob], 'audio.mp3', {
          type: 'audio/mp3',
+         setRecorderState,
       })
-      dispatch(postFiles({ file: audioFile }))
+
+      try {
+         const formData = new FormData()
+         formData.append('multipartFile', audioFile)
+         const { data } = await postFileRequest(formData)
+         const newAnswer = {
+            questionId: question.id,
+            fileUrl: data.link,
+         }
+         dispatch(userQuestionActions.addAnswer(newAnswer))
+         handleNextClick()
+         setRecorderState((prevState) => ({
+            ...prevState,
+            audio: null,
+         }))
+      } catch (error) {
+         notify('error', 'File', 'Something went wrong')
+      }
    }
 
    return (
-      <FormContainer>
-         {question.map((item) => (
-            <>
-               <Title>{item.title}</Title>
-               <Container>
-                  <Img />
-                  <Text> &quot; {item.statement} &quot;.</Text>
-               </Container>
-            </>
-         ))}
+      <>
+         <Title>{question.title}</Title>
+         <Container>
+            <Img />
+            <Text> &quot; {question.statement} &quot;.</Text>
+         </Container>
          <SecondContainer>
             {recorderState?.initRecording ? <Recording /> : null}
-            <WaveformAudioRecorder
-               svg={{ color: '#0f1010' }}
+            <MemoizedWaveformAudioRecorder
                setRecorderState={setRecorderState}
             />
             <div>
@@ -57,10 +70,12 @@ const RecordSaying = ({ question }) => {
                </Button>
             </div>
          </SecondContainer>
-      </FormContainer>
+      </>
    )
 }
 export default RecordSaying
+
+const MemoizedWaveformAudioRecorder = React.memo(WaveformAudioRecorder)
 
 const Title = styled(Typography)(() => ({
    fontStyle: 'normal',
