@@ -1,4 +1,4 @@
-import { Grid, Typography, styled } from '@mui/material'
+import { Grid, Typography, keyframes, styled } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ReactComponent as Roadmap } from '../../assets/icons/roadmap.svg'
@@ -7,8 +7,16 @@ import { ReactComponent as Icon2 } from '../../assets/icons/research.svg'
 import { ReactComponent as Icon3 } from '../../assets/icons/thirdicon.svg'
 import { ReactComponent as Icon4 } from '../../assets/icons/dashboard.svg'
 import { ReactComponent as Icon5 } from '../../assets/icons/img-secure-design.svg'
-import { textAnimation } from '../../utils/helpers/animations'
+import { animation, textAnimation } from '../../utils/helpers/animations'
 import ButtonLanding from '../UI/buttons/LandingButton'
+
+const dash = keyframes`
+        to  {
+          stroke-dashoffset: 0;  
+        } from {
+          stroke-dashoffset: 300;
+        }
+      `
 
 const infoAnimation = {
    hidden: {
@@ -26,7 +34,7 @@ const infoAnimation = {
 const secondInfoAnimation = {
    hidden: {
       opacity: 0,
-      x: 500,
+      x: 400,
    },
    visible: (custom) => ({
       opacity: 1,
@@ -70,14 +78,22 @@ const LearnMore = () => {
                   </Text1>
                </motion.div>
 
-               <Icon1 style={{ position: 'relative', zIndex: 1 }} />
+               <StyledGlobusIcon
+                  variants={animation}
+                  custom={0.7}
+                  style={{ position: 'relative', zIndex: 1 }}
+               />
             </Container>
             <Container1
                initial="hidden"
                whileInView="visible"
                viewport={{ amount: 0.5 }}
             >
-               <Icon2 style={{ position: 'relative', zIndex: 1 }} />
+               <StyledResearchIcon
+                  variants={animation}
+                  custom={0.7}
+                  style={{ position: 'relative', zIndex: 1 }}
+               />
                <motion.div
                   style={{ overflow: 'hidden' }}
                   variants={secondInfoAnimation}
@@ -111,14 +127,22 @@ const LearnMore = () => {
                      cheating and ensure results you can trust.
                   </Text1>
                </motion.div>
-               <Icon3 style={{ position: 'relative', zIndex: 1 }} />
+               <StyledSecuryIcon
+                  variants={animation}
+                  custom={0.7}
+                  style={{ position: 'relative', zIndex: 1 }}
+               />
             </Container2>
             <Container3
                initial="hidden"
                whileInView="visible"
                viewport={{ amount: 0.5 }}
             >
-               <Icon4 style={{ position: 'relative', zIndex: 1 }} />
+               <StyledDashboardIcon
+                  variants={animation}
+                  custom={0.7}
+                  style={{ position: 'relative', zIndex: 1 }}
+               />
                <motion.div variants={secondInfoAnimation}>
                   <Title2>Convenient results dashboard</Title2>
                   <Text2>
@@ -145,7 +169,11 @@ const LearnMore = () => {
                      <br /> to see a question repeated.
                   </Text1>
                </motion.div>
-               <Icon5 style={{ position: 'relative', zIndex: 1 }} />
+               <StyledDesignIcon
+                  variants={animation}
+                  custom={0.7}
+                  style={{ position: 'relative', zIndex: 1 }}
+               />
             </Container4>
             <StyledButton
                initial="hidden"
@@ -192,7 +220,17 @@ const StyledIcon = styled(Roadmap)(() => ({
    left: '0',
    right: '0',
    margin: '107px auto',
+   path: {
+      strokeDasharray: '18.56 18.56',
+      animation: `${dash} 3.5s infinite linear forwards`,
+   },
 }))
+
+const StyledGlobusIcon = styled(motion(Icon1))(() => ({}))
+const StyledResearchIcon = styled(motion(Icon2))(() => ({}))
+const StyledSecuryIcon = styled(motion(Icon3))(() => ({}))
+const StyledDashboardIcon = styled(motion(Icon4))(() => ({}))
+const StyledDesignIcon = styled(motion(Icon5))(() => ({}))
 
 const Title1 = styled(Typography)(() => ({
    fontFamily: 'Poppins',
@@ -232,13 +270,13 @@ const Text2 = styled(Typography)(() => ({
    color: '#23212A',
 }))
 const Container = styled(motion(Grid))(() => ({
-   maxWidth: '1200px',
+   maxWidth: '70%',
    display: 'flex',
    marginTop: '78px',
    alignItems: 'center',
 }))
 const Container1 = styled(motion(Grid))(() => ({
-   maxWidth: '1400px',
+   maxWidth: '100%',
    display: 'flex',
    marginTop: '264px',
    justifyContent: 'flex-end',
@@ -247,14 +285,14 @@ const Container1 = styled(motion(Grid))(() => ({
    overflow: 'hidden',
 }))
 const Container2 = styled(motion(Grid))(() => ({
-   maxWidth: '1200px',
+   maxWidth: '70%',
    display: 'flex',
    marginTop: '96px',
    gap: '160px',
    alignItems: 'center',
 }))
 const Container3 = styled(motion(Grid))(() => ({
-   maxWidth: '1400px',
+   maxWidth: '100%',
    display: 'flex',
    marginTop: '150px',
    gap: '220px',
@@ -263,7 +301,7 @@ const Container3 = styled(motion(Grid))(() => ({
    overflow: 'hidden',
 }))
 const Container4 = styled(motion(Grid))(() => ({
-   maxWidth: '1200px',
+   maxWidth: '70%',
    display: 'flex',
    marginTop: '190px',
    gap: '162px',

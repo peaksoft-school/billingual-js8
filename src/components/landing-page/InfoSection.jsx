@@ -188,8 +188,8 @@ const ImgBackground = styled('div')(({ backgroundImage }) => ({
    marginRight: '154.19px',
    width: '115rem',
    backgroundImage: `url(${backgroundImage})`,
-   backgroundSize: 'cover',
    backgroundPosition: 'center',
+   backgroundRepeat: 'no-repeat',
 }))
 
 const ChildContainer = styled(motion.div)(() => ({

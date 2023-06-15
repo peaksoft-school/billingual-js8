@@ -77,6 +77,7 @@ const ListenWords = ({ title, duration, testId }) => {
    const [optionOrder, setOptionOrder] = useState(1)
    const [id, setId] = useState('')
    const audioRef = useRef('')
+   const [isChecked, setIsChecked] = useState(false)
 
    useEffect(() => {
       setDeleteArrayListen(options)
@@ -116,9 +117,10 @@ const ListenWords = ({ title, duration, testId }) => {
       } else {
          const data = {
             title: titleListen,
-            isCorrect: false,
+            isCorrect: isChecked,
             fileUrl: audioUrl.path,
             optionOrder,
+            id: optionOrder,
             isActive: true,
          }
          setOptionOrder((prevState) => prevState + 1)
@@ -190,7 +192,8 @@ const ListenWords = ({ title, duration, testId }) => {
       navigate('/admin/test')
    }
 
-   const checkedFunc = (id) => {
+   const checkedFunc = (e, id) => {
+      setIsChecked(e.target.checked)
       dispatch(questionActions.changeTrueOption(id))
    }
 
@@ -262,7 +265,8 @@ const ListenWords = ({ title, duration, testId }) => {
                   <Checkboxes
                      sx={styleCheckboxes}
                      color="success"
-                     onClick={() => checkedFunc(elem.id)}
+                     onClick={(e) => checkedFunc(e, elem.id)}
+                     checked={elem.isCorrect}
                   />
                   <MyIconButton onClick={() => openModal(elem.id)}>
                      <DeleteIconLogo />
