@@ -12,7 +12,7 @@ const FormContainer = ({ children }) => {
 export default FormContainer
 
 const MainContainer = styled('div')(() => ({
-   padding: '70px 190px',
+   padding: '70px 170px',
 }))
 
 const InsideContainer = styled('div')(() => ({

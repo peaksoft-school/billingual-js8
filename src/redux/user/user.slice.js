@@ -4,6 +4,7 @@ const initialState = {
    testId: null,
    answers: [],
    words: [],
+   selectedOption: [],
 }
 
 export const userSlice = createSlice({
@@ -22,8 +23,12 @@ export const userSlice = createSlice({
       deleteWord: (state, action) => {
          state.words = state.words.filter((item) => item.id !== action.payload)
       },
-      clearWords: (state) => {
+      clearOptionsIds: (state) => {
          state.words = []
+         state.selectedOption = []
+      },
+      setOption: (state, action) => {
+         state.selectedOption.push(action.payload)
       },
    },
 })
