@@ -1,5 +1,5 @@
-import { fileAxiosInstanse } from '../config/axios-instanse/fileAxiosInstanse'
-import { instanse } from '../config/axios-instanse/Instanse'
+import { fileAxiosInstanse } from '../config/axios-instanse/fileAxiosInstance'
+import { instanse } from '../config/axios-instanse/Instance'
 import { questionsApi } from '../utils/constants/common'
 
 export const typeWhatYourHearRequest = (formValues) => {
@@ -15,6 +15,7 @@ export const deleteQuestionRequest = (id) => {
 export const getAllQuestionsRequest = () => {
    return instanse.get('api/questions')
 }
+
 export const postRespondWords = (requestData) => {
    return instanse.post(questionsApi.respondInAtLeastNWords, requestData)
 }
@@ -35,6 +36,14 @@ export const postSelectBestTitle = (data) => {
 
 export const describeImageReq = (payload) => {
    return instanse.post(questionsApi.describeImage, payload)
+}
+
+export const postSelectRealEnglishWord = (data) => {
+   return instanse.post(questionsApi.selectRealEnglishWords, data)
+}
+
+export const postListenSelectRealEnglishWord = (data) => {
+   return instanse.post(questionsApi.listenAndSelect, data)
 }
 
 export const updateQuestionRequest = (data) => {

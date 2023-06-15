@@ -17,6 +17,8 @@ import {
 import Spinner from '../../../../components/UI/spinner/Spinner'
 import { useSnackbar } from '../../../../hooks/useSnackbar'
 
+let mount = false
+
 const AdminTest = () => {
    const dispatch = useDispatch()
    const { tests, isLoading } = useSelector((state) => state.tests)
@@ -24,7 +26,10 @@ const AdminTest = () => {
    const { notify } = useSnackbar()
 
    useEffect(() => {
-      dispatch(getTests(notify))
+      if (mount) {
+         dispatch(getTests(notify))
+      }
+      mount = true
    }, [])
 
    const createTestHandler = () => {
