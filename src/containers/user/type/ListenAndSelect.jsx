@@ -3,6 +3,7 @@ import { styled } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import MultiplySelect from '../../../components/UI/multiply-select/MultiplySelect'
 import Button from '../../../components/UI/buttons/Buttons'
+import { userQuestionActions } from '../../../redux/user/user.slice'
 
 const ListenAndSelect = ({ question, handleNextClick }) => {
    const dispatch = useDispatch()
@@ -14,18 +15,18 @@ const ListenAndSelect = ({ question, handleNextClick }) => {
          optionIds: audio,
       }
 
-      // eslint-disable-next-line no-undef
       dispatch(userQuestionActions.addAnswer(answerData))
       handleNextClick()
+      setAudio([])
    }
 
    return (
       <Container>
          <AudioContainer>
-            {question !== null && question.length === 0 ? (
+            {question !== null && question.options.length === 0 ? (
                <p style={{ margin: '0 auto' }}>Empty</p>
             ) : (
-               question.map((item, i) => (
+               question.options.map((item, i) => (
                   <MultiplySelect
                      id={i + 1}
                      word="awdawd"
