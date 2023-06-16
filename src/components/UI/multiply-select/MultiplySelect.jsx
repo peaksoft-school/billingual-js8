@@ -17,8 +17,6 @@ const MultiplySelect = ({ id, word, audio, setAudio, audioIds }) => {
       return setAudio((prev) => [...prev, id])
    }
 
-   console.log(audioIds)
-
    const stopSound = () => {
       Howler.stop()
       setIsPlaying(false)
@@ -46,7 +44,7 @@ const MultiplySelect = ({ id, word, audio, setAudio, audioIds }) => {
                onClick={() => soundPlay(audio)}
             />
 
-            <Word>
+            <Word onClick={() => selectHandler(id)}>
                {word} {id}
             </Word>
          </Content>
