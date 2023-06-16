@@ -18,7 +18,7 @@ const SelectEnglishWords = ({ question, handleNextClick }) => {
       }
       dispatch(userQuestionActions.addAnswer(answerData))
       handleNextClick()
-      dispatch(userQuestionActions.clearWords())
+      dispatch(userQuestionActions.clearOptionsIds())
    }
 
    return (
