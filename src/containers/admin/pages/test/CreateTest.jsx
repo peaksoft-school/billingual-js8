@@ -54,11 +54,6 @@ const CreateTest = () => {
       },
    })
 
-   // const createAndAddTest = async () => {
-   //    await submitHandler(values)
-   //    // navigate(`/admin/test/${state.id}`)
-   // }
-
    return (
       <FormContainer>
          <CreateTestForm onSubmit={handleSubmit}>
@@ -89,9 +84,6 @@ const CreateTest = () => {
                <SaveButton color="success" variant="contained" type="submit">
                   Save
                </SaveButton>
-               {state !== null ? null : (
-                  <Button variant="contained">+ Add question</Button>
-               )}
             </ButtonContainer>
          </CreateTestForm>
       </FormContainer>

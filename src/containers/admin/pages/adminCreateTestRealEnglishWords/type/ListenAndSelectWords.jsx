@@ -16,6 +16,7 @@ import { useSnackbar } from '../../../../../hooks/useSnackbar'
 import MyIconButton from '../../../../../components/UI/Icon-button/IconButton'
 
 import { postListenSelectRealEnglishWord } from '../../../../../api/questionService'
+import { postFiles } from '../../../../../redux/question/question.thunk'
 
 const buttonStyleGoBack = {
    width: '12.8%',
@@ -61,7 +62,7 @@ const buttonStyle = {
 }
 
 const ListenWords = ({ title, duration, testId }) => {
-   const { options } = useSelector((data) => data.questions)
+   const { options, link } = useSelector((data) => data.questions)
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const { notify } = useSnackbar()
@@ -117,7 +118,7 @@ const ListenWords = ({ title, duration, testId }) => {
          const data = {
             title: titleListen,
             isCorrect: false,
-            fileUrl: audioUrl.path,
+            fileUrl: link,
             optionOrder,
          }
          setOptionOrder((prevState) => prevState + 1)
@@ -135,6 +136,7 @@ const ListenWords = ({ title, duration, testId }) => {
       }))
       const file = acceptedFiles[0]
       setAudioName(file.name)
+      dispatch(postFiles({ file }))
       const audioUrl = URL.createObjectURL(file)
       setAudioUrl(file)
       audioRef.current.src = audioUrl
@@ -251,7 +253,7 @@ const ListenWords = ({ title, duration, testId }) => {
                <source src={audioUrl} type="audio/mp3" />
             </audio>
             {sliceListenWordOne.map((elem) => (
-               <ListenWordEnglish options={options}>
+               <ListenWordEnglish key={elem.id} options={options}>
                   <NumberListenWords>{elem.id}</NumberListenWords>
                   <StyledVolumeup
                      src={elem.id === id ? volumeUpIcon : volumeup}

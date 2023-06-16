@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import Slider from 'react-slick'
 import { Grid, Typography, styled } from '@mui/material'
+import { motion } from 'framer-motion'
 import { ReactComponent as Globus } from '../../../assets/icons/globus.svg'
 import { ReactComponent as NextIcon } from '../../../assets/icons/nextIcon.svg'
 import { ReactComponent as PrevIcon } from '../../../assets/icons/prevIcon.svg'
 import { ReactComponent as Pagination } from '../../../assets/icons/pagination.svg'
 import { ReactComponent as ActivePagination } from '../../../assets/icons/activePagination.svg'
 import SlideItem from './SliderItem'
+import { textAnimation } from '../../../utils/helpers/animations'
 
 const info = [
    {
@@ -88,24 +90,28 @@ const LandingSlider = () => {
    }
 
    return (
-      <>
-         <TitleContainer>
+      <motion.div
+         initial="hidden"
+         whileInView="visible"
+         viewport={{ amount: 0.4 }}
+      >
+         <TitleContainer variants={textAnimation}>
             <Title>Check out each question type</Title>
          </TitleContainer>
-         <Container>
+         <Container variants={textAnimation}>
             <StyledSlider style={{ position: 'relative' }} {...settings}>
                {info.map((item, i) => (
                   <SlideItem key={item.id} item={item} prop={i === index} />
                ))}
             </StyledSlider>
          </Container>
-      </>
+      </motion.div>
    )
 }
 
 export default LandingSlider
 
-const TitleContainer = styled(Grid)(() => ({
+const TitleContainer = styled(motion(Grid))(() => ({
    display: 'flex',
    justifyContent: 'center',
 }))
@@ -119,7 +125,7 @@ const Title = styled(Typography)(() => ({
    color: '#3752B4',
 }))
 
-const Container = styled(Grid)(() => ({
+const Container = styled(motion(Grid))(() => ({
    display: 'flex',
    justifyContent: 'center',
    '& .slick-center': {
