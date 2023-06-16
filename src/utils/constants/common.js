@@ -14,6 +14,7 @@ import avatar4 from '../../assets/images/avatar4.jpg'
 import avatar5 from '../../assets/images/avatar5.jpg'
 import SelectEnglishWords from '../../containers/user/type/SelectEnglishWords'
 import RecordSaying from '../../containers/user/type/RecordSaying'
+import ListenAndSelect from '../../containers/user/type/ListenAndSelect'
 import ClientBestTitle from '../../containers/user/type/ClientBestTitle'
 import ClientMainIdea from '../../containers/user/type/ClientMainIdea'
 
@@ -150,7 +151,7 @@ export const questionComponents = {
    SELECT_THE_MAIN_IDEA: ClientBestTitle,
    TYPE_WHAT_YOU_HEAR: 'ClientTypeHear',
    DESCRIBE_IMAGE: 'ClientDescribe',
-   LISTEN_AND_SELECT_ENGLISH_WORD: 'ClientListenWords',
+   LISTEN_AND_SELECT_ENGLISH_WORD: ListenAndSelect,
    RECORD_SAYING_STATEMENT: RecordSaying,
    RESPOND_N_WORDS: 'ClientHighlight',
    SELECT_BEST_TITLE: ClientMainIdea,

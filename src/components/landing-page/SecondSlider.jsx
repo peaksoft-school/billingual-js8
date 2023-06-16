@@ -16,7 +16,7 @@ const humans = [
    {
       id: 1,
       description:
-         'Great way to learn a language. Fun, interactive, and engaging. I am enjoying the course immensely and would recommend it to anyone who wishes to learn a second language.',
+         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
       name: 'Aibek Atabekov',
       rating: 5,
       avatar: avatar1,
@@ -24,7 +24,7 @@ const humans = [
    {
       id: 2,
       description:
-         'Bilingual has helped me to get a good grasp of the language in a fun and challenging way. I enjoy the dialogues and scenarios, which include helpful phrases that can be used in various situations.',
+         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
       name: 'Alina Begishova',
       rating: 5,
       avatar: avatar2,
@@ -40,7 +40,7 @@ const humans = [
    {
       id: 4,
       description:
-         'Great way to learn a language. Fun, interactive, and engaging. I am enjoying the course immensely and would recommend it to anyone who wishes to learn a second language.',
+         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
       name: 'Aibek Atabekov',
       rating: 5,
       avatar: avatar4,
@@ -205,6 +205,7 @@ const StyledSlider = styled(Slider)({
       gap: '30px',
       justifyContent: 'center',
       // width: '564px',
+      alignItems: 'flex-start',
       paddingTop: '50px',
    },
 
