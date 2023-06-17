@@ -25,6 +25,8 @@ const RespondNWords = ({ question, handleNextClick }) => {
 
    const word = responseText.split(' ')
 
+   const disabledBtn = word.length <= question.minWords
+
    return (
       <>
          <TitleCont>
@@ -43,13 +45,13 @@ const RespondNWords = ({ question, handleNextClick }) => {
                   maxRows={6}
                   placeholder={`Your response (min words: ${question.minWords})`}
                />
-               <Word>Word: {word.length - 1}</Word>
+               <Word wordColor={disabledBtn}>Word: {word.length - 1}</Word>
             </ResponseContainer>
          </Container>
          <BtnContainer>
             <NextBtn
                variant="contained"
-               disabled={word.length <= question.minWords}
+               disabled={disabledBtn}
                onClick={nextHandler}
             >
                Next
@@ -136,13 +138,13 @@ const ResponseContainer = styled('div')(() => ({
    },
 }))
 
-const Word = styled('p')(() => ({
+const Word = styled('p')(({ wordColor }) => ({
    fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: '400',
    fontSize: '16px',
    lineHeight: '124%',
-   color: '#AFAFAF',
+   color: wordColor ? '#AFAFAF' : '#3A10E5',
 }))
 
 const BtnContainer = styled('div')(() => ({

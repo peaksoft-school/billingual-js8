@@ -105,7 +105,7 @@ const InfoContainer = styled(Grid)(() => ({
 const StyledTitle = styled(Typography)(() => ({
    margin: '15px 0px 20px 0px',
    alingSelf: 'self-start',
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '26px',
@@ -114,7 +114,7 @@ const StyledTitle = styled(Typography)(() => ({
 }))
 
 const StyledDescription = styled(Typography)(() => ({
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontSize: '16px',
    lineHeight: '18px',
