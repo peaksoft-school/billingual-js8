@@ -2,7 +2,7 @@ import { Grid, InputAdornment, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { signInWithPopup } from 'firebase/auth'
 import { ReactComponent as System } from '../../assets/icons/system.svg'
 import { ReactComponent as Layer } from '../../assets/icons/layer 2.svg'
@@ -18,44 +18,54 @@ import MyIconButton from '../../components/UI/Icon-button/IconButton'
 import { ReactComponent as EyeIcon } from '../../assets/icons/eyeDefaultIcon.svg'
 import { ReactComponent as EyeIconOff } from '../../assets/icons/eyeOffIcon.svg'
 import { auth, provider } from '../../config/axios-instanse/firebaseConfig'
-import { STORAGE_KEYS } from '../../utils/constants/common'
-import { authActions } from '../../redux/auth/auth.slice'
+import authService from '../../api/authService'
 
 const SigninPage = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { error, isLoading, isAuthorized } = useSelector((state) => state.auth)
+   const { error, isLoading } = useSelector((state) => state.auth)
    const [showPassword, setShowPassword] = useState(false)
 
    const googleSignInHandler = () => {
-      signInWithPopup(auth, provider).then((data) => {
-         const userData = {
-            token: data.user.accessToken,
-            email: data.user.email,
-            role: 'USER',
+      signInWithPopup(auth, provider).then(async (data) => {
+         console.log(data)
+         try {
+            const res = await authService.authWithGoogle(
+               // eslint-disable-next-line no-underscore-dangle
+               data.user.accessToken
+            )
+            console.log(res.data)
+         } catch (error) {
+            console.log(error)
          }
 
-         localStorage.setItem(
-            STORAGE_KEYS.BILINGUAL_USER_KEY,
-            JSON.stringify(userData)
-         )
+         // const userData = {
+         //    token: data.user.accessToken,
+         //    email: data.user.email,
+         //    role: 'USER',
+         // }
+
+         // localStorage.setItem(
+         //    STORAGE_KEYS.BILINGUAL_USER_KEY,
+         //    JSON.stringify(userData)
+         // )
          navigate('/user/tests')
       })
    }
 
-   useEffect(() => {
-      const userInfo = JSON.parse(
-         localStorage.getItem(STORAGE_KEYS.BILINGUAL_USER_KEY)
-      )
-      if (userInfo) {
-         const authorizedUserCredentials = {
-            token: userInfo.token,
-            email: userInfo.email,
-            role: userInfo.role,
-         }
-         dispatch(authActions.login(authorizedUserCredentials))
-      }
-   }, [isAuthorized])
+   // useEffect(() => {
+   //    const userInfo = JSON.parse(
+   //       localStorage.getItem(STORAGE_KEYS.BILINGUAL_USER_KEY)
+   //    )
+   //    if (userInfo) {
+   //       const authorizedUserCredentials = {
+   //          token: userInfo.token,
+   //          email: userInfo.email,
+   //          role: userInfo.role,
+   //       }
+   //       dispatch(authActions.login(authorizedUserCredentials))
+   //    }
+   // }, [isAuthorized])
 
    const handleClickShowPassword = () => setShowPassword((show) => !show)
 
@@ -143,13 +153,21 @@ const SigninPage = () => {
                      sign in
                   </StyledButton>
                )}
-               <ButtonContainer onClick={googleSignInHandler}>
+               <ButtonContainer
+                  disabled={isLoading}
+                  onClick={googleSignInHandler}
+               >
                   <GoogleIcon />
                   sign in with google
                </ButtonContainer>
                <StyledText>
                   DON`T HAVE AN ACCOUNT?
-                  <StyledNavLink to="/sign-up">REGISTER</StyledNavLink>
+                  <StyledNavLink
+                     disabled={isLoading}
+                     to={isLoading ? '' : '/sign-up'}
+                  >
+                     REGISTER
+                  </StyledNavLink>
                </StyledText>
             </Container>
          </SignInForm>
@@ -255,7 +273,8 @@ const StyledText = styled(Typography)(() => ({
    color: '#757575',
 }))
 
-const StyledNavLink = styled(NavLink)(() => ({
-   color: '#3A10E5',
+const StyledNavLink = styled(NavLink)(({ disabled }) => ({
+   color: disabled ? '#bdbdbd' : '#3A10E5',
    textDecoration: 'none',
+   cursor: disabled ? 'default' : 'pointer',
 }))

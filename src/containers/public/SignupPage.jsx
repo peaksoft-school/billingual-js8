@@ -158,13 +158,21 @@ const SignupPage = () => {
                      sign up
                   </StyledButton>
                )}
-               <ButtonContainer onClick={googleSignInHandler}>
+               <ButtonContainer
+                  disabled={isLoading}
+                  onClick={googleSignInHandler}
+               >
                   <GoogleIcon />
                   sign up with google
                </ButtonContainer>
                <StyledText>
                   ALREADY HAVE AN ACCOUNT?
-                  <StyledNavLink to="/sign-in">LOG IN</StyledNavLink>
+                  <StyledNavLink
+                     disabled={isLoading}
+                     to={isLoading ? '' : '/sign-up'}
+                  >
+                     LOG IN
+                  </StyledNavLink>
                </StyledText>
             </Container>
          </SignUpForm>
