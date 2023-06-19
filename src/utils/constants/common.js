@@ -15,6 +15,7 @@ import avatar5 from '../../assets/images/avatar5.jpg'
 import SelectEnglishWords from '../../containers/user/type/SelectEnglishWords'
 import ClientBestTitle from '../../containers/user/type/ClientBestTitle'
 import ClientMainIdea from '../../containers/user/type/ClientMainIdea'
+import ListenAndSelect from '../../containers/admin/pages/submitePage/typeQueastion/ListenAndSelect'
 
 export const STORAGE_KEYS = {
    BILINGUAL_USER_KEY: 'BILINGUAL_USER_KEY',
@@ -154,4 +155,15 @@ export const questionComponents = {
    RESPOND_N_WORDS: 'ClientHighlight',
    SELECT_BEST_TITLE: ClientMainIdea,
    HIGHLIGHT_THE_ANSWER: 'ClientHighlight',
+}
+export const resultQuestionComponents = {
+   LISTEN_AND_SELECT_ENGLISH_WORD: () => ListenAndSelect,
+   SELECT_ENGLISH_WORD: 'Result-SELECT-ENGLISH-WORDS',
+   SELECT_THE_MAIN_IDEA: 'Result-THE-MAIN-IDEA',
+   TYPE_WHAT_YOU_HEAR: 'Result-TYPE-HEAR',
+   DESCRIBE_IMAGE: 'Result-Describe',
+   RECORD_SAYING_STATEMENT: 'Result-Record-Saying',
+   RESPOND_N_WORDS: 'Result-Respond-Words',
+   SELECT_BEST_TITLE: 'Result-Main-Idea',
+   HIGHLIGHT_THE_ANSWER: 'Result-High-light',
 }

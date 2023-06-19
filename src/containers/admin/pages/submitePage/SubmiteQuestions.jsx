@@ -1,13 +1,11 @@
 import { styled, Typography } from '@mui/material'
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
-import Button from '../../../components/UI/buttons/Buttons'
-import ModalReusable from '../../../components/UI/modal/Modal'
-import Spinner from '../../../components/UI/spinner/Spinner'
-import { userQuestionActions } from '../../../redux/user/user.slice'
-import { questionComponents } from '../../../utils/constants/common'
-import UserTest from './UserTest'
+import React, { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import Button from '../../../../components/UI/buttons/Buttons'
+import ModalReusable from '../../../../components/UI/modal/Modal'
+import Spinner from '../../../../components/UI/spinner/Spinner'
+import { resultQuestionComponents } from '../../../../utils/constants/common'
+import UserTest from '../../../user/practicePage/UserTest'
 
 const modalStyleDiv = {
    width: '407px',
@@ -19,18 +17,13 @@ const modalStyleDiv = {
 }
 
 const PracticeTest = () => {
-   const dispatch = useDispatch()
    const [count, setCountPage] = useState(0)
    const [isOpenModal, setOpenModal] = useState(false)
    const navigate = useNavigate()
    const { state } = useLocation()
-   const { testId } = useParams()
 
-   useEffect(() => {
-      dispatch(userQuestionActions.addTestId(testId))
-   }, [])
-
-   const QuestionComponent = questionComponents[state?.[count]?.questionType]
+   const QuestionComponent =
+      resultQuestionComponents[state?.[count]?.questionType]
 
    const closeHandler = () => {
       setOpenModal((prevState) => !prevState)
@@ -38,6 +31,7 @@ const PracticeTest = () => {
    const openHandler = () => {
       setOpenModal((prevState) => !prevState)
    }
+   console.log(state)
 
    const navigateGoBackTest = () => {
       navigate('/user/tests')
@@ -73,17 +67,7 @@ const PracticeTest = () => {
                setCountPage={setCountPage}
                count={count}
             >
-               {(isEnded) => {
-                  return QuestionComponent ? (
-                     <QuestionComponent
-                        question={state[count]}
-                        count={count}
-                        isEnded={isEnded}
-                     />
-                  ) : (
-                     <Navigate to="/user/tests" />
-                  )
-               }}
+               <QuestionComponent question={state[count]} count={count} />
             </UserTest>
          </BackgroundContainer>
       )

@@ -47,8 +47,9 @@ const ClientMainIdea = ({ question, handleNextClick }) => {
                      <Radio
                         checked={selectedOption === option.id}
                         onChange={() => handleOptionChange(option.id)}
+                        id="radio"
                      />
-                     <OptionTitle>{option.title}</OptionTitle>
+                     <OptionTitle for="radio">{option.title}</OptionTitle>
                   </OptionItem>
                ))}
             </div>
@@ -102,7 +103,7 @@ const OptionItem = styled('div')(() => ({
    boxSizing: 'border-box',
 }))
 
-const OptionTitle = styled('p')(() => ({
+const OptionTitle = styled('label')(() => ({
    fontFamily: 'DINNextRoundedLTW01-Regular',
    fontStyle: 'normal',
    fontWeight: 400,

@@ -7,3 +7,11 @@ export const getAllResults = () => {
 export const deleteResultRequest = (id) => {
    return instanse.delete(`/api/results/${id}`)
 }
+
+export const getAllSubmittedResults = () => {
+   return instanse.get('/api/results')
+}
+
+export const getCurrentlResults = (resultId) => {
+   return instanse.get(`/api/results/${resultId}`)
+}
