@@ -13,6 +13,8 @@ import avatar3 from '../../assets/images/avatar3.jpg'
 import avatar4 from '../../assets/images/avatar4.jpg'
 import avatar5 from '../../assets/images/avatar5.jpg'
 import SelectEnglishWords from '../../containers/user/type/SelectEnglishWords'
+import RespondNWords from '../../containers/user/type/RespondNWords'
+import HighlightTheAnswer from '../../containers/user/type/HighlightTheAnswer'
 import RecordSaying from '../../containers/user/type/RecordSaying'
 import ListenAndSelect from '../../containers/user/type/ListenAndSelect'
 import ClientBestTitle from '../../containers/user/type/ClientBestTitle'
@@ -153,7 +155,7 @@ export const questionComponents = {
    DESCRIBE_IMAGE: 'ClientDescribe',
    LISTEN_AND_SELECT_ENGLISH_WORD: ListenAndSelect,
    RECORD_SAYING_STATEMENT: RecordSaying,
-   RESPOND_N_WORDS: 'ClientHighlight',
+   RESPOND_N_WORDS: RespondNWords,
    SELECT_BEST_TITLE: ClientMainIdea,
-   HIGHLIGHT_THE_ANSWER: 'ClientHighlight',
+   HIGHLIGHT_THE_ANSWER: HighlightTheAnswer,
 }

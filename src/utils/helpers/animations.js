@@ -2,9 +2,10 @@ export const animation = {
    hidden: {
       opacity: 0,
    },
-   visible: {
+   visible: (custom) => ({
       opacity: 1,
-   },
+      transition: { delay: custom * 0.3 },
+   }),
 }
 
 export const textAnimation = {

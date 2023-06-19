@@ -188,8 +188,8 @@ const ImgBackground = styled('div')(({ backgroundImage }) => ({
    marginRight: '154.19px',
    width: '115rem',
    backgroundImage: `url(${backgroundImage})`,
-   backgroundSize: 'cover',
    backgroundPosition: 'center',
+   backgroundRepeat: 'no-repeat',
 }))
 
 const ChildContainer = styled(motion.div)(() => ({
@@ -395,11 +395,11 @@ const InfoSection = () => {
          >
             <TextOurTeam variants={textAnimation}>Our Team</TextOurTeam>
             <DivImage>
-               {ourTeamArray.map((elem, i) => (
+               {ourTeamArray.map((elem) => (
                   <DivImageEmployeeName
                      key={elem.id}
-                     custom={i + 1}
                      variants={imgAnimation}
+                     custom={elem.id}
                   >
                      <OurTeamImage src={elem.img} />
                      <DivEmployeeNamePerson>
