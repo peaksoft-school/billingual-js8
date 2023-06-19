@@ -24,10 +24,11 @@ export const getTests = createAsyncThunk(
 
 export const deleteTest = createAsyncThunk(
    'test/deleteTest',
-   async ({ id, notify }, { rejectWithValue, dispatch }) => {
+   async ({ id, notify, setOpenModal }, { rejectWithValue, dispatch }) => {
       try {
          await deleteTestRequest(id)
          notify('success', 'Test', 'Successfully deleted')
+         setOpenModal(false)
          return dispatch(getTests(notify))
       } catch (error) {
          if (AxiosError(error)) {

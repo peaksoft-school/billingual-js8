@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -29,7 +28,7 @@ const GetAllTests = () => {
          )}
          {tests && tests.length > 0 ? (
             tests.map((el) => {
-               return (
+               return el.isActive ? (
                   <TestsContainer key={el.id}>
                      <InfoContainer>
                         <TestIconWrapper>
@@ -49,7 +48,7 @@ const GetAllTests = () => {
                         try test
                      </StyledButton>
                   </TestsContainer>
-               )
+               ) : null
             })
          ) : (
             <Typography>
@@ -106,7 +105,7 @@ const InfoContainer = styled(Grid)(() => ({
 const StyledTitle = styled(Typography)(() => ({
    margin: '15px 0px 20px 0px',
    alingSelf: 'self-start',
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '26px',
@@ -115,7 +114,7 @@ const StyledTitle = styled(Typography)(() => ({
 }))
 
 const StyledDescription = styled(Typography)(() => ({
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontSize: '16px',
    lineHeight: '18px',

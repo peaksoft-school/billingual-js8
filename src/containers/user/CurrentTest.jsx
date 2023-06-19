@@ -119,7 +119,7 @@ const SpinnerContainer = styled('div')(() => ({
    height: '100%',
 }))
 const TitleStyle = styled(Typography)(() => ({
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontSize: '28px',
    lineHeight: '32px',
@@ -127,7 +127,7 @@ const TitleStyle = styled(Typography)(() => ({
    fontWeight: 400,
 }))
 const InfoStyle = styled(Typography)(() => ({
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontSize: '14px',
    lineHeight: '124%',
@@ -136,7 +136,7 @@ const InfoStyle = styled(Typography)(() => ({
 }))
 const ListStyle = styled(List)(() => ({
    ListItem: {
-      fontFamily: 'DINNextRoundedLTW01-Regular',
+      fontFamily: 'Poppins',
       fontStyle: 'normal',
       fontSize: '18px',
       lineHeight: '124%',

@@ -27,7 +27,14 @@ const getInitialState = () => {
 export const authSlice = createSlice({
    name: 'auth',
    initialState: getInitialState(),
-   reducers: {},
+   reducers: {
+      login(state, { payload }) {
+         state.token = payload.token
+         state.role = payload.role
+         state.email = payload.email
+         state.isAuthorized = true
+      },
+   },
    extraReducers: (builder) => {
       builder.addCase(signIn.fulfilled, (state, { payload }) => {
          state.isAuthorized = true
@@ -49,7 +56,7 @@ export const authSlice = createSlice({
          state.isAuthorized = false
          state.token = ''
          state.email = ''
-         state.role = ''
+         state.role = 'GUEST'
          state.isLoading = false
          state.error = ''
       })
@@ -71,3 +78,5 @@ export const authSlice = createSlice({
       })
    },
 })
+
+export const authActions = authSlice.actions

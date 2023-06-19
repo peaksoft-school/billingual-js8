@@ -16,7 +16,7 @@ const UserTest = ({ questions, setCountPage, count, children }) => {
       })
    }
 
-   const { duration } = questions[count]
+   const duration = questions[count]?.duration
 
    const handleTimeUp = () => {
       handleNextClick()
