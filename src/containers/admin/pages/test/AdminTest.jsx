@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid, Typography, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -16,6 +16,7 @@ import {
 } from '../../../../redux/tests/test.thunk'
 import Spinner from '../../../../components/UI/spinner/Spinner'
 import { useSnackbar } from '../../../../hooks/useSnackbar'
+import ModalDelete from '../../../../components/UI/modal/ModalDelete'
 
 let mount = false
 
@@ -24,6 +25,17 @@ const AdminTest = () => {
    const { tests, isLoading } = useSelector((state) => state.tests)
    const navigate = useNavigate()
    const { notify } = useSnackbar()
+   const [openModal, setOpenModal] = useState(false)
+   const [testId, setTestId] = useState(null)
+
+   const openModalHandler = (id) => {
+      setOpenModal(true)
+      setTestId(id)
+   }
+
+   const closeModalHandler = () => {
+      setOpenModal(false)
+   }
 
    useEffect(() => {
       if (mount) {
@@ -40,7 +52,7 @@ const AdminTest = () => {
    }
 
    const deleteHandler = (id) => {
-      dispatch(deleteTest({ id, notify }))
+      dispatch(deleteTest({ id, notify, setOpenModal }))
    }
 
    const updateIsActive = async ({ id, title, isActive, shortDescription }) => {
@@ -56,43 +68,50 @@ const AdminTest = () => {
    }
 
    return (
-      <FormContainer>
-         <ButtonContainer>
-            <Button variant="contained" onClick={createTestHandler}>
-               + Add new Test
-            </Button>
-         </ButtonContainer>
+      <>
+         <ModalDelete
+            isOpenModal={openModal}
+            openModal={closeModalHandler}
+            deleteFunction={() => deleteHandler(testId)}
+         />
+         <FormContainer>
+            <ButtonContainer>
+               <Button variant="contained" onClick={createTestHandler}>
+                  + Add new Test
+               </Button>
+            </ButtonContainer>
 
-         {isLoading && <Spinner />}
-         {!isLoading && tests !== null && tests.length === 0 ? (
-            <Typography sx={{ textAlign: 'center' }}>
-               Test list is empty
-            </Typography>
-         ) : (
-            tests.map((item) => (
-               <Container key={item.id}>
-                  <TitleContainer onClick={() => navigate(`${item.id}`)}>
-                     <TestTitle>{item.title}</TestTitle>
-                  </TitleContainer>
+            {isLoading && <Spinner />}
+            {!isLoading && tests !== null && tests.length === 0 ? (
+               <Typography sx={{ textAlign: 'center' }}>
+                  Test list is empty
+               </Typography>
+            ) : (
+               tests.map((item) => (
+                  <Container key={item.id}>
+                     <TitleContainer onClick={() => navigate(`${item.id}`)}>
+                        <TestTitle>{item.title}</TestTitle>
+                     </TitleContainer>
 
-                  <IconsContainer>
-                     <Switcher
-                        checked={item.isActive}
-                        onClick={() => updateIsActive(item)}
-                     />
+                     <IconsContainer>
+                        <Switcher
+                           checked={item.isActive}
+                           onClick={() => updateIsActive(item)}
+                        />
 
-                     <MyIconButton onClick={() => goToUpdateTest(item)}>
-                        <StyledEditIcon />
-                     </MyIconButton>
+                        <MyIconButton onClick={() => goToUpdateTest(item)}>
+                           <StyledEditIcon />
+                        </MyIconButton>
 
-                     <MyIconButton onClick={() => deleteHandler(item.id)}>
-                        <StyledDeleteIcon />
-                     </MyIconButton>
-                  </IconsContainer>
-               </Container>
-            ))
-         )}
-      </FormContainer>
+                        <MyIconButton onClick={() => openModalHandler(item.id)}>
+                           <StyledDeleteIcon />
+                        </MyIconButton>
+                     </IconsContainer>
+                  </Container>
+               ))
+            )}
+         </FormContainer>
+      </>
    )
 }
 

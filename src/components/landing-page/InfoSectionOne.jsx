@@ -1,6 +1,8 @@
 import React from 'react'
 import { styled } from '@mui/material'
+import { motion } from 'framer-motion'
 import CountUp from 'react-countup'
+import { animation } from '../../utils/helpers/animations'
 import paperAirline from '../../assets/images/infoSectionImg/imgGroup1/group.png'
 import borderFrame from '../../assets/images/infoSectionImg/imgGroup1/vector-8.png'
 import globusImage from '../../assets/images/infoSectionImg/imgGroup2/group.png'
@@ -14,7 +16,7 @@ import piggyBankRays from '../../assets/images/infoSectionImg/imgGroup3/group-3.
 import piggyBankRays2 from '../../assets/images/infoSectionImg/imgGroup3/group-4.png'
 import dollar from '../../assets/images/infoSectionImg/imgGroup3/dollarLogo.png'
 
-const InfoCard = styled('div')(() => ({
+const InfoCard = styled(motion.div)(() => ({
    display: 'flex',
    justifyContent: 'space-between',
    alignItems: 'center',
@@ -24,7 +26,7 @@ const InfoCard = styled('div')(() => ({
    margin: '0 auto',
 }))
 
-const InfoDivOne = styled('div')(() => ({
+const InfoDivOne = styled(motion.div)(() => ({
    width: '27.85%',
    height: 'auto',
    display: 'flex',
@@ -49,7 +51,7 @@ const InfoDivThird = styled('div')(() => ({
    justifyContent: 'center',
 }))
 
-const ImagePaperAirline = styled('div')(() => ({
+const ImagePaperAirline = styled(motion.div)(() => ({
    width: '89.84%',
    height: '176px',
    marginTop: '1.8px',
@@ -267,8 +269,13 @@ const Text = styled('div')(() => ({
 }))
 const InfoSectionOne = ({ count }) => {
    return (
-      <InfoCard>
-         <InfoDivOne>
+      <InfoCard
+         initial="hidden"
+         whileInView="visible"
+         viewport={{ amount: 0.5 }}
+         variants={animation}
+      >
+         <InfoDivOne variants={animation}>
             <ImagePaperAirline>
                <ImagePaperAirline1 src={paperAirline} />
                <ImageBorder src={borderFrame} />
@@ -292,8 +299,8 @@ const InfoSectionOne = ({ count }) => {
                offered annually.
             </Text>
          </InfoDivOne>
-         <InfoDivSecond>
-            <ImageGlobus>
+         <InfoDivSecond variants={animation}>
+            <ImageGlobus variants={animation}>
                <ImageOne src={globusImage} />
                <ImageLine src={lineImage} />
                <ImageFrame src={borderFrame} />
@@ -312,8 +319,8 @@ const InfoSectionOne = ({ count }) => {
                Students from over 200 countries and territories have benefitted.
             </Text>
          </InfoDivSecond>
-         <InfoDivThird>
-            <ImagePiggyBank>
+         <InfoDivThird variants={animation}>
+            <ImagePiggyBank variants={animation}>
                <ImageMoney src={moneyImage} />
                <ImagePiggyBank1 src={piggyBankImage1} />
                <ImagePiggyBank2 src={piggyBankImage2} />

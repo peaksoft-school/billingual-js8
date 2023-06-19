@@ -67,7 +67,7 @@ const TestQuestions = () => {
 
    const { testId } = useParams()
    const durationOnChange = (e) => {
-      setDuration(e.target.value)
+      setDuration(+e.target.value)
       setError((prevState) => ({
          ...prevState,
          duration: '',
@@ -145,6 +145,7 @@ const TestQuestions = () => {
                      onChange={durationOnChange}
                      type="number"
                      value={duration}
+                     min={1}
                   />
                </DivTimerInput>
             </DivInputOne>
@@ -247,7 +248,8 @@ const TimeText = styled('label')(() => ({
    fontStyle: 'normal',
    fontWeight: 500,
    fontSize: '1rem',
-   lineHeight: '0.9rem',
+   lineHeight: '1.4rem',
+   // letterSpacing: '2px',
    display: 'flex',
    alignItems: 'center',
    color: '#4B4759',

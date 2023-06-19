@@ -35,6 +35,6 @@ const TextAreaStyle = styled(TextField)(({ theme }) => ({
    },
    ' & .MuiInputBase-input': {
       color: theme.palette.primary.fontColor,
-      fontFamily: 'DINNextRoundedLTW01-Regular',
+      fontFamily: 'Poppins',
    },
 }))

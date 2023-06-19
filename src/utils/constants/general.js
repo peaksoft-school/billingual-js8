@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 export const signUpInputArray = [
    {
       name: 'firstName',
-      label: 'Frist name',
+      label: 'First name',
       type: 'text',
    },
    {
@@ -13,12 +13,17 @@ export const signUpInputArray = [
    },
    {
       name: 'email',
-      label: 'email',
+      label: 'Email',
       type: 'email',
    },
    {
       name: 'password',
       label: 'Password',
+      type: 'password',
+   },
+   {
+      name: 'confirmPassword',
+      label: 'Confirm Password',
       type: 'password',
    },
 ]
@@ -39,6 +44,12 @@ export const signUpValidation = Yup.object().shape({
    password: Yup.string()
       .required('Password is required')
       .min(8, 'Password is too short - should be 8 chars minimum'),
+   confirmPassword: Yup.string()
+      .required('Password is required')
+      .oneOf([Yup.ref('password')], 'Your password do not match'),
+   // .test('password match', 'Password must match', (value) => {
+   //    return this.password === value
+   // }),
 })
 
 export const signInValidation = Yup.object().shape({

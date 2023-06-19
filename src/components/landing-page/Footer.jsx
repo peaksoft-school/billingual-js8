@@ -79,7 +79,7 @@ export default Footer
 const StyledFooter = styled('footer')(() => ({
    backgroundColor: '#262626',
    color: '#fff',
-   padding: '120px 110px 12px',
+   padding: '60px 110px 12px',
    margin: '120px 0 0 0',
 }))
 
@@ -99,7 +99,7 @@ const MuiAccordion = styled(Accordion)(() => ({
    borderBottom: '1px solid #4a4a4a',
    boxShadow: 'none',
    borderRadius: 'none',
-   padding: '34px 0',
+   padding: '14px 0',
 }))
 
 const MuiAccordionSummary = styled(AccordionSummary)(() => ({
@@ -125,7 +125,7 @@ const Logos = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'space-between',
    alignItems: 'center',
-   marginTop: '150px',
+   marginTop: '90px',
 }))
 
 const SocialNetwork = styled('div')(() => ({

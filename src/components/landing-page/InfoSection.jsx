@@ -1,36 +1,30 @@
 import { React, useState } from 'react'
-import { keyframes, styled } from '@mui/material'
+import { styled } from '@mui/material'
 import { motion } from 'framer-motion'
 import ScrollTrigger from 'react-scroll-trigger'
+import { ourTeamArray } from '../../utils/constants/common'
+import { textAnimation } from '../../utils/helpers/animations'
 import accessible from '../../assets/images/accessible.png'
 import speech from '../../assets/images/speech.png'
 import extensive from '../../assets/images/extensive.png'
 import tutoring from '../../assets/images/tutoring.png'
-// import booksImage from '../../assets/images/imgBookEnglish.png'
-import { ourTeamArray } from '../../utils/constants/common'
 import booksBackground from '../../assets/icons/background.svg'
 import bookImg from '../../assets/icons/bookImg.svg'
 import learnImg from '../../assets/icons/learnImg.svg'
 import readingImg from '../../assets/icons/reading.svg'
 import InfoSectionOne from './InfoSectionOne'
 
-// const fadeIn = keyframes`
-//    from {
-//       opacity: 0;
-//    }
-//    to {
-//       opacity: 1;
-//    }
-// `
-
-const slideIn = keyframes`
-   from {
-      transform: translateX(-100%);
-   }
-   to {
-      transform: translateX(0);
-   }
-`
+const imgAnimation = {
+   hidden: {
+      opacity: 0,
+      x: 100,
+   },
+   visible: (custom) => ({
+      opacity: 1,
+      x: 0,
+      transition: { delay: custom * 0.1 },
+   }),
+}
 
 const Card = styled('div')(() => ({
    width: '100%',
@@ -167,8 +161,8 @@ const ImgBackground = styled('div')(({ backgroundImage }) => ({
    marginRight: '154.19px',
    width: '115rem',
    backgroundImage: `url(${backgroundImage})`,
-   backgroundSize: 'cover',
    backgroundPosition: 'center',
+   backgroundRepeat: 'no-repeat',
 }))
 
 const ChildContainer = styled(motion.div)(() => ({
@@ -206,14 +200,13 @@ const DivSeparation = styled('div')(() => ({
    display: 'flex',
    gap: '67.88px',
 }))
-const OurTeam = styled('div')(() => ({
+const OurTeam = styled(motion.div)(() => ({
    height: '335px',
    display: 'grid',
    justifyItems: 'center',
-   animation: `${slideIn} 1s ease-in-out`,
 }))
 
-const TextOurTeam = styled('div')(() => ({
+const TextOurTeam = styled(motion.div)(() => ({
    fontFamily: 'Gilroy',
    fontStyle: 'normal',
    fontWeight: 700,
@@ -226,12 +219,12 @@ const OurTeamImage = styled('img')(() => ({
    width: '180px',
    height: '180px',
 }))
-const DivImage = styled('div')(() => ({
+const DivImage = styled(motion.div)(() => ({
    display: 'flex',
    marginTop: '48px',
    flexWrap: 'wrap',
 }))
-const DivImageEmployeeName = styled('div')(() => ({
+const DivImageEmployeeName = styled(motion.div)(() => ({
    display: 'flex',
    flexDirection: 'column',
    marginRight: '30px',
@@ -364,11 +357,19 @@ const InfoSection = () => {
                </ChildContainer>
             </ImgBackground>
          </Description>
-         <OurTeam>
-            <TextOurTeam>Our Team</TextOurTeam>
+         <OurTeam
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.2 }}
+         >
+            <TextOurTeam variants={textAnimation}>Our Team</TextOurTeam>
             <DivImage>
                {ourTeamArray.map((elem) => (
-                  <DivImageEmployeeName key={elem.id}>
+                  <DivImageEmployeeName
+                     key={elem.id}
+                     variants={imgAnimation}
+                     custom={elem.id}
+                  >
                      <OurTeamImage src={elem.img} />
                      <DivEmployeeNamePerson>
                         <NamePersonEmployee>{elem.name}</NamePersonEmployee>

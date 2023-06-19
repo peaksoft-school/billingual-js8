@@ -5,6 +5,19 @@ import Button from '../../../components/UI/buttons/Buttons'
 import TextArea from '../../../components/UI/textArea/TextArea'
 import { userQuestionActions } from '../../../redux/user/user.slice'
 
+const styleTextArea = {
+   width: '64.1%',
+   fontFamily: 'Poppins',
+   '& .MuiInputBase-root': {
+      borderRadius: '8px',
+      height: '185px',
+      border: '1px solid #D4D0D0',
+   },
+   ' & .MuiInputBase-input': {
+      fontFamily: 'Poppins',
+   },
+}
+
 const UserTestDescribeImage = ({ question, handleNextClick }) => {
    const dispatch = useDispatch()
    const [testResponse, setTestResponse] = useState('')
@@ -23,6 +36,7 @@ const UserTestDescribeImage = ({ question, handleNextClick }) => {
       }
       dispatch(userQuestionActions.addAnswer(dataAnswer))
       handleNextClick()
+      setTestResponse('')
    }
    return (
       <DescribeImageDivv>
@@ -33,21 +47,11 @@ const UserTestDescribeImage = ({ question, handleNextClick }) => {
             <DivInputandImage>
                <ImageForTheTest src={fileUrl} alt="Your Image" />
                <TextArea
+                  value={testResponse}
                   handleChange={chnageCorrectAnswer}
                   placeholder="Your response"
                   maxRows={6}
-                  sx={{
-                     width: '64.1%',
-                     fontFamily: 'Poppins',
-                     '& .MuiInputBase-root': {
-                        borderRadius: '8px',
-                        height: '185px',
-                        border: '1px solid #D4D0D0',
-                     },
-                     ' & .MuiInputBase-input': {
-                        fontFamily: 'Poppins',
-                     },
-                  }}
+                  sx={styleTextArea}
                />
             </DivInputandImage>
          </SecondDescribeImageDiv>

@@ -2,10 +2,10 @@ import { Grid, InputAdornment, Typography, styled } from '@mui/material'
 import { useFormik } from 'formik'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { signInWithPopup } from 'firebase/auth'
 import { ReactComponent as System } from '../../assets/icons/system.svg'
 import { ReactComponent as Layer } from '../../assets/icons/layer 2.svg'
-import { ReactComponent as Defoult } from '../../assets/icons/defoult.svg'
 import Input from '../../components/UI/input/Input'
 import Button from '../../components/UI/buttons/Buttons'
 import { signUp } from '../../redux/auth/auth.thunk'
@@ -18,16 +18,55 @@ import Spinner from '../../components/UI/spinner/Spinner'
 import MyIconButton from '../../components/UI/Icon-button/IconButton'
 import { ReactComponent as EyeIcon } from '../../assets/icons/eyeDefaultIcon.svg'
 import { ReactComponent as EyeIconOff } from '../../assets/icons/eyeOffIcon.svg'
+import { ReactComponent as Google } from '../../assets/icons/google.svg'
+import { auth, provider } from '../../config/axios-instanse/firebaseConfig'
+import { STORAGE_KEYS } from '../../utils/constants/common'
+import { authActions } from '../../redux/auth/auth.slice'
 
 const SignupPage = () => {
    const dispatch = useDispatch()
    const { error, isLoading } = useSelector((state) => state.auth)
    const [showPassword, setShowPassword] = useState(false)
 
-   const handleClickShowPassword = () => setShowPassword((show) => !show)
-
    const navigate = useNavigate()
    const { notify } = useSnackbar()
+
+   const handleClickShowPassword = (fieldName) => {
+      setShowPassword((prevState) => ({
+         ...prevState,
+         [fieldName]: !prevState[fieldName],
+      }))
+   }
+
+   const googleSignInHandler = () => {
+      signInWithPopup(auth, provider).then((data) => {
+         const userData = {
+            token: data.user.accessToken,
+            email: data.user.email,
+            role: 'USER',
+         }
+
+         localStorage.setItem(
+            STORAGE_KEYS.BILINGUAL_USER_KEY,
+            JSON.stringify(userData)
+         )
+         navigate('/user/tests')
+      })
+   }
+
+   useEffect(() => {
+      const userInfo = JSON.parse(
+         localStorage.getItem(STORAGE_KEYS.BILINGUAL_USER_KEY)
+      )
+      if (userInfo) {
+         const authorizedUserCredentials = {
+            token: userInfo.token,
+            email: userInfo.email,
+            role: userInfo.role,
+         }
+         dispatch(authActions.login(authorizedUserCredentials))
+      }
+   }, [])
 
    const submitHandler = (values) => {
       dispatch(signUp(values))
@@ -43,6 +82,7 @@ const SignupPage = () => {
          lastName: '',
          email: '',
          password: '',
+         confirmPassword: '',
       },
       validationSchema: signUpValidation,
       onSubmit: (values) => {
@@ -57,6 +97,8 @@ const SignupPage = () => {
    const CheckEmail = errors.email && touched.email ? 'Incorrect email! ' : null
    const CheckPassword =
       errors.password && touched.password ? 'Incorrect  password! ' : null
+   const CheckConfirmPassword =
+      touched.confirmPassword && errors.confirmPassword
 
    return (
       <Background>
@@ -70,33 +112,42 @@ const SignupPage = () => {
                {signUpInputArray.map((item) => {
                   return (
                      <StyledInput
-                        error={!!errors[item.name]}
+                        error={touched[item.name] && errors[item.name]}
                         key={item.name}
                         label={item.label}
                         name={item.name}
                         value={values[item.name]}
                         onChange={handleChange}
-                        type={item.type}
-                        InputProps={{
-                           endAdornment: item.name === 'password' && (
-                              <InputAdornment position="end">
-                                 <MyIconButton
-                                    onClick={handleClickShowPassword}
-                                    edge="end"
-                                 >
-                                    {showPassword ? (
-                                       <EyeIconOff />
-                                    ) : (
-                                       <EyeIcon />
-                                    )}
-                                 </MyIconButton>
-                              </InputAdornment>
-                           ),
-                        }}
+                        type={showPassword[item.name] ? 'text' : item.type}
+                        InputProps={
+                           item.type === 'password'
+                              ? {
+                                   endAdornment: (
+                                      <InputAdornment position="end">
+                                         <MyIconButton
+                                            onClick={() =>
+                                               handleClickShowPassword(
+                                                  item.name
+                                               )
+                                            }
+                                            edge="end"
+                                         >
+                                            {showPassword[item.name] ? (
+                                               <EyeIconOff />
+                                            ) : (
+                                               <EyeIcon />
+                                            )}
+                                         </MyIconButton>
+                                      </InputAdornment>
+                                   ),
+                                }
+                              : null
+                        }
                      />
                   )
                })}
 
+               <Error>{CheckConfirmPassword}</Error>
                <Error>{CheckEmail}</Error>
                <Error> {CheckPassword}</Error>
                <Error>{error}</Error>
@@ -107,10 +158,21 @@ const SignupPage = () => {
                      sign up
                   </StyledButton>
                )}
-               <DefoultIcon />
+               <ButtonContainer
+                  disabled={isLoading}
+                  onClick={googleSignInHandler}
+               >
+                  <GoogleIcon />
+                  sign up with google
+               </ButtonContainer>
                <StyledText>
                   ALREADY HAVE AN ACCOUNT?
-                  <NavLink to="/sign-in">LOG IN</NavLink>
+                  <StyledNavLink
+                     disabled={isLoading}
+                     to={isLoading ? '' : '/sign-up'}
+                  >
+                     LOG IN
+                  </StyledNavLink>
                </StyledText>
             </Container>
          </SignUpForm>
@@ -176,11 +238,30 @@ const StyledButton = styled(Button)(() => ({
    height: '52px',
    marginTop: '10px',
 }))
-const DefoultIcon = styled(Defoult)(() => ({
-   margin: '0 auto',
-   marginTop: '34px',
+const ButtonContainer = styled(Button)(() => ({
+   margin: '34px auto 0',
+   border: ' 1px solid #BDBDBD',
+   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
+   borderRadius: '8px',
+   padding: '10px 10px',
+   color: '#757575',
+}))
+const GoogleIcon = styled(Google)(() => ({
+   margin: '0 8px 0 0',
 }))
 const StyledText = styled(Typography)(() => ({
    textAlign: 'center',
    marginTop: '24px',
+   fontFamily: 'Poppins',
+   fontStyle: 'normal',
+   fontWeight: '500',
+   fontSize: '14px',
+   lineHeight: '21px',
+   letterSpacing: '0.02em',
+   color: '#757575',
+}))
+
+const StyledNavLink = styled(NavLink)(() => ({
+   color: '#3A10E5',
+   textDecoration: 'none',
 }))

@@ -6,11 +6,12 @@ import Button from '../../../components/UI/buttons/Buttons'
 import { ReactComponent as VolumeIcon } from '../../../assets/icons/volumeIcon.svg'
 import { userQuestionActions } from '../../../redux/user/user.slice'
 
-const TypeWhatYouHear = ({ question, handleNextClick }) => {
+const UserTypeWhatYouHear = ({ question, handleNextClick }) => {
+   const numberReplays = question.numberOfReplays
    const dispatch = useDispatch()
    const audioRef = useRef('')
    const [isPlaying, setIsPlaying] = useState(false)
-   const [replaysLeft, setReplaysLeft] = useState(question.numberOfReplays)
+   const [replaysLeft, setReplaysLeft] = useState(numberReplays)
    const [testResponse, setTestResponse] = useState('')
    const [volumeIconDisabled, setVolumeIconDisabled] = useState(false)
    const { files } = question
@@ -44,17 +45,12 @@ const TypeWhatYouHear = ({ question, handleNextClick }) => {
       }
       dispatch(userQuestionActions.addAnswer(dataAnswer))
       handleNextClick()
+      setTestResponse('')
    }
 
    return (
       <TypeWhatYouHearDivv>
-         <div
-            style={{
-               width: '74.32%',
-               display: 'flex',
-               flexDirection: 'column',
-            }}
-         >
+         <SecondDivTypeWhatYouHear>
             <Title>Type the statement you hear</Title>
             <audio
                ref={audioRef}
@@ -74,60 +70,36 @@ const TypeWhatYouHear = ({ question, handleNextClick }) => {
                   type="audio/mp3"
                />
             </audio>
-            <div
-               style={{
-                  width: '100%',
-                  height: 'auto',
-                  display: 'flex',
-                  alignItems: 'center',
-               }}
-            >
+            <VolumeDiv>
                <ImageVolume
                   onClick={() => listenToTheSound(files)}
                   disabled={volumeIconDisabled}
                />
-               <div
-                  style={{
-                     width: '81.98%',
-                     marginTop: '40px',
-                     marginLeft: '115px',
-                  }}
-               >
+               <DivTextAreaandReplays>
                   <TextArea
+                     value={testResponse}
                      handleChange={testResponseWord}
                      placeholder="Your response"
                      maxRows={6}
                      sx={{
-                        width: '64.1%',
+                        width: '100%',
                         fontFamily: 'Poppins',
                         '& .MuiInputBase-root': {
                            fontFamily: 'Poppins',
                            borderRadius: '8px',
                            height: '185px',
-                           border: '1px solid #D4D0D0',
                         },
                         ' & .MuiInputBase-input': {
                            fontFamily: 'Poppins',
                         },
                      }}
                   />
-                  <p
-                     style={{
-                        width: '49%',
-                        height: '20px',
-                        marginTop: '8px',
-                        fontFamily: 'Poppins',
-                        fontStyle: 'normal',
-                        fontWeight: 400,
-                        fontSize: '1rem',
-                        color: '#AFAFAF',
-                     }}
-                  >
+                  <NumberOfReplaysLeft textColor={replaysLeft}>
                      Number of replays left: {replaysLeft}
-                  </p>
-               </div>
-            </div>
-         </div>
+                  </NumberOfReplaysLeft>
+               </DivTextAreaandReplays>
+            </VolumeDiv>
+         </SecondDivTypeWhatYouHear>
          <ContainerBtn>
             <Button
                onClick={nextTestHandler}
@@ -142,7 +114,7 @@ const TypeWhatYouHear = ({ question, handleNextClick }) => {
    )
 }
 
-export default TypeWhatYouHear
+export default UserTypeWhatYouHear
 
 const TypeWhatYouHearDivv = styled('div')(() => ({
    width: '100%',
@@ -186,4 +158,30 @@ const ContainerBtn = styled('div')(() => ({
    marginTop: '3.75rem',
    borderTop: '1.5296px solid #D4D0D0',
    padding: '32px 0  0 0 ',
+}))
+const SecondDivTypeWhatYouHear = styled('div')(() => ({
+   width: '74.32%',
+   display: 'flex',
+   flexDirection: 'column',
+}))
+const NumberOfReplaysLeft = styled('p')(({ textColor }) => ({
+   width: '49%',
+   height: '20px',
+   marginTop: '8px',
+   fontFamily: 'Poppins',
+   fontStyle: 'normal',
+   fontWeight: 400,
+   fontSize: '1rem',
+   color: textColor === 0 ? '#ff0000' : '#AFAFAF',
+}))
+const VolumeDiv = styled('div')(() => ({
+   width: '100%',
+   height: 'auto',
+   display: 'flex',
+   alignItems: 'center',
+}))
+const DivTextAreaandReplays = styled('div')(() => ({
+   width: '81.98%',
+   marginTop: '40px',
+   marginLeft: '115px',
 }))

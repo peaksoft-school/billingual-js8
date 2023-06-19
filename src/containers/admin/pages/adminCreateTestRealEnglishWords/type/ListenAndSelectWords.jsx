@@ -16,6 +16,7 @@ import { useSnackbar } from '../../../../../hooks/useSnackbar'
 import MyIconButton from '../../../../../components/UI/Icon-button/IconButton'
 
 import { postListenSelectRealEnglishWord } from '../../../../../api/questionService'
+import { postFiles } from '../../../../../redux/question/question.thunk'
 
 const buttonStyleGoBack = {
    width: '12.8%',
@@ -61,7 +62,7 @@ const buttonStyle = {
 }
 
 const ListenWords = ({ title, duration, testId }) => {
-   const { options } = useSelector((data) => data.questions)
+   const { options, link } = useSelector((data) => data.questions)
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const { notify } = useSnackbar()
@@ -77,6 +78,7 @@ const ListenWords = ({ title, duration, testId }) => {
    const [optionOrder, setOptionOrder] = useState(1)
    const [id, setId] = useState('')
    const audioRef = useRef('')
+   const [isChecked, setIsChecked] = useState(false)
 
    useEffect(() => {
       setDeleteArrayListen(options)
@@ -116,9 +118,11 @@ const ListenWords = ({ title, duration, testId }) => {
       } else {
          const data = {
             title: titleListen,
-            isCorrect: false,
-            fileUrl: audioUrl.path,
+            isCorrect: isChecked,
+            fileUrl: link,
             optionOrder,
+            id: optionOrder,
+            isActive: true,
          }
          setOptionOrder((prevState) => prevState + 1)
          dispatch(questionActions.addOption(data))
@@ -135,6 +139,7 @@ const ListenWords = ({ title, duration, testId }) => {
       }))
       const file = acceptedFiles[0]
       setAudioName(file.name)
+      dispatch(postFiles({ file }))
       const audioUrl = URL.createObjectURL(file)
       setAudioUrl(file)
       audioRef.current.src = audioUrl
@@ -189,7 +194,8 @@ const ListenWords = ({ title, duration, testId }) => {
       navigate('/admin/test')
    }
 
-   const checkedFunc = (id) => {
+   const checkedFunc = (e, id) => {
+      setIsChecked(e.target.checked)
       dispatch(questionActions.changeTrueOption(id))
    }
 
@@ -251,7 +257,7 @@ const ListenWords = ({ title, duration, testId }) => {
                <source src={audioUrl} type="audio/mp3" />
             </audio>
             {sliceListenWordOne.map((elem) => (
-               <ListenWordEnglish options={options}>
+               <ListenWordEnglish key={elem.id} options={options}>
                   <NumberListenWords>{elem.id}</NumberListenWords>
                   <StyledVolumeup
                      src={elem.id === id ? volumeUpIcon : volumeup}
@@ -261,7 +267,8 @@ const ListenWords = ({ title, duration, testId }) => {
                   <Checkboxes
                      sx={styleCheckboxes}
                      color="success"
-                     onClick={() => checkedFunc(elem.id)}
+                     onClick={(e) => checkedFunc(e, elem.id)}
+                     checked={elem.isCorrect}
                   />
                   <MyIconButton onClick={() => openModal(elem.id)}>
                      <DeleteIconLogo />

@@ -119,7 +119,7 @@ const SpinnerContainer = styled('div')(() => ({
    height: '100%',
 }))
 const TitleStyle = styled(Typography)(() => ({
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontSize: '28px',
    lineHeight: '32px',
@@ -127,7 +127,7 @@ const TitleStyle = styled(Typography)(() => ({
    fontWeight: 400,
 }))
 const InfoStyle = styled(Typography)(() => ({
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontSize: '14px',
    lineHeight: '124%',
@@ -136,7 +136,7 @@ const InfoStyle = styled(Typography)(() => ({
 }))
 const ListStyle = styled(List)(() => ({
    ListItem: {
-      fontFamily: 'DINNextRoundedLTW01-Regular',
+      fontFamily: 'Poppins',
       fontStyle: 'normal',
       fontSize: '18px',
       lineHeight: '124%',
@@ -148,11 +148,10 @@ const ListStyle = styled(List)(() => ({
 const ContentContainer = styled(Grid)(() => ({
    display: 'flex',
    justifyContent: 'center',
-   margin: '  3.625rem 0 5.6875rem 0 ',
+   margin: '3.625rem 0 5.6875rem 0',
    svg: {
       marginRight: '2rem',
    },
-
    span: {
       fontSize: '1rem',
       lineHeight: '1.5',
@@ -161,8 +160,9 @@ const ContentContainer = styled(Grid)(() => ({
 }))
 
 const StyledForm = styled('div')(() => ({
-   maxWidth: '54.063rem',
+   width: '100%',
    textAlign: 'center',
+   margin: '0 auto',
 }))
 
 const ContainerBtn = styled('div')(() => ({
