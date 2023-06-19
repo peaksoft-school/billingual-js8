@@ -127,7 +127,7 @@ const TestQuestions = () => {
                </div>
                <DivTimerInput>
                   <TimeText htmlFor="timeInput">
-                     Duration <br /> (in minutes)
+                     Duration <br /> (in seconds)
                   </TimeText>
                   <InputNewTime
                      style={
@@ -241,13 +241,13 @@ const InputNewTime = styled('input')(() => ({
 }))
 
 const TimeText = styled('label')(() => ({
-   width: '93.84%',
+   width: '100%',
    height: '38.3%',
-   fontFamily: 'DINNextRoundedLTW04-Medium',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 500,
    fontSize: '1rem',
-   lineHeight: '1.125rem',
+   lineHeight: '0.9rem',
    display: 'flex',
    alignItems: 'center',
    color: '#4B4759',

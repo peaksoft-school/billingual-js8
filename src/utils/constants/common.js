@@ -15,6 +15,8 @@ import avatar5 from '../../assets/images/avatar5.jpg'
 import SelectEnglishWords from '../../containers/user/type/SelectEnglishWords'
 import ClientBestTitle from '../../containers/user/type/ClientBestTitle'
 import ClientMainIdea from '../../containers/user/type/ClientMainIdea'
+import TypeWhatYouHear from '../../containers/user/type/UserTestTypeWhatYouHear'
+import UserTestDescribeImage from '../../containers/user/type/UserTestDescribeImage'
 
 export const STORAGE_KEYS = {
    BILINGUAL_USER_KEY: 'BILINGUAL_USER_KEY',
@@ -147,8 +149,8 @@ export const questionsApi = {
 export const questionComponents = {
    SELECT_ENGLISH_WORD: SelectEnglishWords,
    SELECT_THE_MAIN_IDEA: ClientBestTitle,
-   TYPE_WHAT_YOU_HEAR: 'ClientTypeHear',
-   DESCRIBE_IMAGE: 'ClientDescribe',
+   TYPE_WHAT_YOU_HEAR: TypeWhatYouHear,
+   DESCRIBE_IMAGE: UserTestDescribeImage,
    LISTEN_AND_SELECT_ENGLISH_WORD: 'ClientListenWords',
    RECORD_SAYING_STATEMENT: 'ClientRecordSaying',
    RESPOND_N_WORDS: 'ClientHighlight',
