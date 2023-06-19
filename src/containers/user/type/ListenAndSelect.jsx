@@ -11,7 +11,6 @@ const ListenAndSelect = ({ question, handleNextClick }) => {
    const nextHandler = () => {
       const answerData = {
          questionId: question.id,
-         data: new Date().toLocaleDateString(),
          optionIds: audio,
       }
 
