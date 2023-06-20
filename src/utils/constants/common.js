@@ -154,7 +154,7 @@ export const questionComponents = {
    TYPE_WHAT_YOU_HEAR: 'ClientTypeHear',
    DESCRIBE_IMAGE: 'ClientDescribe',
    LISTEN_AND_SELECT_ENGLISH_WORD: ListenAndSelect,
-   RECORD_SAYING_STATEMENT: 'ClientRecordSaying',
+   RECORD_SAYING_STATEMENT: RecordSaying,
    RESPOND_N_WORDS: RespondNWords,
    SELECT_BEST_TITLE: ClientMainIdea,
    HIGHLIGHT_THE_ANSWER: HighlightTheAnswer,

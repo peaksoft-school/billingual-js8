@@ -13,7 +13,6 @@ const SelectEnglishWords = ({ question, handleNextClick }) => {
       const optionIds = words.map((item) => item.id)
       const answerData = {
          questionId: question.id,
-         data: new Date().toLocaleDateString(),
          optionIds,
       }
       dispatch(userQuestionActions.addAnswer(answerData))
