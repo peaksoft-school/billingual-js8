@@ -16,6 +16,7 @@ import TestQuestions from '../containers/admin/pages/adminCreateTestRealEnglishW
 
 import MyResults from '../containers/user/MyResults'
 import PracticeTest from '../containers/user/practicePage/PracticeTest'
+import CompleteTest from '../containers/user/CompleteTest'
 
 const MainRoutes = () => {
    const { role, isAuthorized } = useSelector((state) => state.auth)
@@ -53,6 +54,11 @@ const MainRoutes = () => {
                      path="tests/:testId/practice"
                      element={<PracticeTest />}
                   />
+                  <Route
+                     path="tests/:testId/practice"
+                     element={<PracticeTest />}
+                  />
+                  <Route path="complete" element={<CompleteTest />} />
                </Route>
             </Route>
 
