@@ -19,7 +19,6 @@ const ClientMainIdea = ({ question, handleNextClick }) => {
    const handleSubmit = () => {
       const answerData = {
          questionId: question.id,
-         data: new Date().toLocaleDateString(),
          optionIds: [selectedOption],
       }
       dispatch(userQuestionActions.addAnswer(answerData))

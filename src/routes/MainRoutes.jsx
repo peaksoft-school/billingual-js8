@@ -18,6 +18,7 @@ import PracticeTest from '../containers/user/practicePage/PracticeTest'
 import EveluatingResults from '../containers/admin/pages/EvaluatingResults'
 import SubmittedResults from '../containers/admin/pages/SubmittedResults'
 import SubmiteQuestions from '../containers/admin/pages/submitePage/SubmitQuestions'
+import CompleteTest from '../containers/user/CompleteTest'
 
 const MainRoutes = () => {
    const { role, isAuthorized } = useSelector((state) => state.auth)
@@ -55,6 +56,11 @@ const MainRoutes = () => {
                      path="tests/:testId/practice"
                      element={<PracticeTest />}
                   />
+                  <Route
+                     path="tests/:testId/practice"
+                     element={<PracticeTest />}
+                  />
+                  <Route path="complete" element={<CompleteTest />} />
                </Route>
             </Route>
 
