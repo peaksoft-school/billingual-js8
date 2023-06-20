@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
 import { styled } from '@mui/material'
 import Checkboxes from '../../../../../components/UI/checkbox/Checkbox'
@@ -11,8 +11,12 @@ import ModalDelete from '../../../../../components/UI/modal/ModalDelete'
 import QuestionModal from '../../../../../components/UI/modal/QuestionModal'
 import { questionActions } from '../../../../../redux/question/question.slice'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
-import { postSelectRealEnglishWord } from '../../../../../api/questionService'
+import {
+   postSelectRealEnglishWord,
+   updateQuestionRequest,
+} from '../../../../../api/questionService'
 import MyIconButton from '../../../../../components/UI/Icon-button/IconButton'
+import TextContainer from '../../../../../components/UI/TextContainer'
 
 const buttonStyleGoBack = {
    width: '12.8%',
@@ -59,17 +63,12 @@ const buttonStyle = {
 const SelectRealEnglishWords = ({ title, duration, testId }) => {
    const { options } = useSelector((item) => item.questions)
    const dispatch = useDispatch()
+   const { state } = useLocation()
    const { notify } = useSnackbar()
    const [isOpenModalDelete, setIsOpenModalDelete] = useState(false)
    const [isOpenModalSave, setIsOpenModalSave] = useState(false)
    const [idListen, setListenId] = useState()
-   const [deleteArrayListen, setDeleteArrayListen] = useState([])
-   const sliceWordOne = deleteArrayListen.slice(0, 3)
-   const sliceWordTwo = deleteArrayListen.slice(3, 6)
 
-   useEffect(() => {
-      setDeleteArrayListen(options)
-   }, [options])
    const navigate = useNavigate()
 
    const openModalDelete = (id) => {
@@ -100,14 +99,22 @@ const SelectRealEnglishWords = ({ title, duration, testId }) => {
          testId,
          options,
          isActive: true,
+         questionType: state?.question.questionType,
+         id: state?.question.id,
       }
       try {
          if (!title || !duration || options.length === 0) {
             return notify('error', 'Question', 'Please fill in all fields')
          }
-         await postSelectRealEnglishWord(data)
-         goBack()
-         notify('success', 'Question', 'Successfully added')
+         if (state !== null) {
+            await updateQuestionRequest(data)
+            goBack()
+            notify('success', 'Question', 'Successfully updated')
+         } else {
+            await postSelectRealEnglishWord(data)
+            goBack()
+            notify('success', 'Question', 'Successfully added')
+         }
          return dispatch(questionActions.clearOptions())
       } catch (error) {
          if (AxiosError(error)) {
@@ -116,6 +123,11 @@ const SelectRealEnglishWords = ({ title, duration, testId }) => {
          return notify('error', 'Question', 'Something went wrong')
       }
    }
+
+   useEffect(() => {
+      dispatch(questionActions.updateOption(state?.question.options || []))
+   }, [])
+
    return (
       <>
          <ModalDelete
@@ -130,40 +142,15 @@ const SelectRealEnglishWords = ({ title, duration, testId }) => {
                + Add Options
             </Button>
             <TestSelectRealEnglishWordsLine>
-               {sliceWordOne.map((elem) => (
-                  <WordEnglish>
-                     <NumberWords>{elem.id}</NumberWords>
-                     <WordEnglishTest>{elem.title}</WordEnglishTest>
-                     <Checkboxes
-                        sx={styleCheckboxes}
-                        color="success"
-                        checked={elem.isCorrect}
-                        onClick={() => checkedFunc(elem.id)}
-                     />
-                     <MyIconButton onClick={() => openModalDelete(elem.id)}>
-                        <DeleteIconLogo />
-                     </MyIconButton>
-                  </WordEnglish>
+               {options.map((elem, i) => (
+                  <TextContainer
+                     elem={elem}
+                     index={i}
+                     checkedFunc={checkedFunc}
+                     openModal={deleteTest}
+                  />
                ))}
             </TestSelectRealEnglishWordsLine>
-            <TestSelectRealEnglishWordsLine>
-               {sliceWordTwo.map((elem) => (
-                  <WordEnglish>
-                     <NumberWords>{elem.id}</NumberWords>
-                     <WordEnglishTest>{elem.title}</WordEnglishTest>
-                     <Checkboxes
-                        sx={styleCheckboxes}
-                        color="success"
-                        checked={elem.isCorrect}
-                        onClick={() => checkedFunc(elem.id)}
-                     />
-                     <MyIconButton onClick={() => openModalDelete(elem.id)}>
-                        <DeleteIconLogo />
-                     </MyIconButton>
-                  </WordEnglish>
-               ))}
-            </TestSelectRealEnglishWordsLine>
-
             <DivButtonSaveandGoBack>
                <Button sx={buttonStyleGoBack} onClick={navigateGoBackTest}>
                   go Back
@@ -219,6 +206,8 @@ const WordEnglishTest = styled('div')(() => ({
    color: ' #4C4859',
    width: '47.59%',
    height: '39.13%',
+   overflow: 'hidden',
+   textOverflow: 'ellipsis',
 }))
 
 const Delete = styled('img')(() => ({

@@ -81,6 +81,10 @@ const AddQuestions = () => {
       }
    }
 
+   const navigateToUpdate = (question) => {
+      navigate(`update-question`, { state: { question } })
+   }
+
    return (
       <>
          <ModalDelete
@@ -149,7 +153,11 @@ const AddQuestions = () => {
                                                    updateQuestion(question)
                                                 }
                                              />
-                                             <MyIconButton>
+                                             <MyIconButton
+                                                onClick={() =>
+                                                   navigateToUpdate(question)
+                                                }
+                                             >
                                                 <StyledEditIcon />
                                              </MyIconButton>
                                              <MyIconButton

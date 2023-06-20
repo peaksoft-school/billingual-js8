@@ -1,24 +1,31 @@
 import { Grid, Typography, styled } from '@mui/material'
 import { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import img from '../../../../../assets/images/describeimage.png'
 import Input from '../../../../../components/UI/input/Input'
 import Button from '../../../../../components/UI/buttons/Buttons'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
-import { postDescribeImage } from '../../../../../redux/question/question.thunk'
+import {
+   postDescribeImage,
+   postFiles,
+} from '../../../../../redux/question/question.thunk'
+import { updateQuestionRequest } from '../../../../../api/questionService'
 
 const DescribeImage = ({ title, duration, testId }) => {
    const dispatch = useDispatch()
+   const { state } = useLocation()
    const navigate = useNavigate()
    const { link } = useSelector((state) => state.questions)
    const inputRef = useRef(null)
-   const [input, setInput] = useState('')
+   const [input, setInput] = useState(state?.question.correctAnswer || '')
    const { notify } = useSnackbar()
 
    const [imgFile, setImgFile] = useState(null)
    const [imgUrl, setImgUrl] = useState(null)
    const [imgName, setImgName] = useState('')
+
+   const oldLink = state?.question.files.find((item) => item)
 
    const goBackHandler = () => {
       navigate('/admin/test')
@@ -58,9 +65,23 @@ const DescribeImage = ({ title, duration, testId }) => {
             file: imgFile,
             testId,
             isActive: true,
+            questionType: state?.question.questionType,
+            id: state?.question.id,
          }
-         dispatch(postDescribeImage({ describeImgData, notify, imgFile }))
-         goBackHandler()
+         if (state !== null) {
+            dispatch(postFiles({ file: imgFile }))
+               .unwrap()
+               .then(async ({ link }) => {
+                  await updateQuestionRequest({
+                     ...describeImgData,
+                     file: link,
+                  })
+                  goBackHandler()
+               })
+         } else {
+            dispatch(postDescribeImage({ describeImgData, notify, imgFile }))
+            goBackHandler()
+         }
       }
    }
 
@@ -68,13 +89,17 @@ const DescribeImage = ({ title, duration, testId }) => {
       setInput(e.target.value)
    }
 
+   useEffect(() => {
+      setImgUrl(oldLink?.fileUrl || null)
+   }, [])
+
    return (
       <Contain onSubmit={submitTests}>
          <SectionOne onClick={handleImageClick}>
             {imgFile ? (
                <Image src={imgUrl} alt="" />
             ) : (
-               <Image src={img} alt="" />
+               <Image src={oldLink?.fileUrl || img} alt="" />
             )}
             <FileName>{imgFile ? imgName : 'file_name_not_found!'}</FileName>
             <input

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Typography, keyframes, styled } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import TextArea from '../../../../../components/UI/textArea/TextArea'
@@ -9,15 +9,21 @@ import RadioButtons from '../../../../../components/UI/checkbox/RadioButton'
 import MyIconButton from '../../../../../components/UI/Icon-button/IconButton'
 import { ReactComponent as DeleteIcon } from '../../../../../assets/icons/deletedIcon.svg'
 import QuestionModal from '../../../../../components/UI/modal/QuestionModal'
-import { postSelectMainIdea } from '../../../../../api/questionService'
+import {
+   postSelectMainIdea,
+   updateQuestionRequest,
+} from '../../../../../api/questionService'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
 import { questionActions } from '../../../../../redux/question/question.slice'
 
 const SelectMainIdea = ({ title, duration, testId }) => {
    const dispatch = useDispatch()
+   const { state } = useLocation()
    const { options } = useSelector((state) => state.questions)
    const [openModal, setOpenModal] = useState(false)
-   const [passageInput, setPassageInput] = useState('')
+   const [passageInput, setPassageInput] = useState(
+      state?.question.passage || ''
+   )
    const navigate = useNavigate()
    const { notify } = useSnackbar()
 
@@ -53,14 +59,23 @@ const SelectMainIdea = ({ title, duration, testId }) => {
          passage: passageInput,
          isActive: true,
          options,
+         questionType: state?.question.questionType,
+         id: state?.question.id,
       }
       try {
          if (!title || !duration || !passageInput || options.length === 0) {
             return notify('error', 'Question', 'Please fill in all fields')
          }
-         await postSelectMainIdea(data)
-         goBack()
-         notify('success', 'Question', 'Successfully added')
+
+         if (state !== null) {
+            await updateQuestionRequest(data)
+            goBack()
+            notify('success', 'Question', 'Successfully updated')
+         } else {
+            await postSelectMainIdea(data)
+            goBack()
+            notify('success', 'Question', 'Successfully added')
+         }
          return dispatch(questionActions.clearOptions())
       } catch (error) {
          if (AxiosError(error)) {
@@ -69,6 +84,10 @@ const SelectMainIdea = ({ title, duration, testId }) => {
          return notify('error', 'Question', 'Something went wrong')
       }
    }
+
+   useEffect(() => {
+      dispatch(questionActions.updateOption(state?.question.options || []))
+   }, [])
 
    return (
       <>

@@ -1,30 +1,37 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { InputLabel, styled } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useDropzone } from 'react-dropzone'
 import { ReactComponent as PlayAudio } from '../../../../../assets/icons/playIcon.svg'
 import { ReactComponent as PauseAudio } from '../../../../../assets/icons/pauseIcon.svg'
 import Button from '../../../../../components/UI/buttons/Buttons'
-import { typeWhatHearThunk } from '../../../../../redux/question/question.thunk'
+import {
+   postFiles,
+   typeWhatHearThunk,
+} from '../../../../../redux/question/question.thunk'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
 import Input from '../../../../../components/UI/input/Input'
+import { updateQuestionRequest } from '../../../../../api/questionService'
 
 const TypeWhatHear = ({ title, duration, testId }) => {
    const dispatch = useDispatch()
+   const { state } = useLocation()
    const audioRef = useRef(null)
    const [isPlaying, setIsPlaying] = useState(false)
    const [audioUrl, setAudioUrl] = useState()
    const [audioName, setAudioName] = useState('')
    const [formValues, setFormValues] = useState({
-      numberOfReplays: 0,
-      correctAnswer: '',
+      numberOfReplays: state?.question.numberOfReplays || 0,
+      correctAnswer: state?.question.correctAnswer || '',
    })
    const navigate = useNavigate()
 
    const { notify } = useSnackbar()
    const [validationErrors, setValidationErrors] = useState({})
+
+   const oldLink = state?.question.files.find((item) => item)
 
    const handleInputChange = (event) => {
       const { name, value } = event.target
@@ -78,7 +85,7 @@ const TypeWhatHear = ({ title, duration, testId }) => {
    const handleAudioEnded = () => {
       setIsPlaying(false)
    }
-   const handleSubmit = () => {
+   const handleSubmit = async () => {
       if (!audioUrl) {
          notify('error', 'Attention!', 'Please select an audio file.')
 
@@ -98,16 +105,30 @@ const TypeWhatHear = ({ title, duration, testId }) => {
             correctAnswer: formValues.correctAnswer,
             testId: Number(testId),
             isActive: true,
+            questionType: state?.question.questionType,
+            id: state?.question.id,
          }
 
-         dispatch(
-            typeWhatHearThunk({
-               requestData,
-               notify,
-               audioFile: audioUrl,
-               navigate,
-            })
-         )
+         if (state !== null) {
+            dispatch(postFiles({ file: audioUrl }))
+               .unwrap()
+               .then(async ({ link }) => {
+                  await updateQuestionRequest({
+                     ...requestData,
+                     file: link,
+                  })
+                  navigate('/admin/test')
+               })
+         } else {
+            dispatch(
+               typeWhatHearThunk({
+                  requestData,
+                  notify,
+                  audioFile: audioUrl,
+                  navigate,
+               })
+            )
+         }
       }
    }
 
@@ -126,6 +147,10 @@ const TypeWhatHear = ({ title, duration, testId }) => {
    const navigateGoBackTest = () => {
       navigate('/admin/test')
    }
+
+   useEffect(() => {
+      setAudioUrl(oldLink?.fileUrl || null)
+   }, [])
 
    return (
       <>
@@ -151,13 +176,13 @@ const TypeWhatHear = ({ title, duration, testId }) => {
                controls
             >
                <track kind="captions" srcLang="en" label="English captions" />
-               <source src={audioUrl} type="audio/mp3" />
+               <source src={oldLink?.fileUrl || audioUrl} type="audio/mp3" />
             </audio>
 
             <div {...getRootProps()} style={{ cursor: 'pointer' }}>
                <input {...getInputProps()} />
-               <UpploadButton audioUrl={audioUrl} variant="contained">
-                  {!audioUrl ? 'Uppload ' : 'Replays'}
+               <UpploadButton url={audioUrl} variant="contained">
+                  {audioUrl ? 'Uppload ' : 'Replays'}
                </UpploadButton>
             </div>
 
@@ -273,11 +298,11 @@ const GoBackButton = styled(Button)(() => ({
       border: '2px solid',
    },
 }))
-const UpploadButton = styled(Button)(({ audioUrl }) => ({
+const UpploadButton = styled(Button)(({ url }) => ({
    boxSizing: 'border-box',
    fontSize: '14px',
    lineHeight: '16px',
-   padding: audioUrl ? '14px  24px' : '14px  28px',
+   padding: url ? '14px  24px' : '14px  28px',
    fontWeight: 700,
    gap: '8px',
    fontFamily: 'Gilroy , Poppins',

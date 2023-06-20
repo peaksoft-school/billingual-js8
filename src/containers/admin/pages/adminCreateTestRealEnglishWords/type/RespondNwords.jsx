@@ -1,18 +1,22 @@
 import { InputLabel, styled } from '@mui/material'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { postRespondWords } from '../../../../../api/questionService'
+import { useLocation, useNavigate } from 'react-router-dom'
+import {
+   postRespondWords,
+   updateQuestionRequest,
+} from '../../../../../api/questionService'
 import Button from '../../../../../components/UI/buttons/Buttons'
 import Input from '../../../../../components/UI/input/Input'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
 
 const RespondNwords = ({ title, duration, testId }) => {
+   const { state } = useLocation()
    const { notify } = useSnackbar()
    const navigate = useNavigate()
    const [validationErrors, setValidationErrors] = useState({})
    const [formValues, setFormValues] = useState({
-      statement: '',
-      minWords: 0,
+      statement: state?.question.statement || '',
+      minWords: state?.question.minWords || 0,
    })
 
    const navigateGoBackTest = () => {
@@ -87,12 +91,20 @@ const RespondNwords = ({ title, duration, testId }) => {
             questionOrder: 5,
             testId: Number(testId),
             isActive: true,
+            questionType: state?.question.questionType,
+            id: state?.question.id,
          }
-         await postRespondWords(data)
-         navigateGoBackTest()
-         return notify('success', 'New question', 'Posted successfully!')
+         if (state !== null) {
+            await updateQuestionRequest(data)
+            navigateGoBackTest()
+            notify('success', 'Question', 'Updated successfully!')
+         } else {
+            await postRespondWords(data)
+            navigateGoBackTest()
+            notify('success', 'New question', 'Posted successfully!')
+         }
       } catch (error) {
-         return notify('error', 'Question', error.response?.data.message)
+         notify('error', 'Question', error.response?.data.message)
       }
    }
 
