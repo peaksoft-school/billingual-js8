@@ -29,6 +29,7 @@ const Input = forwardRef((props, ref) => {
          value={value}
          onChange={onChange}
          error={isError}
+         min={1}
          {...restProps}
       />
    )

@@ -15,9 +15,9 @@ import AddQuestions from '../containers/admin/pages/test/Questions'
 import TestQuestions from '../containers/admin/pages/adminCreateTestRealEnglishWords/TestQuestions'
 import MyResults from '../containers/user/MyResults'
 import PracticeTest from '../containers/user/practicePage/PracticeTest'
-import EveluatingResults from '../containers/admin/pages/EveluatingResults'
+import EveluatingResults from '../containers/admin/pages/EvaluatingResults'
 import SubmittedResults from '../containers/admin/pages/SubmittedResults'
-import SubmiteQuestions from '../containers/admin/pages/submitePage/SubmiteQuestions'
+import SubmiteQuestions from '../containers/admin/pages/submitePage/SubmitQuestions'
 
 const MainRoutes = () => {
    const { role, isAuthorized } = useSelector((state) => state.auth)

@@ -22,33 +22,6 @@ import {
    getAllSubmittedResults,
 } from '../../../api/resultService'
 
-// const results = [
-//    {
-//       resultId: 1,
-//       userFullName: 'Kauhar',
-//       dateOfSubmission: '2023-06-14T11:56:11.518Z',
-//       testName: 'string',
-//       resultStatus: 'EVALUATED',
-//       finalScore: 77,
-//    },
-//    {
-//       resultId: 2,
-//       userFullName: 'Aziat',
-//       dateOfSubmission: '2023-05-14T11:56:11.518Z',
-//       testName: 'string',
-//       resultStatus: 'NOT_EVALUATED',
-//       finalScore: 0,
-//    },
-//    {
-//       resultId: 3,
-//       userFullName: 'Mairam',
-//       dateOfSubmission: '2023-04-14T11:56:11.518Z',
-//       testName: 'string',
-//       resultStatus: 'EVALUATED',
-//       finalScore: 6,
-//    },
-// ]
-
 const SubmittedResults = () => {
    const [results, setResults] = useState(null)
    const [isLoading, setIsLoading] = useState(true)
@@ -125,7 +98,9 @@ const SubmittedResults = () => {
                               >
                                  <StyledTd>{result.resultId} </StyledTd>
                                  <StyledTd>{result.userFullName} </StyledTd>
-                                 <StyledTd>{result.dateOfSubmission}</StyledTd>
+                                 <StyledTd>
+                                    {result.dateOfSubmission.toString()}
+                                 </StyledTd>
                                  <StyledTd>{result.testName} </StyledTd>
                                  <StyledTd
                                     sx={{

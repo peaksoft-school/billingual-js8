@@ -11,39 +11,19 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { ReactComponent as Viewed } from '../../../assets/icons/eyeDefaultIcon.svg'
-import { ReactComponent as Checked } from '../../../assets/icons/checkSquareIcon.svg'
 import { useSnackbar } from '../../../hooks/useSnackbar'
 import Spinner from '../../../components/UI/spinner/Spinner'
 import FormContainer from '../../../components/UI/form/FormContainer'
-import { getCurrentlResults } from '../../../api/resultService'
+import { getAnswerResult, getCurrentlResults } from '../../../api/resultService'
 import Button from '../../../components/UI/buttons/Buttons'
+import { questionName } from '../../../utils/helpers/questionName'
+import Checkboxes from '../../../components/UI/checkbox/Checkbox'
 
-// const results = [
-//    {
-//       resultId: 1,
-//       userFullName: 'Kauhar',
-//       dateOfSubmission: '2023-06-14T11:56:11.518Z',
-//       testName: 'string',
-//       resultStatus: 'EVALUATED',
-//       finalScore: 77,
-//    },
-//    {
-//       resultId: 2,
-//       userFullName: 'Aziat',
-//       dateOfSubmission: '2023-05-14T11:56:11.518Z',
-//       testName: 'string',
-//       resultStatus: 'NOT_EVALUATED',
-//       finalScore: 0,
-//    },
-//    {
-//       resultId: 3,
-//       userFullName: 'Mairam',
-//       dateOfSubmission: '2023-04-14T11:56:11.518Z',
-//       testName: 'string',
-//       resultStatus: 'EVALUATED',
-//       finalScore: 6,
-//    },
-// ]
+const styleCheckboxes = {
+   width: '6.97%',
+   height: '43.48%',
+   marginLeft: '9.89%',
+}
 
 const EveluatingResults = () => {
    const [results, setResults] = useState(null)
@@ -63,13 +43,18 @@ const EveluatingResults = () => {
          setIsLoading(false)
       }
    }
-   console.log(results)
 
    useEffect(() => {
       getResult()
    }, [])
-   const tryTestHandle = (questions) => {
-      return navigate(`submitted`, { state: questions })
+   const evaluatingQuestionHandle = async (questions) => {
+      const ids = questions.find((item) => item)
+      try {
+         const { data } = await getAnswerResult(ids)
+         return navigate(`submitted`, { state: data })
+      } catch (error) {
+         return error
+      }
    }
 
    return (
@@ -112,6 +97,7 @@ const EveluatingResults = () => {
                         sx={{ marginTop: '1.5rem' }}
                         variant="outlined"
                         onClick={() => navigate(`#`)}
+                        disabled={results?.resultStatus === 'NOT_EVALUATED'}
                      >
                         Send results to user&#39;s email
                      </Button>
@@ -147,11 +133,15 @@ const EveluatingResults = () => {
                                     key={result.questionId}
                                     hover
                                     onClick={() =>
-                                       tryTestHandle(result.userAnswerResponse)
+                                       evaluatingQuestionHandle(
+                                          result.userAnswerResponse
+                                       )
                                     }
                                  >
                                     <StyledTd>{result.questionOrder} </StyledTd>
-                                    <StyledTd>{result.questionType} </StyledTd>
+                                    <StyledTd>
+                                       {questionName(result.questionType)}
+                                    </StyledTd>
                                     <StyledTd>{result.score} </StyledTd>
                                     <StyledTd
                                        sx={{
@@ -165,11 +155,15 @@ const EveluatingResults = () => {
                                        {result.answerStatus}
                                     </StyledTd>
                                     <StyledTd>
-                                       {result.resultStatus ===
+                                       {result.answerStatus ===
                                        'NOT_EVALUATED' ? (
-                                          <Checked />
-                                       ) : (
                                           <Viewed />
+                                       ) : (
+                                          <Checkboxes
+                                             sx={styleCheckboxes}
+                                             color="success"
+                                             checked="true"
+                                          />
                                        )}
                                     </StyledTd>
                                  </StyledTr>

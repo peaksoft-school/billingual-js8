@@ -15,3 +15,11 @@ export const getAllSubmittedResults = () => {
 export const getCurrentlResults = (resultId) => {
    return instanse.get(`/api/results/${resultId}`)
 }
+
+export const getAnswerResult = (ids) => {
+   return instanse.get(`api/questions/${ids.answerId}/${ids.questionId}`)
+}
+
+export const postEveluatingScore = (data) => {
+   return instanse.post(`/api/evaluating/${data.answerId}`, data.score)
+}
