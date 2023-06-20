@@ -18,6 +18,7 @@ import { getAnswerResult, getCurrentlResults } from '../../../api/resultService'
 import Button from '../../../components/UI/buttons/Buttons'
 import { questionName } from '../../../utils/helpers/questionName'
 import Checkboxes from '../../../components/UI/checkbox/Checkbox'
+import { formatDate } from '../../../utils/helpers/formatDate'
 
 const styleCheckboxes = {
    width: '6.97%',
@@ -56,6 +57,14 @@ const EveluatingResults = () => {
          return error
       }
    }
+   const renderDate = (date) => {
+      const [d, h] = formatDate(new Date(date))
+      return (
+         <>
+            {d}&nbsp;&nbsp;{h}
+         </>
+      )
+   }
 
    return (
       <FormContainer>
@@ -72,7 +81,9 @@ const EveluatingResults = () => {
                      </StyledTypography>
                      <StyledTypography>
                         Date of Submission:
-                        <StyledSpan>{results?.dateOfSubmission}</StyledSpan>
+                        <StyledSpan>
+                           {renderDate(results?.dateOfSubmission)}
+                        </StyledSpan>
                      </StyledTypography>
                   </Grid>
                   <ButtonContainer>

@@ -21,6 +21,7 @@ import {
    deleteResultRequest,
    getAllSubmittedResults,
 } from '../../../api/resultService'
+import { formatDate } from '../../../utils/helpers/formatDate'
 
 const SubmittedResults = () => {
    const [results, setResults] = useState(null)
@@ -62,6 +63,15 @@ const SubmittedResults = () => {
       return getResult()
    }
 
+   const renderDate = (date) => {
+      const [d, h] = formatDate(new Date(date))
+      return (
+         <>
+            {h} <br /> {d}
+         </>
+      )
+   }
+
    return (
       <>
          <ModalDelete
@@ -99,7 +109,7 @@ const SubmittedResults = () => {
                                  <StyledTd>{result.resultId} </StyledTd>
                                  <StyledTd>{result.userFullName} </StyledTd>
                                  <StyledTd>
-                                    {result.dateOfSubmission.toString()}
+                                    {renderDate(result.dateOfSubmission)}
                                  </StyledTd>
                                  <StyledTd>{result.testName} </StyledTd>
                                  <StyledTd

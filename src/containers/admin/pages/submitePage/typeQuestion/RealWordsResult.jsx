@@ -63,9 +63,9 @@ const RealWordsResult = ({ question, score, answerId }) => {
    return (
       <>
          <TestSelectRealEnglishWordsLine>
-            {question.questionResponse.options.map((elem) => (
+            {question.questionResponse.options.map((elem, i) => (
                <Words key={elem.id}>
-                  <NumberWords>{elem.id}</NumberWords>
+                  <NumberWords>{i + 1}</NumberWords>
                   <WordEnglishTest>{elem.title}</WordEnglishTest>
                   <Checkboxes
                      sx={styleCheckboxes}
@@ -77,8 +77,9 @@ const RealWordsResult = ({ question, score, answerId }) => {
          </TestSelectRealEnglishWordsLine>
          <h4 style={{ margin: 0 }}>User&#39;s Answer</h4>
          <TestSelectRealEnglishWordsLine>
-            {question.userAnswerResponse.map((elem) => (
+            {question.userAnswerResponse.map((elem, i) => (
                <UserAnswer key={elem.optionTitle}>
+                  <NumberWords>{i + 1}</NumberWords>
                   <Typography>{elem.optionTitle}</Typography>
                </UserAnswer>
             ))}
