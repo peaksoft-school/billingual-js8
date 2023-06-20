@@ -24,3 +24,7 @@ export const updateTestRequest = ({
 }) => {
    return instanse.put(`api/tests/${id}`, { title, shortDescription, isActive })
 }
+
+export const submitTestRequest = (data) => {
+   return instanse.post('api/tests/submit', data)
+}

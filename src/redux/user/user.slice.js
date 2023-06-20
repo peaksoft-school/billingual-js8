@@ -30,6 +30,10 @@ export const userSlice = createSlice({
       setOption: (state, action) => {
          state.selectedOption.push(action.payload)
       },
+      clearTest: (state) => {
+         state.answers = []
+         state.testId = null
+      },
    },
 })
 

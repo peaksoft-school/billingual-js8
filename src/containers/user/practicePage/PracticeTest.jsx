@@ -44,7 +44,8 @@ const PracticeTest = () => {
    }
 
    if (state?.length > 0) {
-      if (count > state.length) return 'complete'
+      if (count > state.length - 1)
+         return <Navigate to="/user/complete" state={testId} />
 
       return (
          <BackgroundContainer>
@@ -81,7 +82,7 @@ const PracticeTest = () => {
                         isEnded={isEnded}
                      />
                   ) : (
-                     <Navigate to="/user/tests" />
+                     <Navigate to="/user/complete" />
                   )
                }}
             </UserTest>
