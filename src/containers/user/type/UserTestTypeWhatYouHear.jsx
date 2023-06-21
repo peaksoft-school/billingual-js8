@@ -6,6 +6,18 @@ import Button from '../../../components/UI/buttons/Buttons'
 import { ReactComponent as VolumeIcon } from '../../../assets/icons/volumeIcon.svg'
 import { userQuestionActions } from '../../../redux/user/user.slice'
 
+const textAreaStyle = {
+   width: '100%',
+   fontFamily: 'Poppins',
+   '& .MuiInputBase-root': {
+      fontFamily: 'Poppins',
+      borderRadius: '8px',
+   },
+   ' & .MuiInputBase-input': {
+      fontFamily: 'Poppins',
+   },
+}
+
 const UserTypeWhatYouHear = ({ question, handleNextClick }) => {
    const numberReplays = question.numberOfReplays
    const dispatch = useDispatch()
@@ -81,18 +93,8 @@ const UserTypeWhatYouHear = ({ question, handleNextClick }) => {
                      handleChange={testResponseWord}
                      placeholder="Your response"
                      maxRows={6}
-                     sx={{
-                        width: '100%',
-                        fontFamily: 'Poppins',
-                        '& .MuiInputBase-root': {
-                           fontFamily: 'Poppins',
-                           borderRadius: '8px',
-                           height: '185px',
-                        },
-                        ' & .MuiInputBase-input': {
-                           fontFamily: 'Poppins',
-                        },
-                     }}
+                     rows={6}
+                     sx={textAreaStyle}
                   />
                   <NumberOfReplaysLeft textColor={replaysLeft}>
                      Number of replays left: {replaysLeft}
