@@ -19,6 +19,8 @@ import RecordSaying from '../../containers/user/type/RecordSaying'
 import ListenAndSelect from '../../containers/user/type/ListenAndSelect'
 import ClientBestTitle from '../../containers/user/type/ClientBestTitle'
 import ClientMainIdea from '../../containers/user/type/ClientMainIdea'
+import ListenAndSelectResult from '../../containers/admin/pages/submitePage/typeQuestion/ListenAndSelectResult'
+import CheckHighLightTheAnswer from '../../containers/admin/pages/submitePage/typeQuestion/CheckHighlightTheAnswer'
 
 export const STORAGE_KEYS = {
    BILINGUAL_USER_KEY: 'BILINGUAL_USER_KEY',
@@ -158,4 +160,15 @@ export const questionComponents = {
    RESPOND_N_WORDS: RespondNWords,
    SELECT_BEST_TITLE: ClientMainIdea,
    HIGHLIGHT_THE_ANSWER: HighlightTheAnswer,
+}
+export const resultQuestionComponents = {
+   LISTEN_AND_SELECT_ENGLISH_WORD: ListenAndSelectResult,
+   SELECT_ENGLISH_WORD: 'Result-SELECT-ENGLISH-WORDS',
+   SELECT_THE_MAIN_IDEA: 'Result-THE-MAIN-IDEA',
+   TYPE_WHAT_YOU_HEAR: 'Result-TYPE-HEAR',
+   DESCRIBE_IMAGE: 'Result-Describe',
+   RECORD_SAYING_STATEMENT: 'Result-Record-Saying',
+   RESPOND_N_WORDS: 'Result-Respond-Words',
+   SELECT_BEST_TITLE: 'Result-Main-Idea',
+   HIGHLIGHT_THE_ANSWER: CheckHighLightTheAnswer,
 }

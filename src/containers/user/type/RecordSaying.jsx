@@ -30,6 +30,7 @@ const RecordSaying = ({ question, handleNextClick }) => {
          const { data } = await postFileRequest(formData)
          const newAnswer = {
             questionId: question.id,
+            numberOfPlays: 1,
             fileUrl: data.link,
          }
          dispatch(userQuestionActions.addAnswer(newAnswer))

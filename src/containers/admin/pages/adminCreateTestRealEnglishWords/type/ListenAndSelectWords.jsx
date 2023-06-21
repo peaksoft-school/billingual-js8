@@ -156,7 +156,7 @@ const ListenWords = ({ title, duration, testId }) => {
    }
 
    const goBack = () => {
-      navigate('/admin/test')
+      navigate(`/admin/test/${testId}`)
    }
 
    const checkedFunc = (e, id) => {

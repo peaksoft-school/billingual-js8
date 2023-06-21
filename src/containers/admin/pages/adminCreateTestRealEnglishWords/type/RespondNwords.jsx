@@ -20,7 +20,7 @@ const RespondNwords = ({ title, duration, testId }) => {
    })
 
    const navigateGoBackTest = () => {
-      navigate('/admin/test')
+      navigate(`/admin/test/${testId}`)
    }
 
    const handleInputChange = (event) => {

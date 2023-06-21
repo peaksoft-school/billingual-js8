@@ -82,14 +82,14 @@ const SelectRealEnglishWords = ({ title, duration, testId }) => {
       dispatch(questionActions.deleteOption(id))
       setIsOpenModalDelete((prevState) => !prevState)
    }
-   const checkedFunc = (id) => {
+   const checkedFunc = (e, id) => {
       dispatch(questionActions.changeTrueOption(id))
    }
    const navigateGoBackTest = () => {
       navigate(-1)
    }
    const goBack = () => {
-      navigate('/admin/test')
+      navigate(`/admin/test/${testId}`)
    }
    const saveTest = async () => {
       const data = {
@@ -170,9 +170,11 @@ const TestSelectRealEnglishWordsLine = styled('div')(() => ({
    width: '100%',
    height: 'auto',
    margin: '0 auto',
-   display: 'flex',
-   gap: '2.2%',
    marginBottom: '18px',
+   display: 'grid',
+   gridTemplateColumns: 'repeat(auto-fit, minmax(200px, auto))',
+   gap: '10px 67px',
+   justifyItems: 'center',
 }))
 
 const WordEnglish = styled('div')(() => ({

@@ -145,7 +145,7 @@ const TypeWhatHear = ({ title, duration, testId }) => {
       onDrop,
    })
    const navigateGoBackTest = () => {
-      navigate('/admin/test')
+      navigate(`/admin/test/${testId}`)
    }
 
    useEffect(() => {
@@ -182,7 +182,7 @@ const TypeWhatHear = ({ title, duration, testId }) => {
             <div {...getRootProps()} style={{ cursor: 'pointer' }}>
                <input {...getInputProps()} />
                <UpploadButton url={audioUrl} variant="contained">
-                  {audioUrl ? 'Uppload ' : 'Replays'}
+                  {!audioUrl ? 'Uppload ' : 'Replays'}
                </UpploadButton>
             </div>
 

@@ -19,7 +19,9 @@ const ClientBestTitle = ({ question, handleNextClick }) => {
    const handleSubmit = () => {
       const answerData = {
          questionId: question.id,
-         optionIds: [selectedOption],
+         numberOfPlays: 1,
+         fileUrl: 'null',
+         optionsIds: [selectedOption],
       }
       dispatch(userQuestionActions.addAnswer(answerData))
       handleNextClick()
@@ -43,11 +45,14 @@ const ClientBestTitle = ({ question, handleNextClick }) => {
                <Title>Select the main idea of the passage</Title>
                {question.options.map((option) => (
                   <OptionItem key={option.id}>
-                     <Radio
-                        checked={selectedOption === option.id}
-                        onChange={() => handleOptionChange(option.id)}
-                     />
-                     <OptionTitle>{option.title}</OptionTitle>
+                     <label htmlFor={`radio-${option.id}`}>
+                        <Radio
+                           checked={selectedOption === option.id}
+                           onChange={() => handleOptionChange(option.id)}
+                           id={`radio-${option.id}`}
+                        />
+                        <OptionTitle>{option.title}</OptionTitle>
+                     </label>
                   </OptionItem>
                ))}
             </div>
@@ -101,7 +106,7 @@ const OptionItem = styled('div')(() => ({
    boxSizing: 'border-box',
 }))
 
-const OptionTitle = styled('p')(() => ({
+const OptionTitle = styled('label')(() => ({
    fontFamily: 'DINNextRoundedLTW01-Regular',
    fontStyle: 'normal',
    fontWeight: 400,

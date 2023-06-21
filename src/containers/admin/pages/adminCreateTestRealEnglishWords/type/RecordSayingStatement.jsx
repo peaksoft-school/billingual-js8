@@ -16,7 +16,7 @@ const RecordSayingStatement = ({ title, duration, testId }) => {
    const { notify } = useSnackbar()
 
    const goBack = () => {
-      navigate('/admin/test')
+      navigate(`/admin/test/${testId}`)
    }
 
    const submitHandler = async () => {
@@ -26,6 +26,7 @@ const RecordSayingStatement = ({ title, duration, testId }) => {
             statement,
             duration,
             questionOrder: 5,
+            correctAnswer: 'Correct',
             testId,
             isActive: true,
             questionType: state?.question.questionType,

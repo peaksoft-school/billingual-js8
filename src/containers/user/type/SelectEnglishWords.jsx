@@ -13,7 +13,9 @@ const SelectEnglishWords = ({ question, handleNextClick }) => {
       const optionIds = words.map((item) => item.id)
       const answerData = {
          questionId: question.id,
-         optionIds,
+         numberOfPlays: 1,
+         fileUrl: 'null',
+         optionsIds: optionIds,
       }
       dispatch(userQuestionActions.addAnswer(answerData))
       handleNextClick()

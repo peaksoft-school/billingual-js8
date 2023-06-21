@@ -13,9 +13,11 @@ import SignupPage from '../containers/public/SignupPage'
 import CreateTest from '../containers/admin/pages/test/CreateTest'
 import AddQuestions from '../containers/admin/pages/test/Questions'
 import TestQuestions from '../containers/admin/pages/adminCreateTestRealEnglishWords/TestQuestions'
-
 import MyResults from '../containers/user/MyResults'
 import PracticeTest from '../containers/user/practicePage/PracticeTest'
+import EveluatingResults from '../containers/admin/pages/EvaluatingResults'
+import SubmittedResults from '../containers/admin/pages/SubmittedResults'
+import SubmiteQuestions from '../containers/admin/pages/submitePage/SubmitQuestions'
 import CompleteTest from '../containers/user/CompleteTest'
 
 const MainRoutes = () => {
@@ -86,6 +88,15 @@ const MainRoutes = () => {
                   <Route
                      path="test/:testId/update-question"
                      element={<TestQuestions />}
+                  />
+                  <Route path="submit-result" element={<SubmittedResults />} />
+                  <Route
+                     path="submit-result/:resultId"
+                     element={<EveluatingResults />}
+                  />
+                  <Route
+                     path="submit-result/:resultId/submitted"
+                     element={<SubmiteQuestions />}
                   />
                </Route>
             </Route>

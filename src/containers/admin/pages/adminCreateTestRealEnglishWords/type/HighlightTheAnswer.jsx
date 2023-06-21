@@ -35,7 +35,7 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
    }
 
    const goBackFunction = () => {
-      navigate('/admin/test')
+      navigate(`/admin/test/${testId}`)
    }
    const saveHandler = async () => {
       if (statement === '' && passage === '') {

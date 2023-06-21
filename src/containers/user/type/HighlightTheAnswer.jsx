@@ -13,6 +13,8 @@ const HighlightTheAnswer = ({ question, handleNextClick }) => {
    const nextHandler = () => {
       const answerData = {
          questionId: question.id,
+         numberOfPlays: 1,
+         fileUrl: 'null',
          data: selectedText,
       }
       dispatch(userQuestionActions.addAnswer(answerData))

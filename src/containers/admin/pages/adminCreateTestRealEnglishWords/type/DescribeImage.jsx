@@ -28,7 +28,7 @@ const DescribeImage = ({ title, duration, testId }) => {
    const oldLink = state?.question.files.find((item) => item)
 
    const goBackHandler = () => {
-      navigate('/admin/test')
+      navigate(`/admin/test/${testId}`)
    }
 
    const handleImageClick = () => {

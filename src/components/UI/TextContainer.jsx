@@ -1,5 +1,5 @@
 import React from 'react'
-import { styled } from '@mui/material'
+import { Tooltip, styled } from '@mui/material'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/deletedIcon.svg'
 import Checkboxes from './checkbox/Checkbox'
 
@@ -8,7 +8,9 @@ const TextContainer = ({ elem, index, checkedFunc, openModal }) => {
       <Container>
          <StyledGrid>
             <Number>{index + 1}</Number>
-            <Word>{elem.title}</Word>
+            <Tooltip title={elem.title}>
+               <Word>{elem.title}</Word>
+            </Tooltip>
             <Checkboxes
                onClick={(e) => checkedFunc(e, elem.id)}
                checked={elem.isCorrect}

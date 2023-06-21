@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { styled } from '@mui/material'
+import { Tooltip, styled } from '@mui/material'
 import { Howl, Howler } from 'howler'
 import { ReactComponent as Volumeup } from '../../../assets/icons/volumeup.svg'
 import { ReactComponent as DeleteIcon } from '../../../assets/icons/deletedIcon.svg'
@@ -35,7 +35,9 @@ const AdminMultiplySelect = ({ elem, index, checkedFunc, openModal }) => {
                active={isPlaying}
                onClick={() => soundPlay(elem.fileUrl)}
             />
-            <Word>{elem.title}</Word>
+            <Tooltip title={elem.title}>
+               <Word>{elem.title}</Word>
+            </Tooltip>
             <Checkboxes
                onClick={(e) => checkedFunc(e, elem.id)}
                checked={elem.isCorrect}

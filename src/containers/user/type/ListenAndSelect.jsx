@@ -11,7 +11,9 @@ const ListenAndSelect = ({ question, handleNextClick }) => {
    const nextHandler = () => {
       const answerData = {
          questionId: question.id,
-         optionIds: audio,
+         numberOfPlays: 1,
+         fileUrl: 'null',
+         optionsIds: audio,
       }
 
       dispatch(userQuestionActions.addAnswer(answerData))
@@ -25,10 +27,10 @@ const ListenAndSelect = ({ question, handleNextClick }) => {
             {question !== null && question.options.length === 0 ? (
                <p style={{ margin: '0 auto' }}>Empty</p>
             ) : (
-               question.options.map((item, i) => (
+               question.options.map((item) => (
                   <MultiplySelect
-                     id={i + 1}
-                     word="awdawd"
+                     id={item.id}
+                     word={item.title}
                      audio={item.fileUrl}
                      setAudio={setAudio}
                      audioIds={audio}
