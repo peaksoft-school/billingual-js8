@@ -1,6 +1,9 @@
+import { React, useState } from 'react'
 import { styled } from '@mui/material'
-
 import { motion } from 'framer-motion'
+import ScrollTrigger from 'react-scroll-trigger'
+import { ourTeamArray } from '../../utils/constants/common'
+import { textAnimation } from '../../utils/helpers/animations'
 import accessible from '../../assets/images/accessible.png'
 import speech from '../../assets/images/speech.png'
 import extensive from '../../assets/images/extensive.png'
@@ -9,8 +12,7 @@ import booksBackground from '../../assets/icons/background.svg'
 import bookImg from '../../assets/icons/bookImg.svg'
 import learnImg from '../../assets/icons/learnImg.svg'
 import readingImg from '../../assets/icons/reading.svg'
-import { infoCardArray, ourTeamArray } from '../../utils/constants/common'
-import { animation, textAnimation } from '../../utils/helpers/animations'
+import InfoSectionOne from './InfoSectionOne'
 
 const imgAnimation = {
    hidden: {
@@ -31,35 +33,6 @@ const Card = styled('div')(() => ({
    background: '#f0f0dc',
 }))
 
-const InfoCard = styled(motion.div)(() => ({
-   display: 'flex',
-   justifyContent: 'space-evenly',
-   flexWrap: 'wrap',
-}))
-
-const Img = styled('img')(() => ({
-   width: '300.96px',
-   height: '176px',
-   top: '898px',
-}))
-const Img1DivOne = styled(motion.div)(() => ({
-   width: '335px',
-   height: '248px',
-   display: 'flex',
-   flexDirection: 'column',
-   alignItems: 'center',
-}))
-const Over = styled('p')(() => ({
-   height: '48px',
-   marginTop: '23px',
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '16px',
-   lineHeight: '24px',
-   textAlign: 'center',
-   color: '#23212A',
-}))
 const Description = styled('div')(() => ({
    height: ' 437px',
    marginLeft: '110px',
@@ -312,20 +285,16 @@ const blockAnimate = {
 }
 
 const InfoSection = () => {
+   const [count, setCountOn] = useState(false)
+
    return (
       <Card>
-         <InfoCard
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ amount: 0.5 }}
+         <ScrollTrigger
+            onEnter={() => setCountOn(true)}
+            onExit={() => setCountOn(false)}
          >
-            {infoCardArray.map((elem) => (
-               <Img1DivOne key={elem.id} variants={animation}>
-                  <Img src={elem.img} />
-                  <Over>{elem.text}</Over>
-               </Img1DivOne>
-            ))}
-         </InfoCard>
+            <InfoSectionOne count={count} />
+         </ScrollTrigger>
          <Description>
             <div>
                <UserExpiriance>Unparalleled user experience</UserExpiriance>

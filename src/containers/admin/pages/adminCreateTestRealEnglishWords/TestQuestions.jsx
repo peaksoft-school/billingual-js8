@@ -242,13 +242,14 @@ const InputNewTime = styled('input')(() => ({
 }))
 
 const TimeText = styled('label')(() => ({
-   width: '93.84%',
+   width: '100%',
    height: '38.3%',
    fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 500,
-   fontSize: '15px',
-   lineHeight: '1.125rem',
+   fontSize: '1rem',
+   lineHeight: '1.4rem',
+   // letterSpacing: '2px',
    display: 'flex',
    alignItems: 'center',
    color: '#4B4759',
@@ -284,6 +285,10 @@ const SelectType = styled(Select)(() => ({
    marginTop: '12px',
    display: 'flex',
    textAlign: 'center',
+   transitionDuration: '3333251ms',
+   // '.MuiMenu-paper': {
+   //    transitionDuration: '3333251ms',
+   // },
 }))
 
 const TestSelectRealEnglishWords = styled('div')(() => ({

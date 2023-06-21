@@ -19,6 +19,8 @@ import RecordSaying from '../../containers/user/type/RecordSaying'
 import ListenAndSelect from '../../containers/user/type/ListenAndSelect'
 import ClientBestTitle from '../../containers/user/type/ClientBestTitle'
 import ClientMainIdea from '../../containers/user/type/ClientMainIdea'
+import TypeWhatYouHear from '../../containers/user/type/UserTestTypeWhatYouHear'
+import UserTestDescribeImage from '../../containers/user/type/UserTestDescribeImage'
 import ListenAndSelectResult from '../../containers/admin/pages/submitePage/typeQuestion/ListenAndSelectResult'
 
 export const STORAGE_KEYS = {
@@ -152,8 +154,8 @@ export const questionsApi = {
 export const questionComponents = {
    SELECT_ENGLISH_WORD: SelectEnglishWords,
    SELECT_THE_MAIN_IDEA: ClientBestTitle,
-   TYPE_WHAT_YOU_HEAR: 'ClientTypeHear',
-   DESCRIBE_IMAGE: 'ClientDescribe',
+   TYPE_WHAT_YOU_HEAR: TypeWhatYouHear,
+   DESCRIBE_IMAGE: UserTestDescribeImage,
    LISTEN_AND_SELECT_ENGLISH_WORD: ListenAndSelect,
    RECORD_SAYING_STATEMENT: RecordSaying,
    RESPOND_N_WORDS: RespondNWords,
