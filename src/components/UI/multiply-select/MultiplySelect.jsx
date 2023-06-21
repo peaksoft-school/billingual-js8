@@ -2,7 +2,7 @@ import { Grid, Typography, styled } from '@mui/material'
 import { useState } from 'react'
 import { Howl, Howler } from 'howler'
 import { ReactComponent as Volumeup } from '../../../assets/icons/volumeup.svg'
-import { ReactComponent as Check } from '../../../assets/icons/check (1).svg'
+import { ReactComponent as Check } from '../../../assets/icons/check.svg'
 
 const MultiplySelect = ({ id, word, audio, setAudio, audioIds }) => {
    const [color, setColor] = useState(false)

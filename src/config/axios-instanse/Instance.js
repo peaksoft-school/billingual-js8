@@ -6,6 +6,9 @@ export const BASE_URL = 'http://bilingualb8.peaksoftprojects.com/'
 
 export const instanse = axios.create({
    baseURL: BASE_URL,
+   headers: {
+      'Content-Type': 'application/json',
+   },
 })
 
 instanse.interceptors.request.use(
