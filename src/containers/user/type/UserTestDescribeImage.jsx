@@ -22,7 +22,7 @@ const UserTestDescribeImage = ({ question, handleNextClick }) => {
    const dispatch = useDispatch()
    const [testResponse, setTestResponse] = useState('')
 
-   const fileUrl = question.files.map((elem) => {
+   const files = question.files.find((elem) => {
       return elem.fileUrl
    })
 
@@ -45,12 +45,13 @@ const UserTestDescribeImage = ({ question, handleNextClick }) => {
                Write one or more sentences that describe the image
             </TextTitle>
             <DivInputandImage>
-               <ImageForTheTest src={fileUrl} alt="Your Image" />
+               <ImageForTheTest urlImage={files.fileUrl} />
                <TextArea
                   value={testResponse}
                   handleChange={chnageCorrectAnswer}
                   placeholder="Your response"
                   maxRows={6}
+                  rows={6}
                   sx={styleTextArea}
                />
             </DivInputandImage>
@@ -115,7 +116,12 @@ const DivInputandImage = styled('div')(() => ({
    marginTop: '50px',
 }))
 
-const ImageForTheTest = styled('img')(() => ({
-   width: '30.64%',
+const ImageForTheTest = styled('div')(({ urlImage }) => ({
+   width: '36.64%',
    height: '183px',
+   backgroundImage: `url(${urlImage})`,
+   backgroundSize: 'cover',
+   backgroundPosition: 'center',
+   borderRadius: '2px',
+   cursor: 'pointer',
 }))

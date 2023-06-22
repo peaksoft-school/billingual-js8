@@ -153,7 +153,9 @@ const EveluatingResults = () => {
                                     <StyledTd>
                                        {questionName(result.questionType)}
                                     </StyledTd>
-                                    <StyledTd>{result.score} </StyledTd>
+                                    <StyledTd>
+                                       {result.score} out of 10
+                                    </StyledTd>
                                     <StyledTd
                                        sx={{
                                           color:
