@@ -225,6 +225,7 @@ const ListenWords = ({ title, duration, testId }) => {
          <TestListenAndSelectEnglishWords options={options}>
             {options.map((elem, i) => (
                <AdminMultiplySelect
+                  key={elem.id}
                   elem={elem}
                   index={i}
                   checkedFunc={checkedFunc}
@@ -259,8 +260,10 @@ const TestListenAndSelectEnglishWords = styled('div')(({ options }) => ({
    height: 'auto',
    margin: '0 auto',
    marginBottom: !options ? '18px' : '0px',
-   display: 'grid',
-   gridTemplateColumns: 'repeat(auto-fit, minmax(200px, auto))',
+   display: 'flex',
+   flexWrap: 'wrap',
+   justifyContent: 'flex-start',
+   alignItems: 'center',
    gap: '10px 67px',
    justifyItems: 'center',
 }))

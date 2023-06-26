@@ -17,7 +17,7 @@ const humans = [
       id: 1,
       description:
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Aibek Atabekov',
+      name: 'Aziat Abdimalikov',
       rating: 5,
       avatar: avatar1,
    },
@@ -25,33 +25,65 @@ const humans = [
       id: 2,
       description:
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Alina Begishova',
+      name: 'Ilim Shabdanov',
       rating: 5,
-      avatar: avatar2,
+      avatar: avatar1,
    },
    {
       id: 3,
       description:
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Minura Telegenova',
+      name: 'Saltanat Nematilla kyzy',
       rating: 5,
-      avatar: avatar3,
+      avatar: avatar2,
    },
    {
       id: 4,
       description:
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Aibek Atabekov',
+      name: 'Mairam Ormonova',
       rating: 5,
-      avatar: avatar4,
+      avatar: avatar3,
    },
    {
       id: 5,
       description:
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Alina Begishova',
+      name: 'Adil Aitbaev',
+      rating: 5,
+      avatar: avatar4,
+   },
+   {
+      id: 6,
+      description:
+         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
+      name: 'Jazgul Joroeva',
       rating: 5,
       avatar: avatar5,
+   },
+   {
+      id: 7,
+      description:
+         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
+      name: 'Anarbek Ishembek uulu',
+      rating: 5,
+      avatar: avatar1,
+   },
+   {
+      id: 8,
+      description:
+         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
+      name: 'Alibek Altynbek uulu',
+      rating: 5,
+      avatar: avatar2,
+   },
+   {
+      id: 9,
+      description:
+         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
+      name: 'Kauhar Zarlykova',
+      rating: 5,
+      avatar: avatar3,
    },
 ]
 

@@ -6,7 +6,7 @@ import { postEveluatingScore } from '../../../../../api/resultService'
 import Button from '../../../../../components/UI/buttons/Buttons'
 import volumeUpIcon from '../../../../../assets/icons/volumeOn.svg'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
-import AdminMultiplySelect from '../../../../../components/UI/multiply-select/AdminMultiplySelect'
+import AdminCheckSelect from '../../../../../components/UI/multiply-select/AdminCheckSelect'
 
 const buttonStyleGoBack = {
    width: '12.8%',
@@ -60,17 +60,7 @@ const ListenAndSelectResult = ({ question, score, answerId }) => {
       <>
          <TestListenAndSelectEnglishWords>
             {question.questionResponse.options.map((elem, i) => (
-               // <ListenWordEnglish key={elem.id}>
-               //    <NumberListenWords>{i + 1}</NumberListenWords>
-               //    <StyledVolumeup src={volumeUpIcon} />
-               //    <ListenWordEnglishTest>{elem.title}</ListenWordEnglishTest>
-               //    <Checkboxes
-               //       sx={styleCheckboxes}
-               //       color="success"
-               //       checked={elem.isCorrect}
-               //    />
-               // </ListenWordEnglish>
-               <AdminMultiplySelect elem={elem} index={i} />
+               <AdminCheckSelect key={elem.id} elem={elem} index={i} />
             ))}
          </TestListenAndSelectEnglishWords>
          <h4 style={{ margin: 0 }}>User&#39;s Answer</h4>
@@ -79,9 +69,7 @@ const ListenAndSelectResult = ({ question, score, answerId }) => {
                <UserAnswer key={elem.optionTitle}>
                   <NumberListenWords>{i + 1}</NumberListenWords>
                   <StyledVolumeup src={volumeUpIcon} />
-                  <ListenWordEnglishTest>
-                     {elem.optionTitle}
-                  </ListenWordEnglishTest>
+                  <ListenWordEnglishTest>Word {i}</ListenWordEnglishTest>
                </UserAnswer>
             ))}
          </TestSelectRealEnglishWordsLine>
@@ -109,13 +97,13 @@ const TestSelectRealEnglishWordsLine = styled('div')(() => ({
 }))
 
 const UserAnswer = styled('div')(() => ({
-   width: '18.83%',
+   width: '15.83%',
    background: '#FFFFFF',
    border: '1.53px solid #D4D0D0',
    borderRadius: '8px',
    display: 'flex',
    alignItems: 'center',
-   padding: '14px 16px',
+   padding: '10px 16px',
 }))
 
 const TestListenAndSelectEnglishWords = styled('div')(({ options }) => ({

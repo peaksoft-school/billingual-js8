@@ -68,8 +68,7 @@ const CurrentTest = () => {
                               <Time />
                               <span>
                                  Practice takes just{' '}
-                                 {(item.duration / 60).toFixed(0)}
-                                 minutes
+                                 {(item.duration / 60).toFixed(0)} minutes
                               </span>
                            </ListItem>
                            <ListItem>

@@ -145,7 +145,7 @@ const TestQuestions = () => {
                            : { border: '1px solid #6a6666c1' }
                      }
                      placeholder={
-                        errorObject.duration ? errorObject.duration : '15:00'
+                        errorObject.duration ? errorObject.duration : '15'
                      }
                      id="timeInput"
                      name="duration"
@@ -153,7 +153,7 @@ const TestQuestions = () => {
                      type="number"
                      value={duration}
                      min={1}
-                     defaultValue={1}
+                     defaultValue={15}
                   />
                </DivTimerInput>
             </DivInputOne>

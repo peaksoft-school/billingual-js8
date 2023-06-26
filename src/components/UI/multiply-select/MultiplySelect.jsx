@@ -4,7 +4,7 @@ import { Howl, Howler } from 'howler'
 import { ReactComponent as Volumeup } from '../../../assets/icons/volumeup.svg'
 import { ReactComponent as Check } from '../../../assets/icons/check.svg'
 
-const MultiplySelect = ({ id, word, audio, setAudio, audioIds }) => {
+const MultiplySelect = ({ id, audio, setAudio, audioIds, index }) => {
    const [color, setColor] = useState(false)
    const [isPlaying, setIsPlaying] = useState(false)
 
@@ -44,9 +44,7 @@ const MultiplySelect = ({ id, word, audio, setAudio, audioIds }) => {
                onClick={() => soundPlay(audio)}
             />
 
-            <Word onClick={() => selectHandler(id)}>
-               {word} {id}
-            </Word>
+            <Word onClick={() => selectHandler(id)}>word {index + 1}</Word>
          </Content>
          <Actions>
             <Check onClick={() => selectHandler(id)} />
@@ -92,6 +90,8 @@ const Word = styled(Typography)(() => ({
    fontSize: '14px',
    lineHeight: '16px',
    color: '#4C4859',
+   overflow: 'hidden',
+   textOverflow: 'ellipsis',
 }))
 
 const Actions = styled(Grid)(() => ({

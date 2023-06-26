@@ -18,6 +18,7 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
    const divRef = useRef(null)
    const navigate = useNavigate()
    const { notify } = useSnackbar()
+   const [selectedText, setSelectedText] = useState('')
 
    const guestionsThePassage = (e) => {
       setStatement(e.target.value)
@@ -49,7 +50,7 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
             ...prevState,
             passage: 'passage write',
          }))
-      } else if (window.getSelection().toString() === '') {
+      } else if (selectedText === '') {
          setWarningInputPassage((prevState) => ({
             ...prevState,
             correctAnswer: 'Highlight correct answer!',
@@ -60,7 +61,7 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
                title,
                statement,
                passage,
-               correctAnswer: window.getSelection().toString(),
+               correctAnswer: selectedText,
                duration,
                questionOrder: 7,
                testId,
@@ -83,6 +84,10 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
          }
       }
       return null
+   }
+
+   const handleTextSelection = () => {
+      setSelectedText(window.getSelection().toString())
    }
 
    return (
@@ -118,7 +123,12 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
                   <HighlightCorrectAnswerLabel>
                      Highlight correct answer :
                   </HighlightCorrectAnswerLabel>
-                  <DivCorrectAnswer ref={divRef}>{passage}</DivCorrectAnswer>
+                  <DivCorrectAnswer
+                     ref={divRef}
+                     onMouseUp={handleTextSelection}
+                  >
+                     {passage}
+                  </DivCorrectAnswer>
                </>
             )}
             {warningInputPassage.correctAnswer && (

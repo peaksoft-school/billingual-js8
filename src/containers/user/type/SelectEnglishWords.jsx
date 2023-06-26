@@ -44,7 +44,7 @@ export default React.memo(SelectEnglishWords)
 
 const TitleStyle = styled(Typography)(() => ({
    textAlign: 'center',
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '28px',

@@ -55,13 +55,19 @@ const Footer = () => {
                </MuiAccordion>
             ))}
             <Logos>
-               <div>
+               <a href="#home" style={{ cursor: 'pointer' }}>
                   <Bilingual />
-               </div>
+               </a>
                <SocialNetwork>
-                  <YouTube />
-                  <Facebook />
-                  <Instagram />
+                  <a href="https://youtube.com/@Bilingua.education">
+                     <YouTube />
+                  </a>
+                  <a href="https://www.facebook.com/profile.php?id=100093794987413">
+                     <Facebook />
+                  </a>
+                  <a href="https://www.instagram.com/bilingual.education.kg/">
+                     <Instagram />
+                  </a>
                </SocialNetwork>
             </Logos>
             <Copyright>

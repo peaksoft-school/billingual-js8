@@ -1,7 +1,7 @@
 import { Grid, Typography, styled } from '@mui/material'
-import { WaveformAudioRecorder } from 'waveform-audio-recorder'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { ReactMic } from 'react-mic'
 import { ReactComponent as Img } from '../../../assets/icons/img-speak.svg'
 import Button from '../../../components/UI/buttons/Buttons'
 import { ReactComponent as Recording } from '../../../assets/icons/recording.svg'
@@ -10,23 +10,52 @@ import { postFileRequest } from '../../../api/questionService'
 import { useSnackbar } from '../../../hooks/useSnackbar'
 
 const RecordSaying = ({ question, handleNextClick }) => {
-   const [recorderState, setRecorderState] = useState(null)
+   const [isRecording, setRecording] = useState(false)
+   const [audioBlob, setAudioBlob] = useState(null)
    const { notify } = useSnackbar()
    const dispatch = useDispatch()
-   const onClickButton = recorderState?.initRecording
-      ? recorderState?.saveRecording
-      : recorderState?.startRecording
+
+   const startRecording = () => {
+      setRecording(true)
+   }
+
+   const stopRecording = () => {
+      setRecording(false)
+   }
+
+   const onData = (recordedBlob) => {
+      setAudioBlob(recordedBlob.blob)
+   }
+
+   const onStop = (recordedBlob) => {
+      setAudioBlob(recordedBlob.blob)
+   }
+
+   // const downloadRecording = () => {
+   //    if (!audioBlob) {
+   //       notify('error', 'Recording', 'No recording available')
+   //       return
+   //    }
+
+   //    const url = URL.createObjectURL(audioBlob)
+   //    const a = document.createElement('a')
+   //    document.body.appendChild(a)
+   //    a.style = 'display: none'
+   //    a.href = url
+   //    a.download = 'recording.mp3'
+   //    a.click()
+   //    window.URL.revokeObjectURL(url)
+   // }
 
    const nextButtonHandler = async () => {
-      const audioBlob = recorderState?.audio
-      const audioFile = new File([audioBlob], 'audio.mp3', {
-         type: 'audio/mp3',
-         setRecorderState,
-      })
+      if (!audioBlob) {
+         notify('error', 'Recording', 'Please record your saying')
+         return
+      }
 
       try {
          const formData = new FormData()
-         formData.append('multipartFile', audioFile)
+         formData.append('multipartFile', audioBlob, 'recording.mp3')
          const { data } = await postFileRequest(formData)
          const newAnswer = {
             questionId: question.id,
@@ -35,10 +64,7 @@ const RecordSaying = ({ question, handleNextClick }) => {
          }
          dispatch(userQuestionActions.addAnswer(newAnswer))
          handleNextClick()
-         setRecorderState((prevState) => ({
-            ...prevState,
-            audio: null,
-         }))
+         setAudioBlob(null)
       } catch (error) {
          notify('error', 'File', 'Something went wrong')
       }
@@ -49,34 +75,45 @@ const RecordSaying = ({ question, handleNextClick }) => {
          <Title>{question.title}</Title>
          <Container>
             <Img />
-            <Text> &quot; {question.statement} &quot;.</Text>
+            <Text>&quot; {question.statement} &quot;.</Text>
          </Container>
          <SecondContainer>
-            {recorderState?.initRecording ? <Recording /> : null}
-            <MemoizedWaveformAudioRecorder
-               setRecorderState={setRecorderState}
+            {isRecording ? <Recording /> : null}
+            <Wave
+               record={isRecording}
+               onData={onData}
+               onStop={onStop}
+               strokeColor="#3A10E5"
+               backgroundColor="#ffffff"
             />
             <div>
-               <StyledButton variant="contained" onClick={onClickButton}>
-                  {recorderState?.initRecording
-                     ? 'STOP RECORDING'
-                     : 'RECORD NOW'}
+               <StyledButton
+                  variant="contained"
+                  onClick={isRecording ? stopRecording : startRecording}
+               >
+                  {isRecording ? 'STOP RECORDING' : 'RECORD NOW'}
                </StyledButton>
                <Button
-                  disabled={recorderState?.audio === null}
+                  disabled={!audioBlob}
                   variant="contained"
                   onClick={nextButtonHandler}
                >
                   NEXT
                </Button>
+               {/* <Button variant="contained" onClick={downloadRecording}>
+                  DOWNLOAD
+               </Button> */}
             </div>
          </SecondContainer>
       </>
    )
 }
+
 export default RecordSaying
 
-const MemoizedWaveformAudioRecorder = React.memo(WaveformAudioRecorder)
+const Wave = styled(ReactMic)(() => ({
+   display: 'flex',
+}))
 
 const Title = styled(Typography)(() => ({
    fontStyle: 'normal',
@@ -105,14 +142,17 @@ const Text = styled('p')(() => ({
    fontWeight: 500,
    fontSize: '18px',
    lineHeight: '124 %',
-   textRransform: 'lowercase',
+   textTransform: 'lowercase',
    color: '#4C4859',
 }))
+
 const SecondContainer = styled(Grid)(() => ({
    display: 'flex',
-   justifyContent: 'space-between',
+   justifyContent: 'flex-end',
    alignItems: 'center',
 }))
+
 const StyledButton = styled(Button)(() => ({
    marginRight: '20px',
+   textAlign: 'end',
 }))

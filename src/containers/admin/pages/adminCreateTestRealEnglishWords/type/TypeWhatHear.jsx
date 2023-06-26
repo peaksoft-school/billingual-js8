@@ -117,7 +117,7 @@ const TypeWhatHear = ({ title, duration, testId }) => {
                      ...requestData,
                      file: link,
                   })
-                  navigate('/admin/test')
+                  navigate(`/admin/test/${testId}`)
                })
          } else {
             dispatch(
@@ -165,6 +165,7 @@ const TypeWhatHear = ({ title, duration, testId }) => {
                   name="numberOfReplays"
                   value={formValues.numberOfReplays}
                   onChange={handleInputChange}
+                  InputProps={{ inputProps: { min: 0, max: 10 } }}
                />
             </ReplaysStyled>
 

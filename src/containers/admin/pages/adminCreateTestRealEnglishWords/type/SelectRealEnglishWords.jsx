@@ -144,6 +144,7 @@ const SelectRealEnglishWords = ({ title, duration, testId }) => {
             <TestSelectRealEnglishWordsLine>
                {options.map((elem, i) => (
                   <TextContainer
+                     key={elem.id}
                      elem={elem}
                      index={i}
                      checkedFunc={checkedFunc}
@@ -171,8 +172,12 @@ const TestSelectRealEnglishWordsLine = styled('div')(() => ({
    height: 'auto',
    margin: '0 auto',
    marginBottom: '18px',
-   display: 'grid',
-   gridTemplateColumns: 'repeat(auto-fit, minmax(200px, auto))',
+   // display: 'grid',
+   // gridTemplateColumns: 'repeat(auto-fit, minmax(200px, auto))',
+   display: 'flex',
+   flexWrap: 'wrap',
+   justifyContent: 'flex-start',
+   alignItems: 'center',
    gap: '10px 67px',
    justifyItems: 'center',
 }))
