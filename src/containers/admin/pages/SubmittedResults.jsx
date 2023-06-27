@@ -99,10 +99,10 @@ const SubmittedResults = () => {
                         </SpinnerContainer>
                      )}
                      {results && results.length > 0 ? (
-                        results.map((result) => {
+                        results.map((result, i) => {
                            return (
                               <StyledTr key={result.resultId} hover>
-                                 <StyledTd>{result.resultId} </StyledTd>
+                                 <StyledTd>{i + 1} </StyledTd>
                                  <StyledTd>{result.userFullName} </StyledTd>
                                  <StyledTd>
                                     {renderDate(result.dateOfSubmission)}

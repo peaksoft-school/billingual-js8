@@ -12,7 +12,7 @@ import {
 } from '../../../../../redux/question/question.thunk'
 import { updateQuestionRequest } from '../../../../../api/questionService'
 
-const DescribeImage = ({ title, duration, testId }) => {
+const DescribeImage = ({ title, duration, testId, setError }) => {
    const dispatch = useDispatch()
    const { state } = useLocation()
    const navigate = useNavigate()
@@ -49,6 +49,18 @@ const DescribeImage = ({ title, duration, testId }) => {
 
    const submitTests = (e) => {
       e.preventDefault()
+      if (!title) {
+         setError((prevState) => ({
+            ...prevState,
+            title: 'Please title enter!',
+         }))
+      }
+      if (!duration) {
+         setError((prevState) => ({
+            ...prevState,
+            duration: 'Enter time!',
+         }))
+      }
       // Validate inputs
       if (!imgFile || input.trim() === '') {
          notify(

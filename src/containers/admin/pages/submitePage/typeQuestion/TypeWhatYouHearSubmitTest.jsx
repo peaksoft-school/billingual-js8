@@ -45,14 +45,12 @@ const TypeWhatYouHearSubmitTest = ({ question, answerId, score }) => {
       return elem.fileUrl
    })
 
-   console.log(files)
-
    const saveScore = async () => {
       const data = {
          answerId,
          score,
       }
-      console.log('click')
+
       try {
          await postEveluatingScore(data)
          goBack()

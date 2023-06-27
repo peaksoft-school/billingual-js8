@@ -15,7 +15,7 @@ import { useSnackbar } from '../../../../../hooks/useSnackbar'
 import Input from '../../../../../components/UI/input/Input'
 import { updateQuestionRequest } from '../../../../../api/questionService'
 
-const TypeWhatHear = ({ title, duration, testId }) => {
+const TypeWhatHear = ({ title, duration, testId, setError }) => {
    const dispatch = useDispatch()
    const { state } = useLocation()
    const audioRef = useRef(null)
@@ -82,10 +82,29 @@ const TypeWhatHear = ({ title, duration, testId }) => {
       }
    }
 
+   const navigateGoBackTest = () => {
+      navigate(`/admin/test/${testId}`)
+   }
+
    const handleAudioEnded = () => {
       setIsPlaying(false)
    }
    const handleSubmit = async () => {
+      if (!title) {
+         setError((prevState) => ({
+            ...prevState,
+            title: 'Please title enter!',
+         }))
+      }
+      if (!duration) {
+         setError((prevState) => ({
+            ...prevState,
+            duration: 'Enter time!',
+         }))
+      }
+      if (formValues.numberOfReplays === 0) {
+         notify('error', 'Attention!', 'Please select an number of replays.')
+      }
       if (!audioUrl) {
          notify('error', 'Attention!', 'Please select an audio file.')
 
@@ -117,7 +136,7 @@ const TypeWhatHear = ({ title, duration, testId }) => {
                      ...requestData,
                      file: link,
                   })
-                  navigate(`/admin/test/${testId}`)
+                  navigateGoBackTest()
                })
          } else {
             dispatch(
@@ -125,7 +144,7 @@ const TypeWhatHear = ({ title, duration, testId }) => {
                   requestData,
                   notify,
                   audioFile: audioUrl,
-                  navigate,
+                  navigateGoBackTest,
                })
             )
          }
@@ -144,9 +163,6 @@ const TypeWhatHear = ({ title, duration, testId }) => {
       accept: 'audio/mp3',
       onDrop,
    })
-   const navigateGoBackTest = () => {
-      navigate(`/admin/test/${testId}`)
-   }
 
    useEffect(() => {
       setAudioUrl(oldLink?.fileUrl || null)

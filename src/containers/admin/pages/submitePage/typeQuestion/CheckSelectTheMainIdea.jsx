@@ -39,10 +39,10 @@ const CheckSelectTheMainIdea = ({ question, answerId, score }) => {
             <StyledSpan>{question.questionResponse.passage}</StyledSpan>
          </TextContainer>
          <OptionsContainer>
-            {question.questionResponse.options.map((item) => (
+            {question.questionResponse.options.map((item, i) => (
                <Options key={item.id}>
                   <TitleContainer>
-                     <Index>1</Index>
+                     <Index>{i + 1}</Index>
                      <Title>{item.title}</Title>
                   </TitleContainer>
                   <Actions>
@@ -55,10 +55,10 @@ const CheckSelectTheMainIdea = ({ question, answerId, score }) => {
             User&#39;s answer
          </StyledText>
          <OptionsContainer>
-            {question.userAnswerResponse.map((item) => (
+            {question.userAnswerResponse.map((item, i) => (
                <Options>
                   <TitleContainer>
-                     <Index>1</Index>
+                     <Index>{i + 1}</Index>
                      <Title>{item.optionTitle}</Title>
                   </TitleContainer>
                </Options>

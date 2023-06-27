@@ -16,7 +16,7 @@ import {
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
 import { questionActions } from '../../../../../redux/question/question.slice'
 
-const SelectMainIdea = ({ title, duration, testId }) => {
+const SelectMainIdea = ({ title, duration, testId, setError }) => {
    const dispatch = useDispatch()
    const { state } = useLocation()
    const { options } = useSelector((state) => state.questions)
@@ -63,10 +63,24 @@ const SelectMainIdea = ({ title, duration, testId }) => {
          id: state?.question.id,
       }
       try {
-         if (!title || !duration || !passageInput || options.length === 0) {
-            return notify('error', 'Question', 'Please fill in all fields')
+         if (!passageInput) {
+            return notify('error', 'Question', 'Please enter passage')
          }
-
+         if (!title) {
+            return setError((prevState) => ({
+               ...prevState,
+               title: 'Please title enter!',
+            }))
+         }
+         if (!duration) {
+            return setError((prevState) => ({
+               ...prevState,
+               duration: 'Enter time!',
+            }))
+         }
+         if (options.length === 0) {
+            return notify('error', 'Failed', 'options should not be empty')
+         }
          if (state !== null) {
             await updateQuestionRequest(data)
             goBack()

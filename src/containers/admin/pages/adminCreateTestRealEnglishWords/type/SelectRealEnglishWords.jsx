@@ -1,11 +1,8 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
 import { styled } from '@mui/material'
-import Checkboxes from '../../../../../components/UI/checkbox/Checkbox'
-import { ReactComponent as DeleteIcon } from '../../../../../assets/icons/deletedIcon.svg'
 import Button from '../../../../../components/UI/buttons/Buttons'
 import ModalDelete from '../../../../../components/UI/modal/ModalDelete'
 import QuestionModal from '../../../../../components/UI/modal/QuestionModal'
@@ -15,7 +12,6 @@ import {
    postSelectRealEnglishWord,
    updateQuestionRequest,
 } from '../../../../../api/questionService'
-import MyIconButton from '../../../../../components/UI/Icon-button/IconButton'
 import TextContainer from '../../../../../components/UI/TextContainer'
 
 const buttonStyleGoBack = {
@@ -39,11 +35,6 @@ const buttonSave = {
    },
 }
 
-const styleCheckboxes = {
-   width: '6.97%',
-   height: '43.48%',
-   marginLeft: '9.89%',
-}
 const buttonStyle = {
    '&:hover': {
       background: '#0015cf',
@@ -60,7 +51,7 @@ const buttonStyle = {
    fontSize: '0.875rem',
    lineHeight: '1rem',
 }
-const SelectRealEnglishWords = ({ title, duration, testId }) => {
+const SelectRealEnglishWords = ({ title, duration, testId, setError }) => {
    const { options } = useSelector((item) => item.questions)
    const dispatch = useDispatch()
    const { state } = useLocation()
@@ -103,8 +94,20 @@ const SelectRealEnglishWords = ({ title, duration, testId }) => {
          id: state?.question.id,
       }
       try {
-         if (!title || !duration || options.length === 0) {
-            return notify('error', 'Question', 'Please fill in all fields')
+         if (!title) {
+            return setError((prevState) => ({
+               ...prevState,
+               title: 'Please title enter!',
+            }))
+         }
+         if (!duration) {
+            return setError((prevState) => ({
+               ...prevState,
+               duration: 'Enter time!',
+            }))
+         }
+         if (options.length === 0) {
+            return notify('error', 'Failed', 'options should not be empty')
          }
          if (state !== null) {
             await updateQuestionRequest(data)
@@ -182,48 +185,6 @@ const TestSelectRealEnglishWordsLine = styled('div')(() => ({
    justifyItems: 'center',
 }))
 
-const WordEnglish = styled('div')(() => ({
-   width: '31.83%',
-   height: 'auto',
-   background: '#FFFFFF',
-   border: '1.53px solid #D4D0D0',
-   borderRadius: '8px',
-   display: 'flex',
-   alignItems: 'center',
-}))
-
-const NumberWords = styled('div')(() => ({
-   width: '3.47%',
-   height: '39.13%',
-   margin: '14px 6% 14px 6.13%',
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '16px',
-   lineHeight: '18px',
-   color: ' #4C4859',
-}))
-
-const WordEnglishTest = styled('div')(() => ({
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '1rem',
-   lineHeight: '18px',
-   color: ' #4C4859',
-   width: '47.59%',
-   height: '39.13%',
-   overflow: 'hidden',
-   textOverflow: 'ellipsis',
-}))
-
-const Delete = styled('img')(() => ({
-   width: '7.66%',
-   height: '43.48%',
-   cursor: 'pointer',
-   marginLeft: '4.98%',
-}))
-
 const CreateTest = styled('div')(() => ({
    gap: '5px',
 }))
@@ -236,15 +197,4 @@ const DivButtonSaveandGoBack = styled('div')(() => ({
    justifyContent: 'end',
    marginTop: '32px',
    gap: '1.95%',
-}))
-const DeleteIconLogo = styled(DeleteIcon)(({ theme }) => ({
-   width: '20px',
-   height: '20px',
-   cursor: 'pointer',
-   marginLeft: '10px',
-   '&:hover': {
-      path: {
-         stroke: theme.palette.secondary.main,
-      },
-   },
 }))

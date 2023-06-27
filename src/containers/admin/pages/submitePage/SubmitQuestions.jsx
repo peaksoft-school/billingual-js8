@@ -70,13 +70,13 @@ const SubmiteQuestions = () => {
                      <StyledText>
                         Question Statement:{' '}
                         <StyledSpan>
-                           {state.questionResponse.questionStatement}
+                           {state.questionResponse.statement}
                         </StyledSpan>
                      </StyledText>
                   </>
                ) : null}
             </div>
-            <div style={{ width: '100px' }}>
+            <div style={{ width: '120px' }}>
                <h4 style={{ margin: 0 }}>Evaluation</h4>
                {state.questionResponse.questionType ===
                   'LISTEN_AND_SELECT_ENGLISH_WORD' ||

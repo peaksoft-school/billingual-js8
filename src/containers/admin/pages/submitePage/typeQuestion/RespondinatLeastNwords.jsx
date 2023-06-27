@@ -61,6 +61,9 @@ const SaveButton = styled(Button)(() => ({
    height: '42px',
    color: 'white',
    marginLeft: '1rem',
+   '&:hover': {
+      background: '#00ff2a',
+   },
 }))
 const SecondContainer = styled(Grid)(() => ({
    display: 'flex',

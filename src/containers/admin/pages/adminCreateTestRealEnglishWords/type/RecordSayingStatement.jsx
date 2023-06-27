@@ -9,7 +9,7 @@ import {
 } from '../../../../../api/questionService'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
 
-const RecordSayingStatement = ({ title, duration, testId }) => {
+const RecordSayingStatement = ({ title, duration, testId, setError }) => {
    const { state } = useLocation()
    const [statement, setStatement] = useState(state?.question.statement || '')
    const navigate = useNavigate()
@@ -20,6 +20,18 @@ const RecordSayingStatement = ({ title, duration, testId }) => {
    }
 
    const submitHandler = async () => {
+      if (!title) {
+         setError((prevState) => ({
+            ...prevState,
+            title: 'Please title enter!',
+         }))
+      }
+      if (!duration) {
+         setError((prevState) => ({
+            ...prevState,
+            duration: 'Enter time!',
+         }))
+      }
       try {
          const data = {
             title,

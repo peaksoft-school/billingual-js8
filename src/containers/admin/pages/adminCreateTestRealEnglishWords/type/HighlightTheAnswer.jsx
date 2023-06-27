@@ -10,7 +10,7 @@ import {
    updateQuestionRequest,
 } from '../../../../../api/questionService'
 
-const HighlightTheAnswer = ({ title, duration, testId }) => {
+const HighlightTheAnswer = ({ title, duration, testId, setError }) => {
    const { state } = useLocation()
    const [statement, setStatement] = useState(state?.question.statement || '')
    const [passage, setPassage] = useState(state?.question.passage || '')
@@ -39,6 +39,18 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
       navigate(`/admin/test/${testId}`)
    }
    const saveHandler = async () => {
+      if (!title) {
+         return setError((prevState) => ({
+            ...prevState,
+            title: 'Please title enter!',
+         }))
+      }
+      if (!duration) {
+         return setError((prevState) => ({
+            ...prevState,
+            duration: 'Enter time!',
+         }))
+      }
       if (statement === '' && passage === '') {
          setWarningInputPassage((prevState) => ({
             ...prevState,

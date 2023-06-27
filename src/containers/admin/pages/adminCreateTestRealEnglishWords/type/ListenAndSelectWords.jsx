@@ -53,7 +53,7 @@ const buttonStyle = {
    lineHeight: '1rem',
 }
 
-const ListenWords = ({ title, duration, testId }) => {
+const ListenWords = ({ title, duration, testId, setError }) => {
    const { options, link } = useSelector((data) => data.questions)
    const dispatch = useDispatch()
    const { state } = useLocation()
@@ -176,8 +176,20 @@ const ListenWords = ({ title, duration, testId }) => {
          id: state?.question.id,
       }
       try {
-         if (!title || !duration || options.length === 0) {
-            return notify('error', 'Question', 'Please fill in all fields')
+         if (!title) {
+            return setError((prevState) => ({
+               ...prevState,
+               title: 'Please title enter!',
+            }))
+         }
+         if (!duration) {
+            return setError((prevState) => ({
+               ...prevState,
+               duration: 'Enter time!',
+            }))
+         }
+         if (options.length === 0) {
+            return notify('error', 'Failed', 'options should not be empty')
          }
          if (state !== null) {
             await updateQuestionRequest(data)

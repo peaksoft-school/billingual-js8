@@ -145,13 +145,13 @@ const SignupPage = () => {
                   )
                })}
 
-               <Error>{CheckConfirmPassword}</Error>
                {/* <Error>{CheckEmail}</Error>
                <Error> {CheckPassword}</Error> */}
-               <Error>{error}</Error>
-               <Error>{touched.password && errors.password}</Error>
                <Error>{touched.firstName && errors.firstName}</Error>
                <Error>{touched.lastName && errors.lastName}</Error>
+               <Error>{touched.password && errors.password}</Error>
+               <Error>{error}</Error>
+               <Error>{CheckConfirmPassword}</Error>
                {isLoading ? (
                   <Spinner />
                ) : (

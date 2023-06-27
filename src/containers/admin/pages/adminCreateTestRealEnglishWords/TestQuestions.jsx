@@ -56,13 +56,11 @@ const menuItemStyle = {
 const TestQuestions = () => {
    const { state } = useLocation()
    const [selectType, setSelectType] = useState(
-      questionName(state?.question.questionType || '')
+      questionName(state?.question.questionType || 'SELECT_ENGLISH_WORD')
    )
    const [title, setTitle] = useState(state?.question.title || '')
-   const [duration, setDuration] = useState(state?.question.duration || '')
+   const [duration, setDuration] = useState(state?.question.duration || 20)
    const [errorObject, setError] = useState({})
-
-   console.log(state)
 
    const titleOnChangeFunction = (e) => {
       setTitle(e.target.value)
@@ -144,9 +142,7 @@ const TestQuestions = () => {
                              }
                            : { border: '1px solid #6a6666c1' }
                      }
-                     placeholder={
-                        errorObject.duration ? errorObject.duration : '15'
-                     }
+                     placeholder="15"
                      id="timeInput"
                      name="duration"
                      onChange={durationOnChange}
@@ -194,6 +190,7 @@ const TestQuestions = () => {
                title={title}
                duration={duration}
                testId={testId}
+               setError={setError}
             />
          </TestSelectRealEnglishWords>
       </DivCreateTest>

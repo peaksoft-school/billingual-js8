@@ -1,4 +1,5 @@
 import * as Yup from 'yup'
+import { questionTypes } from './common'
 
 export const signUpInputArray = [
    {
@@ -25,6 +26,45 @@ export const signUpInputArray = [
       name: 'confirmPassword',
       label: 'Confirm Password',
       type: 'password',
+   },
+]
+
+export const typeTestArray = [
+   {
+      type: questionTypes.SelectRealEnglishWords,
+      id: Math.random(),
+   },
+   {
+      type: questionTypes.ListenAndSelect,
+      id: Math.random(),
+   },
+   {
+      type: questionTypes.TypeWhatYourHear,
+      id: Math.random(),
+   },
+   {
+      type: questionTypes.DescribeImage,
+      id: Math.random(),
+   },
+   {
+      type: questionTypes.RecordSayingStatement,
+      id: Math.random(),
+   },
+   {
+      type: questionTypes.RespondInAtLeastNWords,
+      id: Math.random(),
+   },
+   {
+      type: questionTypes.HighlightTheAnswer,
+      id: Math.random(),
+   },
+   {
+      type: questionTypes.SelectTheMainIdea,
+      id: Math.random(),
+   },
+   {
+      type: 'Select best title',
+      id: Math.random(),
    },
 ]
 
@@ -56,9 +96,6 @@ export const signUpValidation = Yup.object().shape({
    confirmPassword: Yup.string()
       .required('Password is required')
       .oneOf([Yup.ref('password')], 'Your password do not match'),
-   // .test('password match', 'Password must match', (value) => {
-   //    return this.password === value
-   // }),
 })
 
 export const signInValidation = Yup.object().shape({
@@ -67,7 +104,7 @@ export const signInValidation = Yup.object().shape({
    password: Yup.string()
       .matches(
          /^.*(?=.{8,})(?=.*\d)((?=.*[a-z]){1}).*$/,
-         'Password must contain at least 8 characters, one uppercase, one number and one special case character'
+         'Password must contain at least 8 characters, one uppercase and one number'
       )
       .required('Password is required')
       .min(8, 'Password is too short - should be 8 chars minimum'),

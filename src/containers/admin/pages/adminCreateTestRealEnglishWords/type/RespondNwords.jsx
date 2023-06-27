@@ -9,7 +9,7 @@ import Button from '../../../../../components/UI/buttons/Buttons'
 import Input from '../../../../../components/UI/input/Input'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
 
-const RespondNwords = ({ title, duration, testId }) => {
+const RespondNwords = ({ title, duration, testId, setError }) => {
    const { state } = useLocation()
    const { notify } = useSnackbar()
    const navigate = useNavigate()
@@ -64,6 +64,18 @@ const RespondNwords = ({ title, duration, testId }) => {
    }
 
    const submitHandler = async () => {
+      if (!title) {
+         setError((prevState) => ({
+            ...prevState,
+            title: 'Please title enter!',
+         }))
+      }
+      if (!duration) {
+         setError((prevState) => ({
+            ...prevState,
+            duration: 'Enter time!',
+         }))
+      }
       if (formValues.statement.trim().length === 0) {
          notify(
             'error',

@@ -56,7 +56,6 @@ const RecordSayingResult = ({ question, answerId, score }) => {
       <Container>
          {question.userAnswerResponse.map((item) => (
             <FirstContainer>
-               {console.log(item.fileUrl)}
                <audio
                   ref={audioRef}
                   style={{ display: 'none' }}
@@ -155,6 +154,9 @@ const SaveButton = styled(Button)(() => ({
    height: '42px',
    color: 'white',
    marginLeft: '1rem',
+   ':hover': {
+      background: '#00ff2a',
+   },
 }))
 const SecondContainer = styled(Grid)(() => ({
    display: 'flex',

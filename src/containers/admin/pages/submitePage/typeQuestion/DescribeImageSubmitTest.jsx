@@ -41,8 +41,6 @@ const DescribeImageSubmitTest = ({ question, answerId, score }) => {
       return elem.fileUrl
    })
 
-   console.log(files)
-
    const saveScore = async () => {
       const data = {
          answerId,

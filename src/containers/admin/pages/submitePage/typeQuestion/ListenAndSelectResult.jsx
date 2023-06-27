@@ -69,7 +69,7 @@ const ListenAndSelectResult = ({ question, score, answerId }) => {
                <UserAnswer key={elem.optionTitle}>
                   <NumberListenWords>{i + 1}</NumberListenWords>
                   <StyledVolumeup src={volumeUpIcon} />
-                  <ListenWordEnglishTest>Word {i}</ListenWordEnglishTest>
+                  <ListenWordEnglishTest>Word</ListenWordEnglishTest>
                </UserAnswer>
             ))}
          </TestSelectRealEnglishWordsLine>
@@ -106,13 +106,14 @@ const UserAnswer = styled('div')(() => ({
    padding: '10px 16px',
 }))
 
-const TestListenAndSelectEnglishWords = styled('div')(({ options }) => ({
+const TestListenAndSelectEnglishWords = styled('div')(() => ({
    width: '100%',
    height: 'auto',
-   margin: '0 auto',
+   margin: 0,
    display: 'flex',
    gap: '2.2%',
-   marginBottom: !options ? '18px' : '0px',
+   flexWrap: 'wrap',
+   marginBottom: '18px',
 }))
 
 // const ListenWordEnglish = styled('div')(() => ({
