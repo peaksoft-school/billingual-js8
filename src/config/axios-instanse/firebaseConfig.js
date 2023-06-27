@@ -2,13 +2,13 @@ import { initializeApp } from 'firebase/app'
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 
 const firebaseConfig = {
-   apiKey: 'AIzaSyCaV6ihz4mZq7cBfhNaNvI6Rp3AQqSZOe4',
-   authDomain: 'bilingual-b3163.firebaseapp.com',
-   projectId: 'bilingual-b3163',
-   storageBucket: 'bilingual-b3163.appspot.com',
-   messagingSenderId: '937905994024',
-   appId: '1:937905994024:web:51ed1813b278a0283ef81d',
-   measurementId: 'G-RMXL9VR6B3',
+   apiKey: 'AIzaSyApn0LiSU6abvEuEo5eOeTBmXvfjRz5zQI',
+   authDomain: 'bilingual-27936.firebaseapp.com',
+   projectId: 'bilingual-27936',
+   storageBucket: 'bilingual-27936.appspot.com',
+   messagingSenderId: '820540213652',
+   appId: '1:820540213652:web:1ebc6ea3a21d30ae49e781',
+   measurementId: 'G-6VHDY19CMW',
 }
 
 const app = initializeApp(firebaseConfig)

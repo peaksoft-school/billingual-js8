@@ -26,7 +26,7 @@ const UserTypeWhatYouHear = ({ question, handleNextClick }) => {
    const [replaysLeft, setReplaysLeft] = useState(numberReplays)
    const [testResponse, setTestResponse] = useState('')
    const [volumeIconDisabled, setVolumeIconDisabled] = useState(false)
-   const { files } = question
+   const { files, id } = question
 
    const listenToTheSound = (files) => {
       if (files) {
@@ -54,6 +54,8 @@ const UserTypeWhatYouHear = ({ question, handleNextClick }) => {
    const nextTestHandler = () => {
       const dataAnswer = {
          data: testResponse,
+         questionId: id,
+         numberOfPlays: numberReplays,
       }
       dispatch(userQuestionActions.addAnswer(dataAnswer))
       handleNextClick()
@@ -63,7 +65,7 @@ const UserTypeWhatYouHear = ({ question, handleNextClick }) => {
    return (
       <TypeWhatYouHearDivv>
          <SecondDivTypeWhatYouHear>
-            <Title>Type the statement you hear</Title>
+            <Title>{question.title}</Title>
             <audio
                ref={audioRef}
                style={{ display: 'none' }}

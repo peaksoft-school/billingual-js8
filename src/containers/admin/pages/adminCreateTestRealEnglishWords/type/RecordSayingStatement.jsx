@@ -1,37 +1,60 @@
 import React, { useState } from 'react'
 import { Typography, styled } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Input from '../../../../../components/UI/input/Input'
 import Button from '../../../../../components/UI/buttons/Buttons'
-import { postRecordSayingStatement } from '../../../../../api/questionService'
+import {
+   postRecordSayingStatement,
+   updateQuestionRequest,
+} from '../../../../../api/questionService'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
 
-const RecordSayingStatement = ({ title, duration, testId }) => {
-   const [statement, setStatement] = useState('')
+const RecordSayingStatement = ({ title, duration, testId, setError }) => {
+   const { state } = useLocation()
+   const [statement, setStatement] = useState(state?.question.statement || '')
    const navigate = useNavigate()
    const { notify } = useSnackbar()
 
    const goBack = () => {
-      navigate('/admin/test')
+      navigate(`/admin/test/${testId}`)
    }
 
    const submitHandler = async () => {
+      if (!title) {
+         setError((prevState) => ({
+            ...prevState,
+            title: 'Please title enter!',
+         }))
+      }
+      if (!duration) {
+         setError((prevState) => ({
+            ...prevState,
+            duration: 'Enter time!',
+         }))
+      }
       try {
          const data = {
             title,
             statement,
-            // correctAnswer в фигме нету, поэтому здесь просто написал
-            correctAnswer: 'Hello, how is it going?',
             duration,
             questionOrder: 5,
+            correctAnswer: 'Correct',
             testId,
             isActive: true,
+            questionType: state?.question.questionType,
+            id: state?.question.id,
          }
-         await postRecordSayingStatement(data)
-         goBack()
-         return notify('success', 'Question', 'Successfully added')
+         if (state !== null) {
+            await updateQuestionRequest(data)
+            goBack()
+            notify('success', 'Question', 'Successfully updated')
+         } else {
+            await postRecordSayingStatement(data)
+            goBack()
+            notify('success', 'Question', 'Successfully added')
+         }
       } catch (error) {
-         return notify('error', 'Question', error.response?.data.message)
+         notify('error', 'Question', error.response?.data.message)
       }
    }
 

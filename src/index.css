@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap');
+
+* {
+   scroll-behavior: smooth;
+}
+
 body {
    margin: 0;
    font-family: 'Poppins', 'Gilroy';
@@ -10,4 +15,8 @@ body {
 code {
    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
       monospace;
+}
+
+html {
+   fontfamily: 'Poppins';
 }

@@ -3,10 +3,9 @@ import { useFormik } from 'formik'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
-import { signInWithPopup } from 'firebase/auth'
 import { ReactComponent as System } from '../../assets/icons/system.svg'
 import { ReactComponent as Layer } from '../../assets/icons/layer 2.svg'
-import { ReactComponent as Google } from '../../assets/icons/google.svg'
+// import { ReactComponent as Google } from '../../assets/icons/google.svg'
 import Input from '../../components/UI/input/Input'
 import Checkboxes from '../../components/UI/checkbox/Checkbox'
 import Button from '../../components/UI/buttons/Buttons'
@@ -17,8 +16,8 @@ import Spinner from '../../components/UI/spinner/Spinner'
 import MyIconButton from '../../components/UI/Icon-button/IconButton'
 import { ReactComponent as EyeIcon } from '../../assets/icons/eyeDefaultIcon.svg'
 import { ReactComponent as EyeIconOff } from '../../assets/icons/eyeOffIcon.svg'
-import { auth, provider } from '../../config/axios-instanse/firebaseConfig'
-import authService from '../../api/authService'
+// import { auth, provider } from '../../config/axios-instanse/firebaseConfig'
+// import authService from '../../api/authService'
 
 const SigninPage = () => {
    const dispatch = useDispatch()
@@ -26,32 +25,29 @@ const SigninPage = () => {
    const { error, isLoading } = useSelector((state) => state.auth)
    const [showPassword, setShowPassword] = useState(false)
 
-   const googleSignInHandler = () => {
-      signInWithPopup(auth, provider).then(async (data) => {
-         console.log(data)
-         try {
-            const res = await authService.authWithGoogle(
-               // eslint-disable-next-line no-underscore-dangle
-               data.user.accessToken
-            )
-            console.log(res.data)
-         } catch (error) {
-            console.log(error)
-         }
+   // const googleSignInHandler = () => {
+   //    signInWithPopup(auth, provider).then(async (data) => {
+   //       console.log(data)
+   //       try {
+   //          await authService.authWithGoogle(data.user.accessToken)
+   //          console.log(data)
+   //       } catch (error) {
+   //          console.log(error)
+   //       }
 
-         // const userData = {
-         //    token: data.user.accessToken,
-         //    email: data.user.email,
-         //    role: 'USER',
-         // }
+   //       // const userData = {
+   //       //    token: data.user.accessToken,
+   //       //    email: data.user.email,
+   //       //    role: 'USER',
+   //       // }
 
-         // localStorage.setItem(
-         //    STORAGE_KEYS.BILINGUAL_USER_KEY,
-         //    JSON.stringify(userData)
-         // )
-         navigate('/user/tests')
-      })
-   }
+   //       // localStorage.setItem(
+   //       //    STORAGE_KEYS.BILINGUAL_USER_KEY,
+   //       //    JSON.stringify(userData)
+   //       // )
+   //       navigate('/user/tests')
+   //    })
+   // }
 
    // useEffect(() => {
    //    const userInfo = JSON.parse(
@@ -112,7 +108,7 @@ const SigninPage = () => {
                <StyledInput
                   label="Email"
                   name="email"
-                  error={!!errors.email}
+                  error={touched.email && !!errors.email}
                   value={values.email}
                   onChange={handleChange}
                   type="email"
@@ -153,13 +149,13 @@ const SigninPage = () => {
                      sign in
                   </StyledButton>
                )}
-               <ButtonContainer
+               {/* <ButtonContainer
                   disabled={isLoading}
                   onClick={googleSignInHandler}
                >
                   <GoogleIcon />
                   sign in with google
-               </ButtonContainer>
+               </ButtonContainer> */}
                <StyledText>
                   DON`T HAVE AN ACCOUNT?
                   <StyledNavLink
@@ -250,17 +246,17 @@ const Text = styled(Typography)(() => ({
 const StyledButton = styled(Button)(() => ({
    height: '52px',
 }))
-const ButtonContainer = styled(Button)(() => ({
-   margin: '34px auto 0',
-   border: ' 1px solid #BDBDBD',
-   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
-   borderRadius: '8px',
-   padding: '10px 10px',
-   color: '#757575',
-}))
-const GoogleIcon = styled(Google)(() => ({
-   margin: '0 8px 0 0',
-}))
+// const ButtonContainer = styled(Button)(() => ({
+//    margin: '34px auto 0',
+//    border: ' 1px solid #BDBDBD',
+//    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
+//    borderRadius: '8px',
+//    padding: '10px 10px',
+//    color: '#757575',
+// }))
+// const GoogleIcon = styled(Google)(() => ({
+//    margin: '0 8px 0 0',
+// }))
 const StyledText = styled(Typography)(() => ({
    textAlign: 'center',
    marginTop: '24px',

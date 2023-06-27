@@ -1,19 +1,24 @@
 import { React, useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { styled } from '@mui/material'
 import Input from '../../../../../components/UI/input/Input'
 import TextArea from '../../../../../components/UI/textArea/TextArea'
 import Button from '../../../../../components/UI/buttons/Buttons'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
-import { postHighlightTheAnswer } from '../../../../../api/questionService'
+import {
+   postHighlightTheAnswer,
+   updateQuestionRequest,
+} from '../../../../../api/questionService'
 
-const HighlightTheAnswer = ({ title, duration, testId }) => {
-   const [statement, setStatement] = useState('')
-   const [passage, setPassage] = useState('')
+const HighlightTheAnswer = ({ title, duration, testId, setError }) => {
+   const { state } = useLocation()
+   const [statement, setStatement] = useState(state?.question.statement || '')
+   const [passage, setPassage] = useState(state?.question.passage || '')
    const [warningInputPassage, setWarningInputPassage] = useState({})
    const divRef = useRef(null)
    const navigate = useNavigate()
    const { notify } = useSnackbar()
+   const [selectedText, setSelectedText] = useState('')
 
    const guestionsThePassage = (e) => {
       setStatement(e.target.value)
@@ -31,9 +36,21 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
    }
 
    const goBackFunction = () => {
-      navigate('/admin/test')
+      navigate(`/admin/test/${testId}`)
    }
    const saveHandler = async () => {
+      if (!title) {
+         return setError((prevState) => ({
+            ...prevState,
+            title: 'Please title enter!',
+         }))
+      }
+      if (!duration) {
+         return setError((prevState) => ({
+            ...prevState,
+            duration: 'Enter time!',
+         }))
+      }
       if (statement === '' && passage === '') {
          setWarningInputPassage((prevState) => ({
             ...prevState,
@@ -45,7 +62,7 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
             ...prevState,
             passage: 'passage write',
          }))
-      } else if (window.getSelection().toString() === '') {
+      } else if (selectedText === '') {
          setWarningInputPassage((prevState) => ({
             ...prevState,
             correctAnswer: 'Highlight correct answer!',
@@ -56,20 +73,33 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
                title,
                statement,
                passage,
-               correctAnswer: window.getSelection().toString(),
+               correctAnswer: selectedText,
                duration,
                questionOrder: 7,
                testId,
                isActive: true,
+               questionType: state?.question.questionType,
+               id: state?.question.id,
             }
-            await postHighlightTheAnswer(data)
-            goBackFunction()
-            return notify('success', 'Question', 'Succesfull')
+
+            if (state !== null) {
+               await updateQuestionRequest(data)
+               goBackFunction()
+               notify('success', 'Question', 'Succesfully updated')
+            } else {
+               await postHighlightTheAnswer(data)
+               goBackFunction()
+               return notify('success', 'Question', 'Succesfully added')
+            }
          } catch (error) {
             return notify('error', 'Question', error.response?.data.message)
          }
       }
       return null
+   }
+
+   const handleTextSelection = () => {
+      setSelectedText(window.getSelection().toString())
    }
 
    return (
@@ -80,6 +110,7 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
             </LabelQuestion>
             <InputQuestion
                type="text"
+               value={statement}
                id="questionsToThePassage"
                onChange={guestionsThePassage}
             />
@@ -91,6 +122,7 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
             <LabelPassage htmlFor="passageLabel">Passage</LabelPassage>
             <TextAreaPassage
                id="passageLabel"
+               value={passage}
                handleChange={changePassageFunction}
             />
          </PassageDiv>
@@ -103,7 +135,12 @@ const HighlightTheAnswer = ({ title, duration, testId }) => {
                   <HighlightCorrectAnswerLabel>
                      Highlight correct answer :
                   </HighlightCorrectAnswerLabel>
-                  <DivCorrectAnswer ref={divRef}>{passage}</DivCorrectAnswer>
+                  <DivCorrectAnswer
+                     ref={divRef}
+                     onMouseUp={handleTextSelection}
+                  >
+                     {passage}
+                  </DivCorrectAnswer>
                </>
             )}
             {warningInputPassage.correctAnswer && (

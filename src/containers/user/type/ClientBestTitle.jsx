@@ -19,11 +19,14 @@ const ClientBestTitle = ({ question, handleNextClick }) => {
    const handleSubmit = () => {
       const answerData = {
          questionId: question.id,
-         optionIds: [selectedOption],
+         numberOfPlays: 1,
+         fileUrl: 'null',
+         optionsIds: [selectedOption],
       }
       dispatch(userQuestionActions.addAnswer(answerData))
       handleNextClick()
       dispatch(userQuestionActions.clearOptionsIds())
+      setSelectedOption(null)
    }
 
    const isButtonDisabled = selectedOption === null
@@ -77,7 +80,7 @@ const ButtonContainer = styled('div')(() => ({
 }))
 
 const Title = styled('p')(() => ({
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '1.625rem',
@@ -105,7 +108,7 @@ const OptionItem = styled('div')(() => ({
 }))
 
 const OptionTitle = styled('label')(() => ({
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '1rem',

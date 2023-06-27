@@ -22,6 +22,14 @@ import ClientMainIdea from '../../containers/user/type/ClientMainIdea'
 import TypeWhatYouHear from '../../containers/user/type/UserTestTypeWhatYouHear'
 import UserTestDescribeImage from '../../containers/user/type/UserTestDescribeImage'
 import ListenAndSelectResult from '../../containers/admin/pages/submitePage/typeQuestion/ListenAndSelectResult'
+import CheckHighLightTheAnswer from '../../containers/admin/pages/submitePage/typeQuestion/CheckHighlightTheAnswer'
+import RecordSayingResult from '../../containers/admin/pages/submitePage/typeQuestion/RecordSayingResult'
+import RespondinatLeastNwords from '../../containers/admin/pages/submitePage/typeQuestion/RespondinatLeastNwords'
+import RealWordsResult from '../../containers/admin/pages/submitePage/typeQuestion/RealWordsResult'
+import CheckSelectTheMainIdea from '../../containers/admin/pages/submitePage/typeQuestion/CheckSelectTheMainIdea'
+import CheckBestTitle from '../../containers/admin/pages/submitePage/typeQuestion/CheckBestTitle'
+import TypeWhatYouHearSubmitTest from '../../containers/admin/pages/submitePage/typeQuestion/TypeWhatYouHearSubmitTest'
+import DescribeImageSubmitTest from '../../containers/admin/pages/submitePage/typeQuestion/DescribeImageSubmitTest'
 
 export const STORAGE_KEYS = {
    BILINGUAL_USER_KEY: 'BILINGUAL_USER_KEY',
@@ -164,12 +172,12 @@ export const questionComponents = {
 }
 export const resultQuestionComponents = {
    LISTEN_AND_SELECT_ENGLISH_WORD: ListenAndSelectResult,
-   SELECT_ENGLISH_WORD: 'Result-SELECT-ENGLISH-WORDS',
-   SELECT_THE_MAIN_IDEA: 'Result-THE-MAIN-IDEA',
-   TYPE_WHAT_YOU_HEAR: 'Result-TYPE-HEAR',
-   DESCRIBE_IMAGE: 'Result-Describe',
-   RECORD_SAYING_STATEMENT: 'Result-Record-Saying',
-   RESPOND_N_WORDS: 'Result-Respond-Words',
-   SELECT_BEST_TITLE: 'Result-Main-Idea',
-   HIGHLIGHT_THE_ANSWER: 'Result-High-light',
+   SELECT_ENGLISH_WORD: RealWordsResult,
+   SELECT_THE_MAIN_IDEA: CheckSelectTheMainIdea,
+   TYPE_WHAT_YOU_HEAR: TypeWhatYouHearSubmitTest,
+   DESCRIBE_IMAGE: DescribeImageSubmitTest,
+   RECORD_SAYING_STATEMENT: RecordSayingResult,
+   RESPOND_N_WORDS: RespondinatLeastNwords,
+   SELECT_BEST_TITLE: CheckBestTitle,
+   HIGHLIGHT_THE_ANSWER: CheckHighLightTheAnswer,
 }

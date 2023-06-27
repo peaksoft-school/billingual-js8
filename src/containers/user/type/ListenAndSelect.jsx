@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { styled } from '@mui/material'
+import { Typography, styled } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import MultiplySelect from '../../../components/UI/multiply-select/MultiplySelect'
 import Button from '../../../components/UI/buttons/Buttons'
@@ -11,7 +11,9 @@ const ListenAndSelect = ({ question, handleNextClick }) => {
    const nextHandler = () => {
       const answerData = {
          questionId: question.id,
-         optionIds: audio,
+         numberOfPlays: 1,
+         fileUrl: 'null',
+         optionsIds: audio,
       }
 
       dispatch(userQuestionActions.addAnswer(answerData))
@@ -21,17 +23,21 @@ const ListenAndSelect = ({ question, handleNextClick }) => {
 
    return (
       <Container>
+         <TitleStyle>{question.title}</TitleStyle>
+
          <AudioContainer>
             {question !== null && question.options.length === 0 ? (
                <p style={{ margin: '0 auto' }}>Empty</p>
             ) : (
                question.options.map((item, i) => (
                   <MultiplySelect
-                     id={i + 1}
-                     word="awdawd"
+                     key={item.id}
+                     id={item.id}
+                     word={item.title}
                      audio={item.fileUrl}
                      setAudio={setAudio}
                      audioIds={audio}
+                     index={i}
                   />
                ))
             )}
@@ -52,10 +58,23 @@ const ListenAndSelect = ({ question, handleNextClick }) => {
 export default ListenAndSelect
 
 const Container = styled('div')(() => ({}))
+const TitleStyle = styled(Typography)(() => ({
+   textAlign: 'center',
+   fontFamily: 'Poppins',
+   fontStyle: 'normal',
+   fontWeight: 400,
+   fontSize: '28px',
+   lineHeight: '32px',
+   color: '#4C4859',
+   margin: '50px 0',
+   letterSpacing: '1.5px',
+}))
 
 const AudioContainer = styled('div')(() => ({
-   display: 'grid',
-   gridTemplateColumns: 'repeat(auto-fit, minmax(180px, auto))',
+   display: 'flex',
+   flexWrap: 'wrap',
+   justifyContent: 'flex-start',
+   alignItems: 'center',
    gap: '.625rem 4.1875rem',
    justifyItems: 'center',
    padding: '0 5% 32px',

@@ -6,7 +6,6 @@ const Checkboxes = ({ disabled, onChange, ...restProps }) => {
          disabled={disabled}
          onChange={onChange}
          sx={{
-            color: 'white',
             '&.Mui-checked': {
                color: '#2AB930',
             },

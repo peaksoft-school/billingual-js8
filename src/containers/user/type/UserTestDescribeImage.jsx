@@ -33,6 +33,9 @@ const UserTestDescribeImage = ({ question, handleNextClick }) => {
    const nextTestHandler = () => {
       const dataAnswer = {
          data: testResponse,
+         questionId: question.id,
+         numberOfPlays: 1,
+         fileUrl: files.fileUrl,
       }
       dispatch(userQuestionActions.addAnswer(dataAnswer))
       handleNextClick()

@@ -19,6 +19,7 @@ import Button from '../../../components/UI/buttons/Buttons'
 import { questionName } from '../../../utils/helpers/questionName'
 import Checkboxes from '../../../components/UI/checkbox/Checkbox'
 import { formatDate } from '../../../utils/helpers/formatDate'
+import { instanse } from '../../../config/axios-instanse/Instance'
 
 const styleCheckboxes = {
    width: '6.97%',
@@ -66,6 +67,17 @@ const EveluatingResults = () => {
       )
    }
 
+   const sendEmailHandler = async () => {
+      try {
+         await instanse.post(
+            `api/sendEmail/${resultId}?link=http://localhost:3000/user/my-result`
+         )
+         notify('success', 'Email', 'Successfully sent')
+      } catch (error) {
+         notify('error', 'Failed', error.response.data.message)
+      }
+   }
+
    return (
       <FormContainer>
          {results !== null ? (
@@ -80,7 +92,7 @@ const EveluatingResults = () => {
                         <StyledSpan> {results?.testTitle}</StyledSpan>
                      </StyledTypography>
                      <StyledTypography>
-                        Date of Submission:
+                        Date of Submission:{' '}
                         <StyledSpan>
                            {renderDate(results?.dateOfSubmission)}
                         </StyledSpan>
@@ -88,11 +100,11 @@ const EveluatingResults = () => {
                   </Grid>
                   <ButtonContainer>
                      <StyledTypography>
-                        Final score:
-                        <StyledSpan>{results?.finalScore}</StyledSpan>
+                        Final score:{' '}
+                        <StyledSpan>{results?.finalScore.toFixed()}</StyledSpan>
                      </StyledTypography>
                      <StyledTypography>
-                        Final status:
+                        Final status:{' '}
                         <StyledSpan
                            sx={{
                               color:
@@ -107,7 +119,7 @@ const EveluatingResults = () => {
                      <Button
                         sx={{ marginTop: '1.5rem' }}
                         variant="outlined"
-                        onClick={() => navigate(`#`)}
+                        onClick={sendEmailHandler}
                         disabled={results?.resultStatus === 'NOT_EVALUATED'}
                      >
                         Send results to user&#39;s email
@@ -121,6 +133,11 @@ const EveluatingResults = () => {
                      overflowX: 'auto',
                   }}
                >
+                  {isLoading && (
+                     <SpinnerContainer>
+                        <Spinner />
+                     </SpinnerContainer>
+                  )}
                   <StyledTable>
                      <TableHead>
                         <TableRow>
@@ -131,14 +148,9 @@ const EveluatingResults = () => {
                         </TableRow>
                      </TableHead>
                      <TableBody>
-                        {isLoading && (
-                           <SpinnerContainer>
-                              <Spinner />
-                           </SpinnerContainer>
-                        )}
                         {results.resultQuestionResponses &&
                         results.resultQuestionResponses.length > 0 ? (
-                           results.resultQuestionResponses.map((result) => {
+                           results.resultQuestionResponses.map((result, i) => {
                               return (
                                  <StyledTr
                                     key={result.questionId}
@@ -149,12 +161,12 @@ const EveluatingResults = () => {
                                        )
                                     }
                                  >
-                                    <StyledTd>{result.questionOrder} </StyledTd>
+                                    <StyledTd>{i + 1} </StyledTd>
                                     <StyledTd>
                                        {questionName(result.questionType)}
                                     </StyledTd>
                                     <StyledTd>
-                                       {result.score} out of 10
+                                       {result.score.toFixed()} out of 10
                                     </StyledTd>
                                     <StyledTd
                                        sx={{
@@ -170,7 +182,7 @@ const EveluatingResults = () => {
                                     <StyledTd>
                                        {result.answerStatus ===
                                        'NOT_EVALUATED' ? (
-                                          <Viewed />
+                                          <StyledViewIcon />
                                        ) : (
                                           <Checkboxes
                                              sx={styleCheckboxes}
@@ -270,4 +282,12 @@ const SpinnerContainer = styled(Grid)(() => ({
    marginRight: '-600px',
    marginTop: '50px',
    marginLeft: '13rem',
+}))
+const StyledViewIcon = styled(Viewed)(({ theme }) => ({
+   cursor: 'pointer',
+   '&:hover': {
+      path: {
+         stroke: theme.palette.secondary.skyBlue,
+      },
+   },
 }))

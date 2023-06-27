@@ -16,7 +16,6 @@ const Time = styled('h3')(() => ({
    width: '61px',
    height: '24px',
    marginBottom: '20px',
-   fontFamily: 'Roundet',
    fontStyle: 'normal',
    fontWeight: 500,
    fontSize: '32px',

@@ -4,15 +4,10 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { postEveluatingScore } from '../../../../../api/resultService'
 import Button from '../../../../../components/UI/buttons/Buttons'
-import Checkboxes from '../../../../../components/UI/checkbox/Checkbox'
 import volumeUpIcon from '../../../../../assets/icons/volumeOn.svg'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
+import AdminCheckSelect from '../../../../../components/UI/multiply-select/AdminCheckSelect'
 
-const styleCheckboxes = {
-   width: '6.97%',
-   height: '43.48%',
-   marginLeft: '9.89%',
-}
 const buttonStyleGoBack = {
    width: '12.8%',
    height: '42px',
@@ -64,21 +59,8 @@ const ListenAndSelectResult = ({ question, score, answerId }) => {
    return (
       <>
          <TestListenAndSelectEnglishWords>
-            <audio style={{ display: 'none' }} type="audio/mp3" controls>
-               <track kind="captions" srcLang="en" label="English captions" />
-               <source type="audio/mp3" />
-            </audio>
             {question.questionResponse.options.map((elem, i) => (
-               <ListenWordEnglish key={elem.id}>
-                  <NumberListenWords>{i + 1}</NumberListenWords>
-                  <StyledVolumeup src={volumeUpIcon} />
-                  <ListenWordEnglishTest>{elem.title}</ListenWordEnglishTest>
-                  <Checkboxes
-                     sx={styleCheckboxes}
-                     color="success"
-                     checked={elem.isCorrect}
-                  />
-               </ListenWordEnglish>
+               <AdminCheckSelect key={elem.id} elem={elem} index={i} />
             ))}
          </TestListenAndSelectEnglishWords>
          <h4 style={{ margin: 0 }}>User&#39;s Answer</h4>
@@ -87,9 +69,7 @@ const ListenAndSelectResult = ({ question, score, answerId }) => {
                <UserAnswer key={elem.optionTitle}>
                   <NumberListenWords>{i + 1}</NumberListenWords>
                   <StyledVolumeup src={volumeUpIcon} />
-                  <ListenWordEnglishTest>
-                     {elem.optionTitle}
-                  </ListenWordEnglishTest>
+                  <ListenWordEnglishTest>Word</ListenWordEnglishTest>
                </UserAnswer>
             ))}
          </TestSelectRealEnglishWordsLine>
@@ -117,34 +97,35 @@ const TestSelectRealEnglishWordsLine = styled('div')(() => ({
 }))
 
 const UserAnswer = styled('div')(() => ({
-   width: '18.83%',
+   width: '15.83%',
    background: '#FFFFFF',
    border: '1.53px solid #D4D0D0',
    borderRadius: '8px',
    display: 'flex',
    alignItems: 'center',
-   padding: '14px 16px',
+   padding: '10px 16px',
 }))
 
-const TestListenAndSelectEnglishWords = styled('div')(({ options }) => ({
+const TestListenAndSelectEnglishWords = styled('div')(() => ({
    width: '100%',
    height: 'auto',
-   margin: '0 auto',
+   margin: 0,
    display: 'flex',
    gap: '2.2%',
-   marginBottom: !options ? '18px' : '0px',
-}))
-
-const ListenWordEnglish = styled('div')(() => ({
-   width: '31.83%',
-   height: '46px',
-   background: '#FFFFFF',
-   border: '1.53px solid #D4D0D0',
-   borderRadius: '8px',
-   display: 'flex',
-   alignItems: 'center',
+   flexWrap: 'wrap',
    marginBottom: '18px',
 }))
+
+// const ListenWordEnglish = styled('div')(() => ({
+//    width: '31.83%',
+//    height: '46px',
+//    background: '#FFFFFF',
+//    border: '1.53px solid #D4D0D0',
+//    borderRadius: '8px',
+//    display: 'flex',
+//    alignItems: 'center',
+//    marginBottom: '18px',
+// }))
 
 const NumberListenWords = styled('div')(() => ({
    width: '3.47%',

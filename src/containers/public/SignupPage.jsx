@@ -3,7 +3,6 @@ import { useFormik } from 'formik'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { signInWithPopup } from 'firebase/auth'
 import { ReactComponent as System } from '../../assets/icons/system.svg'
 import { ReactComponent as Layer } from '../../assets/icons/layer 2.svg'
 import Input from '../../components/UI/input/Input'
@@ -18,8 +17,7 @@ import Spinner from '../../components/UI/spinner/Spinner'
 import MyIconButton from '../../components/UI/Icon-button/IconButton'
 import { ReactComponent as EyeIcon } from '../../assets/icons/eyeDefaultIcon.svg'
 import { ReactComponent as EyeIconOff } from '../../assets/icons/eyeOffIcon.svg'
-import { ReactComponent as Google } from '../../assets/icons/google.svg'
-import { auth, provider } from '../../config/axios-instanse/firebaseConfig'
+// import { ReactComponent as Google } from '../../assets/icons/google.svg'
 import { STORAGE_KEYS } from '../../utils/constants/common'
 import { authActions } from '../../redux/auth/auth.slice'
 
@@ -38,21 +36,21 @@ const SignupPage = () => {
       }))
    }
 
-   const googleSignInHandler = () => {
-      signInWithPopup(auth, provider).then((data) => {
-         const userData = {
-            token: data.user.accessToken,
-            email: data.user.email,
-            role: 'USER',
-         }
+   // const googleSignInHandler = () => {
+   //    signInWithPopup(auth, provider).then((data) => {
+   //       const userData = {
+   //          token: data.user.accessToken,
+   //          email: data.user.email,
+   //          role: 'USER',
+   //       }
 
-         localStorage.setItem(
-            STORAGE_KEYS.BILINGUAL_USER_KEY,
-            JSON.stringify(userData)
-         )
-         navigate('/user/tests')
-      })
-   }
+   //       localStorage.setItem(
+   //          STORAGE_KEYS.BILINGUAL_USER_KEY,
+   //          JSON.stringify(userData)
+   //       )
+   //       navigate('/user/tests')
+   //    })
+   // }
 
    useEffect(() => {
       const userInfo = JSON.parse(
@@ -94,9 +92,9 @@ const SignupPage = () => {
       navigate('/')
    }
 
-   const CheckEmail = errors.email && touched.email ? 'Incorrect email! ' : null
-   const CheckPassword =
-      errors.password && touched.password ? 'Incorrect  password! ' : null
+   // const CheckEmail = errors.email && touched.email ? 'Incorrect email! ' : null
+   // const CheckPassword =
+   //    errors.password && touched.password ? 'Incorrect  password! ' : null
    const CheckConfirmPassword =
       touched.confirmPassword && errors.confirmPassword
 
@@ -147,10 +145,13 @@ const SignupPage = () => {
                   )
                })}
 
-               <Error>{CheckConfirmPassword}</Error>
-               <Error>{CheckEmail}</Error>
-               <Error> {CheckPassword}</Error>
+               {/* <Error>{CheckEmail}</Error>
+               <Error> {CheckPassword}</Error> */}
+               <Error>{touched.firstName && errors.firstName}</Error>
+               <Error>{touched.lastName && errors.lastName}</Error>
+               <Error>{touched.password && errors.password}</Error>
                <Error>{error}</Error>
+               <Error>{CheckConfirmPassword}</Error>
                {isLoading ? (
                   <Spinner />
                ) : (
@@ -158,18 +159,18 @@ const SignupPage = () => {
                      sign up
                   </StyledButton>
                )}
-               <ButtonContainer
+               {/* <ButtonContainer
                   disabled={isLoading}
                   onClick={googleSignInHandler}
                >
                   <GoogleIcon />
                   sign up with google
-               </ButtonContainer>
+               </ButtonContainer> */}
                <StyledText>
                   ALREADY HAVE AN ACCOUNT?
                   <StyledNavLink
                      disabled={isLoading}
-                     to={isLoading ? '' : '/sign-up'}
+                     to={isLoading ? '' : '/sign-in'}
                   >
                      LOG IN
                   </StyledNavLink>
@@ -238,17 +239,17 @@ const StyledButton = styled(Button)(() => ({
    height: '52px',
    marginTop: '10px',
 }))
-const ButtonContainer = styled(Button)(() => ({
-   margin: '34px auto 0',
-   border: ' 1px solid #BDBDBD',
-   boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
-   borderRadius: '8px',
-   padding: '10px 10px',
-   color: '#757575',
-}))
-const GoogleIcon = styled(Google)(() => ({
-   margin: '0 8px 0 0',
-}))
+// const ButtonContainer = styled(Button)(() => ({
+//    margin: '34px auto 0',
+//    border: ' 1px solid #BDBDBD',
+//    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
+//    borderRadius: '8px',
+//    padding: '10px 10px',
+//    color: '#757575',
+// }))
+// const GoogleIcon = styled(Google)(() => ({
+//    margin: '0 8px 0 0',
+// }))
 const StyledText = styled(Typography)(() => ({
    textAlign: 'center',
    marginTop: '24px',

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Typography, keyframes, styled } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { AxiosError } from 'axios'
 import TextArea from '../../../../../components/UI/textArea/TextArea'
@@ -9,15 +9,21 @@ import RadioButtons from '../../../../../components/UI/checkbox/RadioButton'
 import MyIconButton from '../../../../../components/UI/Icon-button/IconButton'
 import { ReactComponent as DeleteIcon } from '../../../../../assets/icons/deletedIcon.svg'
 import QuestionModal from '../../../../../components/UI/modal/QuestionModal'
-import { postSelectBestTitle } from '../../../../../api/questionService'
+import {
+   postSelectBestTitle,
+   updateQuestionRequest,
+} from '../../../../../api/questionService'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
 import { questionActions } from '../../../../../redux/question/question.slice'
 
-const SelectBestTitle = ({ title, duration, testId }) => {
+const SelectBestTitle = ({ title, duration, testId, setError }) => {
    const dispatch = useDispatch()
+   const { state } = useLocation()
    const { options } = useSelector((state) => state.questions)
    const [openModal, setOpenModal] = useState(false)
-   const [passageInput, setPassageInput] = useState('')
+   const [passageInput, setPassageInput] = useState(
+      state?.question.passage || ''
+   )
    const navigate = useNavigate()
    const { notify } = useSnackbar()
 
@@ -34,7 +40,7 @@ const SelectBestTitle = ({ title, duration, testId }) => {
    }
 
    const goBack = () => {
-      navigate('/admin/test')
+      navigate(`/admin/test/${testId}`)
    }
 
    const changeRadioOption = (id) => {
@@ -54,14 +60,37 @@ const SelectBestTitle = ({ title, duration, testId }) => {
          passage: passageInput,
          isActive: true,
          options,
+         questionType: state?.question.questionType,
+         id: state?.question.id,
       }
       try {
-         if (!title || !duration || !passageInput || options.length === 0) {
-            return notify('error', 'Question', 'Please fill in all fields')
+         if (!passageInput) {
+            return notify('error', 'Question', 'Please enter passage')
          }
-         await postSelectBestTitle(data)
-         goBack()
-         notify('success', 'Question', 'Successfully added')
+         if (!title) {
+            return setError((prevState) => ({
+               ...prevState,
+               title: 'Please title enter!',
+            }))
+         }
+         if (!duration) {
+            return setError((prevState) => ({
+               ...prevState,
+               duration: 'Enter time!',
+            }))
+         }
+         if (options.length === 0) {
+            return notify('error', 'Failed', 'options should not be empty')
+         }
+         if (state !== null) {
+            await updateQuestionRequest(data)
+            goBack()
+            notify('success', 'Question', 'Successfully updated')
+         } else {
+            await postSelectBestTitle(data)
+            goBack()
+            notify('success', 'Question', 'Successfully added')
+         }
          return dispatch(questionActions.clearOptions())
       } catch (error) {
          if (AxiosError(error)) {
@@ -72,6 +101,10 @@ const SelectBestTitle = ({ title, duration, testId }) => {
    }
 
    const disabledBtn = options.length === 0 || !passageInput
+
+   useEffect(() => {
+      dispatch(questionActions.updateOption(state?.question.options || []))
+   }, [])
 
    return (
       <>

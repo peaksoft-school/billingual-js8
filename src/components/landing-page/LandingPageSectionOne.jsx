@@ -202,7 +202,7 @@ const LandingPageSectionOne = () => {
       <LandingPage>
          {/* Header */}
          <LogoAndButtonDiv bgColor={bgColor}>
-            <Logo src={logo} />
+            <Logo loading="lazy" src={logo} />
             <ButtonDiv>
                {isAuthorized ? (
                   <>
@@ -230,7 +230,7 @@ const LandingPageSectionOne = () => {
          </LogoAndButtonDiv>
          {/* Header */}
 
-         <DivInfo>
+         <DivInfo id="home">
             <EnglishProficiency>
                <ProveYourEnglish>
                   Prove your English proficiency today with
@@ -247,10 +247,10 @@ const LandingPageSectionOne = () => {
             </ButtonToBegin>
          </DivInfo>
 
-         <ImgBubble src={imageBubble} />
+         <ImgBubble src={imageBubble} loading="lazy" />
 
-         <AcademicCap src={cap} />
-         <ImageBooks src={imageBook} />
+         <AcademicCap loading="lazy" src={cap} />
+         <ImageBooks loading="lazy" src={imageBook} />
       </LandingPage>
    )
 }

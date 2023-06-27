@@ -104,26 +104,29 @@ const TestSelectRealEnglishWordsLine = styled('div')(() => ({
    margin: 0,
    display: 'flex',
    gap: '2.2%',
+   flexWrap: 'wrap',
    marginBottom: '18px',
 }))
 
 const Words = styled('div')(() => ({
-   width: '31.83%',
+   width: '21.83%',
    height: 'auto',
    background: '#FFFFFF',
    border: '1.53px solid #D4D0D0',
    borderRadius: '8px',
    display: 'flex',
    alignItems: 'center',
+   margin: '0 0 10px 0',
 }))
 const UserAnswer = styled('div')(() => ({
-   width: '18.83%',
+   width: '21.83%',
+   height: 'auto',
    background: '#FFFFFF',
    border: '1.53px solid #D4D0D0',
    borderRadius: '8px',
    display: 'flex',
    alignItems: 'center',
-   padding: '14px 16px',
+   margin: '0 0 10px 0',
 }))
 
 const NumberWords = styled('div')(() => ({
