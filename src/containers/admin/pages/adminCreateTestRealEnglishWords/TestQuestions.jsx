@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { InputLabel, MenuItem, Select, styled } from '@mui/material'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import TypeTest from './TypeTest'
 import { questionTypes } from '../../../../utils/constants/common'
+import { questionName } from '../../../../utils/helpers/questionName'
 
 const typeTestArray = [
    {
@@ -53,10 +54,14 @@ const menuItemStyle = {
 }
 
 const TestQuestions = () => {
-   const [selectType, setSelectType] = useState('')
-   const [title, setTitle] = useState('')
-   const [duration, setDuration] = useState('')
+   const { state } = useLocation()
+   const [selectType, setSelectType] = useState(
+      questionName(state?.question.questionType || 'SELECT_ENGLISH_WORD')
+   )
+   const [title, setTitle] = useState(state?.question.title || '')
+   const [duration, setDuration] = useState(state?.question.duration || 20)
    const [errorObject, setError] = useState({})
+
    const titleOnChangeFunction = (e) => {
       setTitle(e.target.value)
       setError((prevState) => ({
@@ -137,15 +142,14 @@ const TestQuestions = () => {
                              }
                            : { border: '1px solid #6a6666c1' }
                      }
-                     placeholder={
-                        errorObject.duration ? errorObject.duration : '15:00'
-                     }
+                     placeholder="15"
                      id="timeInput"
                      name="duration"
                      onChange={durationOnChange}
                      type="number"
                      value={duration}
                      min={1}
+                     defaultValue={15}
                   />
                </DivTimerInput>
             </DivInputOne>
@@ -159,6 +163,7 @@ const TestQuestions = () => {
                   onChange={selectFunction}
                   error={!!errorObject.select}
                   displayEmpty
+                  defaultValue={state?.question.questionType}
                >
                   <MenuItem value="" disabled>
                      Select type test
@@ -168,6 +173,9 @@ const TestQuestions = () => {
                         key={type.id}
                         sx={menuItemStyle}
                         value={type.type}
+                        defaultValue={
+                           type.type === state?.question.questionType
+                        }
                      >
                         {type.type}
                      </MenuItem>
@@ -182,6 +190,7 @@ const TestQuestions = () => {
                title={title}
                duration={duration}
                testId={testId}
+               setError={setError}
             />
          </TestSelectRealEnglishWords>
       </DivCreateTest>

@@ -278,6 +278,11 @@ const InfoSectionOne = ({ count }) => {
          <InfoDivOne variants={animation}>
             <ImagePaperAirline>
                <ImagePaperAirline1 src={paperAirline} />
+               {/* <OptimizedImage
+                  src={paperAirline}
+                  blurhash="LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+                  alt={paperAirline}
+               /> */}
                <ImageBorder src={borderFrame} />
                <BorderFrameImageOne>
                   <CountNumber>
@@ -309,14 +314,14 @@ const InfoSectionOne = ({ count }) => {
                <BorderFrameImageTwo>
                   <CountNumber2>
                      {count && (
-                        <CountUp start={0} end={200} duration={2} delay={0} />
+                        <CountUp start={0} end={100} duration={2} delay={0} />
                      )}
                      +
                   </CountNumber2>
                </BorderFrameImageTwo>
             </ImageGlobus>
             <Text>
-               Students from over 200 countries and territories have benefitted.
+               Students from over 100 countries and territories have benefitted.
             </Text>
          </InfoDivSecond>
          <InfoDivThird variants={animation}>
@@ -331,9 +336,8 @@ const InfoSectionOne = ({ count }) => {
                   <CountNumber3>
                      <Dollar src={dollar} />
                      {count && (
-                        <CountUp start={0} end={100} duration={2} delay={0} />
+                        <CountUp start={100} end={0} duration={3} delay={0} />
                      )}
-                     M
                   </CountNumber3>
                </BorderFrameImageThird>
             </ImagePiggyBank>

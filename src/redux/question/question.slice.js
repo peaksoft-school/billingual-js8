@@ -35,6 +35,12 @@ const questionSlice = createSlice({
       clearOptions(state) {
          state.options = []
       },
+      updateOption: (state, action) => {
+         state.options = action.payload
+      },
+      addLink: (state, action) => {
+         state.link = action.payload
+      },
    },
    extraReducers: (builder) => {
       builder.addCase(getAllQuestions.fulfilled, (state, action) => {

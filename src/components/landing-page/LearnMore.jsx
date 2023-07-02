@@ -70,7 +70,7 @@ const LearnMore = () => {
                <motion.div variants={infoAnimation}>
                   <Title1>Expand your applicant pool</Title1>
                   <Text1>
-                     Tap into a diverse pool of candidates from 210+ countries
+                     Tap into a diverse pool of candidates from 100+ countries
                      and
                      <br />
                      territories of origin, who have taken the Bilingual English

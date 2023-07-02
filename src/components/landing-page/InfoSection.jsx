@@ -336,6 +336,7 @@ const InfoSection = () => {
                      whileInView="onscreen"
                      animate="animate"
                      src={bookImg}
+                     loading="lazy"
                   />
                   <ImgLearn
                      variants={blockAnimate}
@@ -343,6 +344,7 @@ const InfoSection = () => {
                      whileInView="onscreen"
                      animate="animate"
                      src={learnImg}
+                     loading="lazy"
                   />
                   <ImgReading
                      variants={blockAnimate}
@@ -350,6 +352,7 @@ const InfoSection = () => {
                      whileInView="onscreen"
                      animate="animate"
                      src={readingImg}
+                     loading="lazy"
                   />
                </ChildContainer>
             </ImgBackground>
@@ -367,7 +370,7 @@ const InfoSection = () => {
                      variants={imgAnimation}
                      custom={elem.id}
                   >
-                     <OurTeamImage imageUrl={elem.img} />
+                     <OurTeamImage src={elem.img} loading="lazy" />
                      <DivEmployeeNamePerson>
                         <NamePersonEmployee>{elem.name}</NamePersonEmployee>
                         <Employee>{elem.employee}</Employee>

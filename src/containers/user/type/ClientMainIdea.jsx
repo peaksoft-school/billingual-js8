@@ -19,11 +19,14 @@ const ClientMainIdea = ({ question, handleNextClick }) => {
    const handleSubmit = () => {
       const answerData = {
          questionId: question.id,
-         optionIds: [selectedOption],
+         numberOfPlays: 1,
+         fileUrl: 'null',
+         optionsIds: [selectedOption],
       }
       dispatch(userQuestionActions.addAnswer(answerData))
       handleNextClick()
       dispatch(userQuestionActions.clearOptionsIds())
+      setSelectedOption(null)
    }
 
    const isButtonDisabled = selectedOption === null
@@ -40,15 +43,15 @@ const ClientMainIdea = ({ question, handleNextClick }) => {
          </QuestionContainer>
          <VariantContainer>
             <div>
-               <Title>Select the main idea of the passage</Title>
+               <Title>{question.title}</Title>
                {question.options.map((option) => (
                   <OptionItem key={option.id}>
                      <Radio
                         checked={selectedOption === option.id}
                         onChange={() => handleOptionChange(option.id)}
-                        id="radio"
+                        id={option.id}
                      />
-                     <OptionTitle for="radio">{option.title}</OptionTitle>
+                     <OptionTitle for={option.id}>{option.title}</OptionTitle>
                   </OptionItem>
                ))}
             </div>
@@ -75,7 +78,7 @@ const ButtonContainer = styled('div')(() => ({
 }))
 
 const Title = styled('p')(() => ({
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '1.625rem',
@@ -103,7 +106,7 @@ const OptionItem = styled('div')(() => ({
 }))
 
 const OptionTitle = styled('label')(() => ({
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '1rem',

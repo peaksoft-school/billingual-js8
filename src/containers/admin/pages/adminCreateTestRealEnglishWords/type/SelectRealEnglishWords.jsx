@@ -1,18 +1,18 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
 import { styled } from '@mui/material'
-import Checkboxes from '../../../../../components/UI/checkbox/Checkbox'
-import { ReactComponent as DeleteIcon } from '../../../../../assets/icons/deletedIcon.svg'
 import Button from '../../../../../components/UI/buttons/Buttons'
 import ModalDelete from '../../../../../components/UI/modal/ModalDelete'
 import QuestionModal from '../../../../../components/UI/modal/QuestionModal'
 import { questionActions } from '../../../../../redux/question/question.slice'
 import { useSnackbar } from '../../../../../hooks/useSnackbar'
-import { postSelectRealEnglishWord } from '../../../../../api/questionService'
-import MyIconButton from '../../../../../components/UI/Icon-button/IconButton'
+import {
+   postSelectRealEnglishWord,
+   updateQuestionRequest,
+} from '../../../../../api/questionService'
+import TextContainer from '../../../../../components/UI/TextContainer'
 
 const buttonStyleGoBack = {
    width: '12.8%',
@@ -35,11 +35,6 @@ const buttonSave = {
    },
 }
 
-const styleCheckboxes = {
-   width: '6.97%',
-   height: '43.48%',
-   marginLeft: '9.89%',
-}
 const buttonStyle = {
    '&:hover': {
       background: '#0015cf',
@@ -56,20 +51,15 @@ const buttonStyle = {
    fontSize: '0.875rem',
    lineHeight: '1rem',
 }
-const SelectRealEnglishWords = ({ title, duration, testId }) => {
+const SelectRealEnglishWords = ({ title, duration, testId, setError }) => {
    const { options } = useSelector((item) => item.questions)
    const dispatch = useDispatch()
+   const { state } = useLocation()
    const { notify } = useSnackbar()
    const [isOpenModalDelete, setIsOpenModalDelete] = useState(false)
    const [isOpenModalSave, setIsOpenModalSave] = useState(false)
    const [idListen, setListenId] = useState()
-   const [deleteArrayListen, setDeleteArrayListen] = useState([])
-   const sliceWordOne = deleteArrayListen.slice(0, 3)
-   const sliceWordTwo = deleteArrayListen.slice(3, 6)
 
-   useEffect(() => {
-      setDeleteArrayListen(options)
-   }, [options])
    const navigate = useNavigate()
 
    const openModalDelete = (id) => {
@@ -83,14 +73,14 @@ const SelectRealEnglishWords = ({ title, duration, testId }) => {
       dispatch(questionActions.deleteOption(id))
       setIsOpenModalDelete((prevState) => !prevState)
    }
-   const checkedFunc = (id) => {
+   const checkedFunc = (e, id) => {
       dispatch(questionActions.changeTrueOption(id))
    }
    const navigateGoBackTest = () => {
       navigate(-1)
    }
    const goBack = () => {
-      navigate('/admin/test')
+      navigate(`/admin/test/${testId}`)
    }
    const saveTest = async () => {
       const data = {
@@ -100,14 +90,34 @@ const SelectRealEnglishWords = ({ title, duration, testId }) => {
          testId,
          options,
          isActive: true,
+         questionType: state?.question.questionType,
+         id: state?.question.id,
       }
       try {
-         if (!title || !duration || options.length === 0) {
-            return notify('error', 'Question', 'Please fill in all fields')
+         if (!title) {
+            return setError((prevState) => ({
+               ...prevState,
+               title: 'Please title enter!',
+            }))
          }
-         await postSelectRealEnglishWord(data)
-         goBack()
-         notify('success', 'Question', 'Successfully added')
+         if (!duration) {
+            return setError((prevState) => ({
+               ...prevState,
+               duration: 'Enter time!',
+            }))
+         }
+         if (options.length === 0) {
+            return notify('error', 'Failed', 'options should not be empty')
+         }
+         if (state !== null) {
+            await updateQuestionRequest(data)
+            goBack()
+            notify('success', 'Question', 'Successfully updated')
+         } else {
+            await postSelectRealEnglishWord(data)
+            goBack()
+            notify('success', 'Question', 'Successfully added')
+         }
          return dispatch(questionActions.clearOptions())
       } catch (error) {
          if (AxiosError(error)) {
@@ -116,6 +126,11 @@ const SelectRealEnglishWords = ({ title, duration, testId }) => {
          return notify('error', 'Question', 'Something went wrong')
       }
    }
+
+   useEffect(() => {
+      dispatch(questionActions.updateOption(state?.question.options || []))
+   }, [])
+
    return (
       <>
          <ModalDelete
@@ -130,40 +145,16 @@ const SelectRealEnglishWords = ({ title, duration, testId }) => {
                + Add Options
             </Button>
             <TestSelectRealEnglishWordsLine>
-               {sliceWordOne.map((elem) => (
-                  <WordEnglish>
-                     <NumberWords>{elem.id}</NumberWords>
-                     <WordEnglishTest>{elem.title}</WordEnglishTest>
-                     <Checkboxes
-                        sx={styleCheckboxes}
-                        color="success"
-                        checked={elem.isCorrect}
-                        onClick={() => checkedFunc(elem.id)}
-                     />
-                     <MyIconButton onClick={() => openModalDelete(elem.id)}>
-                        <DeleteIconLogo />
-                     </MyIconButton>
-                  </WordEnglish>
+               {options.map((elem, i) => (
+                  <TextContainer
+                     key={elem.id}
+                     elem={elem}
+                     index={i}
+                     checkedFunc={checkedFunc}
+                     openModal={deleteTest}
+                  />
                ))}
             </TestSelectRealEnglishWordsLine>
-            <TestSelectRealEnglishWordsLine>
-               {sliceWordTwo.map((elem) => (
-                  <WordEnglish>
-                     <NumberWords>{elem.id}</NumberWords>
-                     <WordEnglishTest>{elem.title}</WordEnglishTest>
-                     <Checkboxes
-                        sx={styleCheckboxes}
-                        color="success"
-                        checked={elem.isCorrect}
-                        onClick={() => checkedFunc(elem.id)}
-                     />
-                     <MyIconButton onClick={() => openModalDelete(elem.id)}>
-                        <DeleteIconLogo />
-                     </MyIconButton>
-                  </WordEnglish>
-               ))}
-            </TestSelectRealEnglishWordsLine>
-
             <DivButtonSaveandGoBack>
                <Button sx={buttonStyleGoBack} onClick={navigateGoBackTest}>
                   go Back
@@ -183,49 +174,15 @@ const TestSelectRealEnglishWordsLine = styled('div')(() => ({
    width: '100%',
    height: 'auto',
    margin: '0 auto',
-   display: 'flex',
-   gap: '2.2%',
    marginBottom: '18px',
-}))
-
-const WordEnglish = styled('div')(() => ({
-   width: '31.83%',
-   height: 'auto',
-   background: '#FFFFFF',
-   border: '1.53px solid #D4D0D0',
-   borderRadius: '8px',
+   // display: 'grid',
+   // gridTemplateColumns: 'repeat(auto-fit, minmax(200px, auto))',
    display: 'flex',
+   flexWrap: 'wrap',
+   justifyContent: 'flex-start',
    alignItems: 'center',
-}))
-
-const NumberWords = styled('div')(() => ({
-   width: '3.47%',
-   height: '39.13%',
-   margin: '14px 6% 14px 6.13%',
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '16px',
-   lineHeight: '18px',
-   color: ' #4C4859',
-}))
-
-const WordEnglishTest = styled('div')(() => ({
-   fontFamily: 'Poppins',
-   fontStyle: 'normal',
-   fontWeight: 400,
-   fontSize: '1rem',
-   lineHeight: '18px',
-   color: ' #4C4859',
-   width: '47.59%',
-   height: '39.13%',
-}))
-
-const Delete = styled('img')(() => ({
-   width: '7.66%',
-   height: '43.48%',
-   cursor: 'pointer',
-   marginLeft: '4.98%',
+   gap: '10px 67px',
+   justifyItems: 'center',
 }))
 
 const CreateTest = styled('div')(() => ({
@@ -240,15 +197,4 @@ const DivButtonSaveandGoBack = styled('div')(() => ({
    justifyContent: 'end',
    marginTop: '32px',
    gap: '1.95%',
-}))
-const DeleteIconLogo = styled(DeleteIcon)(({ theme }) => ({
-   width: '20px',
-   height: '20px',
-   cursor: 'pointer',
-   marginLeft: '10px',
-   '&:hover': {
-      path: {
-         stroke: theme.palette.secondary.main,
-      },
-   },
 }))

@@ -85,6 +85,10 @@ const MainRoutes = () => {
                      path="test/:testId/createtest"
                      element={<TestQuestions />}
                   />
+                  <Route
+                     path="test/:testId/update-question"
+                     element={<TestQuestions />}
+                  />
                   <Route path="submit-result" element={<SubmittedResults />} />
                   <Route
                      path="submit-result/:resultId"

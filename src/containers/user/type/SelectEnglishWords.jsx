@@ -13,7 +13,9 @@ const SelectEnglishWords = ({ question, handleNextClick }) => {
       const optionIds = words.map((item) => item.id)
       const answerData = {
          questionId: question.id,
-         optionIds,
+         numberOfPlays: 1,
+         fileUrl: 'null',
+         optionsIds: optionIds,
       }
       dispatch(userQuestionActions.addAnswer(answerData))
       handleNextClick()
@@ -42,7 +44,7 @@ export default React.memo(SelectEnglishWords)
 
 const TitleStyle = styled(Typography)(() => ({
    textAlign: 'center',
-   fontFamily: 'DINNextRoundedLTW01-Regular',
+   fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '28px',

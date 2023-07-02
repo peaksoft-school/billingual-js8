@@ -1,8 +1,7 @@
-import { styled, Typography } from '@mui/material'
+import { styled, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import FormContainer from '../../../../components/UI/form/FormContainer'
-import Input from '../../../../components/UI/input/Input'
 import { resultQuestionComponents } from '../../../../utils/constants/common'
 import { questionName } from '../../../../utils/helpers/questionName'
 
@@ -14,7 +13,10 @@ const SubmiteQuestions = () => {
       resultQuestionComponents[state?.questionResponse.questionType]
 
    const changeScoreHandler = (e) => {
-      setScore(e.target.value)
+      const { value } = e.target
+      if (value === '' || (parseFloat(value) >= 0 && parseFloat(value) <= 10)) {
+         setScore(value)
+      }
    }
    return (
       <FormContainer>
@@ -31,65 +33,65 @@ const SubmiteQuestions = () => {
             <div>
                <h4 style={{ margin: '0 0 14px 0' }}>Test question</h4>
                <StyledText>
-                  Question Title:
+                  Question Title:{' '}
                   <StyledSpan>{state.questionResponse.title}</StyledSpan>
                </StyledText>
                <StyledText>
-                  Duration:
+                  Duration:{' '}
                   <StyledSpan>{state.questionResponse.duration}</StyledSpan>
                </StyledText>
                <StyledText>
-                  Question Type:
+                  Question Type:{' '}
                   <StyledSpan>
                      {questionName(state.questionResponse.questionType)}
                   </StyledSpan>
                </StyledText>
-               {state.questionResponse.questionType === 'TYPE_WHAT_YOU_HEAR' ? (
+               {/* {state.questionResponse.questionType === 'TYPE_WHAT_YOU_HEAR' ? (
                   <StyledText>
-                     Mimimum number of words:
+                     Mimimum number of words:{' '}
                      <StyledSpan>{state.questionResponse.minWords}</StyledSpan>
                   </StyledText>
-               ) : null}
+               ) : null} */}
                {state.questionResponse.questionType ===
                'RECORD_SAYING_STATEMENT' ? (
                   <StyledText>
-                     Statement:
+                     Statement:{' '}
                      <StyledSpan>{state.questionResponse.statement}</StyledSpan>
                   </StyledText>
                ) : null}
                {state.questionResponse.questionType === 'RESPOND_N_WORDS' ? (
                   <>
                      <StyledText>
-                        Mimimum number of words:
+                        Mimimum number of words:{' '}
                         <StyledSpan>
                            {state.questionResponse.minWords}
                         </StyledSpan>
                      </StyledText>
                      <StyledText>
-                        Question Statement:
+                        Question Statement:{' '}
                         <StyledSpan>
-                           {state.questionResponse.questionStatement}
+                           {state.questionResponse.statement}
                         </StyledSpan>
                      </StyledText>
                   </>
                ) : null}
             </div>
-            <div style={{ width: '100px' }}>
+            <div style={{ width: '120px' }}>
                <h4 style={{ margin: 0 }}>Evaluation</h4>
                {state.questionResponse.questionType ===
                   'LISTEN_AND_SELECT_ENGLISH_WORD' ||
                state.questionResponse.questionType === 'SELECT_ENGLISH_WORD' ? (
                   <StyledText>
-                     Score: <Score>{state.evaluationScore}</Score>
+                     Score: <Score>{state.evaluationScore.toFixed()}</Score>
                   </StyledText>
                ) : (
                   <>
-                     <StyledScoreText>Score:(1-10)</StyledScoreText>
-                     <Input
+                     <StyledScoreText>Score:(0-10)</StyledScoreText>
+                     <StyledInput
                         value={score}
                         onChange={changeScoreHandler}
                         type="number"
-                        min={1}
+                        InputProps={{ inputProps: { min: 0, max: 10 } }}
                      />
                   </>
                )}
@@ -141,3 +143,5 @@ const StyledScoreText = styled(Typography)(() => ({
    fontFamily: 'Poppins',
    fontWeight: '500',
 }))
+
+const StyledInput = styled(TextField)(() => ({}))

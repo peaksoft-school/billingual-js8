@@ -99,14 +99,10 @@ const SubmittedResults = () => {
                         </SpinnerContainer>
                      )}
                      {results && results.length > 0 ? (
-                        results.map((result) => {
+                        results.map((result, i) => {
                            return (
-                              <StyledTr
-                                 onClick={() => navigate(`${result.resultId}`)}
-                                 key={result.resultId}
-                                 hover
-                              >
-                                 <StyledTd>{result.resultId} </StyledTd>
+                              <StyledTr key={result.resultId} hover>
+                                 <StyledTd>{i + 1} </StyledTd>
                                  <StyledTd>{result.userFullName} </StyledTd>
                                  <StyledTd>
                                     {renderDate(result.dateOfSubmission)}
@@ -132,17 +128,25 @@ const SubmittedResults = () => {
                                              : '#2AB930',
                                     }}
                                  >
-                                    {result.finalScore}
+                                    {result.finalScore.toFixed()}
                                  </StyledTd>
                                  <StyledTd>
                                     {result.resultStatus === 'NOT_EVALUATED' ? (
-                                       <Checked />
+                                       <StyledCheckIcon
+                                          onClick={() =>
+                                             navigate(`${result.resultId}`)
+                                          }
+                                       />
                                     ) : (
-                                       <Viewed />
+                                       <Viewed
+                                          onClick={() =>
+                                             navigate(`${result.resultId}`)
+                                          }
+                                       />
                                     )}
                                  </StyledTd>
                                  <StyledTd>
-                                    <DeleteIcon
+                                    <StyledDeleteIcon
                                        onClick={() =>
                                           openModalDelete(result.resultId)
                                        }
@@ -214,4 +218,22 @@ const SpinnerContainer = styled(Grid)(() => ({
    marginRight: '-600px',
    marginTop: '50px',
    marginLeft: '13rem',
+}))
+
+const StyledDeleteIcon = styled(DeleteIcon)(({ theme }) => ({
+   cursor: 'pointer',
+   '&:hover': {
+      path: {
+         stroke: theme.palette.secondary.main,
+      },
+   },
+}))
+
+const StyledCheckIcon = styled(Checked)(({ theme }) => ({
+   cursor: 'pointer',
+   '&:hover': {
+      path: {
+         stroke: theme.palette.secondary.skyBlue,
+      },
+   },
 }))

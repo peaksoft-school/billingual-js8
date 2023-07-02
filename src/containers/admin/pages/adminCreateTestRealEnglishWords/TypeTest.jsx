@@ -10,7 +10,7 @@ import SelectMainIdea from './type/SelectMainIdea'
 import { questionTypes } from '../../../../utils/constants/common'
 import DescribeImage from './type/DescribeImage'
 
-const TypeTest = ({ selectType, title, duration, testId }) => {
+const TypeTest = ({ selectType, title, duration, testId, setError }) => {
    switch (selectType) {
       case questionTypes.SelectRealEnglishWords:
          return (
@@ -18,11 +18,17 @@ const TypeTest = ({ selectType, title, duration, testId }) => {
                title={title}
                duration={duration}
                testId={testId}
+               setError={setError}
             />
          )
       case questionTypes.ListenAndSelect:
          return (
-            <ListenWords title={title} duration={duration} testId={testId} />
+            <ListenWords
+               title={title}
+               duration={duration}
+               testId={testId}
+               setError={setError}
+            />
          )
       case questionTypes.RecordSayingStatement:
          return (
@@ -30,6 +36,7 @@ const TypeTest = ({ selectType, title, duration, testId }) => {
                title={title}
                duration={duration}
                testId={testId}
+               setError={setError}
             />
          )
       case questionTypes.HighlightTheAnswer:
@@ -38,19 +45,35 @@ const TypeTest = ({ selectType, title, duration, testId }) => {
                title={title}
                duration={duration}
                testId={testId}
+               setError={setError}
             />
          )
       case questionTypes.TypeWhatYourHear:
          return (
-            <TypeWhatHear title={title} duration={duration} testId={testId} />
+            <TypeWhatHear
+               title={title}
+               duration={duration}
+               testId={testId}
+               setError={setError}
+            />
          )
       case questionTypes.RespondInAtLeastNWords:
          return (
-            <RespondNwords title={title} duration={duration} testId={testId} />
+            <RespondNwords
+               title={title}
+               duration={duration}
+               testId={testId}
+               setError={setError}
+            />
          )
       case questionTypes.SelectTheMainIdea:
          return (
-            <SelectMainIdea title={title} duration={duration} testId={testId} />
+            <SelectMainIdea
+               title={title}
+               duration={duration}
+               testId={testId}
+               setError={setError}
+            />
          )
       case questionTypes.SelectBestTitle:
          return (
@@ -58,11 +81,17 @@ const TypeTest = ({ selectType, title, duration, testId }) => {
                title={title}
                duration={duration}
                testId={testId}
+               setError={setError}
             />
          )
       case questionTypes.DescribeImage:
          return (
-            <DescribeImage title={title} duration={duration} testId={testId} />
+            <DescribeImage
+               title={title}
+               duration={duration}
+               testId={testId}
+               setError={setError}
+            />
          )
       default:
          return <div />

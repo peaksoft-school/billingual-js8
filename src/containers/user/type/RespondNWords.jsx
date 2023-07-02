@@ -16,6 +16,8 @@ const RespondNWords = ({ question, handleNextClick }) => {
    const nextHandler = () => {
       const answerData = {
          questionId: question.id,
+         numberOfPlays: 1,
+         fileUrl: 'null',
          data: responseText,
       }
       dispatch(userQuestionActions.addAnswer(answerData))
