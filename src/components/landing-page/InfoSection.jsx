@@ -215,10 +215,7 @@ const TextOurTeam = styled(motion.div)(() => ({
    textTransform: 'capitalize',
    color: '#3752B4',
 }))
-const OurTeamImage = styled('img')(() => ({
-   width: '180px',
-   height: '180px',
-}))
+
 const DivImage = styled(motion.div)(() => ({
    display: 'flex',
    marginTop: '48px',
@@ -370,7 +367,7 @@ const InfoSection = () => {
                      variants={imgAnimation}
                      custom={elem.id}
                   >
-                     <OurTeamImage src={elem.img} />
+                     <OurTeamImage imageUrl={elem.img} />
                      <DivEmployeeNamePerson>
                         <NamePersonEmployee>{elem.name}</NamePersonEmployee>
                         <Employee>{elem.employee}</Employee>
@@ -384,3 +381,12 @@ const InfoSection = () => {
 }
 
 export default InfoSection
+
+const OurTeamImage = styled('div')(({ imageUrl }) => ({
+   width: '180px',
+   height: '180px',
+   backgroundImage: `url(${imageUrl})`,
+   backgroundSize: 'cover',
+   backgroundRepeat: 'no-repeat',
+   borderRadius: '0px 0px 0px 40px',
+}))
