@@ -2,11 +2,15 @@ import { Grid, Rating, Typography, styled } from '@mui/material'
 import React, { useState } from 'react'
 
 import Slider from 'react-slick'
-import avatar1 from '../../assets/images/avatar1.jpg'
-import avatar2 from '../../assets/images/avatar2.jpg'
-import avatar3 from '../../assets/images/avatar3.jpg'
-import avatar4 from '../../assets/images/avatar4.jpg'
-import avatar5 from '../../assets/images/avatar5.jpg'
+import avatar1 from '../../assets/images/markZuckerberg.jpg'
+import adil from '../../assets/images/adil.jpg'
+import aziat from '../../assets/images/aziatNika.jpeg'
+import elonMusk from '../../assets/images/elonMusk.jpg'
+import mairamgul from '../../assets/images/mairamgul.jpg'
+import jobs from '../../assets/images/steveJobs.jpg'
+import bezos from '../../assets/images/bezos.jpg'
+import timCook from '../../assets/images/aimon.jpg'
+import kaukhar from '../../assets/images/kaukhar2.jpg'
 import { ReactComponent as NextIcon } from '../../assets/icons/nextIcon.svg'
 import { ReactComponent as PrevIcon } from '../../assets/icons/prevIcon.svg'
 import { ReactComponent as Pagination } from '../../assets/icons/pagination.svg'
@@ -17,15 +21,15 @@ const humans = [
       id: 1,
       description:
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Aziat Abdimalikov',
+      name: 'Ormonova Mairamgul',
       rating: 5,
-      avatar: avatar1,
+      avatar: mairamgul,
    },
    {
       id: 2,
       description:
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Ilim Shabdanov',
+      name: 'Mark Zuckerberg',
       rating: 5,
       avatar: avatar1,
    },
@@ -33,41 +37,41 @@ const humans = [
       id: 3,
       description:
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Saltanat Nematilla kyzy',
+      name: 'Adil Aitbaev',
       rating: 5,
-      avatar: avatar2,
+      avatar: adil,
    },
    {
       id: 4,
       description:
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Mairam Ormonova',
+      name: 'Steve Jobs',
       rating: 5,
-      avatar: avatar3,
+      avatar: jobs,
    },
    {
       id: 5,
       description:
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Adil Aitbaev',
+      name: 'Aimona Dunaeva',
       rating: 5,
-      avatar: avatar4,
+      avatar: timCook,
    },
    {
       id: 6,
       description:
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Jazgul Joroeva',
+      name: 'Aziat Abdimalikov',
       rating: 5,
-      avatar: avatar5,
+      avatar: aziat,
    },
    {
       id: 7,
       description:
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Anarbek Ishembek uulu',
+      name: 'Kaukhar Zarlykova',
       rating: 5,
-      avatar: avatar1,
+      avatar: kaukhar,
    },
    {
       id: 8,
@@ -75,15 +79,15 @@ const humans = [
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
       name: 'Alibek Altynbek uulu',
       rating: 5,
-      avatar: avatar2,
+      avatar: bezos,
    },
    {
       id: 9,
       description:
          'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Kauhar Zarlykova',
+      name: 'Elon Musk',
       rating: 5,
-      avatar: avatar3,
+      avatar: elonMusk,
    },
 ]
 
@@ -137,11 +141,7 @@ const SecondSlider = () => {
             <StyledSlider {...settings}>
                {humans.map((item, i) => (
                   <UserContainer key={item.id} prop={i === index}>
-                     <UserImg
-                        prop={i === index}
-                        src={item.avatar}
-                        alt="avatar"
-                     />
+                     <UserImg prop={i === index} imageUrl={item.avatar} />
                      <UserText prop={i === index}>{item.description}</UserText>
                      <UserName prop={i === index}>- {item.name}</UserName>
                      <Rating value={item.rating} readOnly />
@@ -178,11 +178,14 @@ const Container = styled(Grid)(() => ({
    marginTop: '60px',
 }))
 
-const UserImg = styled('img')(({ prop }) => ({
+const UserImg = styled('div')(({ prop, imageUrl }) => ({
    width: prop ? '80%' : '50%',
    height: prop ? '260px' : '180px',
    borderRadius: '50%',
    margin: prop ? '40px 30px' : '40px 60px',
+   backgroundImage: `url(${imageUrl})`,
+   backgroundRepeat: 'no-repeat',
+   backgroundSize: 'cover',
 }))
 
 const UserContainer = styled(Grid)(({ prop }) => ({

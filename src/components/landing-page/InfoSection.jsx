@@ -215,7 +215,11 @@ const TextOurTeam = styled(motion.div)(() => ({
    textTransform: 'capitalize',
    color: '#3752B4',
 }))
-const OurTeamImage = styled('img')(() => ({
+const OurTeamImage = styled('div')(({ imageSrc }) => ({
+   backgroundImage: `url(${imageSrc})`,
+   backgroundSize: 'cover',
+   backgroundRepeat: 'no-repeat',
+   borderRadius: '0px 40px 0px 40px',
    width: '180px',
    height: '180px',
 }))
@@ -241,7 +245,7 @@ const DivEmployeeNamePerson = styled('div')(() => ({
    marginTop: '14px',
 }))
 const NamePersonEmployee = styled('div')(() => ({
-   width: '115px',
+   width: '185px',
    height: '21px',
    fontFamily: 'Poppins',
    fontStyle: 'normal',
@@ -373,7 +377,7 @@ const InfoSection = () => {
                      variants={imgAnimation}
                      custom={elem.id}
                   >
-                     <OurTeamImage src={elem.img} loading="lazy" />
+                     <OurTeamImage imageSrc={elem.img} loading="lazy" />
                      <DivEmployeeNamePerson>
                         <NamePersonEmployee>{elem.name}</NamePersonEmployee>
                         <Employee>{elem.employee}</Employee>
