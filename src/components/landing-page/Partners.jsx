@@ -1,10 +1,10 @@
 import React from 'react'
 import { Grid, Typography, styled } from '@mui/material'
 import Marquee from 'react-fast-marquee'
-import Adama from '../../assets/icons/adama.svg'
-import Dekalb from '../../assets/icons/dekalb.svg'
+import Adama from '../../assets/images/new-facebook-meta6114.jpg'
+import Dekalb from '../../assets/images/teslaLogo.jpg'
 import Basf from '../../assets/icons/basf.svg'
-import Lidea from '../../assets/icons/lidea.svg'
+import Lidea from '../../assets/images/peaksoftLogo.jpg'
 
 const partners = [
    { id: '1', icon: Lidea },
@@ -49,7 +49,7 @@ const PartnersTitle = styled(Typography)(() => ({
 
 const StyledImg = styled('img')(() => ({
    width: '100%',
-   height: 'auto',
+   height: '120px',
    objectFit: 'contain',
 }))
 

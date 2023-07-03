@@ -1,10 +1,10 @@
 import paperAirline from '../../assets/images/paperAirline.png'
 import globus from '../../assets/images/globus.png'
 import piggyBank from '../../assets/images/piggyBank.png'
-import OurTeamImg1 from '../../assets/images/person1.png'
-import OurTeamImg2 from '../../assets/images/person2.png'
-import OurTeamImg3 from '../../assets/images/person3.png'
-import OurTeamImg4 from '../../assets/images/person4.png'
+import OurTeamImg1 from '../../assets/images/mairamgul.jpg'
+import OurTeamImg2 from '../../assets/images/adil.jpg'
+import OurTeamImg3 from '../../assets/images/kaukhar.jpg'
+import OurTeamImg4 from '../../assets/images/aziat.jpg'
 import OurTeamImg5 from '../../assets/images/person5.png'
 import OurTeamImg6 from '../../assets/images/person6.png'
 import avatar1 from '../../assets/images/avatar1.jpg'
@@ -56,37 +56,37 @@ export const infoCardArray = [
 export const ourTeamArray = [
    {
       img: OurTeamImg1,
-      name: 'Alice Archie',
+      name: 'Mairamgul Ormonova',
       employee: 'Founder Bilingual',
       id: 1,
    },
    {
       img: OurTeamImg2,
-      name: 'Mia George',
+      name: 'Adil Aitbaev',
       employee: 'Marketer',
       id: 2,
    },
    {
       img: OurTeamImg3,
-      name: 'Oscar Ryan',
+      name: 'Kaukhar Zarlykova',
       employee: 'Developer',
       id: 3,
    },
    {
       img: OurTeamImg4,
-      name: 'Jack William',
+      name: 'Aziat Abdimalikov',
       employee: 'UX/UI Designer',
       id: 4,
    },
    {
       img: OurTeamImg5,
-      name: 'Rose Thomas',
+      name: 'Alibek Altynbek uulu ',
       employee: 'Chief Editor',
       id: 5,
    },
    {
       img: OurTeamImg6,
-      name: 'Albert Stanley',
+      name: 'Elon Musk',
       employee: 'Chief Editor',
       id: 6,
    },
