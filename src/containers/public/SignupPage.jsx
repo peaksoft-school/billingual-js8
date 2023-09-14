@@ -69,7 +69,7 @@ const SignupPage = () => {
    const submitHandler = (values) => {
       dispatch(signUp(values))
          .unwrap()
-         .then(() => navigate('/'))
+         .then(() => navigate('/user/tests'))
          .then(() => notify('success', 'Authorization', 'Successfully sign up'))
          .catch(() => notify('error', 'Authorization', 'Failed to sign up'))
    }

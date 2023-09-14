@@ -5,8 +5,8 @@ import OurTeamImg1 from '../../assets/images/mairamgul.jpg'
 import OurTeamImg2 from '../../assets/images/adil.jpg'
 import OurTeamImg3 from '../../assets/images/kaukhar.jpg'
 import OurTeamImg4 from '../../assets/images/aziat.jpg'
-import OurTeamImg5 from '../../assets/images/person5.png'
-import OurTeamImg6 from '../../assets/images/person6.png'
+import OurTeamImg5 from '../../assets/images/aibekBratan.jpeg'
+import OurTeamImg6 from '../../assets/images/ilim.jpeg'
 import avatar1 from '../../assets/images/avatar1.jpg'
 import avatar2 from '../../assets/images/avatar2.jpg'
 import avatar3 from '../../assets/images/avatar3.jpg'
@@ -75,7 +75,7 @@ export const ourTeamArray = [
    {
       img: OurTeamImg4,
       name: 'Aziat Abdimalikov',
-      employee: 'UX/UI Designer',
+      employee: 'Frontend developer',
       id: 4,
    },
    {
@@ -86,8 +86,8 @@ export const ourTeamArray = [
    },
    {
       img: OurTeamImg6,
-      name: 'Elon Musk',
-      employee: 'Chief Editor',
+      name: 'Ilim Shabdanov',
+      employee: 'Backend developer',
       id: 6,
    },
 ]
@@ -136,7 +136,7 @@ export const humans = [
 ]
 
 export const questionTypes = {
-   SelectRealEnglishWords: 'Select real English words',
+   SelectRealEnglishWords: 'бирдеме',
    ListenAndSelect: 'Listen and select English word',
    TypeWhatYourHear: 'Type what you hear',
    DescribeImage: 'Describe image',

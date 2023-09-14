@@ -91,8 +91,14 @@ const DescribeImage = ({ title, duration, testId, setError }) => {
                   goBackHandler()
                })
          } else {
-            dispatch(postDescribeImage({ describeImgData, notify, imgFile }))
-            goBackHandler()
+            dispatch(
+               postDescribeImage({
+                  describeImgData,
+                  notify,
+                  imgFile,
+                  goBackHandler,
+               })
+            )
          }
       }
    }
@@ -111,7 +117,7 @@ const DescribeImage = ({ title, duration, testId, setError }) => {
             {imgFile ? (
                <Image src={imgUrl} alt="" />
             ) : (
-               <Image src={oldLink?.fileUrl || img} alt="" />
+               <Image src={oldLink?.fileUrl || img} alt="Describe image" />
             )}
             <FileName>{imgFile ? imgName : 'file_name_not_found!'}</FileName>
             <input

@@ -89,7 +89,7 @@ export const typeWhatHearThunk = createAsyncThunk(
 export const postDescribeImage = createAsyncThunk(
    'questions/postDescribeImage',
    async (
-      { describeImgData, notify, imgFile },
+      { describeImgData, notify, imgFile, goBackHandler },
       { rejectWithValue, dispatch }
    ) => {
       try {
@@ -101,6 +101,7 @@ export const postDescribeImage = createAsyncThunk(
             ...describeImgData,
             file: imageLink.link,
          })
+         goBackHandler()
          return data
       } catch (error) {
          if (AxiosError(error)) {

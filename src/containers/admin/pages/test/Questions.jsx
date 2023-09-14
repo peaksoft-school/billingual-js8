@@ -13,16 +13,12 @@ import {
 import FormContainer from '../../../../components/UI/form/FormContainer'
 import { getTestById } from '../../../../api/testService'
 import Button from '../../../../components/UI/buttons/Buttons'
-import Switcher from '../../../../components/UI/checkbox/Switcher'
 import MyIconButton from '../../../../components/UI/Icon-button/IconButton'
 import { ReactComponent as EditIcon } from '../../../../assets/icons/editIcon.svg'
 import { ReactComponent as DeleteIcon } from '../../../../assets/icons/deletedIcon.svg'
 import Spinner from '../../../../components/UI/spinner/Spinner'
 import { formatTime } from '../../../../utils/helpers/formatTime'
-import {
-   deleteQuestionRequest,
-   updateQuestionRequest,
-} from '../../../../api/questionService'
+import { deleteQuestionRequest } from '../../../../api/questionService'
 import { useSnackbar } from '../../../../hooks/useSnackbar'
 import ModalDelete from '../../../../components/UI/modal/ModalDelete'
 import { questionName } from '../../../../utils/helpers/questionName'
@@ -69,17 +65,17 @@ const AddQuestions = () => {
       return getTest()
    }
 
-   const updateQuestion = async (question) => {
-      const newQuestion = { ...question, isActive: !question.isActive }
+   // const updateQuestion = async (question) => {
+   //    const newQuestion = { ...question, isActive: !question.isActive }
 
-      try {
-         await updateQuestionRequest(newQuestion)
-         notify('success', 'Question', 'Successfully updated')
-         return getTest()
-      } catch (error) {
-         return notify('error', 'Question', error.response?.data.message)
-      }
-   }
+   //    try {
+   //       await updateQuestionRequest(newQuestion)
+   //       notify('success', 'Question', 'Successfully updated')
+   //       return getTest()
+   //    } catch (error) {
+   //       return notify('error', 'Question', error.response?.data.message)
+   //    }
+   // }
 
    const navigateToUpdate = (question) => {
       navigate(`update-question`, { state: { question } })
@@ -147,12 +143,12 @@ const AddQuestions = () => {
                                        </StyledTd>
                                        <StyledTd>
                                           <IconsContainer>
-                                             <Switcher
+                                             {/* <Switcher
                                                 checked={question.isActive}
                                                 onClick={() =>
                                                    updateQuestion(question)
                                                 }
-                                             />
+                                             /> */}
                                              <MyIconButton
                                                 onClick={() =>
                                                    navigateToUpdate(question)

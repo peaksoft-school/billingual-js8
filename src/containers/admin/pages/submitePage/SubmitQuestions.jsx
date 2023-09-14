@@ -8,6 +8,7 @@ import { questionName } from '../../../../utils/helpers/questionName'
 const SubmiteQuestions = () => {
    const { state } = useLocation()
    const [score, setScore] = useState(state.evaluationScore)
+   const [scoreError, setScoreError] = useState(false)
 
    const QuestionComponent =
       resultQuestionComponents[state?.questionResponse.questionType]
@@ -16,6 +17,9 @@ const SubmiteQuestions = () => {
       const { value } = e.target
       if (value === '' || (parseFloat(value) >= 0 && parseFloat(value) <= 10)) {
          setScore(value)
+         setScoreError(false)
+      } else {
+         setScoreError(true)
       }
    }
    return (
@@ -88,11 +92,15 @@ const SubmiteQuestions = () => {
                   <>
                      <StyledScoreText>Score:(0-10)</StyledScoreText>
                      <StyledInput
+                        error={!!scoreError}
                         value={score}
                         onChange={changeScoreHandler}
                         type="number"
                         InputProps={{ inputProps: { min: 0, max: 10 } }}
                      />
+                     <Typography style={{ color: '#f00' }}>
+                        {scoreError && 'Limit 0-10'}
+                     </Typography>
                   </>
                )}
             </div>

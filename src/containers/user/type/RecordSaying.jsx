@@ -31,22 +31,6 @@ const RecordSaying = ({ question, handleNextClick }) => {
       setAudioBlob(recordedBlob.blob)
    }
 
-   // const downloadRecording = () => {
-   //    if (!audioBlob) {
-   //       notify('error', 'Recording', 'No recording available')
-   //       return
-   //    }
-
-   //    const url = URL.createObjectURL(audioBlob)
-   //    const a = document.createElement('a')
-   //    document.body.appendChild(a)
-   //    a.style = 'display: none'
-   //    a.href = url
-   //    a.download = 'recording.mp3'
-   //    a.click()
-   //    window.URL.revokeObjectURL(url)
-   // }
-
    const nextButtonHandler = async () => {
       if (!audioBlob) {
          notify('error', 'Recording', 'Please record your saying')
@@ -78,7 +62,7 @@ const RecordSaying = ({ question, handleNextClick }) => {
             <Text>&quot; {question.statement} &quot;.</Text>
          </Container>
          <SecondContainer>
-            {isRecording ? <Recording /> : null}
+            {isRecording ? <StyledRecording /> : null}
             <Wave
                record={isRecording}
                onData={onData}
@@ -100,9 +84,6 @@ const RecordSaying = ({ question, handleNextClick }) => {
                >
                   NEXT
                </Button>
-               {/* <Button variant="contained" onClick={downloadRecording}>
-                  DOWNLOAD
-               </Button> */}
             </div>
          </SecondContainer>
       </>
@@ -111,8 +92,13 @@ const RecordSaying = ({ question, handleNextClick }) => {
 
 export default RecordSaying
 
+const StyledRecording = styled(Recording)(() => ({
+   textAlign: 'start',
+   margin: '0 auto 0 0',
+}))
+
 const Wave = styled(ReactMic)(() => ({
-   display: 'flex',
+   display: 'none',
 }))
 
 const Title = styled(Typography)(() => ({
