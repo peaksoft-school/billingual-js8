@@ -2,7 +2,7 @@ import axios from 'axios'
 import { store } from '../../redux'
 import { postFiles } from '../../redux/question/question.thunk'
 
-const BASE_URL = 'http://bilingualb8.peaksoftprojects.com/'
+const BASE_URL = 'http://10.10.11.46:8080/'
 
 export const fileAxiosInstanse = axios.create({
    baseURL: BASE_URL,

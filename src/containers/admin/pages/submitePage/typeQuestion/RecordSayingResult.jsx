@@ -87,7 +87,7 @@ const RecordSayingResult = ({ question, answerId, score }) => {
                </StyledButton>
                <Text>
                   {' '}
-                  Correct answer: {question.questionResponse.correctAnswer}
+                  Correct answer: {question.questionResponse.statement}
                </Text>
             </FirstContainer>
          ))}

@@ -4,11 +4,11 @@ import React, { useState } from 'react'
 import Slider from 'react-slick'
 import avatar1 from '../../assets/images/markZuckerberg.jpg'
 import adil from '../../assets/images/adil.jpg'
-import aziat from '../../assets/images/aziatNika.jpeg'
+import aziat from '../../assets/images/aziat.jpeg'
 import elonMusk from '../../assets/images/elonMusk.jpg'
 import mairamgul from '../../assets/images/mairamgul.jpg'
 import jobs from '../../assets/images/steveJobs.jpg'
-import bezos from '../../assets/images/bezos.jpg'
+import bezos from '../../assets/images/aibekBratan.jpeg'
 import timCook from '../../assets/images/aimon.jpg'
 import kaukhar from '../../assets/images/kaukhar2.jpg'
 import { ReactComponent as NextIcon } from '../../assets/icons/nextIcon.svg'
@@ -20,7 +20,7 @@ const humans = [
    {
       id: 1,
       description:
-         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
+         'Bilingual is a fantastic website for learning English. The interface is user-friendly and the content is engaging and interactive.',
       name: 'Ormonova Mairamgul',
       rating: 5,
       avatar: mairamgul,
@@ -28,7 +28,7 @@ const humans = [
    {
       id: 2,
       description:
-         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
+         'I highly recommend Bilingual for anyone looking to improve their English skills. The lessons are well-structured and cover a wide range of topics.',
       name: 'Mark Zuckerberg',
       rating: 5,
       avatar: avatar1,
@@ -36,31 +36,32 @@ const humans = [
    {
       id: 3,
       description:
-         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Adil Aitbaev',
-      rating: 5,
-      avatar: adil,
-   },
-   {
-      id: 4,
-      description:
-         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
-      name: 'Steve Jobs',
-      rating: 5,
-      avatar: jobs,
-   },
-   {
-      id: 5,
-      description:
-         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
+         'The community aspect of Bilingual is wonderful. I can connect with other English learners and native speakers, which helps me practice speaking and writing.',
       name: 'Aimona Dunaeva',
       rating: 5,
       avatar: timCook,
    },
    {
+      id: 4,
+      description:
+         'Bilingual offers a great selection of resources for English learners. From grammar exercises to vocabulary quizzes, theres something for everyone.',
+      name: 'Adil Aitbaev',
+      rating: 5,
+      avatar: adil,
+   },
+   {
+      id: 5,
+      description:
+         'I love the audio feature on Bilingual, which allows me to practice my listening skills. Its a great way to improve comprehension.',
+      name: 'Steve Jobs',
+      rating: 5,
+      avatar: jobs,
+   },
+
+   {
       id: 6,
       description:
-         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
+         'The mobile app for Bilingual is convenient and easy to use. I can learn English on the go and access my progress from any device.',
       name: 'Aziat Abdimalikov',
       rating: 5,
       avatar: aziat,
@@ -68,7 +69,7 @@ const humans = [
    {
       id: 7,
       description:
-         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
+         'Bilingual provides excellent feedback on my exercises and assessments. It helps me identify areas where I need improvement and tracks my progress over time.',
       name: 'Kaukhar Zarlykova',
       rating: 5,
       avatar: kaukhar,
@@ -76,7 +77,7 @@ const humans = [
    {
       id: 8,
       description:
-         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
+         'The variety of learning materials on Bilingual keeps me motivated and engaged. I never get bored with the content and always feel challenged.',
       name: 'Alibek Altynbek uulu',
       rating: 5,
       avatar: bezos,
@@ -84,7 +85,7 @@ const humans = [
    {
       id: 9,
       description:
-         'I have tried other language apps and found them boring but with Bilingual, it is easy and fun to practice every day.',
+         'Bilingual offers a personalized learning experience. I can set my own goals and study at my own pace, making it a flexible and effective platform for English learning.',
       name: 'Elon Musk',
       rating: 5,
       avatar: elonMusk,
@@ -143,7 +144,7 @@ const SecondSlider = () => {
                   <UserContainer key={item.id} prop={i === index}>
                      <UserImg prop={i === index} imageUrl={item.avatar} />
                      <UserText prop={i === index}>{item.description}</UserText>
-                     <UserName prop={i === index}>- {item.name}</UserName>
+                     <UserName prop={i === index}>{item.name}</UserName>
                      <Rating value={item.rating} readOnly />
                   </UserContainer>
                ))}
@@ -200,7 +201,7 @@ const UserContainer = styled(Grid)(({ prop }) => ({
 }))
 
 const UserText = styled(Typography)(({ prop }) => ({
-   textAlign: 'left',
+   textAlign: 'center',
    fontFamily: 'Poppins',
    fontStyle: 'normal',
    fontWeight: '400',
